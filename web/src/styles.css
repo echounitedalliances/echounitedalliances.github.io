@@ -1,0 +1,205 @@
+@import "tailwindcss";
+
+/* =====================================================================
+   Echo United Alliances -- design tokens
+
+   Dark-first. The alliance runs a deep purple identity and the site commits
+   to it; there is no light theme, so every colour here is painted explicitly
+   rather than inherited from the host.
+
+   Division accents come from the database (divisions.accent_color) and are
+   applied inline, not here -- the palette below is the ground they sit on.
+   ===================================================================== */
+
+@theme {
+  --color-ground:     #0B0713;
+  --color-ground-2:   #110A1F;
+  --color-surface:    #17102A;
+  --color-surface-2:  #1F1639;
+  --color-edge:       #2E2450;
+  --color-edge-soft:  #221A40;
+
+  --color-ink:        #F1ECFA;
+  --color-ink-dim:    #B6AAD6;
+  --color-ink-faint:  #7C7099;
+
+  --color-accent:     #A855F7;
+  --color-accent-dim: #7C3AED;
+  --color-cyan:       #82FDFF;
+  --color-good:       #55E39A;
+  --color-warn:       #F5C451;
+
+  --font-brand: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-sans: "Public Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+}
+
+html {
+  background: var(--color-ground);
+  /* One unbreakable token (an API key, a long aircraft name) is enough to make
+     the document wider than the viewport, which then pushes every mx-auto
+     container off-centre. Wide content scrolls in its own container instead. */
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  background: var(--color-ground);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--color-accent); color: #fff; }
+
+:focus-visible {
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Type roles ------------------------------------------------------- */
+/* The wordmark. Archivo set wide and heavy, all caps: a modern airline
+   lockup rather than the editorial serif the headlines use. */
+.wordmark {
+  font-family: var(--font-brand);
+  font-weight: 800;
+  font-variation-settings: "wdth" 118;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+.wordmark-sub {
+  font-family: var(--font-brand);
+  font-weight: 500;
+  font-variation-settings: "wdth" 112;
+  text-transform: uppercase;
+  letter-spacing: 0.26em;
+  line-height: 1;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Surfaces --------------------------------------------------------- */
+.panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-edge);
+}
+.hairline { border-color: var(--color-edge-soft); }
+
+/* A carrier's generated mark: two letters on its division's accent.
+   Stands in until real logos exist. */
+.mark {
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #0B0713;
+  flex: none;
+}
+
+/* Scrollbars ------------------------------------------------------- */
+* { scrollbar-width: thin; scrollbar-color: var(--color-edge) transparent; }
+*::-webkit-scrollbar { width: 9px; height: 9px; }
+*::-webkit-scrollbar-thumb {
+  background: var(--color-edge);
+  border-radius: 99px;
+}
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* Split-flap board --------------------------------------------------
+   The signature element. Everything here is DOM and CSS; the only motion is
+   the character flip, and that stops as soon as a cell settles. */
+.board {
+  border: 1px solid var(--color-edge);
+  background: #08050F;
+  padding: 14px 16px 16px;
+  overflow-x: auto;
+}
+.board-head,
+.board-row {
+  display: flex;
+  gap: 14px;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+.board-head {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  padding-bottom: 10px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--color-edge-soft);
+}
+.board-row { padding: 3px 0; }
+.board-row + .board-row { border-top: 1px solid rgba(255,255,255,.035); }
+
+.flap-run { display: inline-flex; gap: 2px; }
+
+.flap {
+  display: inline-grid;
+  place-items: center;
+  width: 1.02ch;
+  min-width: 13px;
+  padding: 3px 0;
+  border-radius: 2px;
+  font-size: 14px;
+  line-height: 1.1;
+  color: #EDE6FB;
+  background: linear-gradient(#211734 0 49%, #170F27 51% 100%);
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.05);
+  /* the seam across the middle of a real flap */
+  position: relative;
+}
+.flap::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 50%;
+  height: 1px;
+  background: rgba(0,0,0,.5);
+}
+.flap-live .flap { color: var(--color-good); }
+
+@media (max-width: 720px) {
+  .flap { min-width: 11px; font-size: 12px; }
+  .board-head, .board-row { gap: 9px; }
+}
+
+/* Motion ----------------------------------------------------------- */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+.rise { animation: rise .5s cubic-bezier(.2,.7,.3,1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* the flaps still land on the right characters; they simply do not step */
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

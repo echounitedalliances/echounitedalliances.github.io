@@ -1,0 +1,32 @@
+# ---------------------------------------------------------------------
+# Regenerated artefacts. Everything here is rebuilt by a script in the repo,
+# so committing it would only add weight and merge conflicts.
+# ---------------------------------------------------------------------
+
+# 574MB of scraped per-airline JSON. Rebuild with:
+#   python divisions/scrape_members.py --division <name>
+# The rosters (divisions/*/members.json) ARE committed - they are small and
+# they are what the scraper needs to know who to fetch.
+divisions/*/members/*/
+
+# 132MB of CSV, rebuilt in ~40s by database/scripts/build_database.py
+database/csv/
+
+# raw open datasets; the merged extract airports_reference.json IS committed
+database/reference/.cache/
+
+# ---------------------------------------------------------------------
+# Secrets and machine-local state
+# ---------------------------------------------------------------------
+database/connection.txt
+divisions/.token
+divisions/*/members/.token
+web/.env.local
+
+# ---------------------------------------------------------------------
+# Build output
+# ---------------------------------------------------------------------
+web/node_modules/
+web/dist/
+web/tsconfig.tsbuildinfo
+.claude/launch.json

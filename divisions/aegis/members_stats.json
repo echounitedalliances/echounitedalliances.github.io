@@ -1,0 +1,704 @@
+[
+    {
+        "uid": "01e8ed2c-981b-4438-b215-4f64cd016009",
+        "numAircraft": 0,
+        "numRoutes": 0,
+        "numFlights": 0,
+        "flagshipAircraft": "",
+        "majorHubAirport": "",
+        "lastOnlineTime": "2026-08-23T02:37:16.455+00:00"
+    },
+    {
+        "uid": "08a5103a-2494-4d86-8eb4-d8a5b84837fc",
+        "numAircraft": 106,
+        "numRoutes": 239,
+        "numFlights": 616,
+        "flagshipAircraft": "Airbus A321neo",
+        "majorHubAirport": "MNL",
+        "lastOnlineTime": "2026-09-04T15:55:46.54+00:00"
+    },
+    {
+        "uid": "08ea8513-4e8a-4be0-af23-eccf27f58849",
+        "numAircraft": 358,
+        "numRoutes": 93,
+        "numFlights": 172,
+        "flagshipAircraft": "Boeing 737 MAX 10",
+        "majorHubAirport": "CAI",
+        "lastOnlineTime": "2026-08-23T02:59:00.655+00:00"
+    },
+    {
+        "uid": "0feead84-5782-4448-a358-195a600b85b7",
+        "numAircraft": 865,
+        "numRoutes": 597,
+        "numFlights": 1108,
+        "flagshipAircraft": "Boeing 777-9",
+        "majorHubAirport": "LHR",
+        "lastOnlineTime": "2026-09-04T07:20:05.938+00:00"
+    },
+    {
+        "uid": "10297595-a4e9-4132-81c9-b282ff67dcc7",
+        "numAircraft": 92,
+        "numRoutes": 120,
+        "numFlights": 332,
+        "flagshipAircraft": "Airbus A330-200",
+        "majorHubAirport": "SFO",
+        "lastOnlineTime": "2026-09-03T06:21:46.107+00:00"
+    },
+    {
+        "uid": "12d5dd92-d4cf-4a5b-b292-8e8a2b50808c",
+        "numAircraft": 245,
+        "numRoutes": 450,
+        "numFlights": 729,
+        "flagshipAircraft": "Airbus A320neo",
+        "majorHubAirport": "HND",
+        "lastOnlineTime": "2026-09-03T06:44:34.355+00:00"
+    },
+    {
+        "uid": "15596be6-0fea-4e50-a79f-b00057d320b0",
+        "numAircraft": 187,
+        "numRoutes": 156,
+        "numFlights": 451,
+        "flagshipAircraft": "Airbus A330-800",
+        "majorHubAirport": "AMM",
+        "lastOnlineTime": "2026-09-03T04:46:04.086+00:00"
+    },
+    {
+        "uid": "1dca0e35-589e-4db9-bf3a-3757d8a78883",
+        "numAircraft": 34,
+        "numRoutes": 78,
+        "numFlights": 87,
+        "flagshipAircraft": "Airbus A220-300",
+        "majorHubAirport": "GLA",
+        "lastOnlineTime": "2026-09-03T23:34:40.662+00:00"
+    },
+    {
+        "uid": "1f10dc12-3faa-4f1b-acc5-f2d2c324a558",
+        "numAircraft": 268,
+        "numRoutes": 125,
+        "numFlights": 512,
+        "flagshipAircraft": "Airbus A321neo",
+        "majorHubAirport": "HND",
+        "lastOnlineTime": "2026-09-03T15:55:45.119+00:00"
+    },
+    {
+        "uid": "231bd568-269e-440e-9809-7a88d423458a",
+        "numAircraft": 190,
+        "numRoutes": 307,
+        "numFlights": 585,
+        "flagshipAircraft": "Airbus A321neo",
+        "majorHubAirport": "HKG",
+        "lastOnlineTime": "2026-08-10T06:17:56.75+00:00"
+    },
+    {
+        "uid": "25882611-c878-4d02-bf77-424022431d60",
+        "numAircraft": 363,
+        "numRoutes": 453,
+        "numFlights": 1136,
+        "flagshipAircraft": "Boeing 787-8 Dreamliner",
+        "majorHubAirport": "AMS",
+        "lastOnlineTime": "2026-09-01T20:09:56.29+00:00"
+    },
+    {
+        "uid": "27e5b47f-9216-42a0-b3f0-4b679516b80f",
+        "numAircraft": 154,
+        "numRoutes": 202,
+        "numFlights": 577,
+        "flagshipAircraft": "Airbus A350-1000",
+        "majorHubAirport": "ZRH",
+        "lastOnlineTime": "2026-08-13T18:27:24.253+00:00"
+    },
+    {
+        "uid": "313a55d7-1a2f-4774-a0ab-b7a6b9423ac8",
+        "numAircraft": 123,
+        "numRoutes": 90,
+        "numFlights": 297,
+        "flagshipAircraft": "Boeing 787-9 Dreamliner",
+        "majorHubAirport": "AUH",
+        "lastOnlineTime": "2026-09-04T14:39:55.656+00:00"
+    },
+    {
+        "uid": "31c66cb0-0a1a-43d8-9f56-4a66e650e2b3",
+        "numAircraft": 215,
+        "numRoutes": 180,
+        "numFlights": 526,
+        "flagshipAircraft": "Boeing 787-9 Dreamliner",
+        "majorHubAirport": "MEX",
+        "lastOnlineTime": "2026-08-23T02:26:51.904+00:00"
+    },
+    {
+        "uid": "366f65c8-e5ae-458e-8952-9c688c95e9b1",
+        "numAircraft": 68,
+        "numRoutes": 110,
+        "numFlights": 242,
+        "flagshipAircraft": "Airbus A320-200",
+        "majorHubAirport": "SCL",
+        "lastOnlineTime": "2026-08-09T02:06:10.83+00:00"
+    },
+    {
+        "uid": "37b32b72-fc43-403c-a4ba-de28559c7819",
+        "numAircraft": 121,
+        "numRoutes": 282,
+        "numFlights": 350,
+        "flagshipAircraft": "Airbus A320neo",
+        "majorHubAirport": "FRA",
+        "lastOnlineTime": "2026-08-12T10:20:55.946+00:00"
+    },
+    {
+        "uid": "382fce01-fc58-4bfc-b43f-924ee003af1a",
+        "numAircraft": 510,
+        "numRoutes": 900,
+        "numFlights": 1044,
+        "flagshipAircraft": "Boeing 787-10 Dreamliner",
+        "majorHubAirport": "CGK",
+        "lastOnlineTime": "2026-09-04T13:46:16.322+00:00"
+    },
+    {
+        "uid": "3c91c819-328d-41af-9dd8-920c1b85c894",
+        "numAircraft": 345,
+        "numRoutes": 403,
+        "numFlights": 1558,
+        "flagshipAircraft": "Airbus A321neo",
+        "majorHubAirport": "LHR",
+        "lastOnlineTime": "2026-09-04T06:12:27.933+00:00"
+    },
+    {
+        "uid": "4599e528-806a-421a-964a-d4943417da8a",
+        "numAircraft": 302,
+        "numRoutes": 423,
+        "numFlights": 495,
+        "flagshipAircraft": "Airbus A350-900ULR",
+        "majorHubAirport": "HNL",
+        "lastOnlineTime": "2026-08-29T22:23:12.287+00:00"
+    },
+    {
+        "uid": "4608e8d7-707f-4b9a-b63e-cc6ec4c8e2f7",
+        "numAircraft": 1258,
+        "numRoutes": 2394,
+        "numFlights": 3009,
+        "flagshipAircraft": "Boeing 777-9",
+        "majorHubAirport": "DXB",
+        "lastOnlineTime": "2026-09-01T16:44:00.471+00:00"
+    },
+    {
+        "uid": "479d0ce6-1a6f-47de-82b2-fde8587f8f99",
+        "numAircraft": 486,
+        "numRoutes": 426,
+        "numFlights": 1196,
+        "flagshipAircraft": "Boeing 777-9",
+        "majorHubAirport": "CGK",
+        "lastOnlineTime": "2026-09-04T14:11:04.242+00:00"
+    },
+    {
+        "uid": "4a7659da-7c55-4395-a0a5-3ba3071314b6",
+        "numAircraft": 55,
+        "numRoutes": 80,
+        "numFlights": 82,
+        "flagshipAircraft": "Boeing 777-9",
+        "majorHubAirport": "JFK",
+        "lastOnlineTime": "2026-08-31T08:02:55.229+00:00"
+    },
+    {
+        "uid": "4c52bd6d-b875-4761-81bf-6b5ac9cb725e",
+        "numAircraft": 541,
+        "numRoutes": 758,
+        "numFlights": 1292,
+        "flagshipAircraft": "Boeing 737 MAX 10",
+        "majorHubAirport": "BKK",
+        "lastOnlineTime": "2026-08-21T20:36:36.08+00:00"
+    },
+    {
+        "uid": "54896133-cebe-49c4-9234-2cd07fde5842",
+        "numAircraft": 316,
+        "numRoutes": 278,
+        "numFlights": 928,
+        "flagshipAircraft": "Boeing 737 MAX 8",
+        "majorHubAirport": "LAX",
+        "lastOnlineTime": "2026-09-03T02:49:47.872+00:00"
+    },
+    {
+        "uid": "5823719b-2afb-4090-ab3d-a283ada2ae91",
+        "numAircraft": 42,
+        "numRoutes": 15,
+        "numFlights": 142,
+        "flagshipAircraft": "Airbus A380-800",
+        "majorHubAirport": "SIN",
+        "lastOnlineTime": "2026-08-25T01:22:47.906+00:00"
+    },
+    {
+        "uid": "59ad6b25-fae7-4e93-a4fa-c226a4c7e7be",
+        "numAircraft": 75,
+        "numRoutes": 85,
+        "numFlights": 335,
+        "flagshipAircraft": "Boeing 737-900ER",
+        "majorHubAirport": "HND",
+        "lastOnlineTime": "2026-09-04T09:06:33.658+00:00"
+    },
+    {
+        "uid": "5b211670-0838-423f-a4c6-739d2f449f49",
+        "numAircraft": 317,
+        "numRoutes": 394,
+        "numFlights": 508,
+        "flagshipAircraft": "Boeing 777-9",
+        "majorHubAirport": "LHR",
+        "lastOnlineTime": "2026-09-04T11:31:48.56+00:00"
+    },
+    {
+        "uid": "5b5a0319-bc0b-4b20-b161-47a429f89bf2",
+        "numAircraft": 187,
+        "numRoutes": 280,
+        "numFlights": 472,
+        "flagshipAircraft": "Airbus A350-900",
+        "majorHubAirport": "LHR",
+        "lastOnlineTime": "2026-08-30T13:25:53.894+00:00"
+    },
+    {
+        "uid": "64db11db-6e2a-4411-87fb-73c03e941ffa",
+        "numAircraft": 41,
+        "numRoutes": 39,
+        "numFlights": 90,
+        "flagshipAircraft": "Airbus A350-900",
+        "majorHubAirport": "BKK",
+        "lastOnlineTime": "2026-08-13T07:13:30.227+00:00"
+    },
+    {
+        "uid": "68ffa11c-c01a-46fc-ba4b-de402526c53a",
+        "numAircraft": 215,
+        "numRoutes": 99,
+        "numFlights": 182,
+        "flagshipAircraft": "Embraer E190",
+        "majorHubAirport": "HND",
+        "lastOnlineTime": "2026-09-03T23:03:10.271+00:00"
+    },
+    {
+        "uid": "69c045ba-c993-420d-ae89-e7f430499394",
+        "numAircraft": 168,
+        "numRoutes": 168,
+        "numFlights": 623,
+        "flagshipAircraft": "Boeing 777-300ER",
+        "majorHubAirport": "DOH",
+        "lastOnlineTime": "2026-08-22T04:18:41.313+00:00"
+    },
+    {
+        "uid": "6be7c9f0-ba7d-48a0-b50f-6552579e7965",
+        "numAircraft": 1146,
+        "numRoutes": 1152,
+        "numFlights": 3223,
+        "flagshipAircraft": "Boeing 777-9",
+        "majorHubAirport": "MSY",
+        "lastOnlineTime": "2026-09-04T00:41:12.714+00:00"
+    },
+    {
+        "uid": "711be232-e626-41ae-ae7c-58065d65312c",
+        "numAircraft": 615,
+        "numRoutes": 306,
+        "numFlights": 1028,
+        "flagshipAircraft": "Boeing 777-9",
+        "majorHubAirport": "CGK",
+        "lastOnlineTime": "2026-09-04T13:30:34.004+00:00"
+    },
+    {
+        "uid": "7161dd99-f487-4203-85f2-34ce91d946fa",
+        "numAircraft": 572,
+        "numRoutes": 815,
+        "numFlights": 1839,
+        "flagshipAircraft": "Airbus A321neo",
+        "majorHubAirport": "TPE",
+        "lastOnlineTime": "2026-09-02T15:24:59.206+00:00"
+    },
+    {
+        "uid": "754a2f59-1faa-41c4-b2b1-5c4d76e6da1e",
+        "numAircraft": 56,
+        "numRoutes": 58,
+        "numFlights": 105,
+        "flagshipAircraft": "Boeing 737-800",
+        "majorHubAirport": "HND",
+        "lastOnlineTime": "2026-09-03T04:38:53.084+00:00"
+    },
+    {
+        "uid": "78bd4dd5-a965-44ed-91c8-60e3b1ae2e58",
+        "numAircraft": 208,
+        "numRoutes": 123,
+        "numFlights": 413,
+        "flagshipAircraft": "Airbus A350-900",
+        "majorHubAirport": "MNL",
+        "lastOnlineTime": "2026-09-04T14:33:53.513+00:00"
+    },
+    {
+        "uid": "7c117101-c74c-4a53-aeec-875a00eb4727",
+        "numAircraft": 79,
+        "numRoutes": 207,
+        "numFlights": 266,
+        "flagshipAircraft": "Comac C919-100ER",
+        "majorHubAirport": "LHR",
+        "lastOnlineTime": "2026-09-03T20:32:12.431+00:00"
+    },
+    {
+        "uid": "7ec8ce07-a832-4013-932a-b82cbd35aede",
+        "numAircraft": 138,
+        "numRoutes": 234,
+        "numFlights": 479,
+        "flagshipAircraft": "Airbus A350-900",
+        "majorHubAirport": "MEX",
+        "lastOnlineTime": "2026-08-13T18:26:57.253+00:00"
+    },
+    {
+        "uid": "7eee9375-9f49-42b3-848a-c8037b7e0aa7",
+        "numAircraft": 57,
+        "numRoutes": 68,
+        "numFlights": 238,
+        "flagshipAircraft": "Embraer E175",
+        "majorHubAirport": "XNA",
+        "lastOnlineTime": "2026-08-23T00:09:28.676+00:00"
+    },
+    {
+        "uid": "7f887975-3d0a-4857-8e05-ff6acca3c2eb",
+        "numAircraft": 136,
+        "numRoutes": 176,
+        "numFlights": 403,
+        "flagshipAircraft": "Boeing 767-300ER",
+        "majorHubAirport": "SAL",
+        "lastOnlineTime": "2026-09-02T23:33:49.759+00:00"
+    },
+    {
+        "uid": "81896537-4de1-4b1b-a058-2635c34a7d8a",
+        "numAircraft": 142,
+        "numRoutes": 64,
+        "numFlights": 402,
+        "flagshipAircraft": "Boeing 777-200ER",
+        "majorHubAirport": "ORD",
+        "lastOnlineTime": "2026-09-04T06:28:36.093+00:00"
+    },
+    {
+        "uid": "877a19fe-ae78-4032-b1a6-7489784b7da4",
+        "numAircraft": 471,
+        "numRoutes": 443,
+        "numFlights": 477,
+        "flagshipAircraft": "Airbus A340-600",
+        "majorHubAirport": "MUX",
+        "lastOnlineTime": "2026-09-01T12:12:13.159+00:00"
+    },
+    {
+        "uid": "891cba79-1611-4238-a80c-670ab9e3f91b",
+        "numAircraft": 114,
+        "numRoutes": 88,
+        "numFlights": 183,
+        "flagshipAircraft": "Airbus A320neo",
+        "majorHubAirport": "KUL",
+        "lastOnlineTime": "2026-09-04T03:35:18.074+00:00"
+    },
+    {
+        "uid": "8b6ad4e7-2753-438f-9fb3-e0d6ff615ef1",
+        "numAircraft": 291,
+        "numRoutes": 213,
+        "numFlights": 457,
+        "flagshipAircraft": "Airbus A350-1000",
+        "majorHubAirport": "ATL",
+        "lastOnlineTime": "2026-09-04T14:11:08.115+00:00"
+    },
+    {
+        "uid": "8c798914-6abb-41ce-ac84-b066aa52b358",
+        "numAircraft": 121,
+        "numRoutes": 101,
+        "numFlights": 158,
+        "flagshipAircraft": "Airbus A350-900",
+        "majorHubAirport": "SIN",
+        "lastOnlineTime": "2026-08-23T14:43:46.62+00:00"
+    },
+    {
+        "uid": "8f812e79-b646-4de5-ac4d-3202f64709cf",
+        "numAircraft": 160,
+        "numRoutes": 419,
+        "numFlights": 509,
+        "flagshipAircraft": "Airbus A350-1000ULR",
+        "majorHubAirport": "HKG",
+        "lastOnlineTime": "2026-08-14T04:31:47.262+00:00"
+    },
+    {
+        "uid": "91814d64-9de2-4b9d-9053-6388f62b227d",
+        "numAircraft": 416,
+        "numRoutes": 125,
+        "numFlights": 268,
+        "flagshipAircraft": "Airbus A350-900",
+        "majorHubAirport": "AMS",
+        "lastOnlineTime": "2026-09-04T16:21:35.426+00:00"
+    },
+    {
+        "uid": "9e9abb70-b2c5-43f8-a63f-e96883096d1c",
+        "numAircraft": 725,
+        "numRoutes": 769,
+        "numFlights": 2030,
+        "flagshipAircraft": "Airbus A321neo",
+        "majorHubAirport": "CAI",
+        "lastOnlineTime": "2026-09-03T20:11:18.896+00:00"
+    },
+    {
+        "uid": "9f92d192-fb07-411d-bd4a-e1e6df00d319",
+        "numAircraft": 25,
+        "numRoutes": 24,
+        "numFlights": 101,
+        "flagshipAircraft": "Airbus A319-100",
+        "majorHubAirport": "LGW",
+        "lastOnlineTime": "2026-08-25T01:22:56.906+00:00"
+    },
+    {
+        "uid": "a09bef3f-34ca-4a76-ae80-9eab5d6260e3",
+        "numAircraft": 262,
+        "numRoutes": 209,
+        "numFlights": 303,
+        "flagshipAircraft": "Airbus A321XLR",
+        "majorHubAirport": "DUB",
+        "lastOnlineTime": "2026-09-03T04:40:04.084+00:00"
+    },
+    {
+        "uid": "a39fcafd-1b72-4a4c-8a51-16a835268f5d",
+        "numAircraft": 437,
+        "numRoutes": 332,
+        "numFlights": 542,
+        "flagshipAircraft": "Boeing 737 MAX 8200",
+        "majorHubAirport": "SHE",
+        "lastOnlineTime": "2026-09-04T06:20:42.547+00:00"
+    },
+    {
+        "uid": "a3de5062-8d67-47b2-9f26-9228fa9bfca9",
+        "numAircraft": 305,
+        "numRoutes": 77,
+        "numFlights": 304,
+        "flagshipAircraft": "Airbus A350-1000",
+        "majorHubAirport": "AKL",
+        "lastOnlineTime": "2026-09-04T09:36:31.979+00:00"
+    },
+    {
+        "uid": "a513caf5-3767-4358-b24c-6cf4c0f0a39b",
+        "numAircraft": 1293,
+        "numRoutes": 977,
+        "numFlights": 1859,
+        "flagshipAircraft": "Airbus A350-1000",
+        "majorHubAirport": "BOS",
+        "lastOnlineTime": "2026-09-02T19:47:54.239+00:00"
+    },
+    {
+        "uid": "ab461091-0afa-4c90-9e47-f3cabf7a63a7",
+        "numAircraft": 50,
+        "numRoutes": 74,
+        "numFlights": 106,
+        "flagshipAircraft": "Boeing 737 MAX 10",
+        "majorHubAirport": "YVR",
+        "lastOnlineTime": "2026-08-28T19:35:44.03+00:00"
+    },
+    {
+        "uid": "ab7cb92b-d19b-4baa-bd3a-90fd57056e8f",
+        "numAircraft": 141,
+        "numRoutes": 388,
+        "numFlights": 476,
+        "flagshipAircraft": "Airbus A321neo",
+        "majorHubAirport": "ORD",
+        "lastOnlineTime": "2026-09-03T17:38:49.914+00:00"
+    },
+    {
+        "uid": "b2d06467-a588-490e-9493-1c62444b2383",
+        "numAircraft": 70,
+        "numRoutes": 50,
+        "numFlights": 305,
+        "flagshipAircraft": "Airbus A220-300",
+        "majorHubAirport": "CDG",
+        "lastOnlineTime": "2026-09-04T11:35:01.598+00:00"
+    },
+    {
+        "uid": "b55ea5b6-ef89-4c23-ad62-8acc4038db17",
+        "numAircraft": 743,
+        "numRoutes": 813,
+        "numFlights": 1944,
+        "flagshipAircraft": "Airbus A350-1000",
+        "majorHubAirport": "HND",
+        "lastOnlineTime": "2026-09-04T14:35:21.617+00:00"
+    },
+    {
+        "uid": "bb00b3e3-833f-4fd0-bfd5-5c39120bca93",
+        "numAircraft": 110,
+        "numRoutes": 77,
+        "numFlights": 85,
+        "flagshipAircraft": "Airbus A380-800",
+        "majorHubAirport": "ICN",
+        "lastOnlineTime": "2026-08-31T00:58:30.971+00:00"
+    },
+    {
+        "uid": "c1325eb4-2b31-43e2-909a-fa962e693668",
+        "numAircraft": 45,
+        "numRoutes": 34,
+        "numFlights": 152,
+        "flagshipAircraft": "Airbus A321XLR",
+        "majorHubAirport": "EWR",
+        "lastOnlineTime": "2026-08-25T01:22:38.906+00:00"
+    },
+    {
+        "uid": "c2bf375d-1d86-49cf-b3ee-7b522f77ad74",
+        "numAircraft": 92,
+        "numRoutes": 202,
+        "numFlights": 303,
+        "flagshipAircraft": "Airbus A321neo",
+        "majorHubAirport": "RDO",
+        "lastOnlineTime": "2026-08-18T13:11:12.694+00:00"
+    },
+    {
+        "uid": "c396f27f-3d6e-42dc-bb8e-fa839019b0aa",
+        "numAircraft": 239,
+        "numRoutes": 311,
+        "numFlights": 792,
+        "flagshipAircraft": "Airbus A320neo",
+        "majorHubAirport": "SYD",
+        "lastOnlineTime": "2026-08-27T22:33:09.461+00:00"
+    },
+    {
+        "uid": "c6b2dcc1-0c15-4882-81a4-dd8895210e3f",
+        "numAircraft": 169,
+        "numRoutes": 257,
+        "numFlights": 573,
+        "flagshipAircraft": "Comac ARJ-21-700",
+        "majorHubAirport": "CCS",
+        "lastOnlineTime": "2026-08-13T18:27:47.253+00:00"
+    },
+    {
+        "uid": "c83aad90-f45e-45d1-be88-e5b2de4d08ce",
+        "numAircraft": 80,
+        "numRoutes": 56,
+        "numFlights": 185,
+        "flagshipAircraft": "Airbus A350-1000",
+        "majorHubAirport": "LHR",
+        "lastOnlineTime": "2026-09-04T16:19:10.399+00:00"
+    },
+    {
+        "uid": "cb7d7498-f9b0-4b75-aa7a-c11b1f50a1d7",
+        "numAircraft": 572,
+        "numRoutes": 468,
+        "numFlights": 680,
+        "flagshipAircraft": "Embraer E195-E2",
+        "majorHubAirport": "YVR",
+        "lastOnlineTime": "2026-08-22T18:37:12.967+00:00"
+    },
+    {
+        "uid": "cdc838c4-7a2b-4a67-8334-062939959b75",
+        "numAircraft": 202,
+        "numRoutes": 705,
+        "numFlights": 872,
+        "flagshipAircraft": "Airbus A320-200",
+        "majorHubAirport": "LPA",
+        "lastOnlineTime": "2026-09-03T17:51:19.99+00:00"
+    },
+    {
+        "uid": "ce48624f-5230-4882-97f8-00101eaba295",
+        "numAircraft": 166,
+        "numRoutes": 360,
+        "numFlights": 537,
+        "flagshipAircraft": "Airbus A350-1000ULR",
+        "majorHubAirport": "ZRH",
+        "lastOnlineTime": "2026-09-02T04:04:08.507+00:00"
+    },
+    {
+        "uid": "d043373d-5b4d-4fff-b661-03b4ff8db333",
+        "numAircraft": 177,
+        "numRoutes": 238,
+        "numFlights": 280,
+        "flagshipAircraft": "Airbus A321neo",
+        "majorHubAirport": "EZE",
+        "lastOnlineTime": "2026-09-01T21:52:23.312+00:00"
+    },
+    {
+        "uid": "d673f17d-0b62-46f7-9828-cb6112245cda",
+        "numAircraft": 12,
+        "numRoutes": 8,
+        "numFlights": 52,
+        "flagshipAircraft": "Airbus A320neo",
+        "majorHubAirport": "XMN",
+        "lastOnlineTime": "2026-09-02T11:49:39.935+00:00"
+    },
+    {
+        "uid": "d89be622-8abd-428d-9501-c53890d4e198",
+        "numAircraft": 175,
+        "numRoutes": 123,
+        "numFlights": 355,
+        "flagshipAircraft": "Airbus A350-900",
+        "majorHubAirport": "SJO",
+        "lastOnlineTime": "2026-09-02T11:05:13.748+00:00"
+    },
+    {
+        "uid": "df34f763-370e-4d1e-8389-ad2e4995d94f",
+        "numAircraft": 102,
+        "numRoutes": 106,
+        "numFlights": 207,
+        "flagshipAircraft": "Airbus A321XLR",
+        "majorHubAirport": "ICN",
+        "lastOnlineTime": "2026-09-03T09:39:21.566+00:00"
+    },
+    {
+        "uid": "e15b4774-8726-4225-8672-76e4754d8082",
+        "numAircraft": 127,
+        "numRoutes": 243,
+        "numFlights": 262,
+        "flagshipAircraft": "Boeing 737-800",
+        "majorHubAirport": "DAL",
+        "lastOnlineTime": "2026-09-03T05:39:12.154+00:00"
+    },
+    {
+        "uid": "e1e9318c-e577-46a6-953e-d0f0b8733f5d",
+        "numAircraft": 624,
+        "numRoutes": 1207,
+        "numFlights": 1484,
+        "flagshipAircraft": "Airbus A350-1000ULR",
+        "majorHubAirport": "BOM",
+        "lastOnlineTime": "2026-09-02T17:58:32.931+00:00"
+    },
+    {
+        "uid": "e282adb6-41ec-434c-b317-78c8584b7c91",
+        "numAircraft": 80,
+        "numRoutes": 117,
+        "numFlights": 245,
+        "flagshipAircraft": "Airbus A350-900",
+        "majorHubAirport": "BSL",
+        "lastOnlineTime": "2026-08-13T18:25:07.745+00:00"
+    },
+    {
+        "uid": "e90d6ceb-d800-4da7-8fa2-045136b9b733",
+        "numAircraft": 285,
+        "numRoutes": 389,
+        "numFlights": 450,
+        "flagshipAircraft": "Boeing 777-9",
+        "majorHubAirport": "MAD",
+        "lastOnlineTime": "2026-08-29T13:13:44.755+00:00"
+    },
+    {
+        "uid": "ecb851ea-5b84-4844-b2a7-45dfaec12e81",
+        "numAircraft": 119,
+        "numRoutes": 98,
+        "numFlights": 283,
+        "flagshipAircraft": "Airbus A321neo",
+        "majorHubAirport": "MNL",
+        "lastOnlineTime": "2026-09-04T07:24:25.995+00:00"
+    },
+    {
+        "uid": "f3942172-7b0e-4038-884b-a3860d698525",
+        "numAircraft": 171,
+        "numRoutes": 205,
+        "numFlights": 307,
+        "flagshipAircraft": "Airbus A321neo",
+        "majorHubAirport": "CGK",
+        "lastOnlineTime": "2026-09-04T13:09:08.255+00:00"
+    },
+    {
+        "uid": "f70fc650-2adc-420e-97c1-f050e3bed54f",
+        "numAircraft": 134,
+        "numRoutes": 155,
+        "numFlights": 542,
+        "flagshipAircraft": "Airbus A321neo",
+        "majorHubAirport": "FRA",
+        "lastOnlineTime": "2026-09-04T04:48:01.491+00:00"
+    },
+    {
+        "uid": "fa8b08fa-f41a-44f2-9ae7-c5d92659aa1f",
+        "numAircraft": 35,
+        "numRoutes": 16,
+        "numFlights": 51,
+        "flagshipAircraft": "Boeing 787-9 Dreamliner",
+        "majorHubAirport": "LGW",
+        "lastOnlineTime": "2026-08-25T09:44:59.954+00:00"
+    }
+]

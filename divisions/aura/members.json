@@ -1,0 +1,1292 @@
+[
+    {
+        "uid": "020f4184-2825-4069-864b-fccb0dc2184c",
+        "airlineName": "Concordia aura",
+        "airlineCode": "CA",
+        "airlineCountry": "IN",
+        "claimProfitTime": "2026-08-13T16:21:21.606+00:00",
+        "hubAirports": [
+            "DEL"
+        ],
+        "airlineId": "bring-thrown-new",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "0fdce97a-183d-497d-a44a-35ca227b0afd",
+        "airlineName": "Jiroland Airlines",
+        "airlineCode": "JR",
+        "airlineCountry": "PH",
+        "claimProfitTime": "2026-09-04T16:43:00.57+00:00",
+        "hubAirports": [
+            "MNL",
+            "CEB",
+            "HNL"
+        ],
+        "airlineId": "worry-sheet-porch",
+        "extraSpecialLiverySlot": 1,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Airbus A350-1000"
+    },
+    {
+        "uid": "10138a85-a27b-4801-896d-f3ba3ec38c4a",
+        "airlineName": "AeroLahore Caribe",
+        "airlineCode": "LC",
+        "airlineCountry": "LC",
+        "claimProfitTime": "2026-08-30T18:20:05.679+00:00",
+        "hubAirports": [
+            "UVF",
+            "SLU",
+            "GND",
+            "FDF",
+            "DOM",
+            "PTP",
+            "SVD",
+            "POS",
+            "SXM"
+        ],
+        "airlineId": "lift-entire-wrong",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "120e6d6b-bdc6-4b14-b246-a322774a6fa0",
+        "airlineName": "Discover Türkiye",
+        "airlineCode": "TR",
+        "airlineCountry": "TR",
+        "claimProfitTime": "2026-08-27T11:25:03.883+00:00",
+        "hubAirports": [
+            "IST"
+        ],
+        "airlineId": "reach-bottle-think",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "13a83e7b-19b1-4edc-84a7-94247322e183",
+        "airlineName": "Italianu",
+        "airlineCode": "IU",
+        "airlineCountry": "IT",
+        "claimProfitTime": "2026-09-02T22:06:14.02+00:00",
+        "hubAirports": [
+            "FCO",
+            "MXP"
+        ],
+        "airlineId": "who-smaller-fill",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "1517cf36-536d-49b5-a7e5-c35e805ee9ee",
+        "airlineName": "Kiuguyat Airlines",
+        "airlineCode": "KA",
+        "airlineCountry": "US",
+        "claimProfitTime": "2026-09-04T01:25:29.913+00:00",
+        "hubAirports": [
+            "ANC",
+            "JNU",
+            "FAI",
+            "SEA"
+        ],
+        "airlineId": "accurate-green-only",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Boeing 787-9 Dreamliner"
+    },
+    {
+        "uid": "19c205ac-a0c5-468b-b2a2-f1fc6a11f258",
+        "airlineName": "American express ",
+        "airlineCode": "AX",
+        "airlineCountry": "US",
+        "claimProfitTime": "2026-09-04T14:37:36.323+00:00",
+        "hubAirports": [
+            "JFK"
+        ],
+        "airlineId": "dirty-usually-seeing",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Airbus A350-1000"
+    },
+    {
+        "uid": "24d61ea9-0aba-43eb-9e9e-a2a47260b7e2",
+        "airlineName": "BlazeAsia",
+        "airlineCode": "JA",
+        "airlineCountry": "MY",
+        "claimProfitTime": "2026-09-04T16:00:19.057+00:00",
+        "hubAirports": [
+            "SZB",
+            "KUL",
+            "PVG"
+        ],
+        "airlineId": "plain-worried-lake",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.0",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "269239f6-556c-4f6a-ad39-2b7e0c3a0500",
+        "airlineName": "Kenya airways ",
+        "airlineCode": "KQ",
+        "airlineCountry": "KE",
+        "claimProfitTime": "2026-08-31T01:53:38.579+00:00",
+        "hubAirports": [
+            "NBO",
+            "HKG",
+            "HND",
+            "MBA",
+            "KUL",
+            "DAR",
+            "LOS",
+            "JNB",
+            "CWL"
+        ],
+        "airlineId": "wooden-driving-wish",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Airbus A380-800"
+    },
+    {
+        "uid": "2fa9849d-466c-4a79-a807-c0cc89aa0d04",
+        "airlineName": "Asiajet",
+        "airlineCode": "AJ",
+        "airlineCountry": "CN",
+        "claimProfitTime": "2026-09-02T22:30:47.667+00:00",
+        "hubAirports": [
+            "PEK",
+            "PVG",
+            "CAN",
+            "KUL",
+            "FRA",
+            "LHR",
+            "CRA",
+            "OSL",
+            "HAN"
+        ],
+        "airlineId": "gun-youth-ago",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Boeing 787-9 Dreamliner"
+    },
+    {
+        "uid": "3340d32f-b34e-4278-88f0-cc9f49f7f0b5",
+        "airlineName": "blazeJet",
+        "airlineCode": "BJ",
+        "airlineCountry": "US",
+        "claimProfitTime": "2026-09-04T15:43:12.631+00:00",
+        "hubAirports": [
+            "MCO",
+            "JFK",
+            "MIA",
+            "LAX",
+            "LAS",
+            "FLL",
+            "ORD",
+            "DFW",
+            "PVG",
+            "KUL",
+            "BDL",
+            "YYZ",
+            "HNL",
+            "IND",
+            "MSP",
+            "LGA",
+            "BOS",
+            "EWR",
+            "DEN",
+            "SJU"
+        ],
+        "airlineId": "fly-simplest-compound",
+        "extraSpecialLiverySlot": 1,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "388318f2-e319-4f0d-af18-e24ac58d9ee3",
+        "airlineName": "IndiGo",
+        "airlineCode": "6E",
+        "airlineCountry": "IN",
+        "claimProfitTime": "2026-09-03T19:33:19.053+00:00",
+        "hubAirports": [
+            "DEL",
+            "BOM",
+            "MAA"
+        ],
+        "airlineId": "plenty-stairs-buy",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Airbus A320neo"
+    },
+    {
+        "uid": "3d4d007c-c5ad-4592-a8ca-ba26666f6716",
+        "airlineName": "Sahara Airlines",
+        "airlineCode": "AS",
+        "airlineCountry": "IN",
+        "claimProfitTime": "2026-09-04T16:21:03.573+00:00",
+        "hubAirports": [
+            "IXB",
+            "RDP",
+            "CCU",
+            "GAU",
+            "DWC",
+            "BOM",
+            "DEL",
+            "EWR"
+        ],
+        "airlineId": "doctor-fell-long",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "45e77dd9-a1bc-4312-b8ea-4a9ba150dc44",
+        "airlineName": "AeroCanadian",
+        "airlineCode": "AC",
+        "airlineCountry": "CA",
+        "claimProfitTime": "2026-09-04T14:37:58.324+00:00",
+        "hubAirports": [
+            "YVR",
+            "YYC",
+            "YUL",
+            "YEG",
+            "YYZ"
+        ],
+        "airlineId": "strike-herd-secret",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Boeing 777-300ER"
+    },
+    {
+        "uid": "4c1a54bd-9282-4641-b928-5f6f5555543a",
+        "airlineName": "Citilink Int’l",
+        "airlineCode": "QG",
+        "airlineCountry": "ID",
+        "claimProfitTime": "2026-09-03T14:59:36.163+00:00",
+        "hubAirports": [
+            "CGK",
+            "HLP",
+            "PEK",
+            "CDG",
+            "NRT"
+        ],
+        "airlineId": "fought-brief-cotton",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Airbus A350-1000"
+    },
+    {
+        "uid": "51a5f3b2-3c4c-4df0-942b-94ce1b1200cb",
+        "airlineName": "Emirates",
+        "airlineCode": "EK",
+        "airlineCountry": "AE",
+        "claimProfitTime": "2026-09-03T14:58:35.163+00:00",
+        "hubAirports": [
+            "DXB",
+            "JFK",
+            "NRT"
+        ],
+        "airlineId": "curious-stop-do",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Airbus A380-800"
+    },
+    {
+        "uid": "52dc1fc2-735b-4c2b-a63a-91fb8cea4e0c",
+        "airlineName": "Echoverse Airlines",
+        "airlineCode": "EV",
+        "airlineCountry": "NL",
+        "claimProfitTime": "2026-09-04T16:29:06.916+00:00",
+        "hubAirports": [
+            "AMS",
+            "BDL",
+            "ORD",
+            "HKG",
+            "DXB"
+        ],
+        "airlineId": "suddenly-motion-box",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "585785ca-c37f-446a-bd01-dff0571f8b2b",
+        "airlineName": "Nova Air",
+        "airlineCode": "NA",
+        "airlineCountry": "AU",
+        "claimProfitTime": "2026-09-04T11:25:50.713+00:00",
+        "hubAirports": [
+            "MEL",
+            "JFK",
+            "HND",
+            "SYD",
+            "LHR"
+        ],
+        "airlineId": "down-fort-next",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Airbus A321neo"
+    },
+    {
+        "uid": "59f2bd2d-f98b-4220-917f-2c7a7f2712d0",
+        "airlineName": "SAS",
+        "airlineCode": "SK",
+        "airlineCountry": "DK",
+        "claimProfitTime": "2026-09-03T07:19:37.805+00:00",
+        "hubAirports": [
+            "CPH"
+        ],
+        "airlineId": "course-rubbed-straw",
+        "extraSpecialLiverySlot": 1,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Airbus A350-900"
+    },
+    {
+        "uid": "5c63dea2-e0f4-44b3-bde4-8ed6a2241f59",
+        "airlineName": "ANTÜ",
+        "airlineCode": "AG",
+        "airlineCountry": "CL",
+        "claimProfitTime": "2026-09-04T01:32:52.818+00:00",
+        "hubAirports": [
+            "SCL"
+        ],
+        "airlineId": "note-paid-slightly",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "6031f612-52e7-4808-93e5-3e8fb4d07dec",
+        "airlineName": "Trans Pacific Air",
+        "airlineCode": "TP",
+        "airlineCountry": "US",
+        "claimProfitTime": "2026-09-04T01:25:38.913+00:00",
+        "hubAirports": [
+            "HNL",
+            "ANC"
+        ],
+        "airlineId": "taste-roar-car",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Boeing 787-10 Dreamliner"
+    },
+    {
+        "uid": "63b2de8e-1e9a-486d-ac63-09d9dc807ef2",
+        "airlineName": "SLCLS",
+        "airlineCode": "SS",
+        "airlineCountry": "PH",
+        "claimProfitTime": "2026-08-25T16:15:36.279+00:00",
+        "hubAirports": [
+            "ATL",
+            "HND",
+            "LHR",
+            "SIN",
+            "PVG",
+            "MNL",
+            "DXB",
+            "ICN",
+            "PEK",
+            "FRA",
+            "IST",
+            "DVO",
+            "SVO",
+            "DEL",
+            "GRU",
+            "CAI",
+            "JNB",
+            "JFK",
+            "AKL",
+            "BOG",
+            "SYD",
+            "ZRH",
+            "HNL",
+            "YVR",
+            "DFW",
+            "DOH",
+            "RUH"
+        ],
+        "airlineId": "than-hold-future",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.2",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "66bfb1bb-f909-47c9-8ecf-bf3a7a43c214",
+        "airlineName": "Crown",
+        "airlineCode": "CR",
+        "airlineCountry": "ES",
+        "claimProfitTime": "2026-09-01T12:35:10.274+00:00",
+        "hubAirports": [
+            "BCN",
+            "ZAZ",
+            "PMI",
+            "MAH",
+            "IBZ",
+            "VLC"
+        ],
+        "airlineId": "horn-tongue-pie",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Airbus A350-900"
+    },
+    {
+        "uid": "69e6dfc9-e18e-478a-91b4-f9bc58ecc237",
+        "airlineName": "  JanjiJiwa Air UK",
+        "airlineCode": "E2",
+        "airlineCountry": "GB",
+        "claimProfitTime": "2026-09-02T05:00:50.726+00:00",
+        "hubAirports": [
+            "LHR",
+            "LGW",
+            "MAN",
+            "BHX"
+        ],
+        "airlineId": "seeing-maybe-longer",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "69f667ae-5613-4509-9d12-cf932728002b",
+        "airlineName": "Turnesian Airline",
+        "airlineCode": "TA",
+        "airlineCountry": "US",
+        "claimProfitTime": "2026-09-03T23:50:20.324+00:00",
+        "hubAirports": [
+            "SFO",
+            "MIA",
+            "ATL",
+            "ORD",
+            "SIN",
+            "JFK"
+        ],
+        "airlineId": "usually-accurate-over",
+        "extraSpecialLiverySlot": 1,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "6db29242-4023-4a35-a1fd-25a133329909",
+        "airlineName": "港龍航空 BG DRAGONAIR",
+        "airlineCode": "DR",
+        "airlineCountry": "CN",
+        "claimProfitTime": "2026-09-04T06:22:35.673+00:00",
+        "hubAirports": [
+            "PEK",
+            "SHA",
+            "CAN",
+            "PVG",
+            "TPE",
+            "HKG",
+            "CKG"
+        ],
+        "airlineId": "widely-future-mud",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "71050e83-ae38-4449-a351-0d86afe0e6c3",
+        "airlineName": "Royal Himalaya",
+        "airlineCode": "H2",
+        "airlineCountry": "NP",
+        "claimProfitTime": "2026-09-02T10:12:26.036+00:00",
+        "hubAirports": [
+            "KTM",
+            "TIA",
+            "FSZ"
+        ],
+        "airlineId": "element-who-clean",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Airbus A350-1000"
+    },
+    {
+        "uid": "719b27aa-eeef-4995-8948-4939d58bd5b0",
+        "airlineName": "Anubis Air",
+        "airlineCode": "AA",
+        "airlineCountry": "EG",
+        "claimProfitTime": "2026-09-04T11:39:34.681+00:00",
+        "hubAirports": [
+            "CAI",
+            "LIS",
+            "TUN"
+        ],
+        "airlineId": "ocean-am-lion",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Embraer E195-E2"
+    },
+    {
+        "uid": "71b97e6e-c805-49d0-ae56-fff014177a68",
+        "airlineName": "Tamurt.",
+        "airlineCode": "KB",
+        "airlineCountry": "DZ",
+        "claimProfitTime": "2026-08-23T11:35:03.476+00:00",
+        "hubAirports": [
+            "BJA",
+            "CZL"
+        ],
+        "airlineId": "author-collect-nuts",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.2",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "7521c3c7-88fb-414c-8e1e-2950f6699e12",
+        "airlineName": "Tai Air",
+        "airlineCode": "TA",
+        "airlineCountry": "TW",
+        "claimProfitTime": "2026-09-04T14:39:41.579+00:00",
+        "hubAirports": [
+            "TPE"
+        ],
+        "airlineId": "finally-though-below",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Airbus A380-800"
+    },
+    {
+        "uid": "754313df-778d-4271-97b1-116e074e1fa5",
+        "airlineName": "Ridh Air Aura",
+        "airlineCode": "RF",
+        "airlineCountry": "BD",
+        "claimProfitTime": "2026-09-04T08:42:12.276+00:00",
+        "hubAirports": [
+            "SHJ",
+            "RKT",
+            "AUH",
+            "CAI",
+            "HBE"
+        ],
+        "airlineId": "inside-above-motor",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Airbus A320neo"
+    },
+    {
+        "uid": "79688959-d851-474b-82a6-5df241e18122",
+        "airlineName": "AirFluff Airlines",
+        "airlineCode": "AF",
+        "airlineCountry": "DE",
+        "claimProfitTime": "2026-09-04T15:40:57.373+00:00",
+        "hubAirports": [
+            "IST",
+            "IAD",
+            "FRA",
+            "DXB"
+        ],
+        "airlineId": "extra-horn-model",
+        "extraSpecialLiverySlot": 1,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "7b27a233-d4f9-4d92-aa86-13c105797c25",
+        "airlineName": "SWAN Air",
+        "airlineCode": "SW",
+        "airlineCountry": "GB",
+        "claimProfitTime": "2026-08-29T03:48:39.545+00:00",
+        "hubAirports": [
+            "LHR",
+            "IOM"
+        ],
+        "airlineId": "troops-onto-tobacco",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Airbus A350-1000"
+    },
+    {
+        "uid": "7db91c0e-3133-43df-8ab1-e110ef623df8",
+        "airlineName": "Sweden Airline",
+        "airlineCode": "SW",
+        "airlineCountry": "SE",
+        "claimProfitTime": "2026-09-04T14:32:29.44+00:00",
+        "hubAirports": [
+            "ARN"
+        ],
+        "airlineId": "dawn-reason-facing",
+        "extraSpecialLiverySlot": 1,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Airbus A350-1000"
+    },
+    {
+        "uid": "800228bc-7faa-4312-9539-2af4b2195864",
+        "airlineName": "Air Olympus ",
+        "airlineCode": "OL",
+        "airlineCountry": "GR",
+        "claimProfitTime": "2026-09-04T11:21:56.094+00:00",
+        "hubAirports": [
+            "ATH",
+            "HER"
+        ],
+        "airlineId": "citizen-liquid-lungs",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "8098e4cc-e4bc-4a64-a63f-21f40f2fa4ce",
+        "airlineName": "Ghaf Airways",
+        "airlineCode": "GH",
+        "airlineCountry": "AE",
+        "claimProfitTime": "2026-09-04T16:09:48.133+00:00",
+        "hubAirports": [
+            "AUH",
+            "DXB"
+        ],
+        "airlineId": "rubbed-music-lucky",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Boeing 747-8"
+    },
+    {
+        "uid": "857a4835-291c-4d10-b11d-0cb3c127b0fa",
+        "airlineName": "Western Airlines",
+        "airlineCode": "WA",
+        "airlineCountry": "US",
+        "claimProfitTime": "2026-09-04T01:25:21.913+00:00",
+        "hubAirports": [
+            "SLC",
+            "MSP",
+            "LAX",
+            "SEA"
+        ],
+        "airlineId": "quickly-bound-likely",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Boeing 737-900ER"
+    },
+    {
+        "uid": "8b4d5dc5-a800-43d1-90ab-083dc3d92697",
+        "airlineName": "Nova Airways",
+        "airlineCode": "NV",
+        "airlineCountry": "CA",
+        "claimProfitTime": "2026-09-04T05:22:07.314+00:00",
+        "hubAirports": [
+            "YVR",
+            "YYZ",
+            "YUL",
+            "YYC"
+        ],
+        "airlineId": "anyone-beyond-wheat",
+        "extraSpecialLiverySlot": 1,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Airbus A380-800"
+    },
+    {
+        "uid": "983980b4-1ba2-4941-8ed8-2c6cfe67b697",
+        "airlineName": "Red Star",
+        "airlineCode": "RS",
+        "airlineCountry": "RU",
+        "claimProfitTime": "2026-09-03T14:35:36.492+00:00",
+        "hubAirports": [
+            "VKO",
+            "SVO",
+            "DME",
+            "LED",
+            "KGD",
+            "ALA",
+            "VVO",
+            "HAV"
+        ],
+        "airlineId": "women-column-am",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "9f09b8fc-e8d0-4d6d-a784-05b06e0737ac",
+        "airlineName": "Italiano Airways",
+        "airlineCode": "TI",
+        "airlineCountry": "IE",
+        "claimProfitTime": "2026-08-24T10:15:48.678+00:00",
+        "hubAirports": [
+            "FCO"
+        ],
+        "airlineId": "lake-leg-safety",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "9ff22dac-b595-4152-9c20-23d6c6e8ac22",
+        "airlineName": "Saminix Airlines",
+        "airlineCode": "SX",
+        "airlineCountry": "US",
+        "claimProfitTime": "2026-09-04T10:34:02.889+00:00",
+        "hubAirports": [
+            "CGK",
+            "JFK",
+            "SYD"
+        ],
+        "airlineId": "film-run-pan",
+        "extraSpecialLiverySlot": 1,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "a076b0cb-bf5c-4b10-b291-47664b170c52",
+        "airlineName": "Frontier",
+        "airlineCode": "F9",
+        "airlineCountry": "US",
+        "claimProfitTime": "2026-09-04T16:19:37.329+00:00",
+        "hubAirports": [
+            "DEN"
+        ],
+        "airlineId": "town-verb-better",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "a706487c-b85f-4cd2-ace5-1803e4a16e24",
+        "airlineName": "SEA Airways MY",
+        "airlineCode": "SX",
+        "airlineCountry": "MY",
+        "claimProfitTime": "2026-09-04T11:32:28.56+00:00",
+        "hubAirports": [
+            "KUL",
+            "JHB",
+            "BKI",
+            "PEN",
+            "SZB"
+        ],
+        "airlineId": "slide-herd-strange",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "a813d084-563d-446a-bfec-512bf67bdcb3",
+        "airlineName": "Royal Desert Airways￼",
+        "airlineCode": "RD",
+        "airlineCountry": "OM",
+        "claimProfitTime": "2026-09-04T11:46:41.279+00:00",
+        "hubAirports": [
+            "MCT",
+            "SZX",
+            "BCN"
+        ],
+        "airlineId": "lonely-tube-being",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "ab30ecc1-aaa7-4772-9329-35e2f30aeb31",
+        "airlineName": "Max Airlines",
+        "airlineCode": "MX",
+        "airlineCountry": "FR",
+        "claimProfitTime": "2026-09-04T06:24:04.759+00:00",
+        "hubAirports": [
+            "CDG",
+            "GVA",
+            "MXP",
+            "ZRH",
+            "YVR",
+            "XMN",
+            "WUH",
+            "WAW",
+            "VIE",
+            "TPE",
+            "SYD",
+            "SIN",
+            "LHR",
+            "SFO",
+            "SEA",
+            "PVG",
+            "JFK",
+            "JNB"
+        ],
+        "airlineId": "anything-cent-meet",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "acb3d3cf-e35b-4395-9967-c27fc95c170e",
+        "airlineName": "Air Cairn",
+        "airlineCode": "CR",
+        "airlineCountry": "GB",
+        "claimProfitTime": "2026-09-04T16:33:42.043+00:00",
+        "hubAirports": [
+            "LHR"
+        ],
+        "airlineId": "tobacco-joy-tax",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "b18cdb96-1d22-4bdc-a237-2b2ec0f67406",
+        "airlineName": "H AIR Baltic",
+        "airlineCode": "HB",
+        "airlineCountry": "RU",
+        "claimProfitTime": "2026-08-25T14:52:48.942+00:00",
+        "hubAirports": [
+            "LED",
+            "OVB",
+            "VVO"
+        ],
+        "airlineId": "wheat-lie-guess",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.2",
+        "flagshipAircraftModel": "Sukhoi Superjet 100-95LR"
+    },
+    {
+        "uid": "b1950033-463e-41f5-88a9-770cae4f53d6",
+        "airlineName": "Lucht Benelux",
+        "airlineCode": "LB",
+        "airlineCountry": "BE",
+        "claimProfitTime": "2026-09-03T17:44:33.973+00:00",
+        "hubAirports": [
+            "AMS",
+            "BRU",
+            "LUX",
+            "LGG",
+            "CRL"
+        ],
+        "airlineId": "angry-name-chest",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.1",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "b563361e-f817-4323-8007-6da1054f28b2",
+        "airlineName": "Sumi Air",
+        "airlineCode": "SU",
+        "airlineCountry": "AT",
+        "claimProfitTime": "2026-09-03T22:22:04.239+00:00",
+        "hubAirports": [
+            "VIE",
+            "SGN"
+        ],
+        "airlineId": "arm-was-black",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Boeing 777-9"
+    },
+    {
+        "uid": "b90672d8-52b7-4725-a3e0-d3d9d0ee181d",
+        "airlineName": "Lreshrea",
+        "airlineCode": "LH",
+        "airlineCountry": "CA",
+        "claimProfitTime": "2026-09-03T13:13:09.03+00:00",
+        "hubAirports": [
+            "YYZ",
+            "LHR"
+        ],
+        "airlineId": "trunk-joy-syllable",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "b94ed19a-1f4a-4cda-bfdf-11d3b6d482d2",
+        "airlineName": "Stonks Air",
+        "airlineCode": "O7",
+        "airlineCountry": "AR",
+        "claimProfitTime": "2026-09-03T07:12:59.472+00:00",
+        "hubAirports": [
+            "EZE"
+        ],
+        "airlineId": "distant-reader-pale",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "ba0fe969-0be3-4389-9a26-606b7f7eff64",
+        "airlineName": "Java Air Indonesia",
+        "airlineCode": "JV",
+        "airlineCountry": "ID",
+        "claimProfitTime": "2026-09-04T11:28:31.849+00:00",
+        "hubAirports": [
+            "CGK",
+            "DPS"
+        ],
+        "airlineId": "distance-wool-pilot",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Boeing 787-9 Dreamliner"
+    },
+    {
+        "uid": "bedffe78-4545-4457-9fb5-c192c37f40d3",
+        "airlineName": "British Airways",
+        "airlineCode": "EJ",
+        "airlineCountry": "GB",
+        "claimProfitTime": "2026-09-02T23:59:28.23+00:00",
+        "hubAirports": [
+            "LHR",
+            "SIN",
+            "SFO",
+            "LAX",
+            "DXB",
+            "CLT"
+        ],
+        "airlineId": "business-scene-made",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "bfddf7e6-10c9-4be2-b58f-cd3ca26cfa68",
+        "airlineName": "AeroAmerican",
+        "airlineCode": "AA",
+        "airlineCountry": "US",
+        "claimProfitTime": "2026-09-04T14:37:43.324+00:00",
+        "hubAirports": [
+            "LAX",
+            "JFK",
+            "SAN",
+            "PHL"
+        ],
+        "airlineId": "copy-throw-lower",
+        "extraSpecialLiverySlot": 1,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Boeing 777-300ER"
+    },
+    {
+        "uid": "c01e8061-2292-4f24-ac34-7567e74bb9ce",
+        "airlineName": "Velocity APAC",
+        "airlineCode": "VJ",
+        "airlineCountry": "JP",
+        "claimProfitTime": "2026-09-04T09:27:34.91+00:00",
+        "hubAirports": [
+            "HND",
+            "KIX",
+            "ICN",
+            "PVG",
+            "FUK",
+            "CTS",
+            "TPE",
+            "NRT",
+            "SIN",
+            "PEK",
+            "SZX",
+            "CKG",
+            "MNL",
+            "BKK",
+            "KUL",
+            "CGK"
+        ],
+        "airlineId": "call-inside-driver",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "cdedff34-6c1f-4e7b-b92a-27a00568ae0b",
+        "airlineName": "LleyAir 耀幸",
+        "airlineCode": "LA",
+        "airlineCountry": "SG",
+        "claimProfitTime": "2026-09-04T08:05:04.136+00:00",
+        "hubAirports": [
+            "SIN",
+            "KUL",
+            "SYD",
+            "PER",
+            "MEL",
+            "AMS"
+        ],
+        "airlineId": "instant-identity-many",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "d18125ce-f273-40d6-9d56-3b24aeb5a271",
+        "airlineName": "Zhejiang Air",
+        "airlineCode": "ZJ",
+        "airlineCountry": "CN",
+        "claimProfitTime": "2026-08-21T16:40:44.745+00:00",
+        "hubAirports": [
+            "HGH",
+            "PVG",
+            "WNZ",
+            "PEK",
+            "SZX",
+            "NGB",
+            "NKG",
+            "HSN",
+            "YIW",
+            "LIJ",
+            "JNH"
+        ],
+        "airlineId": "cry-later-gone",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.1",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "d2452274-5624-4c3a-be9b-63b669ef6ef1",
+        "airlineName": "Sanguo Air",
+        "airlineCode": "S3",
+        "airlineCountry": "CN",
+        "claimProfitTime": "2026-08-22T04:18:01.313+00:00",
+        "hubAirports": [
+            "PEK",
+            "TFU",
+            "PVG"
+        ],
+        "airlineId": "history-close-flow",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.0",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "d3896313-1b1e-4014-9ac3-4811de341fd9",
+        "airlineName": "ACCEL VIP",
+        "airlineCode": "AV",
+        "airlineCountry": "ID",
+        "claimProfitTime": "2026-09-02T12:10:12.219+00:00",
+        "hubAirports": [
+            "CGK",
+            "DPS",
+            "SIN",
+            "PVG",
+            "MEL",
+            "AKL",
+            "YYZ"
+        ],
+        "airlineId": "every-turn-practice",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "dd225dc8-891d-4cb2-813d-7c8b5a33ec1a",
+        "airlineName": "XIYONG YUN AIRWAYS",
+        "airlineCode": "XY",
+        "airlineCountry": "CN",
+        "claimProfitTime": "2026-09-04T12:31:59.085+00:00",
+        "hubAirports": [
+            "PEK",
+            "PVG",
+            "CAN",
+            "SZX",
+            "WUH",
+            "CKG",
+            "HKG",
+            "PKX",
+            "XIY",
+            "HGH"
+        ],
+        "airlineId": "warn-band-behind",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "e0178d94-beba-430d-8323-01941c95056c",
+        "airlineName": "Nusantara Airlines",
+        "airlineCode": "NS",
+        "airlineCountry": "ID",
+        "claimProfitTime": "2026-08-31T03:48:45.812+00:00",
+        "hubAirports": [
+            "CGK",
+            "DJJ",
+            "SOQ"
+        ],
+        "airlineId": "if-sang-pole",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "e44a571a-32fd-487f-bc4a-b150c8e41948",
+        "airlineName": "Air Brazil",
+        "airlineCode": "AB",
+        "airlineCountry": "BR",
+        "claimProfitTime": "2026-08-30T11:20:05.534+00:00",
+        "hubAirports": [
+            "GRU"
+        ],
+        "airlineId": "of-there-better",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "e895f064-bade-482e-933f-32e33a07764e",
+        "airlineName": "World Connection ",
+        "airlineCode": "WC",
+        "airlineCountry": "DE",
+        "claimProfitTime": "2026-09-04T05:11:45.822+00:00",
+        "hubAirports": [
+            "FRA",
+            "MUC",
+            "DXB",
+            "AMS",
+            "ATL"
+        ],
+        "airlineId": "consider-bent-many",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Airbus A321XLR"
+    },
+    {
+        "uid": "ea5807ec-3426-4f08-a6ae-743bff309417",
+        "airlineName": "Fly East Java",
+        "airlineCode": "EJ",
+        "airlineCountry": "ID",
+        "claimProfitTime": "2026-09-03T14:59:46.163+00:00",
+        "hubAirports": [
+            "HKG",
+            "SUB"
+        ],
+        "airlineId": "eye-hurry-metal",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Boeing 747-400"
+    },
+    {
+        "uid": "ef73152f-c48f-4913-8587-c598b7280d73",
+        "airlineName": "SouthernSky",
+        "airlineCode": "SS",
+        "airlineCountry": "IN",
+        "claimProfitTime": "2026-08-29T10:25:56.983+00:00",
+        "hubAirports": [
+            "BOM"
+        ],
+        "airlineId": "doubt-year-indeed",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.2",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "f3e4157c-25d7-4bc9-adbe-74aa31b51a6e",
+        "airlineName": "South Pacific",
+        "airlineCode": "SP",
+        "airlineCountry": "AU",
+        "claimProfitTime": "2026-09-04T09:06:24.658+00:00",
+        "hubAirports": [
+            "MEL",
+            "SYD",
+            "ASP",
+            "LAX",
+            "AKL",
+            "ADL",
+            "PER",
+            "ICN",
+            "SIN",
+            "ZQN",
+            "OOL",
+            "HNL",
+            "CBR",
+            "PQQ",
+            "HBA",
+            "LST",
+            "WLG",
+            "CNS",
+            "HND",
+            "LHR",
+            "POM",
+            "BNE",
+            "JFK"
+        ],
+        "airlineId": "wear-none-case",
+        "extraSpecialLiverySlot": 1,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Boeing 787-9 Dreamliner"
+    },
+    {
+        "uid": "f44c2c67-1519-4a8b-bf20-a69498dfc879",
+        "airlineName": "AeroBritish",
+        "airlineCode": "AB",
+        "airlineCountry": "GB",
+        "claimProfitTime": "2026-09-04T14:35:40.324+00:00",
+        "hubAirports": [
+            "LHR",
+            "MAN"
+        ],
+        "airlineId": "badly-then-union",
+        "extraSpecialLiverySlot": 0,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Airbus A380-800"
+    },
+    {
+        "uid": "f77f2ed7-8719-4571-886e-b3acda45ed30",
+        "airlineName": "Qatar Airways",
+        "airlineCode": "QR",
+        "airlineCountry": "QA",
+        "claimProfitTime": "2026-09-04T11:28:24.849+00:00",
+        "hubAirports": [
+            "DOH",
+            "GIZ",
+            "AHB"
+        ],
+        "airlineId": "upon-general-without",
+        "extraSpecialLiverySlot": 1,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    },
+    {
+        "uid": "fab504da-15b7-471b-8427-bee438886c0d",
+        "airlineName": "Nomad Air",
+        "airlineCode": "ND",
+        "airlineCountry": "KZ",
+        "claimProfitTime": "2026-09-04T15:41:26.744+00:00",
+        "hubAirports": [
+            "NQZ",
+            "ALA",
+            "URA",
+            "SCO",
+            "DOH",
+            "IST",
+            "ICN"
+        ],
+        "airlineId": "drink-took-involved",
+        "extraSpecialLiverySlot": 1,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Airbus A350-1000"
+    },
+    {
+        "uid": "fd73c9b3-a8da-4cc0-9cff-f69ccc25ab78",
+        "airlineName": "Gampritmur",
+        "airlineCode": "GM",
+        "airlineCountry": "ID",
+        "claimProfitTime": "2026-09-03T21:30:43.146+00:00",
+        "hubAirports": [
+            "CGK",
+            "SUB",
+            "SIN",
+            "DXB",
+            "LHR"
+        ],
+        "airlineId": "brought-former-tax",
+        "extraSpecialLiverySlot": 1,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": "Airbus A350-1000"
+    },
+    {
+        "uid": "ff98c210-5327-4be7-b0e7-8e0f92e101c2",
+        "airlineName": "OrionJet",
+        "airlineCode": "OJ",
+        "airlineCountry": "US",
+        "claimProfitTime": "2026-09-04T00:34:02.773+00:00",
+        "hubAirports": [
+            "IAH",
+            "FLL",
+            "LAX",
+            "LGA",
+            "ATL",
+            "MAN",
+            "BOM",
+            "RAK",
+            "MEL",
+            "UIO",
+            "DEL",
+            "NMI",
+            "NBO",
+            "KWI"
+        ],
+        "airlineId": "limited-element-belt",
+        "extraSpecialLiverySlot": 1,
+        "versionString": "1.29.3",
+        "flagshipAircraftModel": null
+    }
+]

@@ -1,0 +1,63 @@
+# Big goal: automate the retrieval of virtual airline info from a centralized server containing virtual airlines in our mobile game, The Airline Simulator.
+
+# File structure:
+(root)
+- divisions
+-- aegis
+-- proxima
+--- members
+- socials
+
+# Task: 
+- Under Proxima's "members" subfolder, open members.json, which contains a list of members to extract info from. Each member has a unique Id, called uid in this game system. From members.json, use leaderUid and allianceMemberUidList as a full uid list of airlines of the alliance. 
+
+- For each uid in the list:
+- Run the POST Query C below with the follow up data also provided. Take airlineName and use the return value to make a new subfolder under /members. This subfolder contains information about each airline under a particular alliance. Use airlineName, airlineCode, and airlineCountry to fill in an info.json file (example: /members/vaultera/info.json).
+- Then run the GET Query A below with the follow up data also provided. Take the JSON response and put it directly into a new file flights.json for that specific airline.
+- Then run the GET Query B below with the follow up data provided. Take the JSON response and put directly into a new file aircrafts.json for that specific airline.
+
+## query A - airline's flights
+GET https://urmwaqnhesasfaeprcga-all.supabase.co/rest/v1/new_player_flight_data?select=*&uid=eq.d478024d-9da7-4bb2-a98e-c4d42b87f6e2 HTTP/2.0
+accept: */*
+apikey: sb_publishable_zGtQpUELNKHPluSkfQ9FOw__BXFJVlf
+authorization: Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6IjNDbjZtZVF3VHRLVmptcGMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3VybXdhcW5oZXNhc2ZhZXByY2dhLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI1OGIxNjUwYi0zZGVkLTQ5NzQtYjJlMy04ZTQ4NjE4NzVkNzkiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzg4NTQyMTgzLCJpYXQiOjE3ODg1Mzg1ODMsImVtYWlsIjoiOWg5YnRwNXRobkBwcml2YXRlcmVsYXkuYXBwbGVpZC5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImFwcGxlIiwicHJvdmlkZXJzIjpbImFwcGxlIl19LCJ1c2VyX21ldGFkYXRhIjp7ImN1c3RvbV9jbGFpbXMiOnsiYXV0aF90aW1lIjoxNzgzMzcyMjY4LCJpc19wcml2YXRlX2VtYWlsIjp0cnVlfSwiZW1haWwiOiI5aDlidHA1dGhuQHByaXZhdGVyZWxheS5hcHBsZWlkLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczovL2FwcGxlaWQuYXBwbGUuY29tIiwicGhvbmVfdmVyaWZpZWQiOmZhbHNlLCJwcm92aWRlcl9pZCI6IjAwMTUwNy5jZDMwMDIzZWM5YTE0MDY5OWIxNDg2YzFmOWFjNWUwMS4xMzQ4Iiwic3ViIjoiMDAxNTA3LmNkMzAwMjNlYzlhMTQwNjk5YjE0ODZjMWY5YWM1ZTAxLjEzNDgifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJvYXV0aCIsInRpbWVzdGFtcCI6MTc1MTk4MjQ4N31dLCJzZXNzaW9uX2lkIjoiMWFiMjkxMzYtYTMwYS00MzJiLWFhNzAtMzM3MzE1ZjdhNjIxIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.q3RIDxRNOlPewumeew8yVy_99FT4gycUgoOBj3TvpAg
+accept-profile: public
+accept-encoding: gzip, deflate, br
+x-client-info: supabase-js-react-native/2.76.1
+user-agent: AirlineSimulator/293 CFNetwork/3860.700.1 Darwin/25.6.0
+priority: u=3, i
+accept-language: en-GB,en;q=0.9
+
+
+## query B - airline's aircrafts
+GET https://urmwaqnhesasfaeprcga-all.supabase.co/rest/v1/player_aircraft_data?select=*&uid=eq.d478024d-9da7-4bb2-a98e-c4d42b87f6e2 HTTP/2.0
+accept: */*
+apikey: sb_publishable_zGtQpUELNKHPluSkfQ9FOw__BXFJVlf
+authorization: Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6IjNDbjZtZVF3VHRLVmptcGMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3VybXdhcW5oZXNhc2ZhZXByY2dhLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI1OGIxNjUwYi0zZGVkLTQ5NzQtYjJlMy04ZTQ4NjE4NzVkNzkiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzg4NTQyMTgzLCJpYXQiOjE3ODg1Mzg1ODMsImVtYWlsIjoiOWg5YnRwNXRobkBwcml2YXRlcmVsYXkuYXBwbGVpZC5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImFwcGxlIiwicHJvdmlkZXJzIjpbImFwcGxlIl19LCJ1c2VyX21ldGFkYXRhIjp7ImN1c3RvbV9jbGFpbXMiOnsiYXV0aF90aW1lIjoxNzgzMzcyMjY4LCJpc19wcml2YXRlX2VtYWlsIjp0cnVlfSwiZW1haWwiOiI5aDlidHA1dGhuQHByaXZhdGVyZWxheS5hcHBsZWlkLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczovL2FwcGxlaWQuYXBwbGUuY29tIiwicGhvbmVfdmVyaWZpZWQiOmZhbHNlLCJwcm92aWRlcl9pZCI6IjAwMTUwNy5jZDMwMDIzZWM5YTE0MDY5OWIxNDg2YzFmOWFjNWUwMS4xMzQ4Iiwic3ViIjoiMDAxNTA3LmNkMzAwMjNlYzlhMTQwNjk5YjE0ODZjMWY5YWM1ZTAxLjEzNDgifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJvYXV0aCIsInRpbWVzdGFtcCI6MTc1MTk4MjQ4N31dLCJzZXNzaW9uX2lkIjoiMWFiMjkxMzYtYTMwYS00MzJiLWFhNzAtMzM3MzE1ZjdhNjIxIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.q3RIDxRNOlPewumeew8yVy_99FT4gycUgoOBj3TvpAg
+accept-profile: public
+accept-encoding: gzip, deflate, br
+x-client-info: supabase-js-react-native/2.76.1
+user-agent: AirlineSimulator/293 CFNetwork/3860.700.1 Darwin/25.6.0
+priority: u=3, i
+accept-language: en-GB,en;q=0.9
+
+## query C - airline's name, code, country
+POST https://urmwaqnhesasfaeprcga-all.supabase.co/rest/v1/rpc/get_player_by_uid HTTP/2.0
+content-type: application/json
+accept: */*
+authorization: Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6IjNDbjZtZVF3VHRLVmptcGMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3VybXdhcW5oZXNhc2ZhZXByY2dhLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI1OGIxNjUwYi0zZGVkLTQ5NzQtYjJlMy04ZTQ4NjE4NzVkNzkiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzg4NTQyMTgzLCJpYXQiOjE3ODg1Mzg1ODMsImVtYWlsIjoiOWg5YnRwNXRobkBwcml2YXRlcmVsYXkuYXBwbGVpZC5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImFwcGxlIiwicHJvdmlkZXJzIjpbImFwcGxlIl19LCJ1c2VyX21ldGFkYXRhIjp7ImN1c3RvbV9jbGFpbXMiOnsiYXV0aF90aW1lIjoxNzgzMzcyMjY4LCJpc19wcml2YXRlX2VtYWlsIjp0cnVlfSwiZW1haWwiOiI5aDlidHA1dGhuQHByaXZhdGVyZWxheS5hcHBsZWlkLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczovL2FwcGxlaWQuYXBwbGUuY29tIiwicGhvbmVfdmVyaWZpZWQiOmZhbHNlLCJwcm92aWRlcl9pZCI6IjAwMTUwNy5jZDMwMDIzZWM5YTE0MDY5OWIxNDg2YzFmOWFjNWUwMS4xMzQ4Iiwic3ViIjoiMDAxNTA3LmNkMzAwMjNlYzlhMTQwNjk5YjE0ODZjMWY5YWM1ZTAxLjEzNDgifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJvYXV0aCIsInRpbWVzdGFtcCI6MTc1MTk4MjQ4N31dLCJzZXNzaW9uX2lkIjoiMWFiMjkxMzYtYTMwYS00MzJiLWFhNzAtMzM3MzE1ZjdhNjIxIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.q3RIDxRNOlPewumeew8yVy_99FT4gycUgoOBj3TvpAg
+priority: u=3, i
+accept-language: en-GB,en;q=0.9
+accept-encoding: gzip, deflate, br
+apikey: sb_publishable_zGtQpUELNKHPluSkfQ9FOw__BXFJVlf
+user-agent: AirlineSimulator/293 CFNetwork/3860.700.1 Darwin/25.6.0
+x-client-info: supabase-js-react-native/2.76.1
+content-profile: public
+content-length: 48
+
+When sending this POST command, the JSON payload is
+{
+    "p_uid": "the uid of the airline in the list"
+}
+
+Look for fields "airlineName", "airlineCode", "airlineCountry" in response
