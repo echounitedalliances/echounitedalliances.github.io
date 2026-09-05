@@ -1,11 +1,103 @@
+import { useState } from 'react'
 import { SITE, discordConfigured } from '../lib/site'
+import { applyWebhookConfigured, submitApplication } from '../lib/discord'
+import type { Division } from '../lib/types'
+
+function ApplyForm({ divisions }: { divisions: Division[] }) {
+  const [airlineName, setAirlineName] = useState('')
+  const [divisionName, setDivisionName] = useState('')
+  const [notes, setNotes] = useState('')
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!airlineName.trim() || !divisionName) return
+    setStatus('sending')
+    try {
+      await submitApplication({ airlineName: airlineName.trim(), divisionName, notes: notes.trim() })
+      setStatus('sent')
+    } catch {
+      setStatus('error')
+    }
+  }
+
+  if (status === 'sent') {
+    return (
+      <div className="mono mt-4 border border-edge px-5 py-3.5 text-center text-[11px] uppercase tracking-[0.14em] text-ink-faint">
+        Application sent — a division lead will follow up on Discord.
+      </div>
+    )
+  }
+
+  return (
+    <form onSubmit={submit} className="mt-4 flex flex-col gap-3">
+      <div>
+        <label htmlFor="apply-airline" className="eyebrow mb-1.5 block text-ink-faint">
+          Airline name
+        </label>
+        <input
+          id="apply-airline"
+          value={airlineName}
+          onChange={(e) => setAirlineName(e.target.value)}
+          placeholder="Your airline"
+          className="w-full border border-edge bg-ground-2 px-3 py-2.5 text-ink outline-none focus:border-accent"
+        />
+      </div>
+      <div>
+        <label htmlFor="apply-division" className="eyebrow mb-1.5 block text-ink-faint">
+          Division
+        </label>
+        <select
+          id="apply-division"
+          value={divisionName}
+          onChange={(e) => setDivisionName(e.target.value)}
+          className="w-full border border-edge bg-ground-2 px-3 py-2.5 text-ink outline-none focus:border-accent"
+        >
+          <option value="">Choose a division</option>
+          {divisions.map((d) => (
+            <option key={d.division_code} value={d.division_name}>
+              {d.division_name}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label htmlFor="apply-notes" className="eyebrow mb-1.5 block text-ink-faint">
+          Notes (optional)
+        </label>
+        <textarea
+          id="apply-notes"
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          rows={3}
+          placeholder="Fleet, routes, anything a division lead should know"
+          className="w-full border border-edge bg-ground-2 px-3 py-2.5 text-ink outline-none focus:border-accent"
+        />
+      </div>
+      <button
+        type="submit"
+        disabled={!airlineName.trim() || !divisionName || status === 'sending'}
+        className="btn btn-primary w-full"
+      >
+        {status === 'sending' ? 'Sending…' : 'Send application'}
+      </button>
+      {status === 'error' && (
+        <p className="text-[12px] text-red-400">
+          Something went wrong — try again, or apply on Discord instead.
+        </p>
+      )}
+    </form>
+  )
+}
 
 /**
  * The join panel. The expected path through this site is
  * outsider -> website -> Discord, so this is the one place the site asks
  * something of the reader, and it says plainly what applying involves.
  */
-export default function Join({ compact = false }: { compact?: boolean }) {
+export default function Join({ compact = false, divisions = [] }: { compact?: boolean; divisions?: Division[] }) {
+  const [showApply, setShowApply] = useState(false)
+
   if (compact) {
     return (
       <a
@@ -66,6 +158,18 @@ export default function Join({ compact = false }: { compact?: boolean }) {
               <div className="mono mt-5 border border-edge px-5 py-3.5 text-center text-[11px] uppercase tracking-[0.14em] text-ink-faint">
                 Invite link not set yet
               </div>
+            )}
+            {applyWebhookConfigured && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => setShowApply((v) => !v)}
+                  className="btn btn-ghost mt-3 w-full"
+                >
+                  {showApply ? 'Hide the form' : 'Already have an airline? Apply here'}
+                </button>
+                {showApply && <ApplyForm divisions={divisions} />}
+              </>
             )}
             <p className="mt-3 text-[12px] text-ink-faint">
               Applying in the game alone is not enough — both steps are required.
