@@ -93,9 +93,11 @@ still one booking and one reference. It runs in 44–73 ms typically.
 Pushing to `main` builds and publishes automatically
 ([`.github/workflows/deploy-web.yml`](.github/workflows/deploy-web.yml)).
 
-Before the first run, in **Settings → Pages** set the source to **GitHub
-Actions**, then in **Settings → Secrets and variables → Actions → Variables**
-add:
+**Settings → Pages → Source must be set to "GitHub Actions".** While it is
+left on "Deploy from a branch", GitHub's own Jekyll builder publishes this
+README over the top of the site and the app never appears.
+
+Then in **Settings → Secrets and variables → Actions → Variables** add:
 
 | Variable | Value |
 |---|---|
