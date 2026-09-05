@@ -1,4 +1,5 @@
-import { HashRouter, Link, NavLink, Route, Routes } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { HashRouter, Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import Divisions from './pages/Divisions'
 import DivisionPage from './pages/Division'
@@ -27,14 +28,16 @@ const links = [
 ]
 
 /** Signed out it reads "Resonance"; signed in it is your name. */
-function AccountLink() {
+function AccountLink({ block = false }: { block?: boolean }) {
   const { user, resonant } = useAuth()
   const label = user ? (resonant?.display_name || 'Account') : 'Resonance'
   return (
     <NavLink
       to="/resonance"
       className={({ isActive }) =>
-        `mono ml-1 border px-2.5 py-1.5 text-[11px] uppercase tracking-[0.12em] transition-colors ${
+        `mono border px-2.5 py-1.5 text-[11px] uppercase tracking-[0.12em] transition-colors ${
+          block ? 'block text-center' : 'ml-1'
+        } ${
           isActive
             ? 'border-[color:var(--color-cyan)] text-cyan'
             : 'border-edge text-ink-dim hover:border-accent hover:text-ink'
@@ -46,11 +49,51 @@ function AccountLink() {
   )
 }
 
+/**
+ * Three links, a button and an account chip come to 526px, which does not fit
+ * a 390px phone -- and because the header is the same on every route, that one
+ * row was making the WHOLE SITE scroll sideways on mobile. Above 900px it is
+ * the row it always was; below, the links fold into a menu and only the two
+ * things a visitor actually came for stay out: Discord, and their account.
+ */
+function MenuButton({ open, onToggle }: { open: boolean; onToggle: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      aria-expanded={open}
+      aria-controls="site-menu"
+      aria-label={open ? 'Close menu' : 'Open menu'}
+      className="mono flex h-9 w-9 shrink-0 items-center justify-center border border-edge text-ink-dim transition-colors hover:border-accent hover:text-ink lg:hidden"
+    >
+      <svg width="15" height="15" viewBox="0 0 15 15" aria-hidden="true">
+        {open ? (
+          <g stroke="currentColor" strokeWidth="1.4" strokeLinecap="round">
+            <line x1="3" y1="3" x2="12" y2="12" />
+            <line x1="12" y1="3" x2="3" y2="12" />
+          </g>
+        ) : (
+          <g stroke="currentColor" strokeWidth="1.4" strokeLinecap="round">
+            <line x1="2" y1="4" x2="13" y2="4" />
+            <line x1="2" y1="7.5" x2="13" y2="7.5" />
+            <line x1="2" y1="11" x2="13" y2="11" />
+          </g>
+        )}
+      </svg>
+    </button>
+  )
+}
+
 function Shell({ children }: { children: React.ReactNode }) {
+  const [open, setOpen] = useState(false)
+  const { pathname } = useLocation()
+  // Following a link should close the menu, or the next page opens behind it.
+  useEffect(() => setOpen(false), [pathname])
+
   return (
     <div className="min-h-screen">
       <header className="sticky top-0 z-40 border-b border-edge-soft bg-[color:var(--color-ground)]/88 backdrop-blur">
-        <div className="mx-auto flex max-w-[1180px] flex-wrap items-center gap-x-4 gap-y-2 px-5 py-3">
+        <div className="mx-auto flex max-w-[1180px] items-center gap-x-3 px-4 py-2.5 sm:px-5 sm:py-3">
           <Link to="/" className="flex items-baseline gap-2.5">
             <span
               className="inline-block h-2.5 w-2.5"
@@ -67,7 +110,7 @@ function Shell({ children }: { children: React.ReactNode }) {
               United Alliances
             </span>
           </Link>
-          <nav className="ml-auto flex items-center gap-1">
+          <nav className="ml-auto hidden items-center gap-1 lg:flex">
             {links.map((l) => (
               <NavLink
                 key={l.to}
@@ -93,7 +136,48 @@ function Shell({ children }: { children: React.ReactNode }) {
             )}
             <AccountLink />
           </nav>
+
+          {/* the phone header: Discord stays out, everything else folds in */}
+          <div className="ml-auto flex items-center gap-2 lg:hidden">
+            {discordConfigured && (
+              <a
+                href={SITE.discordInvite}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary !px-3 !py-1.5 !text-[10px]"
+              >
+                Discord
+              </a>
+            )}
+            <MenuButton open={open} onToggle={() => setOpen((o) => !o)} />
+          </div>
         </div>
+
+        {open && (
+          <nav
+            id="site-menu"
+            className="border-t border-edge-soft bg-[color:var(--color-ground)] px-4 pb-4 pt-3 lg:hidden"
+          >
+            <div className="flex flex-col gap-1">
+              {links.map((l) => (
+                <NavLink
+                  key={l.to}
+                  to={l.to}
+                  className={({ isActive }) =>
+                    `mono border-b border-edge-soft py-3 text-[12px] uppercase tracking-[0.14em] transition-colors ${
+                      isActive ? 'text-cyan' : 'text-ink-dim hover:text-ink'
+                    }`
+                  }
+                >
+                  {l.label}
+                </NavLink>
+              ))}
+              <div className="pt-3">
+                <AccountLink block />
+              </div>
+            </div>
+          </nav>
+        )}
       </header>
 
       <main>{children}</main>

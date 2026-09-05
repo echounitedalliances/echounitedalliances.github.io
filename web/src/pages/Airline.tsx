@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import RouteMap from '../components/RouteMap'
 import { Loading, Mark, NotConfigured } from '../components/ui'
 import { isConfigured, supabase } from '../lib/supabase'
-import type { Airline, Arc, FleetRow, NetworkNode, RouteRow, TimetableRow } from '../lib/types'
+import type { Airline, Arc, FleetRow, NetworkNode, RoutePairRow, TimetableRow } from '../lib/types'
 import { accentOf, duration, flag, num, usd } from '../lib/format'
 
 const DAYS = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
@@ -12,7 +12,7 @@ export default function AirlinePage() {
   const { code = '', slug = '' } = useParams()
   const [a, setA] = useState<Airline | null>(null)
   const [fleet, setFleet] = useState<FleetRow[]>([])
-  const [routes, setRoutes] = useState<RouteRow[]>([])
+  const [routes, setRoutes] = useState<RoutePairRow[]>([])
   const [arcs, setArcs] = useState<Arc[]>([])
   const [nodes, setNodes] = useState<NetworkNode[]>([])
   const [missing, setMissing] = useState(false)
@@ -43,23 +43,26 @@ export default function AirlinePage() {
           .select('aircraft_model, manufacturer, aircraft_count')
           .eq('airline_uid', air.uid)
           .order('aircraft_count', { ascending: false }),
+        // v_route_pairs, not v_routes: the latter is one row per direction, so
+        // the table showed every route twice with half its departures each.
+        // Folding the pair in SQL also means this top-400 is the right 400.
         supabase
-          .from('v_routes')
-          .select('origin_iata, destination_iata, departures_per_week, fastest_minutes, cheapest_economy_usd')
+          .from('v_route_pairs')
+          .select('airport_a, airport_b, departures_per_week, directions, sole_origin, fastest_minutes, cheapest_economy_usd')
           .eq('airline_uid', air.uid)
           .order('departures_per_week', { ascending: false })
           .limit(400),
         supabase.rpc('airline_timetable', { p_uid: air.uid, p_airport: null }),
       ])
       setTimetable((t.data as TimetableRow[]) ?? [])
-      const routeRows = (r.data as RouteRow[]) ?? []
+      const routeRows = (r.data as RoutePairRow[]) ?? []
       setFleet((f.data as FleetRow[]) ?? [])
       setRoutes(routeRows)
 
       // Draw this carrier's own network: look up the coordinates for the
       // airports it actually touches, then build arcs from its routes.
       const codes = Array.from(
-        new Set(routeRows.flatMap((x) => [x.origin_iata, x.destination_iata])),
+        new Set(routeRows.flatMap((x) => [x.airport_a, x.airport_b])),
       ).slice(0, 400)
       if (codes.length) {
         const { data: pts } = await supabase
@@ -74,12 +77,12 @@ export default function AirlinePage() {
         setArcs(
           routeRows
             .map((x) => {
-              const o = byCode.get(x.origin_iata)
-              const d = byCode.get(x.destination_iata)
+              const o = byCode.get(x.airport_a)
+              const d = byCode.get(x.airport_b)
               if (!o || !d || o.latitude == null || d.latitude == null) return null
               return {
-                origin_iata: x.origin_iata,
-                destination_iata: x.destination_iata,
+                origin_iata: x.airport_a,
+                destination_iata: x.airport_b,
                 division_code: air.division_code,
                 weekly_departures: x.departures_per_week,
                 carriers: 1,
@@ -122,7 +125,7 @@ export default function AirlinePage() {
           className="pointer-events-none absolute inset-0"
           style={{ background: `radial-gradient(700px 320px at 80% 25%, ${accent}18, transparent 70%)` }}
         />
-        <div className="mx-auto grid max-w-[1180px] gap-8 px-5 py-12 lg:grid-cols-[1.05fr_.95fr]">
+        <div className="mx-auto grid max-w-[1180px] gap-8 px-4 py-8 sm:px-5 sm:py-12 lg:grid-cols-[1.05fr_.95fr]">
           <div>
             <Link
               to={`/d/${a.division_code}`}
@@ -226,7 +229,7 @@ export default function AirlinePage() {
               arcs={arcs}
               nodes={nodes}
               className="w-full"
-              
+              zoomOnFocus
               focusedAirport={ttAirport || null}
               onPickAirport={(iata) => setTtAirport(iata)}
             />
@@ -237,7 +240,7 @@ export default function AirlinePage() {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-[1180px] gap-10 px-5 py-14 lg:grid-cols-2">
+      <section className="mx-auto grid max-w-[1180px] gap-10 px-4 py-8 sm:px-5 sm:py-14 lg:grid-cols-2">
         <div>
           <h2 className="display text-2xl">Fleet</h2>
           <p className="mt-1 text-ink-faint">
@@ -268,7 +271,7 @@ export default function AirlinePage() {
 
         <div>
           <h2 className="display text-2xl">Busiest routes</h2>
-          <p className="mt-1 text-ink-faint">By departures a week</p>
+          <p className="mt-1 text-ink-faint">By departures a week, both directions counted together</p>
           <div className="panel mt-4 max-h-[520px] overflow-auto">
             <table className="w-full text-sm">
               <thead className="sticky top-0">
@@ -280,18 +283,27 @@ export default function AirlinePage() {
                 </tr>
               </thead>
               <tbody>
-                {routes.slice(0, 60).map((r, i) => (
-                  <tr key={`${r.origin_iata}-${r.destination_iata}-${i}`} className="border-t border-edge-soft">
+                {routes.slice(0, 60).map((r) => {
+                  // Both ways is the normal case, and the arrow says so. A pair
+                  // flown one way only is drawn in the direction it is flown.
+                  const oneWay = r.directions === 1
+                  const from = oneWay && r.sole_origin === r.airport_b ? r.airport_b : r.airport_a
+                  const to = from === r.airport_a ? r.airport_b : r.airport_a
+                  return (
+                  <tr key={`${r.airport_a}-${r.airport_b}`} className="border-t border-edge-soft">
                     <td className="mono px-4 py-2 text-ink">
-                      <Link to={`/airports/${r.origin_iata}`} className="hover:text-cyan">{r.origin_iata}</Link>
-                      <span className="text-ink-faint"> → </span>
-                      <Link to={`/airports/${r.destination_iata}`} className="hover:text-cyan">{r.destination_iata}</Link>
+                      <Link to={`/airports/${from}`} className="hover:text-cyan">{from}</Link>
+                      <span className="text-ink-faint" title={oneWay ? 'One way only' : 'Both directions'}>
+                        {oneWay ? ' → ' : ' ⇄ '}
+                      </span>
+                      <Link to={`/airports/${to}`} className="hover:text-cyan">{to}</Link>
                     </td>
                     <td className="mono px-4 py-2 text-right text-ink-dim">{r.departures_per_week}</td>
                     <td className="mono px-4 py-2 text-right text-ink-dim">{duration(r.fastest_minutes)}</td>
                     <td className="mono px-4 py-2 text-right text-ink-dim">{usd(r.cheapest_economy_usd)}</td>
                   </tr>
-                ))}
+                  )
+                })}
                 {routes.length === 0 && (
                   <tr><td className="px-4 py-6 text-ink-faint" colSpan={4}>No routes filed.</td></tr>
                 )}

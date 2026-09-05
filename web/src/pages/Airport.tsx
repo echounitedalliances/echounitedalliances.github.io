@@ -43,7 +43,7 @@ export default function AirportPage() {
   const hubs = (carriers ?? []).filter((c) => c.is_hub)
 
   return (
-    <div className="mx-auto max-w-[1180px] px-5 py-14">
+    <div className="mx-auto max-w-[1180px] px-4 py-8 sm:px-5 sm:py-14">
       <p className="eyebrow text-cyan">Airport</p>
       <div className="mt-3 flex flex-wrap items-baseline gap-4">
         <h1 className="display text-[clamp(40px,6vw,72px)]">{airport.iata_code}</h1>

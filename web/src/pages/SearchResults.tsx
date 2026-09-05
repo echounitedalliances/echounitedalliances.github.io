@@ -95,7 +95,7 @@ export default function SearchResults() {
   if (!isConfigured) return <NotConfigured />
 
   return (
-    <div className="mx-auto max-w-[1180px] px-5 py-10">
+    <div className="mx-auto max-w-[1180px] px-4 py-7 sm:px-5 sm:py-10">
       <SearchPanel compact />
 
       <div className="mt-8 flex flex-wrap items-baseline justify-between gap-4">

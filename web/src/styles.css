@@ -28,6 +28,9 @@
   --color-cyan:       #82FDFF;
   --color-good:       #55E39A;
   --color-warn:       #F5C451;
+  /* Destructive only. Amber already means "caution"; cancelling a booking
+     deletes it, and that needed a colour nothing else on the site uses. */
+  --color-danger:     #FF6B6B;
 
   --font-brand: "Archivo", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
@@ -187,11 +190,23 @@ body {
 .flap-live .flap { color: var(--color-good); }
 
 @media (max-width: 720px) {
-  .board { --flap-w: 11px; }
-  .flap { font-size: 12px; }
-  .board-head, .board-row { gap: 9px; }
+  .board { --flap-w: 10px; padding: 10px 12px 12px; }
+  .flap { font-size: 11px; }
+  .board-head, .board-row { gap: 7px; }
 }
 
+
+/* The one destructive button on the site. Red is reserved for it, so
+   "this cannot be undone" never looks like any other action. */
+.btn-danger {
+  --btn-accent: var(--color-danger);
+  border-color: color-mix(in srgb, var(--color-danger) 55%, transparent);
+  color: var(--color-danger);
+}
+.btn-danger:hover {
+  background: color-mix(in srgb, var(--color-danger) 16%, transparent);
+  border-color: var(--color-danger);
+}
 
 /* Board hub chips ---------------------------------------------------
    Small enough not to compete with the board, and they carry the alliance
@@ -243,6 +258,12 @@ body {
               border-color .18s ease,
               color .18s ease;
 }
+/* On a phone the same padding costs a whole line: two 250px buttons cannot
+   sit side by side in 350px of usable width, so each took its own row. */
+@media (max-width: 640px) {
+  .btn { padding: 10px 14px; font-size: 10px; letter-spacing: 0.1em; gap: 6px; }
+}
+
 .btn:disabled { opacity: .35; cursor: not-allowed; }
 .btn:not(:disabled):hover { transform: translateY(-1px); }
 .btn:not(:disabled):active { transform: translateY(0); }

@@ -9,6 +9,10 @@ import { shortDate, usd } from '../lib/format'
  * Manage booking. No account needed: find_booking() is security definer and
  * checks the PNR against a passenger surname, which is how every airline does
  * it. Signing in is for keeping a list, not for reaching one booking.
+ *
+ * Cancelling asks twice. It cannot be undone -- cancel_booking() deletes the
+ * segments, which is what fires the trigger that returns the seats to
+ * inventory -- and the reference is not reusable afterwards.
  */
 export default function Trips() {
   const [params] = useSearchParams()
@@ -17,6 +21,8 @@ export default function Trips() {
   const [booking, setBooking] = useState<BookingDetails | null>(null)
   const [busy, setBusy] = useState(false)
   const [msg, setMsg] = useState<string | null>(null)
+  const [confirming, setConfirming] = useState(false)
+  const [cancelled, setCancelled] = useState(false)
 
   useEffect(() => {
     const p = params.get('pnr')
@@ -28,6 +34,8 @@ export default function Trips() {
     setBusy(true)
     setMsg(null)
     setBooking(null)
+    setConfirming(false)
+    setCancelled(false)
     const { data, error } = await supabase.rpc('find_booking', {
       p_pnr: pnr.trim().toUpperCase(),
       p_family_name: surname.trim(),
@@ -45,10 +53,33 @@ export default function Trips() {
     setBooking(rows[0])
   }
 
+  const cancel = async () => {
+    if (!booking) return
+    setBusy(true)
+    setMsg(null)
+    const { data, error } = await supabase.rpc('cancel_booking', {
+      p_pnr: booking.pnr,
+      p_family_name: surname.trim(),
+    })
+    setBusy(false)
+    setConfirming(false)
+    if (error) {
+      // The function raises when nothing live matches -- most likely because
+      // it has already been cancelled in another tab.
+      setMsg(error.message)
+      return
+    }
+    const rows = (data as BookingDetails[]) ?? []
+    if (rows.length > 0) setBooking(rows[0])
+    setCancelled(true)
+  }
+
+  const isCancelled = cancelled || booking?.status?.toUpperCase() === 'CANCELLED'
+
   if (!isConfigured) return <NotConfigured />
 
   return (
-    <div className="mx-auto max-w-[860px] px-5 py-14">
+    <div className="mx-auto max-w-[860px] px-4 py-8 sm:px-5 sm:py-14">
       <p className="eyebrow text-cyan">Manage booking</p>
       <h1 className="display mt-3 text-[clamp(36px,5vw,56px)]">Find your trip</h1>
       <p className="mt-4 max-w-[58ch] text-ink-dim">
@@ -99,8 +130,12 @@ export default function Trips() {
               <div className="mono text-3xl tracking-[0.24em] text-cyan">{booking.pnr}</div>
             </div>
             <div className="text-right">
-              <div className="mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">
-                {booking.status.toLowerCase()}
+              <div
+                className={`mono text-[11px] uppercase tracking-[0.12em] ${
+                  isCancelled ? 'text-danger' : 'text-ink-faint'
+                }`}
+              >
+                {isCancelled ? 'cancelled' : booking.status.toLowerCase()}
               </div>
               <div className="mono text-2xl text-ink">
                 {usd(Number(booking.total_amount_usd))}
@@ -126,6 +161,11 @@ export default function Trips() {
             <h2 className="mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">
               Flights
             </h2>
+            {isCancelled && (booking.segments ?? []).length === 0 && (
+              <p className="mt-2 text-sm text-ink-faint">
+                The flights have been released back to the airlines.
+              </p>
+            )}
             <div className="mt-2 flex flex-col">
               {(booking.segments ?? []).map((s) => (
                 <div key={s.seq} className="border-t border-edge-soft py-3 first:border-0">
@@ -153,6 +193,46 @@ export default function Trips() {
               {booking.divisions.join(', ')}
             </p>
           )}
+
+          <div className="mt-6 border-t border-edge-soft pt-5">
+            {isCancelled ? (
+              <p className="text-sm text-ink-dim">
+                This booking is cancelled. The reference stays valid to look up,
+                but it cannot be reinstated — a new trip means a new booking.
+              </p>
+            ) : confirming ? (
+              <div className="panel border-danger/45 p-4">
+                <p className="text-sm text-ink">
+                  Cancel <span className="mono text-cyan">{booking.pnr}</span> for{' '}
+                  {(booking.passengers ?? []).length}{' '}
+                  {(booking.passengers ?? []).length === 1 ? 'traveller' : 'travellers'}?
+                </p>
+                <p className="mt-1.5 text-[13px] text-ink-faint">
+                  This cannot be undone. The seats go back on sale immediately.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <button
+                    onClick={() => void cancel()}
+                    disabled={busy}
+                    className="btn btn-danger"
+                  >
+                    {busy ? 'Cancelling…' : 'Yes, cancel this booking'}
+                  </button>
+                  <button
+                    onClick={() => setConfirming(false)}
+                    disabled={busy}
+                    className="btn btn-ghost"
+                  >
+                    Keep it
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <button onClick={() => setConfirming(true)} className="btn btn-ghost">
+                Cancel this booking
+              </button>
+            )}
+          </div>
 
           <Link
             to="/"

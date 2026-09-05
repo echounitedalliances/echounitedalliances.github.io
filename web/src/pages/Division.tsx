@@ -55,7 +55,7 @@ export default function DivisionPage() {
           className="pointer-events-none absolute inset-0"
           style={{ background: `radial-gradient(760px 340px at 78% 30%, ${accent}1c, transparent 70%)` }}
         />
-        <div className="mx-auto grid max-w-[1180px] gap-8 px-5 py-14 lg:grid-cols-[1.1fr_.9fr]">
+        <div className="mx-auto grid max-w-[1180px] gap-8 px-4 py-8 sm:px-5 sm:py-14 lg:grid-cols-[1.1fr_.9fr]">
           <div>
             <Link to="/divisions" className="mono text-[11px] uppercase tracking-[0.14em] text-ink-faint">
               ← All divisions
@@ -108,7 +108,6 @@ export default function DivisionPage() {
               nodes={nodes}
               highlightDivision={code}
               className="w-full"
-              
             />
             <p className="mono mt-1 text-center text-[10px] uppercase tracking-[0.16em] text-ink-faint">
               {division.division_name} routes lit · rest of the alliance dimmed
@@ -117,7 +116,7 @@ export default function DivisionPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1180px] px-5 py-14">
+      <section className="mx-auto max-w-[1180px] px-4 py-8 sm:px-5 sm:py-14">
         <div className="flex flex-wrap items-baseline justify-between gap-4">
           <h2 className="display text-3xl">
             Member carriers{' '}

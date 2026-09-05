@@ -95,7 +95,7 @@ export default function Directory() {
   if (!isConfigured) return <NotConfigured />
 
   return (
-    <div className="mx-auto max-w-[1180px] px-5 py-14">
+    <div className="mx-auto max-w-[1180px] px-4 py-8 sm:px-5 sm:py-14">
       <p className="eyebrow text-cyan">The carriers</p>
       <h1 className="display mt-3 text-[clamp(36px,5vw,58px)]">Every airline in Echo</h1>
       <p className="mt-4 max-w-[62ch] text-lg text-ink-dim">

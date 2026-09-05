@@ -91,7 +91,7 @@ export default function Resonance() {
   // ---------------------------------------------------------------- signed out
   if (!user) {
     return (
-      <div className="mx-auto max-w-[720px] px-5 py-16">
+      <div className="mx-auto max-w-[720px] px-4 py-9 sm:px-5 sm:py-16">
         <p className="eyebrow text-cyan">Resonance</p>
         <h1 className="display mt-3 text-[clamp(36px,5vw,56px)]">
           The alliance, remembered
@@ -155,7 +155,7 @@ export default function Resonance() {
 
   // ----------------------------------------------------------------- signed in
   return (
-    <div className="mx-auto max-w-[980px] px-5 py-14">
+    <div className="mx-auto max-w-[980px] px-4 py-8 sm:px-5 sm:py-14">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="eyebrow text-cyan">Resonance</p>

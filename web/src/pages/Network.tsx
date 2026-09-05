@@ -14,8 +14,8 @@ export default function NetworkPage() {
   const [busiest, setBusiest] = useState<AirportRow[]>([])
   const [focus, setFocus] = useState<string | null>(null)
   const [ready, setReady] = useState(false)
-  // When an airport is picked the globe shows only what it reaches, coloured
-  // by whichever division flies each route most.
+  // When an airport is picked the map zooms to it and shows only what it
+  // reaches, each route coloured by whichever division flies it most.
   const [pinned, setPinned] = useState<string | null>(null)
   const [fanned, setFanned] = useState<Arc[] | null>(null)
 
@@ -67,13 +67,13 @@ export default function NetworkPage() {
   if (!isConfigured) return <NotConfigured />
 
   return (
-    <div className="mx-auto max-w-[1180px] px-5 py-12">
+    <div className="mx-auto max-w-[1180px] px-4 py-8 sm:px-5 sm:py-12">
       <p className="eyebrow text-cyan">Network</p>
       <h1 className="display mt-3 text-[clamp(36px,5vw,58px)]">The alliance, drawn</h1>
       <p className="mt-4 max-w-[64ch] text-lg text-ink-dim">
         The 1,200 busiest city pairs Echo flies, coloured by the division that
-        operates them. Drag to turn the globe; pick a division to light only its
-        routes.
+        operates them. Pick a division to light only its routes, or click any
+        airport to zoom in on what it reaches.
       </p>
 
       {pinned && (
@@ -137,7 +137,7 @@ export default function NetworkPage() {
       {!ready ? (
         <Loading label="Drawing the network" />
       ) : (
-        <div className="mt-6 grid gap-8 lg:grid-cols-[1.35fr_1fr]">
+        <div className="mt-6 flex flex-col gap-10">
           <RouteMap
             arcs={pinned && fanned ? fanned : arcs}
             nodes={nodes}
@@ -145,12 +145,14 @@ export default function NetworkPage() {
             focusedAirport={pinned}
             onPickAirport={pickAirport}
             className="w-full"
-            
+            zoomOnFocus
           />
           <div>
             <h2 className="display text-2xl">Busiest airports</h2>
             <p className="mt-1 text-ink-faint">By weekly alliance departures</p>
-            <div className="panel mt-4 overflow-hidden">
+            {/* overflow-hidden CLIPPED this on a phone: the table is 456px wide
+                 and three of its columns simply were not there. */}
+            <div className="panel mt-4 overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-surface-2 text-left">

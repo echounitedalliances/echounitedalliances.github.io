@@ -124,7 +124,7 @@ export default function Book() {
   }
 
   return (
-    <div className="mx-auto grid max-w-[1100px] gap-8 px-5 py-12 lg:grid-cols-[1fr_360px]">
+    <div className="mx-auto grid max-w-[1100px] gap-8 px-4 py-8 sm:px-5 sm:py-12 lg:grid-cols-[1fr_360px]">
       <div>
         <p className="eyebrow text-cyan">Step 2 of 2</p>
         <h1 className="display mt-3 text-4xl">Who is travelling?</h1>

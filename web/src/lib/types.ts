@@ -147,10 +147,20 @@ export type FleetRow = {
   aircraft_count: number
 }
 
-export type RouteRow = {
-  origin_iata: string
-  destination_iata: string
+/**
+ * One city pair, both directions folded together.
+ *
+ * The carrier page used to read v_routes, which is one row per DIRECTED pair,
+ * and so listed LHR -> JFK and JFK -> LHR as two routes each carrying half the
+ * traffic. directions is 1 or 2; when it is 1, sole_origin is the end it
+ * departs from.
+ */
+export type RoutePairRow = {
+  airport_a: string
+  airport_b: string
   departures_per_week: number
+  directions: number
+  sole_origin: string
   fastest_minutes: number
   cheapest_economy_usd: number | null
 }
@@ -208,4 +218,25 @@ export type BoardDeparture = {
   airline_name: string | null
   division_code: string
   accent_color: string
+}
+
+/**
+ * One airport, plus the city it is grouped under.
+ *
+ * place_airports is how many airports that city has, which is what tells the
+ * typeahead whether to draw a "London — all airports" heading over them.
+ */
+export type PlaceRow = {
+  iata_code: string
+  airport_name: string | null
+  city_name: string | null
+  country_code: string | null
+  latitude: number | null
+  longitude: number | null
+  weekly_departures: number
+  carriers: number
+  place_key: string
+  place_name: string
+  place_airports: number
+  place_rank: number
 }
