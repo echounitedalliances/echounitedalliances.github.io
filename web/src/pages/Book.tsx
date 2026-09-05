@@ -75,7 +75,7 @@ export default function Book() {
         p_segments: it.legs.map((leg) => ({
           flight_id: leg.flight_id,
           aircraft_id: leg.aircraft_id,
-          direction: 'OUTBOUND',
+          direction: leg.direction,
           travel_date: leg.departure_date,
         })),
       })

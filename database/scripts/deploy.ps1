@@ -130,7 +130,7 @@ select 'airlines' as t, count(*) from public.airlines
 union all select 'airports', count(*) from public.airports
 union all select 'aircraft', count(*) from public.aircraft
 union all select 'flights',  count(*) from public.flights
-union all select 'flight_fares', count(*) from public.flight_fares
+union all select 'assignments', count(*) from public.flight_assignments
 union all select 'leg_departures', count(*) from public.mv_leg_departures
 order by t;
 "@

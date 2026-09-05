@@ -89,7 +89,14 @@ python database/scripts/build_database.py    # JSON -> csv/  (only after a re-sc
 ```
 
 No arguments: it builds the connection string from `connection.txt` and takes
-the password from pgpass.conf. Run it from the repository root — the CSVs are
+the password from pgpass.conf.
+
+Run the files **in order**, and if you re-run one by hand, re-run everything
+after it too. `07_connections.sql` drops `mv_route_adjacency` with `cascade`,
+which takes `mv_network_arcs`, `mv_network_nodes`, `mv_airport_directory`,
+`mv_airport_connectivity` and `search_airports()` with it -- all created in
+`09_site_api.sql`. The deploy script always runs the whole chain, so this only
+matters when you are applying a single file. Run it from the repository root — the CSVs are
 read by relative path with psql's client-side `\copy`, so no server-side file
 access is needed.
 

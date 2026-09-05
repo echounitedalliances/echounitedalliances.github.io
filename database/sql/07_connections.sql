@@ -429,6 +429,11 @@ begin
            (select jsonb_agg(jsonb_build_object(
                        'flight_id',        l.flight_id,
                        'aircraft_id',      l.aircraft_id,
+                       -- The itinerary can use either direction of a flight
+                       -- pair. Without this the caller has to guess, and
+                       -- guessing OUTBOUND makes booking an inbound leg fail
+                       -- the operates-on-this-date check.
+                       'direction',        l.direction,
                        'designator',       al.carrier_code || ' ' ||
                            case when l.direction = 'OUTBOUND' then f.outbound_flight_number
                                 else f.inbound_flight_number end,

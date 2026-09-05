@@ -44,6 +44,17 @@ $$;
 -- ---------------------------------------------------------------------
 revoke select on public.flight_assignments from anon, authenticated;
 
+-- Supabase grants every new table in public to anon and authenticated by
+-- default, so the reservation tables arrive readable and RLS is the only thing
+-- standing in front of them. RLS does hold - an anonymous select returns zero
+-- rows - but a booking should not depend on one policy being right. Take the
+-- grant away too, and let find_booking() (security definer) be the only way in.
+revoke all on public.bookings         from anon;
+revoke all on public.passengers       from anon;
+revoke all on public.booking_segments from anon;
+revoke all on public.tickets          from anon;
+revoke all on public.resonants        from anon;
+
 comment on table public.flight_assignments is
     'Aircraft rostered onto a flight pair, with the four cabin fares as columns. Not exposed to the API directly - the site reads mv_leg_departures and the search RPCs.';
 

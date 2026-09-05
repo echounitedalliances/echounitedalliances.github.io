@@ -10,6 +10,8 @@ import Book from './pages/Book'
 import Trips from './pages/Trips'
 import NetworkPage from './pages/Network'
 import { SITE, discordConfigured } from './lib/site'
+import Resonance from './pages/Resonance'
+import { AuthProvider, useAuth } from './lib/auth'
 
 /**
  * HashRouter, not BrowserRouter. GitHub Pages has no server to rewrite unknown
@@ -23,6 +25,26 @@ const links = [
   { to: '/network', label: 'Network' },
   { to: '/trips', label: 'My trips' },
 ]
+
+/** Signed out it reads "Resonance"; signed in it is your name. */
+function AccountLink() {
+  const { user, resonant } = useAuth()
+  const label = user ? (resonant?.display_name || 'Account') : 'Resonance'
+  return (
+    <NavLink
+      to="/resonance"
+      className={({ isActive }) =>
+        `mono ml-1 border px-2.5 py-1.5 text-[11px] uppercase tracking-[0.12em] transition-colors ${
+          isActive
+            ? 'border-[color:var(--color-cyan)] text-cyan'
+            : 'border-edge text-ink-dim hover:border-accent hover:text-ink'
+        }`
+      }
+    >
+      {label}
+    </NavLink>
+  )
+}
 
 function Shell({ children }: { children: React.ReactNode }) {
   return (
@@ -59,6 +81,7 @@ function Shell({ children }: { children: React.ReactNode }) {
                 {l.label}
               </NavLink>
             ))}
+            <AccountLink />
           </nav>
         </div>
       </header>
@@ -92,8 +115,9 @@ function Shell({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <HashRouter>
-      <Shell>
+    <AuthProvider>
+      <HashRouter>
+        <Shell>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/divisions" element={<Divisions />} />
@@ -105,6 +129,7 @@ export default function App() {
           <Route path="/search" element={<SearchResults />} />
           <Route path="/book" element={<Book />} />
           <Route path="/trips" element={<Trips />} />
+          <Route path="/resonance" element={<Resonance />} />
           <Route
             path="*"
             element={
@@ -118,7 +143,8 @@ export default function App() {
             }
           />
         </Routes>
-      </Shell>
-    </HashRouter>
+        </Shell>
+      </HashRouter>
+    </AuthProvider>
   )
 }

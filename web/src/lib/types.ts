@@ -114,6 +114,8 @@ export type NetworkNode = {
 export type Leg = {
   flight_id: string
   aircraft_id: string
+  /** OUTBOUND or INBOUND: a flight pair sells in both directions. */
+  direction: 'OUTBOUND' | 'INBOUND'
   designator: string
   carrier_code: string
   division: string

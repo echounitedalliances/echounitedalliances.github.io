@@ -75,14 +75,14 @@ select division_code, division_name, accent_color, carriers
 
 \echo ''
 \echo '=== anonymous access: what a browser can and cannot reach ==='
-select 'airlines readable'      as check, has_table_privilege('anon','public.airlines','SELECT')             as allowed, true  as expected
+select 'airlines readable'      as check_name, has_table_privilege('anon','public.airlines','SELECT')             as allowed, true  as expected
 union all select 'directory readable',    has_table_privilege('anon','public.mv_airline_directory','SELECT'), true
 union all select 'arcs readable',         has_table_privilege('anon','public.mv_network_arcs','SELECT'),      true
 union all select 'countries readable',    has_table_privilege('anon','public.countries','SELECT'),            true
 union all select 'bookings NOT readable', has_table_privilege('anon','public.bookings','SELECT'),             false
 union all select 'passengers NOT readable',has_table_privilege('anon','public.passengers','SELECT'),          false
 union all select 'assignments NOT readable',has_table_privilege('anon','public.flight_assignments','SELECT'), false
-order by check;
+order by check_name;
 
 \echo ''
 \echo '=== booking RPCs are callable by an anonymous visitor ==='
