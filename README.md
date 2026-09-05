@@ -7,6 +7,111 @@ Live at **https://echounitedalliances.github.io**
 
 ---
 
+## What the site does today
+
+### The alliance
+
+**Home.** The headline figures, then a live departure board, then the eight
+divisions, the network drawn flat, and a carrier spotlight.
+
+**Divisions** (`/divisions`). Eight cards, four across and two down, in group
+order: Kyra, Aegis, Elysium, Proxima, Rhea, Vilis, Elion, Aura. Kyra is badged
+*Main division* and Elysium *Realism alliance*. Each opens a division page with
+its roster — sortable by prominence, name or fleet size — and a map of what the
+division flies.
+
+**Airlines** (`/airlines`). All 590 carriers, filtered by name, division or
+country, 60 at a time. 85 countries are represented.
+
+**A page for every carrier.** A written profile, the fleet by type, every route,
+a route map, and a timetable by day of week. The profile is generated from what
+the airline actually flies — nobody was going to hand-write 590 — and can be
+overwritten; the generated text never lands on top of a written one.
+
+**A page for every airport** (`/airports/:iata`). Which members serve it, which
+treat it as a hub, and how far each of them reaches from there.
+
+**Network** (`/network`). The whole alliance drawn at once with the busiest
+airports beside it. Pick an airport and the map shows only what it reaches,
+each route coloured by whichever division flies it most.
+
+### The departure board
+
+A split-flap board of what leaves next, **in the viewer's own timezone**. The
+airport is chosen from that timezone — a viewer in Vietnam gets Ho Chi Minh
+City, one in New York gets JFK — and chips switch it between the six busiest
+hubs. It refetches once a minute, recounts the countdowns every fifteen
+seconds, and ticks a wall clock every second.
+
+It is DOM and CSS, not WebGL: the flaps animate while they settle and then stop
+completely. This replaced a spinning globe that never fully loaded and made a
+laptop stutter.
+
+### Booking, across every carrier at once
+
+**Search.** Origin and destination by typeahead over 2,187 airports, a date, one
+of four cabins, one to six travellers, and a stop limit.
+
+**One query, 590 airlines.** `search_itineraries()` returns nonstop through
+two-stop journeys across the whole group, so a trip no single member flies end
+to end is still one search, one booking and one reference. Typically 44–73 ms.
+Results sort by price, duration or stops.
+
+**Real inventory.** Seats are tracked per departure and cabin, against a
+deliberately gentle background demand simulation — enough that a
+341,710-flight network does not look untouched, never enough to sell out. A
+real booking always takes simulated seats back before it refuses anyone.
+
+**A real PNR.** Passenger details, a mock checkout, and a reference that works.
+The whole reservation goes through one security-definer function, because the
+three writes it makes have to succeed together.
+
+**Manage a booking** (`/trips`) with the PNR and a passenger surname — no
+account, the way every airline does it.
+
+### Resonance
+
+Sign in with a one-time email link; there is no password anywhere in the flow.
+A Resonant gets a profile — display name, home airport, home division — and
+every trip on the account in one place. Booking without an account still works.
+
+### Underneath
+
+The site is static and talks straight to Supabase from the browser, which is
+what lets it live on GitHub Pages with no server. Row level security is the
+protection: the publishable key in the bundle authorises nothing, reservations
+return 401 to an anonymous reader, and every write goes through a
+security-definer function. Each division carries its own accent colour, taken
+from its own chevron. It works down to a phone — where the board scrolls
+sideways inside its own frame rather than dragging the page with it.
+
+---
+
+## What is not built yet
+
+A lot. In rough order of how much is already there to build on:
+
+- **Cancelling a booking from the site.** `cancel_booking()` is in the database,
+  granted, and tested — it refuses a wrong surname and refuses a second
+  cancellation — but nothing in the UI calls it yet. Today a cancellation is a
+  database call.
+- **Admin editing.** `echo_is_admin()` exists and Resonance shows an Admin
+  badge, but there is no editor behind it. Overwriting a carrier profile means
+  writing the row by hand.
+- **Resonance is membership, not a programme.** No status tiers, no benefits,
+  nothing earned by flying.
+- **Search is one-way and single-date.** No return journeys, no multi-city, no
+  flexible dates, no round-the-world.
+- **Three carriers have no usable name** — two carry none at all and one is
+  called `/`. They currently show as their uid stub and need labels chosen by
+  hand.
+- **Nothing syncs with the game.** The data is a point-in-time export; refreshing
+  it means re-running the scraper with a fresh token and redeploying.
+- **Some folder names are not ASCII** (`divisions/vilis/龙凤航空/`). Fine in this
+  repository, awkward in some tooling.
+
+---
+
 ## What this repository holds
 
 ```
@@ -17,7 +122,7 @@ divisions/          the alliance rosters, and the scraper that fetches them
   scrape_members.py
 
 database/           the JSON turned into a relational database
-  sql/              01 .. 14, run in numeric order
+  sql/              01 .. 16, run in numeric order
   scripts/          ETL, airport backfill, deploy, credential handling
   reference/        merged open airport data
   connection.txt    your Supabase project  (NOT committed - see below)
@@ -73,18 +178,10 @@ about — airline codes are not unique, seven different carriers are called
 one fleet. Every one of those is handled; `database/README.md` lists them.
 
 **The database is Postgres, sized to fit.** 341,710 flights and 153,688
-aircraft, in **419 MB** — small enough for a Supabase free project. Getting
+aircraft, in **432 MB** — small enough for a Supabase free project. Getting
 there meant storing operating days as a 7-bit mask rather than a row per day,
 folding the four fixed cabins into columns, and keeping only the indexes that
 are actually scanned.
-
-**The site is static.** It talks straight to Supabase from the browser, which
-is what lets it live on GitHub Pages with no server. Row level security is what
-protects the data; the publishable key in the bundle authorises nothing.
-
-**Search crosses every carrier.** One query returns nonstop through two-stop
-itineraries across all 590 airlines, so a journey no single member flies is
-still one booking and one reference. It runs in 44–73 ms typically.
 
 ---
 
