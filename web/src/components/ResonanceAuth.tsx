@@ -5,11 +5,13 @@ import { useAuth } from '../lib/auth'
 /**
  * Getting into a Resonance account.
  *
- * This used to be one field and a magic link. A link is genuinely good for
- * signing up — nothing to invent, nothing to remember — and genuinely bad for
- * signing in on a phone, where it throws you out to a mail app and back. So
- * both are here, password first, because that is the one people reach for
- * when they already have an account.
+ * Three states: sign in, create an account, and ask for a reset. There was a
+ * fourth — a one-time sign-in link — and it is gone, because it sent people
+ * out to a mail app and back to come in.
+ *
+ * Reset stays, and has to. It is the only route into an account whose
+ * password is forgotten, and the only route in at all for everyone who joined
+ * while the link was the way in: there is no password on those records.
  *
  * Passwords are never held, logged, or put in component state longer than the
  * submit that uses them: the field's value goes straight to supabase-js, which
@@ -104,15 +106,10 @@ function Field({
   )
 }
 
-type Mode = 'password' | 'signup' | 'link' | 'forgot'
-
-const TABS: { key: Mode; label: string }[] = [
-  { key: 'password', label: 'Password' },
-  { key: 'link', label: 'Email link' },
-]
+type Mode = 'password' | 'signup' | 'forgot'
 
 export function SignIn() {
-  const { signInWithPassword, signInWithLink, signUp, sendPasswordReset } = useAuth()
+  const { signInWithPassword, signUp, sendPasswordReset } = useAuth()
   const [mode, setMode] = useState<Mode>('password')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -140,7 +137,7 @@ export function SignIn() {
       if (error) {
         setError(
           error.code === 'invalid_credentials'
-            ? 'That email and password do not match. If you have only ever used a sign-in link you will not have a password yet — use Forgot password, or the Email link tab, then set one from your account.'
+            ? 'That email and password do not match. If you joined before passwords existed you will not have one yet — use Forgot password to set your first.'
             : explain(error),
         )
       }
@@ -161,21 +158,13 @@ export function SignIn() {
       return
     }
 
-    if (mode === 'forgot') {
-      const { error } = await sendPasswordReset(email)
-      setBusy(false)
-      if (error) setError(explain(error))
-      else
-        setNote(
-          `If ${email} has an account, a reset link is on its way. Opening it brings you back here to choose a new password.`,
-        )
-      return
-    }
-
-    const { error } = await signInWithLink(email)
+    const { error } = await sendPasswordReset(email)
     setBusy(false)
     if (error) setError(explain(error))
-    else setNote(`A sign-in link is on its way to ${email}. It opens this page already signed in.`)
+    else
+      setNote(
+        `If ${email} has an account, a reset link is on its way. Opening it brings you back here to choose a new password.`,
+      )
   }
 
   const heading =
@@ -186,52 +175,27 @@ export function SignIn() {
         : 'Sign in'
 
   const cta =
-    mode === 'signup'
-      ? 'Create account'
-      : mode === 'forgot'
-        ? 'Send reset link'
-        : mode === 'link'
-          ? 'Send a sign-in link'
-          : 'Sign in'
+    mode === 'signup' ? 'Create account' : mode === 'forgot' ? 'Send reset link' : 'Sign in'
 
   const emailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)
-  const wantsPassword = mode === 'password' || mode === 'signup'
+  const wantsPassword = mode !== 'forgot'
   const canSubmit = emailOk && (!wantsPassword || password.length >= MIN_PASSWORD) && !busy
 
   return (
     <>
-      {/* Two ways in. Neither is right on its own, so neither is hidden. */}
-      {(mode === 'password' || mode === 'link') && (
-        <div className="mt-8 flex gap-2">
-          {TABS.map((t) => (
-            <button
-              key={t.key}
-              type="button"
-              onClick={() => go(t.key)}
-              aria-pressed={mode === t.key}
-              className={`chip ${mode === t.key ? 'chip-on' : ''}`}
-            >
-              {t.label}
-            </button>
-          ))}
-        </div>
-      )}
-
-      <form
-        onSubmit={submit}
-        className={`panel flex flex-col gap-4 p-5 ${mode === 'password' || mode === 'link' ? 'mt-3' : 'mt-8'}`}
-      >
+      <form onSubmit={submit} className="panel mt-8 flex flex-col gap-4 p-5">
         <h2 className="display text-2xl">{heading}</h2>
 
-        {mode === 'link' && (
-          <p className="-mt-2 text-sm text-ink-dim">
-            No password needed. We send a one-time link that opens this page
-            signed in.
-          </p>
-        )}
         {mode === 'signup' && (
           <p className="-mt-2 text-sm text-ink-dim">
             One account across all 590 carriers. You can also book without one.
+          </p>
+        )}
+        {mode === 'forgot' && (
+          <p className="-mt-2 text-sm text-ink-dim">
+            We email you a link that brings you back here to choose a new one.
+            This is also how to set your first password if you have never had
+            one.
           </p>
         )}
 
@@ -365,7 +329,7 @@ export function PasswordCard({ highlight = false }: { highlight?: boolean }) {
       <p className="mt-2 max-w-[54ch] text-sm text-ink-dim">
         {highlight
           ? 'Your reset link worked. Pick a new password and you are done.'
-          : 'Set one to sign in without waiting for an email. Signing in with a link keeps working either way.'}
+          : 'Change the password you sign in with. If you forget it, Forgot password on the sign-in screen emails you a way back.'}
       </p>
 
       <div className="mt-4 grid gap-4 sm:grid-cols-2">

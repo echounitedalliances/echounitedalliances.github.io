@@ -71,9 +71,11 @@ account, the way every airline does it.
 
 ### Resonance
 
-Sign in with a one-time email link; there is no password anywhere in the flow.
-A Resonant gets a profile — display name, home airport, home division — and
-every trip on the account in one place. Booking without an account still works.
+Sign in with an email and password, held by Supabase Auth and never by this
+project. Forgotten passwords are reset over email — the one place email still
+appears, and the only way back into an account nobody can sign into. A Resonant
+gets a profile — display name, home airport, home division — and every trip on
+the account in one place. Booking without an account still works.
 
 ### Underneath
 

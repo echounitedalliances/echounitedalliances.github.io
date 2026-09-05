@@ -10,10 +10,10 @@ import { shortDate, usd } from '../lib/format'
 /**
  * Resonance: sign in, keep a profile, and see every trip on the account.
  *
- * Two ways in -- a password or a one-time email link -- because a link is a
- * good way to join and a poor way to come back on a phone. Either way the
- * site only ever holds the session that comes back; the sign-in form lives in
- * components/ResonanceAuth.
+ * Sign-in is a password; the one-time email link that used to sit beside it
+ * is gone. Email survives only as password reset, which is the sole way back
+ * into an account nobody can sign into. The form lives in
+ * components/ResonanceAuth; the site only ever holds the session.
  */
 export default function Resonance() {
   const { ready, user, resonant, recovering, endRecovery, signOut, refreshResonant } = useAuth()
