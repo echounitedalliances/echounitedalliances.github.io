@@ -18,6 +18,8 @@ export default function AirlinePage() {
   const [missing, setMissing] = useState(false)
   const [timetable, setTimetable] = useState<TimetableRow[] | null>(null)
   const [ttAirport, setTtAirport] = useState<string>('')
+  /** True when the unfiltered timetable came back at the server's row cap. */
+  const [ttCapped, setTtCapped] = useState(false)
 
   /**
    * The map answers two different questions and they need different data.
@@ -58,7 +60,7 @@ export default function AirlinePage() {
       }
       setA(air)
 
-      const [f, r, t] = await Promise.all([
+      const [f, r] = await Promise.all([
         supabase
           .from('v_fleet')
           .select('aircraft_model, manufacturer, aircraft_count')
@@ -73,9 +75,7 @@ export default function AirlinePage() {
           .eq('airline_uid', air.uid)
           .order('departures_per_week', { ascending: false })
           .limit(400),
-        supabase.rpc('airline_timetable', { p_uid: air.uid, p_airport: null }),
       ])
-      setTimetable((t.data as TimetableRow[]) ?? [])
       const routeRows = (r.data as RoutePairRow[]) ?? []
       setFleet((f.data as FleetRow[]) ?? [])
       setRoutes(routeRows)
@@ -121,6 +121,38 @@ export default function AirlinePage() {
   }, [code, slug])
 
   if (!isConfigured) return <NotConfigured />
+  /**
+   * The timetable, fetched for whatever is currently selected.
+   *
+   * It used to be fetched once, unfiltered, and narrowed in the browser. That
+   * quietly lied: PostgREST caps a result at 1,000 rows and does not say so,
+   * and this carrier files 2,790 services — so everything alphabetically after
+   * HAN was missing, and asking for SGN's departures returned nothing from an
+   * airport it serves 140 times a week.
+   *
+   * Filtering on the server instead means each scope is complete. Only the
+   * unfiltered view can still hit the cap, and it now admits it.
+   */
+  useEffect(() => {
+    if (!isConfigured || !a) return
+    let cancelled = false
+    setTimetable(null)
+    void (async () => {
+      const { data } = await supabase.rpc('airline_timetable', {
+        p_uid: a.uid,
+        p_airport: ttRoute ? ttRoute.a : ttAirport || null,
+        p_pair_with: ttRoute ? ttRoute.b : null,
+      })
+      if (cancelled) return
+      const rows = (data as TimetableRow[]) ?? []
+      setTimetable(rows)
+      setTtCapped(!ttAirport && !ttRoute && rows.length === 1000)
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [a, ttAirport, ttRoute])
+
   // Fetched the first time Division mode is asked for, and kept. The whole
   // division is a much bigger draw than one carrier's routes and most visitors
   // never switch, so it does not belong in the page's initial load.
@@ -169,15 +201,9 @@ export default function AirlinePage() {
 
   const accent = accentOf(a)
   const named = a.airline_name?.trim()
-  const shown = (timetable ?? []).filter((t) => {
-    // A pinned route wins over a pinned airport: asking for one route's full
-    // timetable means both directions of it, not everything leaving one end.
-    if (ttRoute) {
-      const pair = [t.origin_iata, t.destination_iata].sort().join('-')
-      return pair === [ttRoute.a, ttRoute.b].sort().join('-')
-    }
-    return !ttAirport || t.origin_iata === ttAirport
-  })
+  // Already scoped by the query above — a second pass here would only be a
+  // chance for the two to disagree.
+  const shown = timetable ?? []
 
   // Not memoised, and not a hook: everything below here sits after the early
   // returns above, where a hook would change the call order between renders.
@@ -529,8 +555,20 @@ export default function AirlinePage() {
         <p className="mt-1 text-ink-faint">
           {ttRoute
             ? `Every service between ${ttRoute.a} and ${ttRoute.b}, both directions.`
-            : 'Departure times are local to the departure airport. 0 = Monday.'}
+            : ttAirport
+              ? `Every departure from ${ttAirport}. Times are local to it.`
+              : 'Departure times are local to the departure airport. 0 = Monday.'}
         </p>
+
+        {/* Saying "1,000 services" when there are 2,790 is worse than saying
+            nothing; the way out is to pick an airport, so the notice says so. */}
+        {ttCapped && (
+          <p className="mono mt-3 border-l-2 border-l-[color:var(--color-warn)] bg-surface px-4 py-3 text-[12px] text-ink-dim">
+            Showing the first 1,000 services — the server will not return more in
+            one request. Click an airport on the map, or pick a route, for a
+            complete list.
+          </p>
+        )}
 
         {timetable === null ? (
           <Loading />
