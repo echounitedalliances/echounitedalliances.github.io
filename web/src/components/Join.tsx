@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { SITE, discordConfigured } from '../lib/site'
 import { applyWebhookConfigured, submitApplication } from '../lib/discord'
-import { fetchOnlineCount } from '../lib/discordWidget'
+import { useOnlineCount } from '../lib/discordWidget'
 import { num } from '../lib/format'
 import type { Division } from '../lib/types'
 
@@ -117,12 +117,8 @@ function ApplyForm({ divisions }: { divisions: Division[] }) {
  */
 export default function Join({ compact = false, divisions = [] }: { compact?: boolean; divisions?: Division[] }) {
   const [method, setMethod] = useState<'discord' | 'website'>('discord')
-  const [onlineCount, setOnlineCount] = useState<number | null>(null)
+  const onlineCount = useOnlineCount()
   const showToggle = discordConfigured && applyWebhookConfigured
-
-  useEffect(() => {
-    void fetchOnlineCount().then(setOnlineCount)
-  }, [])
 
   if (compact) {
     return (

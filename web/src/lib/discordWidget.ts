@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+
 /**
  * The online count comes from Discord's public Server Widget, not a bot --
  * enabling it in Server Settings -> Widget exposes this JSON with no auth
@@ -7,7 +9,7 @@
  */
 const WIDGET_URL = 'https://discord.com/api/guilds/1535904782622138409/widget.json'
 
-export async function fetchOnlineCount(): Promise<number | null> {
+async function fetchOnlineCount(): Promise<number | null> {
   try {
     const res = await fetch(WIDGET_URL)
     if (!res.ok) return null
@@ -16,4 +18,13 @@ export async function fetchOnlineCount(): Promise<number | null> {
   } catch {
     return null
   }
+}
+
+/** Shared by the header and the Join panel. */
+export function useOnlineCount(): number | null {
+  const [count, setCount] = useState<number | null>(null)
+  useEffect(() => {
+    void fetchOnlineCount().then(setCount)
+  }, [])
+  return count
 }
