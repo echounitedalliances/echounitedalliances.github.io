@@ -5,9 +5,15 @@ import { SLOGAN } from '../lib/alliance'
 /**
  * The arrival sequence, shown once.
  *
- * The wing flies in from the right in two pieces — the upper and lower halves
- * arrive separately and a beat apart — settles, then narrows and sweeps out to
- * the left, taking the overlay with it.
+ * The two halves fly in from the right on opposite arcs — the upper one down
+ * from the top right, the lower one up from the bottom right, each flattening
+ * as it arrives — assemble behind the word, hold, then leave to the left
+ * TOGETHER.
+ *
+ * Together is why the exit is on their shared parent rather than on each wing:
+ * the arcs start a beat apart, and two animations on one element cannot both
+ * own `transform`. The parent carries the exit, each wing carries its arc, and
+ * the transforms compose.
  *
  * Three things keep it from being an obstacle:
  *
@@ -22,7 +28,7 @@ import { SLOGAN } from '../lib/alliance'
  */
 
 const SEEN_KEY = 'echo.welcomed.v1'
-const RUN_MS = 4200
+const RUN_MS = 4600
 
 function alreadyWelcomed() {
   try {
@@ -86,20 +92,24 @@ export default function Welcome() {
       <div className="welcome-inner">
         <p className="welcome-line welcome-kicker">Welcome to</p>
 
-        <div className="welcome-mark" aria-hidden="true">
-          <EchoMark half="top" height={132} color="var(--color-ink)" className="welcome-wing-top" />
-          <EchoMark
-            half="bottom"
-            height={132}
-            color="var(--color-accent)"
-            className="welcome-wing-bottom"
-          />
+        {/* The wing flies in behind the word and leaves it standing. */}
+        <div className="welcome-stage">
+          <div className="welcome-mark" aria-hidden="true">
+            <EchoMark half="top" height={210} color="var(--color-ink)" className="welcome-wing-top" />
+            <EchoMark
+              half="bottom"
+              height={210}
+              color="var(--color-accent)"
+              className="welcome-wing-bottom"
+            />
+          </div>
+          <p className="welcome-line welcome-echo">Echo</p>
         </div>
 
-        <p className="welcome-line welcome-name">
-          Echo <span className="welcome-name-dim">United Alliances</span>
+        <p className="welcome-line welcome-strap">
+          <span className="welcome-strap-name">United Alliances</span>
+          <span className="welcome-strap-slogan">{SLOGAN}</span>
         </p>
-        <p className="welcome-line welcome-slogan">{SLOGAN}</p>
       </div>
 
       <button type="button" className="welcome-skip" onClick={() => { remember(); setShow(false) }}>

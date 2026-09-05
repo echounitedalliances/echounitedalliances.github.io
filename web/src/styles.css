@@ -232,13 +232,12 @@ body {
     radial-gradient(60rem 40rem at 50% 45%,
       color-mix(in srgb, var(--color-accent) 16%, transparent), transparent 70%),
     var(--color-ground);
-  animation: welcome-out 700ms cubic-bezier(.6,0,.9,.3) 3500ms both;
+  animation: welcome-out 700ms cubic-bezier(.6,0,.9,.3) 3800ms both;
 }
 .welcome-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
   padding: 24px;
   text-align: center;
 }
@@ -255,51 +254,94 @@ body {
   letter-spacing: 0.42em;
   text-indent: 0.42em;
   color: var(--color-ink-dim);
-  animation-delay: 120ms;
-}
-.welcome-name {
-  font-size: clamp(26px, 6vw, 66px);
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-indent: 0.12em;
-  margin-top: 10px;
-  animation-delay: 1750ms;
-}
-.welcome-name-dim { color: var(--color-ink-faint); font-weight: 500; }
-.welcome-slogan {
-  font-family: var(--font-display);
-  text-transform: none;
-  font-size: clamp(15px, 2.6vw, 26px);
-  letter-spacing: 0.01em;
-  color: var(--color-accent);
-  animation-delay: 2050ms;
+  animation-delay: 100ms;
 }
 
-/* The wing itself: each half flies in from the right, holds, then narrows
-   and leaves to the left. The lower half is a beat behind the upper. */
-.welcome-mark {
+/* ECHO sits in the middle of the whole thing; the wing flies in behind it. */
+.welcome-stage {
   position: relative;
-  width: min(52vw, 340px);
-  height: 132px;
-  margin: 14px 0 4px;
+  display: grid;
+  place-items: center;
+  width: min(92vw, 720px);
+  height: clamp(150px, 30vw, 240px);
+  margin: 8px 0 4px;
 }
-.welcome-mark .echo-mark {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  margin-left: calc(-1 * 132px * 428 / 339 / 2);
+.welcome-echo {
+  position: relative;
+  z-index: 1;
+  /* The upper wing is white and so is the word, so where they cross the two
+     dissolve into each other. A halo in the ground colour punches the letters
+     out of the wing and makes it read as passing behind them. */
+  text-shadow:
+    0 0 22px var(--color-ground),
+    0 0 12px var(--color-ground),
+    0 0 4px var(--color-ground);
+  font-size: clamp(46px, 13vw, 132px);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-indent: 0.06em;
+  line-height: 1;
+  animation-delay: 900ms;
 }
-.welcome-wing-top    { animation: welcome-wing 3200ms cubic-bezier(.22,.7,.24,1) 250ms both; }
-.welcome-wing-bottom { animation: welcome-wing 3200ms cubic-bezier(.22,.7,.24,1) 600ms both; }
 
-@keyframes welcome-wing {
-  0%   { transform: translateX(120vw) scaleX(1.6); opacity: 0; }
-  18%  { opacity: 1; }
-  40%  { transform: translateX(0) scaleX(1); opacity: 1; }
-  62%  { transform: translateX(0) scaleX(1); opacity: 1; }
-  /* narrowing out, then gone to the left */
-  100% { transform: translateX(-120vw) scaleX(.18); opacity: 0; }
+.welcome-mark {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  /* The exit lives here, on the pair, so both halves leave together however
+     staggered their arrivals were. */
+  animation: welcome-mark-out 900ms cubic-bezier(.5,0,.85,.2) 2600ms both;
 }
+.welcome-mark .echo-mark { grid-area: 1 / 1; }
+
+/* Opposite parabolas. x falls linearly to nothing while y falls with the
+   SQUARE of what is left, so each half comes in steeply from its corner and
+   flattens out as it arrives -- the top one from above, the bottom from
+   below. Sampled at five points; a bezier cannot bend a path, only its rate. */
+.welcome-wing-top    { animation: welcome-arc-top    1500ms cubic-bezier(.25,.6,.3,1) 250ms both; }
+.welcome-wing-bottom { animation: welcome-arc-bottom 1500ms cubic-bezier(.25,.6,.3,1) 500ms both; }
+
+@keyframes welcome-arc-top {
+  0%   { transform: translate(120vw, -60vh); opacity: 0; }
+  15%  { opacity: 1; }
+  20%  { transform: translate(96vw, -38.4vh); }
+  40%  { transform: translate(72vw, -21.6vh); }
+  60%  { transform: translate(48vw, -9.6vh); }
+  80%  { transform: translate(24vw, -2.4vh); }
+  100% { transform: translate(0, 0); opacity: 1; }
+}
+@keyframes welcome-arc-bottom {
+  0%   { transform: translate(120vw, 60vh); opacity: 0; }
+  15%  { opacity: 1; }
+  20%  { transform: translate(96vw, 38.4vh); }
+  40%  { transform: translate(72vw, 21.6vh); }
+  60%  { transform: translate(48vw, 9.6vh); }
+  80%  { transform: translate(24vw, 2.4vh); }
+  100% { transform: translate(0, 0); opacity: 1; }
+}
+
+@keyframes welcome-mark-out {
+  0%   { transform: translateX(0) scaleX(1); opacity: 1; }
+  100% { transform: translateX(-130vw) scaleX(.16); opacity: 0; }
+}
+
+/* One line, two voices: the name, then the slogan in the alliance purple. */
+.welcome-strap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: clamp(14px, 4vw, 42px);
+  margin-top: 14px;
+  font-size: clamp(11px, 1.9vw, 17px);
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  animation-delay: 1500ms;
+}
+.welcome-strap-name { color: var(--color-ink-dim); }
+.welcome-strap-slogan { color: var(--color-accent); }
 
 @keyframes welcome-rise {
   from { opacity: 0; transform: translateY(14px); }
