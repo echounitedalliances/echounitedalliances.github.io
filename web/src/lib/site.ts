@@ -17,7 +17,7 @@ export const SITE = {
 
   /** Where applications actually happen, stated plainly. */
   joinRequirement:
-    'Every division of Echo requires an application in two places: in The Airline Simulator itself, and on the Echo Alliances Discord server. Both are needed — an in-game request alone will not be actioned, and neither will a Discord message without the in-game application.',
+    'Every division of Echo requires an application in two places: in The Airline Simulator itself, and with Echo Alliances — either on the Discord server or through the form on this page, whichever is easier. Both steps are needed — an in-game request alone will not be actioned, and neither will an alliance application without the in-game request.',
 
   joinSteps: [
     {
@@ -25,8 +25,8 @@ export const SITE = {
       body: 'Open The Airline Simulator, find the division you want in the alliance browser, and send an application from your airline.',
     },
     {
-      title: 'Apply on Discord',
-      body: 'Join the Echo Alliances server and post your application there so a division lead can match it to your in-game request.',
+      title: 'Apply with Echo Alliances',
+      body: 'Post your application on the Discord server, or use the form on this page instead — either way it reaches a division lead, who matches it to your in-game request.',
     },
     {
       title: 'Wait for a division lead',
