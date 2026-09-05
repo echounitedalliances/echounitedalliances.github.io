@@ -11,6 +11,8 @@ import Book from './pages/Book'
 import Trips from './pages/Trips'
 import NetworkPage from './pages/Network'
 import { SITE, discordConfigured } from './lib/site'
+import { useOnlineCount } from './lib/discordWidget'
+import { num } from './lib/format'
 import Resonance from './pages/Resonance'
 import { AuthProvider, useAuth } from './lib/auth'
 
@@ -26,6 +28,18 @@ const links = [
   { to: '/network', label: 'Network' },
   { to: '/trips', label: 'My trips' },
 ]
+
+/** The live count from Discord's public widget. Renders nothing until it loads. */
+function OnlineBadge() {
+  const onlineCount = useOnlineCount()
+  if (onlineCount == null) return null
+  return (
+    <div className="mono ml-2 flex items-center gap-1.5 border border-edge px-2.5 py-1.5 text-[11px] text-ink-faint">
+      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+      {num(onlineCount)} online
+    </div>
+  )
+}
 
 /** Signed out it reads "Resonance"; signed in it is your name. */
 function AccountLink({ block = false }: { block?: boolean }) {
@@ -124,6 +138,7 @@ function Shell({ children }: { children: React.ReactNode }) {
                 {l.label}
               </NavLink>
             ))}
+            <OnlineBadge />
             {discordConfigured && (
               <a
                 href={SITE.discordInvite}
