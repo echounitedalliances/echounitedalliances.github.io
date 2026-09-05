@@ -3,20 +3,20 @@ import { Link } from 'react-router-dom'
 import { Loading, NotConfigured } from '../components/ui'
 import { isConfigured, supabase } from '../lib/supabase'
 import { useAuth } from '../lib/auth'
+import { PasswordCard, SignIn } from '../components/ResonanceAuth'
 import type { AirportRow, BookingDetails, Division } from '../lib/types'
 import { shortDate, usd } from '../lib/format'
 
 /**
  * Resonance: sign in, keep a profile, and see every trip on the account.
  *
- * There is no password anywhere in this flow. Supabase sends a one-time link;
- * the site only ever holds the session that comes back.
+ * Two ways in -- a password or a one-time email link -- because a link is a
+ * good way to join and a poor way to come back on a phone. Either way the
+ * site only ever holds the session that comes back; the sign-in form lives in
+ * components/ResonanceAuth.
  */
 export default function Resonance() {
-  const { ready, user, resonant, signIn, signOut, refreshResonant } = useAuth()
-  const [email, setEmail] = useState('')
-  const [sent, setSent] = useState(false)
-  const [busy, setBusy] = useState(false)
+  const { ready, user, resonant, recovering, endRecovery, signOut, refreshResonant } = useAuth()
   const [error, setError] = useState<string | null>(null)
 
   const [trips, setTrips] = useState<BookingDetails[] | null>(null)
@@ -59,16 +59,6 @@ export default function Resonance() {
     }
   }, [airportQuery])
 
-  const send = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setBusy(true)
-    setError(null)
-    const { error } = await signIn(email)
-    setBusy(false)
-    if (error) setError(error)
-    else setSent(true)
-  }
-
   const saveProfile = async (patch: Record<string, string | null>) => {
     if (!resonant) return
     setSaved(false)
@@ -102,53 +92,7 @@ export default function Resonance() {
           book without one.
         </p>
 
-        {sent ? (
-          <div className="panel mt-8 border-l-2 border-l-[color:var(--color-cyan)] p-6">
-            <h2 className="display text-2xl">Check your email</h2>
-            <p className="mt-2 text-ink-dim">
-              A sign-in link is on its way to{' '}
-              <span className="mono text-ink">{email}</span>. It opens this page
-              signed in. No password, nothing to remember.
-            </p>
-            <button
-              onClick={() => setSent(false)}
-              className="mono mt-4 text-[11px] uppercase tracking-[0.14em] text-cyan"
-            >
-              Use a different address
-            </button>
-          </div>
-        ) : (
-          <form onSubmit={send} className="panel mt-8 flex flex-col gap-3 p-5 sm:flex-row sm:items-end">
-            <label className="block flex-1">
-              <span className="eyebrow mb-1.5 block text-ink-faint">Email</span>
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                className="w-full border border-edge bg-ground-2 px-3 py-2.5 text-ink outline-none placeholder:text-ink-faint focus:border-accent"
-              />
-            </label>
-            <button
-              type="submit"
-              disabled={busy || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)}
-              className="btn btn-book"
-            >
-              {busy ? 'Sending…' : 'Send a sign-in link'}
-            </button>
-          </form>
-        )}
-
-        {error && <p className="panel mt-4 p-4 text-ink-dim">{error}</p>}
-
-        <p className="mono mt-6 text-[11px] text-ink-faint">
-          Already booked without an account? Retrieve it with your reference on{' '}
-          <Link to="/trips" className="text-cyan">
-            manage booking
-          </Link>
-          .
-        </p>
+        <SignIn />
       </div>
     )
   }
@@ -178,6 +122,18 @@ export default function Resonance() {
           Sign out
         </button>
       </div>
+
+      {recovering && (
+        <div className="mt-8">
+          <PasswordCard highlight />
+          <button
+            onClick={endRecovery}
+            className="mono mt-3 text-[11px] uppercase tracking-[0.14em] text-ink-faint hover:text-ink-dim"
+          >
+            Skip for now
+          </button>
+        </div>
+      )}
 
       {!resonant ? (
         <Loading label="Setting up your membership" />
@@ -254,6 +210,9 @@ export default function Resonance() {
               </p>
             )}
           </section>
+
+          {/* Not shown twice: while recovering it is already at the top. */}
+          {!recovering && <PasswordCard />}
 
           <section className="mt-10">
             <h2 className="display text-2xl">Your trips</h2>
