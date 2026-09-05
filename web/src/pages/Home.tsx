@@ -173,7 +173,7 @@ export default function Home() {
       </section>
 
       {/* ---------- join: the expected path is site -> Discord ---------- */}
-      <Join />
+      <Join divisions={divisions} />
 
       {/* ---------- search ---------- */}
       <section className="border-y border-edge-soft bg-ground-2">
