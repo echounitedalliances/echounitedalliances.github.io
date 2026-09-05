@@ -9,10 +9,16 @@ import { createClient } from '@supabase/supabase-js'
  * readable, reservations are not, and nothing is writable except through the
  * policies and RPCs.
  */
-const url = import.meta.env.VITE_SUPABASE_URL as string | undefined
-const key = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined
+// Trimmed, and empty treated as missing. An unset GitHub Actions variable
+// substitutes an EMPTY STRING rather than nothing, and `'' ?? fallback` keeps
+// the empty string -- which made createClient throw at module load, so React
+// never mounted and the site served a blank white page with one console error.
+// Missing configuration has to degrade to the NotConfigured panel, never to a
+// crash.
+const url = (import.meta.env.VITE_SUPABASE_URL ?? '').trim()
+const key = (import.meta.env.VITE_SUPABASE_ANON_KEY ?? '').trim()
 
-export const isConfigured = Boolean(url && key)
+export const isConfigured = url.length > 0 && key.length > 0
 
 if (!isConfigured && import.meta.env.DEV) {
   console.warn(
@@ -22,7 +28,7 @@ if (!isConfigured && import.meta.env.DEV) {
 }
 
 export const supabase = createClient(
-  url ?? 'https://placeholder.supabase.co',
-  key ?? 'placeholder',
+  isConfigured ? url : 'https://placeholder.supabase.co',
+  isConfigured ? key : 'placeholder-anon-key',
   { auth: { persistSession: true, autoRefreshToken: true } },
 )

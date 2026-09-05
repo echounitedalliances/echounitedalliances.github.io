@@ -30,6 +30,18 @@ jobs:
           cache: npm
           cache-dependency-path: web/package-lock.json
 
+      - name: Require the Supabase variables
+        # An unset repository variable substitutes an empty string, which built
+        # a bundle with no credentials and published it over a working site.
+        # Fail here instead, with an error that says what to do.
+        run: |
+          if [ -z "${{ vars.VITE_SUPABASE_URL }}" ] || [ -z "${{ vars.VITE_SUPABASE_ANON_KEY }}" ]; then
+            echo "::error::VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are not set."
+            echo "::error::Add them under Settings -> Secrets and variables -> Actions -> Variables."
+            echo "::error::Until then the committed build at the repository root is what serves."
+            exit 1
+          fi
+
       - run: npm ci
 
       - name: Build
