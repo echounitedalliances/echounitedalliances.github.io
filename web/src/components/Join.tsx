@@ -5,16 +5,22 @@ import type { Division } from '../lib/types'
 
 function ApplyForm({ divisions }: { divisions: Division[] }) {
   const [airlineName, setAirlineName] = useState('')
+  const [airlineTag, setAirlineTag] = useState('')
   const [divisionName, setDivisionName] = useState('')
   const [notes, setNotes] = useState('')
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!airlineName.trim() || !divisionName) return
+    if (!airlineName.trim() || !airlineTag.trim() || !divisionName) return
     setStatus('sending')
     try {
-      await submitApplication({ airlineName: airlineName.trim(), divisionName, notes: notes.trim() })
+      await submitApplication({
+        airlineName: airlineName.trim(),
+        airlineTag: airlineTag.trim().toUpperCase(),
+        divisionName,
+        notes: notes.trim(),
+      })
       setStatus('sent')
     } catch {
       setStatus('error')
@@ -41,6 +47,19 @@ function ApplyForm({ divisions }: { divisions: Division[] }) {
           onChange={(e) => setAirlineName(e.target.value)}
           placeholder="Your airline"
           className="w-full border border-edge bg-ground-2 px-3 py-2.5 text-ink outline-none focus:border-accent"
+        />
+      </div>
+      <div>
+        <label htmlFor="apply-tag" className="eyebrow mb-1.5 block text-ink-faint">
+          Airline tag
+        </label>
+        <input
+          id="apply-tag"
+          value={airlineTag}
+          onChange={(e) => setAirlineTag(e.target.value)}
+          placeholder="e.g. ECH"
+          maxLength={4}
+          className="mono w-full border border-edge bg-ground-2 px-3 py-2.5 uppercase text-ink outline-none focus:border-accent"
         />
       </div>
       <div>
@@ -76,7 +95,7 @@ function ApplyForm({ divisions }: { divisions: Division[] }) {
       </div>
       <button
         type="submit"
-        disabled={!airlineName.trim() || !divisionName || status === 'sending'}
+        disabled={!airlineName.trim() || !airlineTag.trim() || !divisionName || status === 'sending'}
         className="btn btn-primary w-full"
       >
         {status === 'sending' ? 'Sending…' : 'Send application'}

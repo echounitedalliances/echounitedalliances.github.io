@@ -14,6 +14,7 @@ export const applyWebhookConfigured = webhookUrl.length > 0
 
 export type Application = {
   airlineName: string
+  airlineTag: string
   divisionName: string
   notes: string
 }
@@ -33,6 +34,7 @@ export async function submitApplication(app: Application) {
           color: 0x45c8f0,
           fields: [
             { name: 'Airline', value: app.airlineName, inline: true },
+            { name: 'Tag', value: app.airlineTag, inline: true },
             { name: 'Division', value: app.divisionName, inline: true },
             ...(app.notes ? [{ name: 'Notes', value: app.notes.slice(0, 1000) }] : []),
           ],
