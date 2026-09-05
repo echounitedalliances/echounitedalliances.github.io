@@ -208,6 +208,22 @@ body {
   border-color: var(--color-danger);
 }
 
+/* The division palette, for CSS that cannot read the database.
+   The source of truth is database/sql/19_division_colours.sql; these exist
+   only because a loading state has to paint before any query has answered,
+   which is the one moment the real colours are not available yet. Change
+   both together. */
+:root {
+  --division-kyra:    #7B35FF;
+  --division-aegis:   #D0FF4D;
+  --division-elysium: #E46EFF;
+  --division-proxima: #81FBFE;
+  --division-rhea:    #5DFE95;
+  --division-vilis:   #FF7E42;
+  --division-elion:   #7EA0F4;
+  --division-aura:    #EF9D9E;
+}
+
 /* The Echo wing ------------------------------------------------------
    The art is a white silhouette, so it is used as a mask over a coloured
    box: one file, any accent. */
@@ -216,6 +232,50 @@ body {
   flex: none;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
+}
+
+/* Loading ------------------------------------------------------------
+   The wing holds still and the colour moves through it: white, then a
+   division, then white, then the next, right to left, for as long as
+   whatever we are waiting for takes.
+
+   It is one gradient nine times the width of the mark, slid leftwards
+   under it. background-position 0% -> 100% moves the image LEFT (its right
+   edge ends up against the box's right edge), so the colours enter from the
+   right, which is the way the wing points. No JavaScript, no frame loop:
+   the compositor runs it and it stops existing when the element unmounts. */
+.echo-loader {
+  background-image: linear-gradient(
+    90deg,
+    #fff, var(--division-kyra),
+    #fff, var(--division-aegis),
+    #fff, var(--division-elysium),
+    #fff, var(--division-proxima),
+    #fff, var(--division-rhea),
+    #fff, var(--division-vilis),
+    #fff, var(--division-elion),
+    #fff, var(--division-aura),
+    #fff
+  );
+  background-size: 900% 100%;
+  animation: echo-loader-sweep 3s linear infinite;
+}
+
+@keyframes echo-loader-sweep {
+  from { background-position: 0% 50%; }
+  to   { background-position: 100% 50%; }
+}
+
+/* A colour cycling every fifth of a second is exactly what reduced-motion is
+   asking us not to do. The global rule would collapse the duration to
+   nothing and freeze it mid-gradient; this stops it deliberately, on one
+   flat colour. */
+@media (prefers-reduced-motion: reduce) {
+  .echo-loader {
+    background-image: none;
+    background-color: var(--color-accent);
+    animation: none;
+  }
 }
 
 /* The arrival sequence ----------------------------------------------

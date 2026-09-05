@@ -1,194 +1,192 @@
 # Merging lacnka/echotesting
 
-Prepared 6 September 2026. **Nothing here has been merged.** This is a survey of
-what each side built after the fork, what will collide, and what must not be
-brought across.
+**Nothing has been merged.** This is the survey: what each side built, what to
+take, what to leave, and the one decision to make first.
 
-Their repo: <https://github.com/lacnka/echotesting> · live at
-<https://lacnka.github.io/echotesting/>
+Updated 6 September 2026 · their repo: <https://github.com/lacnka/echotesting>
 
 ---
 
-## Where the histories split
+## At a glance
 
-```
-64a79c3  Add password sign-in to Resonance, alongside the email link
-```
+| | |
+|---|---|
+| **Decide first** | Where the application form sends data — a secret is otherwise published in the bundle |
+| **Take from them** | The application form · Discord online count · live visitor count |
+| **Take from us** | The country-filter fix — ours now covers three traps, theirs one |
+| **Never take** | `23928a9` — it rewrites asset paths for *their* URL and breaks ours |
+| **Will conflict** | `web/src/App.tsx` (trivial) · `web/src/pages/Home.tsx` (one line) |
 
-Both trees are identical up to that commit. Everything below is after it, so
-this is the base any merge starts from.
+The trees are identical up to **`64a79c3` "Add password sign-in to Resonance"**.
+Everything below happened after it: **12 commits theirs, 8 ours**.
 
-| | commits since the fork | source files touched |
+---
+
+## 1. Decide this before merging anything
+
+**Where should the application form send data?**
+
+Their form posts to a Discord webhook held in `VITE_DISCORD_APPLY_WEBHOOK_URL`.
+That is a **secret compiled into a public bundle** — anyone who opens devtools
+can read it and post to the applications channel themselves, under the
+alliance's own webhook, so it looks official.
+
+Their code says so plainly and treats it as an accepted trade. That is a
+reasonable position, but it is yours to take, not theirs.
+
+> **Checked: nothing is exposed today.** Their committed bundle and their live
+> deployed bundle both contain zero webhook URLs — the variable was never set
+> on a build. The risk is entirely prospective: the first build made with it set
+> publishes it.
+
+| Option | Effort | What you get |
 |---|---|---|
-| **ours** (`echounitedalliances`) | 6 | 27 |
-| **theirs** (`lacnka/echotesting`) | 12 | 9 |
+| **A. Accept it** | none | Works today. Worst case is channel spam under your own webhook; the fix is to regenerate it. |
+| **B. Supabase table** ⭐ | ~an hour | No secret in the bundle. Applications become durable rows you can query and mark handled, instead of chat scrollback. Reuses infrastructure you already run. |
+| **C. Proxy** (Worker / Edge Function) | ~an hour | Keeps Discord as the destination, hides the secret, adds a moving part to maintain. |
 
-They forked before the email-link removal, so their tree still has
-`signInWithOtp` and the Email-link tab. That is not a conflict — we deleted
-those files' contents, they never touched them — but their branch will still
-*show* a sign-in method that no longer exists on ours.
+**B is what I would do.** Settle it first: it substantially rewrites
+`web/src/lib/discord.ts`, and redirecting the form once is easier than merging
+it and rewriting it after.
 
 ---
 
-## What they built that we do not have
+## 2. Take from them
 
-### 1. In-site application form — worth taking
+### The in-site application form — the most valuable thing on their branch
 
-`web/src/components/Join.tsx`, `web/src/lib/discord.ts`
+`web/src/components/Join.tsx` · `web/src/lib/discord.ts`
 
-A form beside the Join panel collecting **airline name, tag, division and
-notes**, posted to a Discord webhook as an embed. The Join panel becomes a
-two-way choice (`method: 'discord' | 'website'`) rather than Discord only, and
-the copy in `site.ts` was rewritten to present them as equal routes instead of
-treating the form as a hidden extra.
+Collects **airline name, tag, division, notes**. The Join panel becomes a real
+choice (`method: 'discord' | 'website'`) rather than Discord-only, and the copy
+in `site.ts` presents the two as equals instead of hiding the form.
 
-It takes `divisions` as a prop now — `<Join divisions={divisions} />` — so the
-division dropdown is populated from the database rather than hardcoded.
+It takes divisions as a prop — `<Join divisions={divisions} />` — so the
+dropdown comes from the database.
 
-**This is the most valuable thing on their branch.** It removes a step from the
-one funnel the site exists to serve.
+It removes a step from the one funnel the site exists to serve. Take it, once
+§1 is settled.
 
-### 2. Discord online count — worth taking, with a caveat
+### Discord online count
 
 `web/src/lib/discordWidget.ts`
 
 Reads `presence_count` from Discord's **public Server Widget** JSON. No auth, no
-bot, CORS already open, and it degrades to rendering nothing if the widget is
-switched off. Shown in the header and on the Join panel.
+bot, CORS already open, and it renders nothing if the widget is switched off.
 
-Caveat: the guild ID is hardcoded in the module. Fine, it is public — but it
-belongs in `site.ts` with the invite link, not buried in a lib file.
+*One change on the way in:* the guild ID is hardcoded in the module. It is
+public, so that is not a leak — but it belongs in `site.ts` beside the invite
+link, not buried in a lib file.
 
-### 3. Live visitor count — take it, but read the label
+### Live visitor count
 
 `web/src/lib/presence.ts`
 
-Supabase Realtime Presence: every tab joins one channel and counts the others.
+Supabase Realtime Presence — every tab joins one channel and counts the others.
 No backend, consistent with the rest of the architecture.
 
-It counts **open tabs, not people** — their own comment says so. One person with
-three tabs reads as three. The badge says "N on site", which slightly oversells
-it; "N tabs open" is honest but weak. Worth deciding on the wording before this
-ships, because a visibly wrong number is worse than no number.
+*Two things to settle on the way in:*
 
-Also unmeasured: this holds a WebSocket open for the life of the page, which is
-the first always-on connection the site would have. Free-tier Realtime has
-concurrent-connection limits worth checking before launch.
-
-### 4. Country filter fix — **we have this bug too**
-
-`web/src/pages/Directory.tsx:140`
-
-```tsx
-{countries.length > 1 && (        // ours, today
-```
-
-Filter to a country with only one carrier and `countries.length` drops to 1, so
-the whole row unmounts — **including the button that clears the filter**. You
-are stuck until you edit the URL. Their fix changes the guard to
-`(country || countries.length > 1)` and makes the two branches a proper ternary.
-
-I have deliberately **not** fixed this on our side. Fixing it independently
-would put a conflicting edit in the same six lines and make their commit harder
-to take. Take theirs.
+- **It counts open tabs, not people.** Their own comment says so. One person
+  with three tabs reads as three, and the badge says "N on site". A visibly
+  wrong number is worse than no number — decide the wording.
+- **It is the site's first always-on WebSocket.** Worth checking the free
+  tier's concurrent-connection limit before this ships.
 
 ---
 
-## What we built that they do not have
+## 3. Take ours instead
 
-For their side of the merge: About and Our activities pages, the alliance
-roster in `lib/alliance.ts`, the new division palette (`19_division_colours.sql`
-plus the matview refreshes), the Echo wing as a CSS mask (`EchoMark`), the
-arrival animation, `brand/` and the favicons, trip sorting, search sorting by
-departure and arrival, `v_route_pairs`, `search_places`, password-only sign-in,
-and the mobile header.
+### The country filter — ours supersedes theirs
 
----
+Their `eb76bca` fixes one trap: filtering to a country with a single carrier
+collapsed the chip row and took the clear button with it.
 
-## Collisions
+We have since fixed that **and two more**, plus one we introduced and caught:
 
-Only two files were edited on both sides.
+1. Single-carrier country unmounted the row — *their bug, also fixed here*
+2. **Zero results** removed the row entirely, and the empty state then advised
+   clearing filters it had just removed the controls for
+3. The search box never followed the URL, so Back left stale text that the next
+   keystroke wrote straight back
+4. `Clear all` cleared everything, then the 220 ms debounce fired and rebuilt
+   the query from a stale snapshot, restoring division and country
 
-### `web/src/App.tsx` — will conflict, trivially
-
-Both sides deleted the same block: the conic-gradient square that stood in for
-a logo. We replaced it with `<EchoMark />`; they replaced it with
-`<OnlineBadge />` and `<SiteVisitorBadge />`.
-
-**Resolution: keep all three.** The mark on the left, the badges on the right.
-Note they also tried a logomark of their own in `f217427` and reverted it in
-`ba813ae` — ours supersedes both, and their two reverting commits can be ignored.
-
-Our nav is also six items now plus Discord and the account chip, and it folds
-into a menu below 1024px. Their badges need to go into the mobile menu or be
-hidden below `lg`, or the header will overflow again — that overflow made the
-whole site scroll sideways on a phone once already.
-
-### `web/src/pages/Home.tsx` — one line
-
-`<Join />` becomes `<Join divisions={divisions} />`. Take theirs; `divisions` is
-already in scope on our Home.
+> **This changes the merge.** Their fix touches the same six lines we rewrote,
+> so `eb76bca` will now **conflict rather than apply cleanly**. Resolve it by
+> keeping ours.
 
 ---
 
-## Do **not** merge
+## 4. Never take
 
 ### `23928a9` "Fix asset paths for a GitHub Pages project page"
 
-It rewrites the built `index.html` and `404.html` from `/assets/…` to
-`/echotesting/assets/…`. That is correct for a **project page**
-(`lacnka.github.io/echotesting/`) and wrong for our **organisation page**
+It rewrites built `index.html` and `404.html` from `/assets/…` to
+`/echotesting/assets/…`. Correct for a **project page**
+(`lacnka.github.io/echotesting/`), wrong for our **organisation page**
 (`echounitedalliances.github.io`), where the base is `/`.
 
-This is deployment configuration, not a feature. It only ever touches built
-output, so the safe rule is: **merge source, never merge `index.html`,
-`404.html` or `assets/`** — republish those with `npm --prefix web run publish`
-after the merge instead.
+This is deployment configuration, not a feature, and it only ever touches built
+output. The safe rule for the whole merge:
 
-Our `brand/` directory is new since the fork and both publish paths had to learn
-it. Whoever merges must confirm `brand/` survives, or the site deploys with no
+> **Merge source. Never merge `index.html`, `404.html`, `assets/` or `brand/`.**
+> Republish with `npm --prefix web run publish` afterwards.
+
+`brand/` is new since the fork — the logo and favicons. Both publish paths had
+to learn about it, so confirm it survives the merge or the site deploys with no
 icon and no wordmark.
 
 ---
 
-## One decision to make first
+## 5. The two collisions
 
-`VITE_DISCORD_APPLY_WEBHOOK_URL` is a **secret that ends up in the public
-bundle**. Their own comment is straight about it: anyone who opens devtools can
-read it and post to the applications channel directly.
+### `web/src/App.tsx` — trivial
 
-I checked — **nothing is exposed today**. The committed bundle and the live
-deployed bundle both contain zero webhook URLs, because the variable was never
-set on a build. The risk is entirely prospective: the first build made with it
-set publishes it.
+Both sides deleted the same block: the conic-gradient square that stood in for a
+logo. We replaced it with `<EchoMark />`; they replaced it with `<OnlineBadge />`
+and `<SiteVisitorBadge />`.
 
-Three options, in order of effort:
+**Keep all three** — mark on the left, badges on the right.
 
-1. **Accept it** as they propose. There is no account or table behind the
-   webhook; worst case is channel spam, and the fix is to regenerate it. Cheap,
-   and reversible — but the spam would be posted under the alliance's own
-   webhook, so it would *look* official.
-2. **Put the form behind Supabase instead** — an `applications` table with an
-   insert-only RLS policy for `anon`, and a division lead reads it from the
-   site. No secret in the bundle, applications are durable and queryable rather
-   than living in a chat scrollback, and it reuses infrastructure that already
-   exists. This is what I would do.
-3. **A tiny proxy** (Cloudflare Worker, Supabase Edge Function) holding the
-   webhook server-side. Keeps Discord as the destination, adds a moving part.
+Two notes. They also tried their own logomark in `f217427` and reverted it in
+`ba813ae`; ours supersedes both and those two commits can be ignored. And our
+nav is now six items plus Discord and the account chip, folding into a menu
+below 1024px — **their badges need to go into that menu or hide below `lg`**, or
+the header overflows. That overflow once made the whole site scroll sideways on
+a phone.
 
-This is worth settling **before** the merge, because option 2 changes
-`discord.ts` substantially and it is easier to redirect the form once than to
-merge it and rewrite it after.
+### `web/src/pages/Home.tsx` — one line
+
+`<Join />` becomes `<Join divisions={divisions} />`. Take theirs; `divisions` is
+already in scope.
 
 ---
 
-## Suggested order
+## 6. What we have that they do not
 
-1. Decide the webhook question above.
-2. Merge their `Directory.tsx` fix on its own — smallest, entirely safe.
-3. Merge `discordWidget.ts` and `presence.ts` (new files, no conflicts), then
-   settle the "on site" wording and where the badges live on mobile.
-4. Merge the application form last, since it is the piece the webhook decision
-   changes.
-5. Resolve `App.tsx` by hand, take their one-line `Home.tsx`.
-6. Republish from source; do not take their built output.
+For their side of the merge:
+
+- **Pages** — About, Our activities, and the alliance roster in `lib/alliance.ts`
+- **Identity** — the new division palette (`19_division_colours.sql`, plus the
+  two materialised views that cache it), the Echo wing as a CSS mask
+  (`EchoMark`), `brand/` and the favicons
+- **Motion** — the arrival animation, and the wing loading state
+- **Booking** — trip sorting, search sorting by departure and arrival,
+  `v_route_pairs` (undirected city pairs), `search_places` (city-grouped
+  airport typeahead)
+- **Auth** — password-only sign-in; they forked before the email link was
+  removed, so their tree still shows a sign-in method that no longer exists
+- **Fixes** — the mobile header, and the four filter traps in §3
+
+---
+
+## 7. Suggested order
+
+1. **Settle §1.** Everything else is cheaper once it is decided.
+2. Merge nothing from `Directory.tsx` — keep ours, drop `eb76bca`.
+3. Merge `discordWidget.ts` and `presence.ts` — new files, no conflicts. Then
+   fix the "on site" wording and place the badges in the mobile menu.
+4. Merge the application form last; §1 decides what it looks like.
+5. Resolve `App.tsx` by hand. Take their one-line `Home.tsx`.
+6. Republish from source. Do not take their built output.
