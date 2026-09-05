@@ -25,6 +25,11 @@ web/.env.local
 
 # ---------------------------------------------------------------------
 # Build output
+#
+# web/dist is intermediate. The published site DOES live in the repository -
+# index.html, 404.html and assets/ at the root - because Pages serves the root
+# of main for a <name>.github.io site. web/scripts/publish-to-root.mjs puts it
+# there; do not edit those files by hand.
 # ---------------------------------------------------------------------
 web/node_modules/
 web/dist/
