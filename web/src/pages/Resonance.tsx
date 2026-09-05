@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Loading, NotConfigured } from '../components/ui'
 import { isConfigured, supabase } from '../lib/supabase'
 import { useAuth } from '../lib/auth'
 import { PasswordCard, SignIn } from '../components/ResonanceAuth'
+import { TRIP_SORTS, bookedAt, tripArrival, tripDeparture } from '../lib/trips'
+import type { TripSort } from '../lib/trips'
 import type { AirportRow, BookingDetails, Division } from '../lib/types'
 import { shortDate, usd } from '../lib/format'
 
@@ -18,6 +20,8 @@ import { shortDate, usd } from '../lib/format'
 export default function Resonance() {
   const { ready, user, resonant, recovering, endRecovery, signOut, refreshResonant } = useAuth()
   const [error, setError] = useState<string | null>(null)
+  const [sort, setSort] = useState<TripSort>('departure')
+  const [newestFirst, setNewestFirst] = useState(false)
 
   const [trips, setTrips] = useState<BookingDetails[] | null>(null)
   const [divisions, setDivisions] = useState<Division[]>([])
@@ -74,6 +78,15 @@ export default function Resonance() {
       setError(error.message)
     }
   }
+
+  // Derived, not stored: re-sorting a list you already have should not mean
+  // asking the server for it again.
+  const ordered = useMemo(() => {
+    if (!trips) return null
+    const key =
+      sort === 'departure' ? tripDeparture : sort === 'arrival' ? tripArrival : bookedAt
+    return [...trips].sort((a, b) => (newestFirst ? key(b) - key(a) : key(a) - key(b)))
+  }, [trips, sort, newestFirst])
 
   if (!isConfigured) return <NotConfigured />
   if (!ready) return <Loading label="Checking your session" />
@@ -215,7 +228,36 @@ export default function Resonance() {
           {!recovering && <PasswordCard />}
 
           <section className="mt-10">
-            <h2 className="display text-2xl">Your trips</h2>
+            <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+              <h2 className="display text-2xl">Your trips</h2>
+              {trips && trips.length > 1 && (
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="mono mr-1 text-[10px] uppercase tracking-[0.16em] text-ink-faint">
+                    Sort by
+                  </span>
+                  {TRIP_SORTS.map((o) => (
+                    <button
+                      key={o.key}
+                      type="button"
+                      onClick={() => setSort(o.key)}
+                      aria-pressed={sort === o.key}
+                      className={`chip ${sort === o.key ? 'chip-on' : ''}`}
+                    >
+                      {o.label}
+                    </button>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() => setNewestFirst((v) => !v)}
+                    aria-label={newestFirst ? 'Showing latest first' : 'Showing earliest first'}
+                    className="chip"
+                    title={newestFirst ? 'Latest first' : 'Earliest first'}
+                  >
+                    {newestFirst ? 'Latest ↓' : 'Earliest ↑'}
+                  </button>
+                </div>
+              )}
+            </div>
             {trips === null ? (
               <Loading />
             ) : trips.length === 0 ? (
@@ -229,7 +271,7 @@ export default function Resonance() {
               </div>
             ) : (
               <div className="mt-4 flex flex-col gap-3">
-                {trips.map((t) => (
+                {(ordered ?? []).map((t) => (
                   <article key={t.booking_id} className="panel p-5">
                     <div className="flex flex-wrap items-baseline justify-between gap-3">
                       <div className="mono text-2xl tracking-[0.2em] text-cyan">{t.pnr}</div>
