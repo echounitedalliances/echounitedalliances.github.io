@@ -159,7 +159,7 @@ export default function SearchResults() {
             {shown.map((it, i) => (
               <article
                 key={`${it.legs.map((l) => l.flight_id).join('-')}-${i}`}
-                className="panel rise grid gap-5 p-5 md:grid-cols-[1fr_auto]"
+                className="panel lift rise grid gap-5 p-5 md:grid-cols-[1fr_auto]"
                 style={{ animationDelay: `${Math.min(i, 12) * 30}ms` }}
               >
                 <div className="min-w-0">
@@ -197,8 +197,7 @@ export default function SearchResults() {
                   </div>
                   <button
                     onClick={() => select(it)}
-                    className="mono px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#0B0713]"
-                    style={{ background: 'var(--color-cyan)' }}
+                    className="btn btn-book"
                   >
                     Select
                   </button>

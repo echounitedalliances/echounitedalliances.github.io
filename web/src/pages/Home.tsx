@@ -63,9 +63,7 @@ export default function Home() {
   return (
     <>
       {/* ---------- identity ---------- */}
-      <section className="relative overflow-hidden border-b border-edge-soft">
-        <div className="pointer-events-none absolute inset-0 opacity-70"
-             style={{ background: 'radial-gradient(900px 420px at 72% 38%, #A855F71f, transparent 70%)' }} />
+      <section className="aurora relative overflow-hidden border-b border-edge-soft">
         <div className="mx-auto grid max-w-[1180px] items-center gap-8 px-5 pt-14 pb-12 lg:grid-cols-[1.05fr_1fr] lg:pt-20">
           <div className="rise">
             <p className="eyebrow text-cyan">Echo United Alliances</p>
@@ -99,16 +97,10 @@ export default function Home() {
             </div>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                to="/divisions"
-                className="mono border border-edge px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-ink transition-colors hover:border-accent"
-              >
+              <Link to="/divisions" className="btn btn-primary">
                 Meet the divisions
               </Link>
-              <Link
-                to="/airlines"
-                className="mono border border-edge px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-ink-dim transition-colors hover:border-accent hover:text-ink"
-              >
+              <Link to="/airlines" className="btn btn-ghost">
                 All 590 carriers
               </Link>
             </div>
@@ -150,8 +142,8 @@ export default function Home() {
               <Link
                 key={d.division_code}
                 to={`/d/${d.division_code}`}
-                className="panel rise group relative overflow-hidden p-5 transition-transform hover:-translate-y-0.5"
-                style={{ animationDelay: `${i * 45}ms` }}
+                className="panel lift rise group relative overflow-hidden p-5"
+                style={{ animationDelay: `${i * 45}ms`, ['--card-accent' as string]: accent }}
               >
                 <span
                   className="absolute inset-x-0 top-0 h-[2px]"

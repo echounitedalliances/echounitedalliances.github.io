@@ -82,7 +82,8 @@ export function AirlineCard({ a }: { a: Airline }) {
   return (
     <Link
       to={`/d/${a.division_code}/${a.airline_slug}`}
-      className="panel group flex items-start gap-3 p-4 transition-colors hover:border-[color:var(--color-accent)]"
+      className="panel lift group flex items-start gap-3 p-4"
+      style={{ ['--card-accent' as string]: accent }}
     >
       <Mark airline={a} />
       <div className="min-w-0 flex-1">

@@ -133,8 +133,7 @@ export default function Resonance() {
             <button
               type="submit"
               disabled={busy || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)}
-              className="mono px-6 py-3 text-[11px] uppercase tracking-[0.14em] text-[#0B0713] disabled:opacity-35"
-              style={{ background: 'var(--color-cyan)' }}
+              className="btn btn-book"
             >
               {busy ? 'Sending…' : 'Send a sign-in link'}
             </button>
@@ -174,7 +173,7 @@ export default function Resonance() {
         </div>
         <button
           onClick={() => void signOut()}
-          className="mono border border-edge px-4 py-2 text-[11px] uppercase tracking-[0.14em] text-ink-dim hover:border-accent hover:text-ink"
+          className="btn btn-ghost"
         >
           Sign out
         </button>

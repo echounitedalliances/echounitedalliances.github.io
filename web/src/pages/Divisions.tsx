@@ -38,8 +38,8 @@ export default function Divisions() {
               <Link
                 key={d.division_code}
                 to={`/d/${d.division_code}`}
-                className="panel rise group grid gap-5 p-6 transition-colors hover:border-[color:var(--color-accent)] md:grid-cols-[minmax(0,1fr)_auto]"
-                style={{ animationDelay: `${i * 40}ms` }}
+                className="panel lift rise group grid gap-5 p-6 md:grid-cols-[minmax(0,1fr)_auto]"
+                style={{ animationDelay: `${i * 40}ms`, ['--card-accent' as string]: accent }}
               >
                 <div className="min-w-0">
                   <div className="flex items-center gap-3">

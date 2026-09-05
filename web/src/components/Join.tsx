@@ -58,8 +58,7 @@ export default function Join({ compact = false }: { compact?: boolean }) {
                 href={SITE.discordInvite}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mono mt-5 block px-5 py-3.5 text-center text-[12px] uppercase tracking-[0.16em] text-[#0B0713]"
-                style={{ background: 'var(--color-cyan)' }}
+                className="btn btn-primary mt-5 w-full"
               >
                 Open the Discord ↗
               </a>

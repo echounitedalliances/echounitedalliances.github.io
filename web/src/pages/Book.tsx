@@ -108,13 +108,13 @@ export default function Book() {
         <div className="mt-10 flex justify-center gap-3">
           <button
             onClick={() => nav(`/trips?pnr=${pnr}`)}
-            className="mono border border-edge px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-ink hover:border-accent"
+            className="btn btn-primary"
           >
             View the booking
           </button>
           <Link
             to="/"
-            className="mono border border-edge px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-ink-dim hover:border-accent hover:text-ink"
+            className="btn btn-ghost"
           >
             Back to Echo
           </Link>
@@ -219,8 +219,7 @@ export default function Book() {
         <button
           onClick={confirm}
           disabled={!complete || busy}
-          className="mono mt-5 w-full px-6 py-4 text-[12px] uppercase tracking-[0.16em] text-[#0B0713] transition-opacity disabled:cursor-not-allowed disabled:opacity-35"
-          style={{ background: 'var(--color-cyan)' }}
+          className="btn btn-book mt-5 w-full py-4"
         >
           {busy ? 'Confirming…' : `Confirm booking · ${usd(total)}`}
         </button>

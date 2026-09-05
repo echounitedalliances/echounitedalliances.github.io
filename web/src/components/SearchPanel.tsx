@@ -176,8 +176,7 @@ export default function SearchPanel({ compact = false }: { compact?: boolean }) 
         <button
           type="submit"
           disabled={from.length !== 3 || to.length !== 3}
-          className="mono ml-auto w-full px-6 py-3 text-[12px] uppercase tracking-[0.16em] text-[#0B0713] transition-opacity disabled:cursor-not-allowed disabled:opacity-35 sm:w-auto"
-          style={{ background: 'var(--color-cyan)' }}
+          className="btn btn-book ml-auto w-full sm:w-auto"
         >
           Search the alliance
         </button>

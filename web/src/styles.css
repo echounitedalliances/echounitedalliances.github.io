@@ -187,6 +187,132 @@ body {
   .board-head, .board-row { gap: 9px; }
 }
 
+
+/* Buttons -----------------------------------------------------------
+   Three roles, and nothing else. Primary is the alliance purple and is used
+   once per view; ghost is everything else; cyan is reserved for the booking
+   path, so "this spends money" always looks the same. */
+.btn {
+  --btn-accent: var(--color-accent);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border: 1px solid transparent;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  isolation: isolate;
+  overflow: hidden;
+  transition: transform .18s cubic-bezier(.2,.7,.3,1),
+              box-shadow .18s ease,
+              border-color .18s ease,
+              color .18s ease;
+}
+.btn:disabled { opacity: .35; cursor: not-allowed; }
+.btn:not(:disabled):hover { transform: translateY(-1px); }
+.btn:not(:disabled):active { transform: translateY(0); }
+
+/* the sweep: a highlight that crosses once on hover, not a looping shimmer */
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(115deg, transparent 25%, rgba(255,255,255,.22) 50%, transparent 75%);
+  transform: translateX(-120%);
+  transition: transform .55s cubic-bezier(.2,.7,.3,1);
+}
+.btn:not(:disabled):hover::after { transform: translateX(120%); }
+
+.btn-primary {
+  color: #0B0713;
+  background: linear-gradient(135deg, var(--color-accent), #C77DFF 55%, var(--color-accent-dim));
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 55%, transparent),
+              0 6px 20px -8px color-mix(in srgb, var(--color-accent) 70%, transparent);
+}
+.btn-primary:not(:disabled):hover {
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 22%, transparent),
+              0 12px 28px -10px color-mix(in srgb, var(--color-accent) 85%, transparent);
+}
+
+.btn-book {
+  color: #051214;
+  background: linear-gradient(135deg, var(--color-cyan), #57C9DA);
+  box-shadow: 0 6px 20px -8px color-mix(in srgb, var(--color-cyan) 70%, transparent);
+}
+.btn-book:not(:disabled):hover {
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-cyan) 20%, transparent),
+              0 12px 28px -10px color-mix(in srgb, var(--color-cyan) 80%, transparent);
+}
+
+.btn-ghost {
+  color: var(--color-ink);
+  background: color-mix(in srgb, var(--color-surface) 70%, transparent);
+  border-color: var(--color-edge);
+}
+.btn-ghost:not(:disabled):hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 12%, transparent);
+}
+
+/* Cards -------------------------------------------------------------- */
+.lift {
+  transition: transform .2s cubic-bezier(.2,.7,.3,1),
+              border-color .2s ease,
+              box-shadow .2s ease;
+}
+.lift:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--card-accent, var(--color-accent)) 55%, var(--color-edge));
+  box-shadow: 0 14px 34px -20px color-mix(in srgb, var(--card-accent, var(--color-accent)) 90%, transparent);
+}
+
+/* The aurora behind the hero.
+   Two very large, very slow radial gradients. No JavaScript, no canvas, and
+   composited on the GPU -- the globe this site used to open with is exactly
+   what happens when ambience needs a render loop. */
+.aurora { position: relative; isolation: isolate; }
+.aurora::before {
+  content: "";
+  position: absolute;
+  inset: -20% -10% auto -10%;
+  height: 150%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(42rem 26rem at 18% 8%,  color-mix(in srgb, var(--color-accent) 20%, transparent), transparent 62%),
+    radial-gradient(34rem 22rem at 82% 34%, color-mix(in srgb, var(--color-cyan)   12%, transparent), transparent 60%),
+    radial-gradient(30rem 20rem at 55% 92%, color-mix(in srgb, #E549C9 12%, transparent), transparent 62%);
+  animation: drift 26s ease-in-out infinite alternate;
+}
+@keyframes drift {
+  from { transform: translate3d(-1.5%, -1%, 0) scale(1); }
+  to   { transform: translate3d(2%, 2.5%, 0) scale(1.06); }
+}
+
+/* Links --------------------------------------------------------------- */
+.link-sweep {
+  position: relative;
+  transition: color .18s ease;
+}
+.link-sweep::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -3px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .28s cubic-bezier(.2,.7,.3,1);
+}
+.link-sweep:hover::after { transform: scaleX(1); }
+
 /* Motion ----------------------------------------------------------- */
 @keyframes rise {
   from { opacity: 0; transform: translateY(10px); }
@@ -195,7 +321,9 @@ body {
 .rise { animation: rise .5s cubic-bezier(.2,.7,.3,1) both; }
 
 @media (prefers-reduced-motion: reduce) {
-  /* the flaps still land on the right characters; they simply do not step */
+  /* the flaps still land on the right characters; they simply do not step,
+     and the aurora holds still rather than drifting */
+  .aurora::before { animation: none; }
   *, *::before, *::after {
     animation-duration: .001ms !important;
     animation-iteration-count: 1 !important;

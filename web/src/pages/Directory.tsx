@@ -180,7 +180,7 @@ export default function Directory() {
               <button
                 onClick={loadMore}
                 disabled={busy}
-                className="mono border border-edge px-6 py-3 text-[11px] uppercase tracking-[0.14em] text-ink transition-colors hover:border-accent disabled:opacity-40"
+                className="btn btn-ghost"
               >
                 {busy ? 'Loading…' : 'Load more carriers'}
               </button>

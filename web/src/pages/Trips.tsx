@@ -81,8 +81,7 @@ export default function Trips() {
         <button
           type="submit"
           disabled={pnr.length !== 6 || !surname.trim() || busy}
-          className="mono px-6 py-3 text-[11px] uppercase tracking-[0.14em] text-[#0B0713] disabled:opacity-35"
-          style={{ background: 'var(--color-cyan)' }}
+          className="btn btn-book"
         >
           {busy ? 'Looking…' : 'Retrieve'}
         </button>
