@@ -58,7 +58,6 @@ function ApplyForm({ divisions }: { divisions: Division[] }) {
           value={airlineTag}
           onChange={(e) => setAirlineTag(e.target.value)}
           placeholder="e.g. ECH"
-          maxLength={4}
           className="mono w-full border border-edge bg-ground-2 px-3 py-2.5 uppercase text-ink outline-none focus:border-accent"
         />
       </div>
