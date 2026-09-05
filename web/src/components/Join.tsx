@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SITE, discordConfigured } from '../lib/site'
 import { applyWebhookConfigured, submitApplication } from '../lib/discord'
+import { fetchOnlineCount } from '../lib/discordWidget'
+import { num } from '../lib/format'
 import type { Division } from '../lib/types'
 
 function ApplyForm({ divisions }: { divisions: Division[] }) {
@@ -115,7 +117,12 @@ function ApplyForm({ divisions }: { divisions: Division[] }) {
  */
 export default function Join({ compact = false, divisions = [] }: { compact?: boolean; divisions?: Division[] }) {
   const [method, setMethod] = useState<'discord' | 'website'>('discord')
+  const [onlineCount, setOnlineCount] = useState<number | null>(null)
   const showToggle = discordConfigured && applyWebhookConfigured
+
+  useEffect(() => {
+    void fetchOnlineCount().then(setOnlineCount)
+  }, [])
 
   if (compact) {
     return (
@@ -157,8 +164,16 @@ export default function Join({ compact = false, divisions = [] }: { compact?: bo
           </div>
 
           <aside className="panel flex flex-col justify-center p-6">
-            <div className="mono text-[11px] uppercase tracking-[0.14em] text-ink-faint">
-              Echo Alliances
+            <div className="flex items-center justify-between gap-3">
+              <div className="mono text-[11px] uppercase tracking-[0.14em] text-ink-faint">
+                Echo Alliances
+              </div>
+              {onlineCount != null && (
+                <div className="mono flex items-center gap-1.5 text-[11px] text-ink-faint">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                  {num(onlineCount)} online
+                </div>
+              )}
             </div>
             <p className="mt-2 text-ink-dim">
               Apply on Discord, or use the form below — either one reaches a
