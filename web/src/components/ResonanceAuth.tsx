@@ -20,6 +20,36 @@ import { useAuth } from '../lib/auth'
 /** What the server enforces is set in the dashboard; this is the front door. */
 const MIN_PASSWORD = 8
 
+/**
+ * GoTrue's own wording, translated where it would leave someone stuck.
+ *
+ * Most of it is passed through untouched -- "Invalid login credentials" is
+ * deliberately vague and should stay that way. These are the cases where the
+ * raw message does not tell you what to do next, and one of them (the email
+ * rate limit) is a wall you can hit just by retrying a form that looked
+ * broken for an unrelated reason.
+ */
+function explain(error: { message: string; code?: string; status?: number }) {
+  const code = error.code ?? ''
+  const msg = error.message ?? ''
+  if (code === 'over_email_send_rate_limit' || /rate limit/i.test(msg)) {
+    return 'Too many emails from this project in the last hour — that is a limit on the sending account, not on you. It clears by itself; try again a little later, or sign in with a password instead.'
+  }
+  if (code === 'user_already_exists' || code === 'email_exists' || /already registered/i.test(msg)) {
+    return 'That address already has an account. Sign in with your password, or use Forgot password if you have never set one.'
+  }
+  if (code === 'weak_password') {
+    return `${msg} Passwords need at least ${MIN_PASSWORD} characters.`
+  }
+  if (code === 'signup_disabled') {
+    return 'New accounts are turned off for this project at the moment.'
+  }
+  if (code === 'email_provider_disabled') {
+    return 'Email sign-in is switched off for this project.'
+  }
+  return msg
+}
+
 function Field({
   label,
   type,
@@ -109,9 +139,9 @@ export function SignIn() {
       setPassword('')
       if (error) {
         setError(
-          /invalid login credentials/i.test(error)
-            ? 'That email and password do not match. If you have only ever used a sign-in link, you will not have a password yet — use the Email link tab, then set one from your account.'
-            : error,
+          error.code === 'invalid_credentials'
+            ? 'That email and password do not match. If you have only ever used a sign-in link you will not have a password yet — use Forgot password, or the Email link tab, then set one from your account.'
+            : explain(error),
         )
       }
       return
@@ -121,18 +151,20 @@ export function SignIn() {
       const { error, needsConfirmation } = await signUp(email, password)
       setBusy(false)
       setPassword('')
-      if (error) setError(error)
+      if (error) setError(explain(error))
       else if (needsConfirmation)
         setNote(
           `Account created. Confirm ${email} from the email we just sent, then sign in with your password.`,
         )
+      // With confirmation off there is already a session, and the page has
+      // re-rendered as the account by the time this line runs.
       return
     }
 
     if (mode === 'forgot') {
       const { error } = await sendPasswordReset(email)
       setBusy(false)
-      if (error) setError(error)
+      if (error) setError(explain(error))
       else
         setNote(
           `If ${email} has an account, a reset link is on its way. Opening it brings you back here to choose a new password.`,
@@ -142,7 +174,7 @@ export function SignIn() {
 
     const { error } = await signInWithLink(email)
     setBusy(false)
-    if (error) setError(error)
+    if (error) setError(explain(error))
     else setNote(`A sign-in link is on its way to ${email}. It opens this page already signed in.`)
   }
 
@@ -313,7 +345,7 @@ export function PasswordCard({ highlight = false }: { highlight?: boolean }) {
     setBusy(false)
     setPassword('')
     setConfirm('')
-    if (error) setError(error)
+    if (error) setError(explain(error))
     else {
       setDone(true)
       setTimeout(() => setDone(false), 6000)

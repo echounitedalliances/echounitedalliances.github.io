@@ -37,7 +37,13 @@ export type Resonant = {
   joined_at: string
 }
 
-type Result = { error: string | null }
+/**
+ * The raw error, not just its text. GoTrue's codes are what distinguish "wrong
+ * password" from "you have sent too many emails this hour", and the page needs
+ * to say different things about those.
+ */
+export type AuthFailure = { message: string; code?: string; status?: number }
+type Result = { error: AuthFailure | null }
 
 type AuthState = {
   ready: boolean
@@ -140,7 +146,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           email: email.trim(),
           options: { emailRedirectTo: redirectTo() },
         })
-        return { error: error ? error.message : null }
+        return { error }
       },
 
       signInWithPassword: async (email: string, password: string) => {
@@ -151,7 +157,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // GoTrue answers "Invalid login credentials" whether the address is
         // unknown or the password is wrong, which is what stops this being a
         // way to find out who has an account. Passed through unchanged.
-        return { error: error ? error.message : null }
+        return { error }
       },
 
       signUp: async (email: string, password: string) => {
@@ -160,9 +166,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           password,
           options: { emailRedirectTo: redirectTo() },
         })
-        if (error) return { error: error.message, needsConfirmation: false }
-        // With "Confirm email" on -- the default for a hosted project -- there
-        // is no session yet and a confirmation mail is on its way.
+        if (error) return { error, needsConfirmation: false }
+        // With "Confirm email" ON there is no session yet and a confirmation
+        // mail is on its way. With it OFF, signUp returns a session and the
+        // page is already signed in by the time this resolves.
         return { error: null, needsConfirmation: !data.session }
       },
 
@@ -170,13 +177,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
           redirectTo: redirectTo(),
         })
-        return { error: error ? error.message : null }
+        return { error }
       },
 
       setPassword: async (password: string) => {
         const { error } = await supabase.auth.updateUser({ password })
         if (!error) setRecovering(false)
-        return { error: error ? error.message : null }
+        return { error }
       },
 
       signOut: async () => {
