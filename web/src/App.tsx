@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { HashRouter, Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
+import About from './pages/About'
+import Activities from './pages/Activities'
 import Divisions from './pages/Divisions'
 import DivisionPage from './pages/Division'
 import AirlinePage from './pages/Airline'
@@ -21,9 +23,11 @@ import { AuthProvider, useAuth } from './lib/auth'
  */
 
 const links = [
+  { to: '/about', label: 'About' },
   { to: '/divisions', label: 'Divisions' },
   { to: '/airlines', label: 'Airlines' },
   { to: '/network', label: 'Network' },
+  { to: '/activities', label: 'Activities' },
   { to: '/trips', label: 'My trips' },
 ]
 
@@ -214,6 +218,8 @@ export default function App() {
         <Shell>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/activities" element={<Activities />} />
           <Route path="/divisions" element={<Divisions />} />
           <Route path="/d/:code" element={<DivisionPage />} />
           <Route path="/d/:code/:slug" element={<AirlinePage />} />

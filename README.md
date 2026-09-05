@@ -11,6 +11,16 @@ Live at **https://echounitedalliances.github.io**
 
 ### The alliance
 
+**About** (`/about`). The slogan, and the board — which is currently the eight
+division leaders, listed by the name and Discord handle they go by rather than
+by airline, since several of them own more than one. The roster is in
+`web/src/lib/alliance.ts`; division names, order and colours come from the
+database, so the page follows a rename without being edited.
+
+**Our activities** (`/activities`). FFA sales, the discount aircraft market
+and the recurring events, each with the facts down the side. All of it happens
+on Discord — the page says so once rather than in every section.
+
 **Home.** The headline figures, then a live departure board, then the eight
 divisions, the network drawn flat, and a carrier spotlight.
 
@@ -67,7 +77,9 @@ The whole reservation goes through one security-definer function, because the
 three writes it makes have to succeed together.
 
 **Manage a booking** (`/trips`) with the PNR and a passenger surname — no
-account, the way every airline does it.
+account, the way every airline does it — and cancel it from there. On a
+Resonance account the trips list sorts by first departure, last arrival, or
+booking date.
 
 ### Resonance
 
@@ -93,10 +105,6 @@ sideways inside its own frame rather than dragging the page with it.
 
 A lot. In rough order of how much is already there to build on:
 
-- **Cancelling a booking from the site.** `cancel_booking()` is in the database,
-  granted, and tested — it refuses a wrong surname and refuses a second
-  cancellation — but nothing in the UI calls it yet. Today a cancellation is a
-  database call.
 - **Admin editing.** `echo_is_admin()` exists and Resonance shows an Admin
   badge, but there is no editor behind it. Overwriting a carrier profile means
   writing the row by hand.
