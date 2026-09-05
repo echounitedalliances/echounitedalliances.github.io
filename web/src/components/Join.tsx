@@ -96,7 +96,8 @@ function ApplyForm({ divisions }: { divisions: Division[] }) {
  * something of the reader, and it says plainly what applying involves.
  */
 export default function Join({ compact = false, divisions = [] }: { compact?: boolean; divisions?: Division[] }) {
-  const [showApply, setShowApply] = useState(false)
+  const [method, setMethod] = useState<'discord' | 'website'>('discord')
+  const showToggle = discordConfigured && applyWebhookConfigured
 
   if (compact) {
     return (
@@ -142,35 +143,51 @@ export default function Join({ compact = false, divisions = [] }: { compact?: bo
               Echo Alliances
             </div>
             <p className="mt-2 text-ink-dim">
-              Applications, division leads and everything else happen on the
-              Discord server.
+              Apply on Discord, or use the form below — either one reaches a
+              division lead the same way.
             </p>
-            {discordConfigured ? (
-              <a
-                href={SITE.discordInvite}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary mt-5 w-full"
-              >
-                Open the Discord ↗
-              </a>
-            ) : (
-              <div className="mono mt-5 border border-edge px-5 py-3.5 text-center text-[11px] uppercase tracking-[0.14em] text-ink-faint">
-                Invite link not set yet
-              </div>
-            )}
-            {applyWebhookConfigured && (
-              <>
+
+            {showToggle && (
+              <div className="mt-5 grid grid-cols-2 gap-2">
                 <button
                   type="button"
-                  onClick={() => setShowApply((v) => !v)}
-                  className="btn btn-ghost mt-3 w-full"
+                  onClick={() => setMethod('discord')}
+                  className={`btn w-full ${method === 'discord' ? 'btn-primary' : 'btn-ghost'}`}
                 >
-                  {showApply ? 'Hide the form' : 'Already have an airline? Apply here'}
+                  Discord
                 </button>
-                {showApply && <ApplyForm divisions={divisions} />}
-              </>
+                <button
+                  type="button"
+                  onClick={() => setMethod('website')}
+                  className={`btn w-full ${method === 'website' ? 'btn-primary' : 'btn-ghost'}`}
+                >
+                  Website form
+                </button>
+              </div>
             )}
+
+            {(!showToggle || method === 'discord') &&
+              (discordConfigured ? (
+                <a
+                  href={SITE.discordInvite}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary mt-5 w-full"
+                >
+                  Open the Discord ↗
+                </a>
+              ) : (
+                !applyWebhookConfigured && (
+                  <div className="mono mt-5 border border-edge px-5 py-3.5 text-center text-[11px] uppercase tracking-[0.14em] text-ink-faint">
+                    Invite link not set yet
+                  </div>
+                )
+              ))}
+
+            {(!showToggle || method === 'website') && applyWebhookConfigured && (
+              <ApplyForm divisions={divisions} />
+            )}
+
             <p className="mt-3 text-[12px] text-ink-faint">
               Applying in the game alone is not enough — both steps are required.
             </p>
