@@ -12,6 +12,7 @@ import Trips from './pages/Trips'
 import NetworkPage from './pages/Network'
 import { SITE, discordConfigured } from './lib/site'
 import { useOnlineCount } from './lib/discordWidget'
+import { useSiteVisitorCount } from './lib/presence'
 import { num } from './lib/format'
 import Resonance from './pages/Resonance'
 import { AuthProvider, useAuth } from './lib/auth'
@@ -37,6 +38,18 @@ function OnlineBadge() {
     <div className="mono ml-2 flex items-center gap-1.5 border border-edge px-2.5 py-1.5 text-[11px] text-ink-faint">
       <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
       {num(onlineCount)} online
+    </div>
+  )
+}
+
+/** How many tabs have the site open right now, via Supabase Presence. */
+function SiteVisitorBadge() {
+  const visitorCount = useSiteVisitorCount()
+  if (visitorCount == null) return null
+  return (
+    <div className="mono ml-2 flex items-center gap-1.5 border border-edge px-2.5 py-1.5 text-[11px] text-ink-faint">
+      <span className="h-1.5 w-1.5 rounded-full bg-cyan" />
+      {num(visitorCount)} on site
     </div>
   )
 }
@@ -139,6 +152,7 @@ function Shell({ children }: { children: React.ReactNode }) {
               </NavLink>
             ))}
             <OnlineBadge />
+            <SiteVisitorBadge />
             {discordConfigured && (
               <a
                 href={SITE.discordInvite}
