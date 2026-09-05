@@ -208,6 +208,125 @@ body {
   border-color: var(--color-danger);
 }
 
+/* The Echo wing ------------------------------------------------------
+   The art is a white silhouette, so it is used as a mask over a coloured
+   box: one file, any accent. */
+.echo-mark {
+  display: inline-block;
+  flex: none;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/* The arrival sequence ----------------------------------------------
+   Runs once per browser. Transform and opacity only, so the compositor
+   owns every frame and nothing here touches layout. */
+.welcome {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(60rem 40rem at 50% 45%,
+      color-mix(in srgb, var(--color-accent) 16%, transparent), transparent 70%),
+    var(--color-ground);
+  animation: welcome-out 700ms cubic-bezier(.6,0,.9,.3) 3500ms both;
+}
+.welcome-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 24px;
+  text-align: center;
+}
+
+.welcome-line {
+  font-family: var(--font-brand);
+  text-transform: uppercase;
+  color: var(--color-ink);
+  opacity: 0;
+  animation: welcome-rise 620ms cubic-bezier(.2,.7,.3,1) both;
+}
+.welcome-kicker {
+  font-size: clamp(13px, 2.4vw, 20px);
+  letter-spacing: 0.42em;
+  text-indent: 0.42em;
+  color: var(--color-ink-dim);
+  animation-delay: 120ms;
+}
+.welcome-name {
+  font-size: clamp(26px, 6vw, 66px);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-indent: 0.12em;
+  margin-top: 10px;
+  animation-delay: 1750ms;
+}
+.welcome-name-dim { color: var(--color-ink-faint); font-weight: 500; }
+.welcome-slogan {
+  font-family: var(--font-display);
+  text-transform: none;
+  font-size: clamp(15px, 2.6vw, 26px);
+  letter-spacing: 0.01em;
+  color: var(--color-accent);
+  animation-delay: 2050ms;
+}
+
+/* The wing itself: each half flies in from the right, holds, then narrows
+   and leaves to the left. The lower half is a beat behind the upper. */
+.welcome-mark {
+  position: relative;
+  width: min(52vw, 340px);
+  height: 132px;
+  margin: 14px 0 4px;
+}
+.welcome-mark .echo-mark {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  margin-left: calc(-1 * 132px * 428 / 339 / 2);
+}
+.welcome-wing-top    { animation: welcome-wing 3200ms cubic-bezier(.22,.7,.24,1) 250ms both; }
+.welcome-wing-bottom { animation: welcome-wing 3200ms cubic-bezier(.22,.7,.24,1) 600ms both; }
+
+@keyframes welcome-wing {
+  0%   { transform: translateX(120vw) scaleX(1.6); opacity: 0; }
+  18%  { opacity: 1; }
+  40%  { transform: translateX(0) scaleX(1); opacity: 1; }
+  62%  { transform: translateX(0) scaleX(1); opacity: 1; }
+  /* narrowing out, then gone to the left */
+  100% { transform: translateX(-120vw) scaleX(.18); opacity: 0; }
+}
+
+@keyframes welcome-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes welcome-out {
+  from { opacity: 1; }
+  to   { opacity: 0; visibility: hidden; }
+}
+
+.welcome-skip {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  background: none;
+  border: 1px solid var(--color-edge);
+  padding: 7px 12px;
+  cursor: pointer;
+}
+.welcome-skip:hover { color: var(--color-ink); border-color: var(--color-accent); }
+
 /* Board hub chips ---------------------------------------------------
    Small enough not to compete with the board, and they carry the alliance
    purple only when selected, so the current hub is never in doubt. */
@@ -338,7 +457,7 @@ body {
   background:
     radial-gradient(42rem 26rem at 18% 8%,  color-mix(in srgb, var(--color-accent) 20%, transparent), transparent 62%),
     radial-gradient(34rem 22rem at 82% 34%, color-mix(in srgb, var(--color-cyan)   12%, transparent), transparent 60%),
-    radial-gradient(30rem 20rem at 55% 92%, color-mix(in srgb, #E549C9 12%, transparent), transparent 62%);
+    radial-gradient(30rem 20rem at 55% 92%, color-mix(in srgb, #E46EFF 12%, transparent), transparent 62%);
   animation: drift 26s ease-in-out infinite alternate;
 }
 @keyframes drift {

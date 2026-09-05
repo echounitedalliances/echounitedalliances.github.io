@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import RouteMap from '../components/RouteMap'
+import EchoMark from '../components/EchoMark'
 import { AirlineCard, Loading, NotConfigured } from '../components/ui'
 import { isConfigured, supabase } from '../lib/supabase'
 import type { Airline, Arc, Division, NetworkNode } from '../lib/types'
@@ -60,9 +61,12 @@ export default function DivisionPage() {
             <Link to="/divisions" className="mono text-[11px] uppercase tracking-[0.14em] text-ink-faint">
               ← All divisions
             </Link>
-            <h1 className="display mt-4 text-[clamp(40px,6vw,72px)]" style={{ color: accent }}>
-              {division.division_name}
-            </h1>
+            <div className="mt-4 flex items-center gap-4">
+              <EchoMark height={34} color={accent} />
+              <h1 className="display text-[clamp(40px,6vw,72px)]" style={{ color: accent }}>
+                {division.division_name}
+              </h1>
+            </div>
             {division.alliance_description && (
               <p className="mt-4 max-w-[60ch] whitespace-pre-line text-ink-dim">
                 {division.alliance_description}

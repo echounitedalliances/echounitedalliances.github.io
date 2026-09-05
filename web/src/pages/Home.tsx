@@ -5,6 +5,7 @@ import DepartureBoard from '../components/DepartureBoard'
 import SearchPanel from '../components/SearchPanel'
 import Join from '../components/Join'
 import { AirlineCard, NotConfigured } from '../components/ui'
+import EchoMark from '../components/EchoMark'
 import { isConfigured, supabase } from '../lib/supabase'
 import type { Airline, Arc, Division, NetworkNode } from '../lib/types'
 import { accentOf, num } from '../lib/format'
@@ -137,6 +138,7 @@ export default function Home() {
                   className="absolute inset-x-0 top-0 h-[2px]"
                   style={{ background: accent }}
                 />
+                <EchoMark height={15} color={accent} className="mb-3" />
                 <div className="display text-2xl" style={{ color: accent }}>
                   {d.division_name}
                 </div>

@@ -15,6 +15,8 @@ import NetworkPage from './pages/Network'
 import { SITE, discordConfigured } from './lib/site'
 import Resonance from './pages/Resonance'
 import { AuthProvider, useAuth } from './lib/auth'
+import EchoMark from './components/EchoMark'
+import Welcome from './components/Welcome'
 
 /**
  * HashRouter, not BrowserRouter. GitHub Pages has no server to rewrite unknown
@@ -99,16 +101,8 @@ function Shell({ children }: { children: React.ReactNode }) {
       <header className="sticky top-0 z-40 border-b border-edge-soft bg-[color:var(--color-ground)]/88 backdrop-blur">
         <div className="mx-auto flex max-w-[1180px] items-center gap-x-3 px-4 py-2.5 sm:px-5 sm:py-3">
           <Link to="/" className="flex items-baseline gap-2.5">
-            <span
-              className="inline-block h-2.5 w-2.5"
-              // the eight division accents, in roster order
-              style={{
-                background:
-                  'conic-gradient(from 210deg, #45C8F0, #B9F227, #F0605F, #2E6FF2,' +
-                  ' #E549C9, #8B5CF6, #2FBF5B, #F4622A, #45C8F0)',
-                borderRadius: 2,
-              }}
-            />
+            {/* The wing, not a coloured square standing in for it. */}
+            <EchoMark height={17} color="var(--color-ink)" />
             <span className="wordmark text-[21px]">Echo</span>
             <span className="wordmark-sub hidden text-[9.5px] text-ink-faint sm:inline">
               United Alliances
@@ -214,6 +208,7 @@ function Shell({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <AuthProvider>
+      <Welcome />
       <HashRouter>
         <Shell>
         <Routes>

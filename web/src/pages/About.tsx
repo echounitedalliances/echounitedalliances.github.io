@@ -5,6 +5,7 @@ import type { Division } from '../lib/types'
 import { LEADERS, SLOGAN } from '../lib/alliance'
 import { accentOf, num } from '../lib/format'
 import { Loading, NotConfigured } from '../components/ui'
+import EchoMark from '../components/EchoMark'
 
 /**
  * Who runs Echo.
@@ -90,11 +91,7 @@ export default function About() {
                 >
                   <div>
                     <div className="flex items-center gap-2.5">
-                      <span
-                        className="h-7 w-1 shrink-0"
-                        style={{ background: accent }}
-                        aria-hidden="true"
-                      />
+                      <EchoMark height={15} color={accent} />
                       <Link
                         to={`/d/${division.division_code}`}
                         className="mono text-[10px] uppercase tracking-[0.16em] transition-colors hover:text-ink"

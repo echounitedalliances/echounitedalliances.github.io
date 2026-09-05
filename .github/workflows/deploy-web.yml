@@ -24,6 +24,7 @@ on:
       - '404.html'
       - '.nojekyll'
       - 'assets/**'
+      - 'brand/**'
       - '.github/workflows/deploy-web.yml'
   workflow_dispatch:
 
@@ -56,6 +57,12 @@ jobs:
           cp index.html _site/
           cp -f 404.html _site/ 2>/dev/null || cp index.html _site/404.html
           cp -r assets _site/
+          # brand/ is the logo and the favicons. It is not under assets/, so
+          # leaving it out here serves a site with no icon and no wordmark.
+          if [ -d brand ]; then cp -r brand _site/; else
+            echo "::error::No brand/ at the repository root — run 'npm --prefix web run publish'."
+            exit 1
+          fi
           touch _site/.nojekyll
           echo "publishing:"
           find _site -type f | sed 's/^/  /'

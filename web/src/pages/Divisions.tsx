@@ -5,6 +5,7 @@ import type { Division } from '../lib/types'
 import { accentOf, num } from '../lib/format'
 import { DIVISION_NOTES } from '../lib/site'
 import { Loading, NotConfigured } from '../components/ui'
+import EchoMark from '../components/EchoMark'
 
 /**
  * The eight divisions, four across and two down.
@@ -54,7 +55,7 @@ export default function Divisions() {
               >
                 <div className="min-w-0">
                   <div className="flex items-center gap-2.5">
-                    <span className="h-7 w-1 shrink-0" style={{ background: accent }} aria-hidden="true" />
+                    <EchoMark height={17} color={accent} />
                     <h2 className="display truncate text-2xl" style={{ color: accent }}>
                       {d.division_name}
                     </h2>
