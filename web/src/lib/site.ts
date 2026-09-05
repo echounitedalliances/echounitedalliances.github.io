@@ -30,7 +30,7 @@ export const SITE = {
     },
     {
       title: 'Wait for a division lead',
-      body: 'Divisions are run separately and review at their own pace. Proxima is invite-only and reviews every application by hand.',
+      body: 'Divisions are run separately and review at their own pace. Every application is read by hand, in every division, so allow a little time.',
     },
   ],
 } as const
