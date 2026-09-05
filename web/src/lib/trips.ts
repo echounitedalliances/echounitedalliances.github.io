@@ -1,7 +1,13 @@
-import type { BookingDetails } from './types'
+import type { BookingDetails, Itinerary } from './types'
 
 /**
- * When a booking leaves and when it lands, for sorting a list of them.
+ * When a journey leaves and when it lands, for sorting a list of them.
+ *
+ * Two shapes need this: a booking that already exists, and an itinerary the
+ * search is offering. They carry their times differently -- a booking stores a
+ * travel_date plus an arrival_days_after offset, while a search result carries
+ * a real arrival_date -- so there is a pair of functions for each, over one
+ * shared clock parser.
  *
  * A booking is not one flight. A two-stop itinerary has three segments, so
  * "when does this trip depart" means the first segment's departure and "when
@@ -60,3 +66,24 @@ export const TRIP_SORTS: { key: TripSort; label: string }[] = [
   { key: 'arrival', label: 'Arrival' },
   { key: 'booked', label: 'Booked' },
 ]
+
+/**
+ * The same two questions of a search result.
+ *
+ * Legs come back from search_itineraries in travel order, so first and last
+ * would usually do -- but min/max cost nothing and do not quietly break if a
+ * connection is ever returned out of order.
+ */
+export function itineraryDeparture(it: Itinerary) {
+  const t = (it.legs ?? [])
+    .map((l) => at(l.departure_date, l.departure_time))
+    .filter((n) => !Number.isNaN(n))
+  return t.length ? Math.min(...t) : LAST
+}
+
+export function itineraryArrival(it: Itinerary) {
+  const t = (it.legs ?? [])
+    .map((l) => at(l.arrival_date, l.arrival_time))
+    .filter((n) => !Number.isNaN(n))
+  return t.length ? Math.max(...t) : LAST
+}

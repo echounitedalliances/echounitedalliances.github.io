@@ -65,7 +65,9 @@ of four cabins, one to six travellers, and a stop limit.
 **One query, 590 airlines.** `search_itineraries()` returns nonstop through
 two-stop journeys across the whole group, so a trip no single member flies end
 to end is still one search, one booking and one reference. Typically 44–73 ms.
-Results sort by price, duration or stops.
+Results sort by price, duration, stops, departure or arrival — arrival
+reckons with the date, so a flight landing after midnight sorts after one
+landing at 22:55 the same evening rather than first.
 
 **Real inventory.** Seats are tracked per departure and cabin, against a
 deliberately gentle background demand simulation — enough that a
