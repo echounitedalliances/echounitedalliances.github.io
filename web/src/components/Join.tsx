@@ -12,9 +12,9 @@ export default function Join({ compact = false }: { compact?: boolean }) {
         href={discordConfigured ? SITE.discordInvite : undefined}
         target="_blank"
         rel="noopener noreferrer"
-        className="mono inline-flex items-center gap-2 border border-edge px-4 py-2 text-[11px] uppercase tracking-[0.14em] text-ink transition-colors hover:border-cyan hover:text-cyan"
+        className="btn btn-ghost"
       >
-        Join Echo on Discord ↗
+        Join on Discord ↗
       </a>
     )
   }

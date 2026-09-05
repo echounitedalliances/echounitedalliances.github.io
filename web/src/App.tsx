@@ -50,7 +50,7 @@ function Shell({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen">
       <header className="sticky top-0 z-40 border-b border-edge-soft bg-[color:var(--color-ground)]/88 backdrop-blur">
-        <div className="mx-auto flex max-w-[1180px] items-center gap-6 px-5 py-3">
+        <div className="mx-auto flex max-w-[1180px] flex-wrap items-center gap-x-4 gap-y-2 px-5 py-3">
           <Link to="/" className="flex items-baseline gap-2.5">
             <span
               className="inline-block h-2.5 w-2.5"
@@ -81,6 +81,16 @@ function Shell({ children }: { children: React.ReactNode }) {
                 {l.label}
               </NavLink>
             ))}
+            {discordConfigured && (
+              <a
+                href={SITE.discordInvite}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary ml-2 !px-4 !py-2"
+              >
+                Join Discord
+              </a>
+            )}
             <AccountLink />
           </nav>
         </div>
