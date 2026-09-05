@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import RouteMap from '../components/RouteMap'
-import SplitFlap from '../components/SplitFlap'
-import type { BoardRow } from '../components/SplitFlap'
+import DepartureBoard from '../components/DepartureBoard'
 import SearchPanel from '../components/SearchPanel'
 import Join from '../components/Join'
 import { AirlineCard, NotConfigured } from '../components/ui'
 import { isConfigured, supabase } from '../lib/supabase'
-import type { Airline, Arc, BoardDeparture, Division, NetworkNode } from '../lib/types'
+import type { Airline, Arc, Division, NetworkNode } from '../lib/types'
 import { accentOf, num } from '../lib/format'
 
 /**
@@ -20,32 +19,20 @@ export default function Home() {
   const [arcs, setArcs] = useState<Arc[]>([])
   const [nodes, setNodes] = useState<NetworkNode[]>([])
   const [spotlight, setSpotlight] = useState<Airline[]>([])
-  const [board, setBoard] = useState<BoardRow[]>([])
 
   useEffect(() => {
     if (!isConfigured) return
     void (async () => {
-      const [d, a, n, s, b] = await Promise.all([
+      const [d, a, n, s] = await Promise.all([
         supabase.from('v_division_summary').select('*').order('sort_order'),
         supabase.from('mv_network_arcs').select('*').order('weekly_departures', { ascending: false }).limit(900),
         supabase.from('mv_network_nodes').select('*').limit(700),
         supabase.rpc('search_airlines', { p_limit: 6, p_offset: 0 }),
-        supabase.rpc('board_departures', { p_limit: 8 }),
       ])
       setDivisions((d.data as Division[]) ?? [])
       setArcs((a.data as Arc[]) ?? [])
       setNodes((n.data as NetworkNode[]) ?? [])
       setSpotlight((s.data as Airline[]) ?? [])
-      setBoard(
-        ((b.data as BoardDeparture[]) ?? []).map((r) => ({
-          time: r.departure_time,
-          flight: r.flight_designator,
-          destination: r.destination_city,
-          carrier: r.airline_name ?? r.carrier_code,
-          status: 'BOARDING',
-          accent: r.accent_color,
-        })),
-      )
     })()
   }, [])
 
@@ -114,24 +101,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------- the board, directly under the figures ---------- */}
+      {/* ---------- the board, directly under the figures ----------
+           Full measure, and it keeps its own time: DepartureBoard refetches
+           and re-renders on its own schedule so the rest of the page does
+           not have to re-render with it. */}
       <section className="border-b border-edge-soft">
         <div className="mx-auto max-w-[1180px] px-5 py-10">
-          <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">
-            <h2 className="display text-2xl">Departures</h2>
-            <p className="mono text-[10px] uppercase tracking-[0.16em] text-ink-faint">
-              Live from the alliance schedule
-            </p>
-          </div>
-          {board.length > 0 ? (
-            <SplitFlap rows={board} />
-          ) : (
-            <div className="board">
-              <div className="mono py-16 text-center text-[11px] uppercase tracking-[0.16em] text-ink-faint">
-                Reading the board…
-              </div>
-            </div>
-          )}
+          <DepartureBoard />
         </div>
       </section>
 

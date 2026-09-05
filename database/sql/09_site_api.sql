@@ -299,57 +299,11 @@ revoke all on function public.echo_refresh_search() from anon, authenticated;
 commit;
 
 -- =====================================================================
---  Appended: the departure board
+--  The departure board used to live here, and no longer does.
 --
---  The site's hero is a split-flap board, so it needs a handful of real
---  departures with everything already resolved for display: the carrier's
---  code, the destination city, and a plausible status. Ordered by traffic so
---  the board shows the network at its busiest rather than a random slice.
+--  That version ordered by departure_minute with no time filter, so it always
+--  returned the day's earliest departures and the board sat frozen on a row of
+--  00:00 flights. It is replaced wholesale by 15_board.sql, which returns real
+--  instants instead of bare clock strings. Leaving the old definition here
+--  would have quietly recreated it on every rebuild.
 -- =====================================================================
-
-begin;
-
-create or replace function public.board_departures(
-    p_origin text default null,
-    p_limit  integer default 8
-)
-returns table (
-    departure_time    text,
-    flight_designator text,
-    origin_iata       text,
-    destination_iata  text,
-    destination_city  text,
-    carrier_code      text,
-    airline_name      text,
-    division_code     text,
-    accent_color      text
-)
-language sql stable parallel safe as $$
-    select to_char(l.departure_time, 'HH24:MI'),
-           a.carrier_code || ' ' ||
-             case when l.direction = 'OUTBOUND' then f.outbound_flight_number
-                  else f.inbound_flight_number end,
-           l.origin_iata,
-           l.destination_iata,
-           coalesce(d.city_name, d.airport_name, l.destination_iata),
-           a.carrier_code,
-           a.airline_name,
-           a.division_code,
-           coalesce(a.accent_color, dv.accent_color, '#A855F7')
-      from public.mv_leg_departures l
-      join public.airlines  a  on a.uid = l.airline_uid and a.is_published
-      join public.flights   f  on f.flight_id = l.flight_id
-      join public.airports  d  on d.iata_code = l.destination_iata
-      left join public.divisions dv on dv.division_code = a.division_code
-     where (p_origin is null or p_origin = '' or l.origin_iata = upper(p_origin))
-       and l.economy_price is not null
-     order by l.departure_minute, l.destination_iata
-     limit greatest(coalesce(p_limit, 8), 1);
-$$;
-
-comment on function public.board_departures(text, integer) is
-    'A handful of real departures with display text resolved, for the split-flap board on the home page.';
-
-grant execute on function public.board_departures(text, integer) to anon, authenticated;
-
-commit;

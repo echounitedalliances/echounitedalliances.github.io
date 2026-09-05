@@ -14,8 +14,31 @@ import { useEffect, useRef, useState } from 'react'
  * like the real thing.
  */
 
-const GLYPHS = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-:/.'
+// Punctuation is in here because airline names have punctuation in them.
+// Adding glyphs is free: a cell starts a fixed number of steps short of its
+// target, so a longer alphabet does not make anything take longer to settle.
+const GLYPHS = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-:/.'&,()+"
 const STEP_MS = 45
+
+/**
+ * What this board can actually show.
+ *
+ * Accents are folded onto their base letters, so Malmo and Munchen read
+ * properly rather than losing a character. A name in a script the board has no
+ * flaps for at all -- CJK, Cyrillic, Arabic -- would come out as a row of
+ * blanks, so it falls back to the code instead. Real boards are Latin-only for
+ * the same mechanical reason.
+ */
+export function toFlap(value: string | null | undefined, fallback: string) {
+  const folded = (value ?? '')
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toUpperCase()
+    .trim()
+  if (!folded) return fallback
+  const printable = Array.from(folded).filter((ch) => GLYPHS.includes(ch)).length
+  return printable >= folded.length * 0.8 ? folded : fallback
+}
 
 function glyphIndex(ch: string) {
   const i = GLYPHS.indexOf(ch.toUpperCase())
@@ -89,12 +112,28 @@ export type BoardRow = {
 }
 
 /**
+ * A heading exactly as wide as the run of flaps beneath it.
+ *
+ * flexShrink matters: the flap runs cannot shrink, because their cells have a
+ * min-width, but the headings can -- so on a narrow screen, where the board
+ * scrolls sideways, the headings collapsed to the width of their own text and
+ * stopped lining up with the columns.
+ */
+function runWidth(cells: number) {
+  return { width: `calc(${cells} * (var(--flap-w) + 2px) - 2px)`, flexShrink: 0 }
+}
+
+/**
  * The board itself. Rows are handed in already formatted; this component is
  * only responsible for how they land.
  */
 export default function SplitFlap({
   rows,
-  columns = { time: 5, flight: 7, destination: 16, carrier: 10, status: 9 },
+  // Sized from the data rather than by eye: the longest flight designator in
+  // the alliance is 12 characters, 99% of airline names fit in 18 and 99% of
+  // city names in 26. Seven characters of flight number was cutting "SVPX1
+  // 2456" down to "SVPX1 2".
+  columns = { time: 5, flight: 12, destination: 24, carrier: 18, status: 9 },
 }: {
   rows: BoardRow[]
   columns?: { time: number; flight: number; destination: number; carrier: number; status: number }
@@ -102,11 +141,11 @@ export default function SplitFlap({
   return (
     <div className="board" role="table" aria-label="Departures">
       <div className="board-head" role="row">
-        <span style={{ width: `${columns.time}ch` }}>Time</span>
-        <span style={{ width: `${columns.flight}ch` }}>Flight</span>
-        <span style={{ width: `${columns.destination}ch` }}>Destination</span>
-        <span style={{ width: `${columns.carrier}ch` }}>Carrier</span>
-        <span style={{ width: `${columns.status}ch` }}>Status</span>
+        <span style={runWidth(columns.time)}>Time</span>
+        <span style={runWidth(columns.flight)}>Flight</span>
+        <span style={runWidth(columns.destination)}>Destination</span>
+        <span style={runWidth(columns.carrier)}>Carrier</span>
+        <span style={runWidth(columns.status)}>Status</span>
       </div>
 
       {rows.map((r, i) => (

@@ -192,9 +192,16 @@ export const CABINS = [
 ] as const
 
 export type BoardDeparture = {
-  departure_time: string
-  flight_designator: string
+  /** The real instant of the next occurrence, so the client can render it
+   *  in the viewer's own zone. The board used to get only a bare clock
+   *  string, which is unconvertible. */
+  departs_at: string
+  /** The origin airport's own clock, kept for reference. */
+  departure_local: string
+  origin_tz: string
   origin_iata: string
+  origin_city: string
+  flight_designator: string
   destination_iata: string
   destination_city: string
   carrier_code: string

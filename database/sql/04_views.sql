@@ -299,6 +299,9 @@ create index if not exists mv_leg_departures_origin_idx
     on public.mv_leg_departures (origin_iata);
 create index if not exists mv_leg_departures_airline_idx
     on public.mv_leg_departures (airline_uid);
+-- board_departures reads each airport's next few departures in time order
+create index if not exists mv_leg_departures_origin_time_idx
+    on public.mv_leg_departures (origin_iata, departure_time);
 
 -- ---------------------------------------------------------------------
 -- v_stopover_itineraries -- through journeys A -> B -> C
