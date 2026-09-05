@@ -1,9 +1,30 @@
 name: Deploy site to GitHub Pages
 
+# Publishes the build that is committed at the repository root.
+#
+# It does not build here, and that is deliberate. This workflow used to run
+# `npm run build` with the Supabase values coming from repository variables --
+# and an unset variable substitutes an EMPTY STRING, so it happily produced a
+# bundle with no credentials, deployed it, and served a blank white page.
+#
+# The build now happens locally, where the values are in web/.env.local and
+# either work or visibly do not:
+#
+#     npm --prefix web run publish     # builds and copies to the repo root
+#     git commit -am "..." && git push
+#
+# So what is deployed is exactly what was reviewed, and there is no way for a
+# missing setting to publish a broken site over a working one.
+
 on:
   push:
     branches: [main]
-    paths: ['web/**', '.github/workflows/deploy-web.yml']
+    paths:
+      - 'index.html'
+      - '404.html'
+      - '.nojekyll'
+      - 'assets/**'
+      - '.github/workflows/deploy-web.yml'
   workflow_dispatch:
 
 permissions:
@@ -16,58 +37,32 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: web
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: web/package-lock.json
-
-      - name: Require the Supabase variables
-        # An unset repository variable substitutes an empty string, which built
-        # a bundle with no credentials and published it over a working site.
-        # Fail here instead, with an error that says what to do.
-        run: |
-          if [ -z "${{ vars.VITE_SUPABASE_URL }}" ] || [ -z "${{ vars.VITE_SUPABASE_ANON_KEY }}" ]; then
-            echo "::error::VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are not set."
-            echo "::error::Add them under Settings -> Secrets and variables -> Actions -> Variables."
-            echo "::error::Until then the committed build at the repository root is what serves."
-            exit 1
-          fi
-
-      - run: npm ci
-
-      - name: Build
-        env:
-          # A project site is served from /<repo>/; a user or organisation
-          # site (<name>.github.io) is served from the domain root. The repo
-          # name tells us which this is, so nothing has to be configured.
-          VITE_BASE: >-
-            ${{ vars.PAGES_BASE
-                || (endsWith(github.event.repository.name, '.github.io') && '/')
-                || format('/{0}/', github.event.repository.name) }}
-          # Repository variables, not secrets: both are meant to reach browsers.
-          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
-        run: npm run build
-
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: web/dist
-
   deploy:
-    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/checkout@v4
+
+      - name: Collect the published site
+        run: |
+          if [ ! -f index.html ] || [ ! -d assets ]; then
+            echo "::error::No built site at the repository root."
+            echo "::error::Run 'npm --prefix web run publish', then commit index.html and assets/."
+            exit 1
+          fi
+          mkdir -p _site
+          cp index.html _site/
+          cp -f 404.html _site/ 2>/dev/null || cp index.html _site/404.html
+          cp -r assets _site/
+          touch _site/.nojekyll
+          echo "publishing:"
+          find _site -type f | sed 's/^/  /'
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
       - id: deployment
         uses: actions/deploy-pages@v4

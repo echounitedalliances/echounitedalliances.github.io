@@ -90,23 +90,25 @@ still one booking and one reference. It runs in 44–73 ms typically.
 
 ## Deploying the site
 
-Pushing to `main` builds and publishes automatically
-([`.github/workflows/deploy-web.yml`](.github/workflows/deploy-web.yml)).
+The build is committed at the repository root and a push publishes it:
 
-**Settings → Pages → Source must be set to "GitHub Actions".** While it is
-left on "Deploy from a branch", GitHub's own Jekyll builder publishes this
-README over the top of the site and the app never appears.
+```bash
+npm --prefix web run publish     # builds and copies index.html + assets/ to the root
+git add -A && git commit -m "..." && git push
+```
 
-Then in **Settings → Secrets and variables → Actions → Variables** add:
+The workflow ([`.github/workflows/deploy-web.yml`](.github/workflows/deploy-web.yml))
+only uploads those files. It does **not** build.
 
-| Variable | Value |
-|---|---|
-| `VITE_SUPABASE_URL` | `https://<project-ref>.supabase.co` |
-| `VITE_SUPABASE_ANON_KEY` | `sb_publishable_…` |
+That is deliberate. It used to build in CI with the Supabase values coming from
+repository variables -- and an unset variable substitutes an *empty string*, so
+it produced a bundle with no credentials, deployed it, and served a blank white
+page over a working site. Building locally means the values come from
+`web/.env.local`, where they either work or visibly do not, and what ships is
+what was reviewed.
 
-Both are *variables*, not secrets, on purpose: they are compiled into a public
-JavaScript bundle and are meant to be. The workflow works out the base path
-from the repository name, so a `<name>.github.io` site needs nothing else.
+`npm --prefix web run publish` is the only way to update the live site. Editing
+`index.html` or `assets/` by hand will be overwritten.
 
 ---
 
