@@ -13,7 +13,6 @@ import NetworkPage from './pages/Network'
 import { SITE, discordConfigured } from './lib/site'
 import { useOnlineCount } from './lib/discordWidget'
 import { num } from './lib/format'
-import Logomark from './components/Logomark'
 import Resonance from './pages/Resonance'
 import { AuthProvider, useAuth } from './lib/auth'
 
@@ -110,7 +109,6 @@ function Shell({ children }: { children: React.ReactNode }) {
       <header className="sticky top-0 z-40 border-b border-edge-soft bg-[color:var(--color-ground)]/88 backdrop-blur">
         <div className="mx-auto flex max-w-[1180px] items-center gap-x-3 px-4 py-2.5 sm:px-5 sm:py-3">
           <Link to="/" className="flex items-baseline gap-2.5">
-            <Logomark />
             <span className="wordmark text-[21px]">Echo</span>
             <span className="wordmark-sub hidden text-[9.5px] text-ink-faint sm:inline">
               United Alliances
