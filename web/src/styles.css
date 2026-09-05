@@ -254,34 +254,26 @@ body {
   letter-spacing: 0.42em;
   text-indent: 0.42em;
   color: var(--color-ink-dim);
-  animation-delay: 100ms;
+  animation-delay: 1100ms;
 }
 
-/* ECHO sits in the middle of the whole thing; the wing flies in behind it. */
+/* The wing owns the top of the frame; every word sits under it. */
 .welcome-stage {
   position: relative;
   display: grid;
   place-items: center;
   width: min(92vw, 720px);
-  height: clamp(150px, 30vw, 240px);
-  margin: 8px 0 4px;
+  height: clamp(150px, 26vw, 230px);
+  margin-bottom: clamp(28px, 6vh, 64px);
 }
 .welcome-echo {
-  position: relative;
-  z-index: 1;
-  /* The upper wing is white and so is the word, so where they cross the two
-     dissolve into each other. A halo in the ground colour punches the letters
-     out of the wing and makes it read as passing behind them. */
-  text-shadow:
-    0 0 22px var(--color-ground),
-    0 0 12px var(--color-ground),
-    0 0 4px var(--color-ground);
+  margin-top: 10px;
   font-size: clamp(46px, 13vw, 132px);
   font-weight: 800;
   letter-spacing: 0.06em;
   text-indent: 0.06em;
   line-height: 1;
-  animation-delay: 900ms;
+  animation-delay: 1300ms;
 }
 
 .welcome-mark {
@@ -293,32 +285,45 @@ body {
      staggered their arrivals were. */
   animation: welcome-mark-out 900ms cubic-bezier(.5,0,.85,.2) 2600ms both;
 }
+/* The strike stretches BEHIND the direction of travel, so the anchor is the
+   leading edge. */
+.welcome-mark .echo-mark { transform-origin: left center; }
 .welcome-mark .echo-mark { grid-area: 1 / 1; }
 
-/* Opposite parabolas. x falls linearly to nothing while y falls with the
-   SQUARE of what is left, so each half comes in steeply from its corner and
-   flattens out as it arrives -- the top one from above, the bottom from
-   below. Sampled at five points; a bezier cannot bend a path, only its rate. */
-.welcome-wing-top    { animation: welcome-arc-top    1500ms cubic-bezier(.25,.6,.3,1) 250ms both; }
-.welcome-wing-bottom { animation: welcome-arc-bottom 1500ms cubic-bezier(.25,.6,.3,1) 500ms both; }
+/* Opposite parabolas, from the two right-hand corners of the page.
+   x falls linearly toward nothing while y falls with the SQUARE of what is
+   left, so each half comes in steeply from its corner and flattens as it
+   arrives. scaleX carries the strike: stretched to nearly three times its
+   length at speed, back to true as it stops.
+
+   The stops are spaced by t, not evenly, and the easing between them is
+   LINEAR -- with a bezier on each segment the wing would ease in and out six
+   separate times and arrive in visible steps. Spacing carries the
+   deceleration; linear keeps it smooth. */
+.welcome-wing-top {
+  animation: welcome-arc-top 1500ms linear 250ms both;
+}
+.welcome-wing-bottom {
+  animation: welcome-arc-bottom 1500ms linear 500ms both;
+}
 
 @keyframes welcome-arc-top {
-  0%   { transform: translate(120vw, -60vh); opacity: 0; }
-  15%  { opacity: 1; }
-  20%  { transform: translate(96vw, -38.4vh); }
-  40%  { transform: translate(72vw, -21.6vh); }
-  60%  { transform: translate(48vw, -9.6vh); }
-  80%  { transform: translate(24vw, -2.4vh); }
-  100% { transform: translate(0, 0); opacity: 1; }
+  0%   { transform: translate(95vw, -70vh)   scaleX(2.8);  opacity: 0; }
+  12%  { opacity: 1; }
+  25%  { transform: translate(57vw, -25.2vh) scaleX(2.08); opacity: 1; }
+  45%  { transform: translate(34.2vw, -9.07vh) scaleX(1.65); }
+  62%  { transform: translate(19vw, -2.8vh)  scaleX(1.36); }
+  78%  { transform: translate(9.5vw, -0.7vh) scaleX(1.18); }
+  100% { transform: translate(0, 0)          scaleX(1);    opacity: 1; }
 }
 @keyframes welcome-arc-bottom {
-  0%   { transform: translate(120vw, 60vh); opacity: 0; }
-  15%  { opacity: 1; }
-  20%  { transform: translate(96vw, 38.4vh); }
-  40%  { transform: translate(72vw, 21.6vh); }
-  60%  { transform: translate(48vw, 9.6vh); }
-  80%  { transform: translate(24vw, 2.4vh); }
-  100% { transform: translate(0, 0); opacity: 1; }
+  0%   { transform: translate(95vw, 95vh)    scaleX(2.8);  opacity: 0; }
+  12%  { opacity: 1; }
+  25%  { transform: translate(57vw, 34.2vh)  scaleX(2.08); opacity: 1; }
+  45%  { transform: translate(34.2vw, 12.31vh) scaleX(1.65); }
+  62%  { transform: translate(19vw, 3.8vh)   scaleX(1.36); }
+  78%  { transform: translate(9.5vw, 0.95vh) scaleX(1.18); }
+  100% { transform: translate(0, 0)          scaleX(1);    opacity: 1; }
 }
 
 @keyframes welcome-mark-out {
@@ -333,12 +338,12 @@ body {
   justify-content: center;
   align-items: baseline;
   gap: clamp(14px, 4vw, 42px);
-  margin-top: 14px;
+  margin-top: clamp(18px, 3vh, 30px);
   font-size: clamp(11px, 1.9vw, 17px);
   font-weight: 600;
   letter-spacing: 0.3em;
   text-indent: 0.3em;
-  animation-delay: 1500ms;
+  animation-delay: 1650ms;
 }
 .welcome-strap-name { color: var(--color-ink-dim); }
 .welcome-strap-slogan { color: var(--color-accent); }

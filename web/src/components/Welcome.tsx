@@ -5,10 +5,11 @@ import { SLOGAN } from '../lib/alliance'
 /**
  * The arrival sequence, shown once.
  *
- * The two halves fly in from the right on opposite arcs — the upper one down
- * from the top right, the lower one up from the bottom right, each flattening
- * as it arrives — assemble behind the word, hold, then leave to the left
- * TOGETHER.
+ * The two halves fly in from opposite corners of the page — the upper one down
+ * from the top right, the lower one up from the bottom right — each stretched
+ * along its direction of travel so it reads as a strike rather than a slide,
+ * each flattening and compressing back to its true shape as it lands. They
+ * assemble above the words, hold, then leave to the left TOGETHER.
  *
  * Together is why the exit is on their shared parent rather than on each wing:
  * the arcs start a beat apart, and two animations on one element cannot both
@@ -90,9 +91,7 @@ export default function Welcome() {
   return (
     <div className="welcome" role="status" aria-label="Welcome to Echo United Alliances">
       <div className="welcome-inner">
-        <p className="welcome-line welcome-kicker">Welcome to</p>
-
-        {/* The wing flies in behind the word and leaves it standing. */}
+        {/* The wing sits above everything; the words are all beneath it. */}
         <div className="welcome-stage">
           <div className="welcome-mark" aria-hidden="true">
             <EchoMark half="top" height={210} color="var(--color-ink)" className="welcome-wing-top" />
@@ -103,8 +102,10 @@ export default function Welcome() {
               className="welcome-wing-bottom"
             />
           </div>
-          <p className="welcome-line welcome-echo">Echo</p>
         </div>
+
+        <p className="welcome-line welcome-kicker">Welcome to</p>
+        <p className="welcome-line welcome-echo">Echo</p>
 
         <p className="welcome-line welcome-strap">
           <span className="welcome-strap-name">United Alliances</span>
