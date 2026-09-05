@@ -4,6 +4,7 @@ The website for Echo United Alliances, a virtual airline group in
 **The Airline Simulator** — eight divisions, 590 member carriers, one network.
 
 Live at **https://echounitedalliances.github.io**
+Check out our 2nd testing site **https://lacnka.github.io/echotesting/**
 
 ---
 
