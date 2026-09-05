@@ -38,6 +38,13 @@ DIVISIONS = [
     ("rhea",    "Rhea",    "VH"),
     ("vilis",   "Vilis",   "VS"),
 ]
+# The order the divisions are LISTED in, which is group policy and has nothing
+# to do with the order above -- that one is the scrape order, and reordering it
+# would change which airline wins a shared carrier code in resolve_identity().
+# Kept in step with database/sql/16_division_policy.sql; change both together.
+DISPLAY_ORDER = ["kyra", "aegis", "elysium", "proxima", "rhea", "vilis", "elion", "aura"]
+assert sorted(DISPLAY_ORDER) == sorted(d for d, _, _ in DIVISIONS),     "DISPLAY_ORDER and DIVISIONS name different divisions"
+
 DIV_TAG = {d: tag for d, _, tag in DIVISIONS}
 DIV_NAME = {d: name for d, name, _ in DIVISIONS}
 
@@ -249,10 +256,10 @@ def main():
         "alliance_description", "alliance_type", "alliance_logo", "alliance_logo_color",
         "created_time", "leader_uid",
     ])
-    for n, (div, name, _) in enumerate(DIVISIONS, start=1):
+    for div, name, _ in DIVISIONS:
         al = rosters[div]["_alliance"]
         w.writerow([
-            div, name, n,
+            div, name, DISPLAY_ORDER.index(div) + 1,
             iso(al and al.get("allianceId")), iso(al and al.get("allianceName")),
             iso(al and al.get("allianceDescription")), iso(al and al.get("allianceType")),
             iso(al and al.get("allianceLogo")), iso(al and al.get("allianceLogoColor")),

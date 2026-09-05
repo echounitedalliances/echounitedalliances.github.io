@@ -3,8 +3,18 @@ import { Link } from 'react-router-dom'
 import { isConfigured, supabase } from '../lib/supabase'
 import type { Division } from '../lib/types'
 import { accentOf, num } from '../lib/format'
+import { DIVISION_NOTES } from '../lib/site'
 import { Loading, NotConfigured } from '../components/ui'
 
+/**
+ * The eight divisions, four across and two down.
+ *
+ * They used to be full-width rows, which gave one of them room for a long
+ * welcome message and the other seven a one-line summary — so the page read as
+ * a list with an odd first entry rather than as a group of equals. Every card
+ * now carries the same summary of what its division actually flies, and the
+ * order is group policy, held in sort_order by 16_division_policy.sql.
+ */
 export default function Divisions() {
   const [rows, setRows] = useState<Division[] | null>(null)
 
@@ -31,58 +41,44 @@ export default function Divisions() {
       {rows === null ? (
         <Loading />
       ) : (
-        <div className="mt-10 flex flex-col gap-3">
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {rows.map((d, i) => {
             const accent = accentOf(d)
+            const note = DIVISION_NOTES[d.division_code]
             return (
               <Link
                 key={d.division_code}
                 to={`/d/${d.division_code}`}
-                className="panel lift rise group grid gap-5 p-6 md:grid-cols-[minmax(0,1fr)_auto]"
+                className="panel lift rise flex flex-col justify-between gap-4 p-5 sm:aspect-square"
                 style={{ animationDelay: `${i * 40}ms`, ['--card-accent' as string]: accent }}
               >
                 <div className="min-w-0">
-                  <div className="flex items-center gap-3">
-                    <span
-                      className="h-8 w-1"
-                      style={{ background: accent }}
-                      aria-hidden="true"
-                    />
-                    <h2 className="display text-3xl" style={{ color: accent }}>
+                  <div className="flex items-center gap-2.5">
+                    <span className="h-7 w-1 shrink-0" style={{ background: accent }} aria-hidden="true" />
+                    <h2 className="display truncate text-2xl" style={{ color: accent }}>
                       {d.division_name}
                     </h2>
-                    {d.division_code === 'proxima' && (
-                      <span className="mono border border-edge px-2 py-0.5 text-[10px] uppercase tracking-[0.12em] text-ink-faint">
-                        Home division
-                      </span>
-                    )}
                   </div>
-                  {d.alliance_description ? (
-                    <p className="mt-3 max-w-[68ch] whitespace-pre-line text-ink-dim">
-                      {d.alliance_description}
-                    </p>
-                  ) : (
-                    <p className="mt-3 max-w-[68ch] text-ink-faint">
-                      {num(d.carriers)} member carriers flying {num(d.routes)} routes
-                      to {num(d.destinations)} destinations.
-                    </p>
+
+                  {note && (
+                    <span
+                      className="mono mt-3 inline-block border px-2 py-0.5 text-[9px] uppercase tracking-[0.14em]"
+                      style={{
+                        color: accent,
+                        borderColor: `color-mix(in srgb, ${accent} 45%, transparent)`,
+                      }}
+                    >
+                      {note}
+                    </span>
                   )}
-                  {d.top_hubs && d.top_hubs.length > 0 && (
-                    <div className="mono mt-4 flex flex-wrap gap-2">
-                      {d.top_hubs.map((h) => (
-                        <Link
-                          key={h}
-                          to={`/airports/${h}`}
-                          className="border border-edge-soft px-2 py-0.5 text-[11px] text-ink-dim transition-colors hover:border-accent hover:text-ink"
-                        >
-                          {h}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
+
+                  <p className={`text-[12px] leading-relaxed text-ink-dim ${note ? 'mt-3' : 'mt-4'}`}>
+                    {num(d.carriers)} member carriers flying {num(d.routes)} routes
+                    to {num(d.destinations)} destinations.
+                  </p>
                 </div>
 
-                <dl className="grid shrink-0 grid-cols-2 gap-x-8 gap-y-3 self-start md:grid-cols-1 md:text-right">
+                <dl className="grid grid-cols-2 gap-x-4 gap-y-3">
                   {[
                     ['Carriers', d.carriers],
                     ['Aircraft', d.aircraft],
@@ -90,8 +86,8 @@ export default function Divisions() {
                     ['Destinations', d.destinations],
                   ].map(([label, v]) => (
                     <div key={label as string}>
-                      <dd className="mono text-xl text-ink">{num(Number(v))}</dd>
-                      <dt className="text-[10px] uppercase tracking-[0.1em] text-ink-faint">
+                      <dd className="mono text-[15px] leading-none text-ink">{num(Number(v))}</dd>
+                      <dt className="mt-1.5 text-[9px] uppercase tracking-[0.1em] text-ink-faint">
                         {label}
                       </dt>
                     </div>

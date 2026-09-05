@@ -85,7 +85,8 @@ if (-not $SkipAirportBackfill)  { $files += '03_airports_backfill.sql' }
 $files += @('04_views.sql', '05_reservations.sql', '06_inventory.sql',
             '07_connections.sql', '08_rls_policies.sql', '09_site_api.sql',
             '10_booking_api.sql', '11_profiles_admin.sql', '12_countries.sql',
-            '13_admin_grants.sql', '14_supabase.sql', '15_board.sql')
+            '13_admin_grants.sql', '14_supabase.sql', '15_board.sql',
+            '16_division_policy.sql')
 
 # 09_site_api indexes the directory and typeahead with trigram GIN indexes.
 Write-Host ""

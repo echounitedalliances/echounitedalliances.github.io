@@ -45,9 +45,5 @@ export const flag = (cc: string | null | undefined) => {
   )
 }
 
-export const DIVISION_ORDER = [
-  'proxima', 'aegis', 'aura', 'elion', 'elysium', 'kyra', 'rhea', 'vilis',
-] as const
-
 export const accentOf = (a: { accent_color?: string | null }) =>
   a.accent_color || '#A855F7'

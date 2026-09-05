@@ -35,4 +35,19 @@ export const SITE = {
   ],
 } as const
 
+/**
+ * Badges on the division cards.
+ *
+ * Group policy rather than game data, which is why it lives here and not in
+ * the database: the divisions table is rebuilt from the game exports, and a
+ * rebuild would wipe anything written into it by hand. The running order is
+ * policy too, but that one has to be in the database -- every page that lists
+ * divisions sorts by sort_order -- and it is set by
+ * database/sql/16_division_policy.sql.
+ */
+export const DIVISION_NOTES: Record<string, string> = {
+  kyra: 'Main division',
+  elysium: 'Realism alliance',
+}
+
 export const discordConfigured = !SITE.discordInvite.includes('REPLACE-ME')
