@@ -137,17 +137,16 @@ export default function Directory() {
             )
           })}
         </div>
-        {countries.length > 1 && (
+        {(country || countries.length > 1) && (
           <div className="mono mt-2 flex flex-wrap gap-1.5 text-[11px]">
-            {country && (
+            {country ? (
               <button
                 onClick={() => setFilter('country', '')}
                 className="border border-[color:var(--color-accent)] px-2 py-0.5 text-ink"
               >
                 {country} ×
               </button>
-            )}
-            {!country &&
+            ) : (
               countries.map(([c, n]) => (
                 <button
                   key={c}
@@ -156,7 +155,8 @@ export default function Directory() {
                 >
                   {c} <span className="text-ink-faint">{n}</span>
                 </button>
-              ))}
+              ))
+            )}
           </div>
         )}
       </div>
