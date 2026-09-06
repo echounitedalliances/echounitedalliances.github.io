@@ -4,113 +4,8 @@ import { Loading, NotConfigured } from '../components/ui'
 import { isConfigured, supabase } from '../lib/supabase'
 import { useAuth } from '../lib/auth'
 import { PasswordCard, SignIn } from '../components/ResonanceAuth'
-import type { Airline, AirlineClaim, AirportRow, BookingDetails, Division } from '../lib/types'
+import type { AirportRow, BookingDetails, Division } from '../lib/types'
 import { shortDate, usd } from '../lib/format'
-
-/**
- * A Resonant's claimed carriers, editable right here -- the same columns an
- * admin can edit (11_profiles_admin.sql), just scoped to what they own by
- * the RLS policy in 19_airline_claims.sql, not by anything this component
- * enforces itself.
- */
-function MyAirlines({ resonantId }: { resonantId: string }) {
-  const [rows, setRows] = useState<Airline[] | null>(null)
-  const [claims, setClaims] = useState<AirlineClaim[]>([])
-  const [saved, setSaved] = useState<string | null>(null)
-
-  const load = async () => {
-    const { data: owners } = await supabase
-      .from('airline_owners')
-      .select('airline_uid')
-      .eq('resonant_id', resonantId)
-    const uids = (owners ?? []).map((o) => o.airline_uid as string)
-    if (uids.length) {
-      const { data } = await supabase.from('mv_airline_directory').select('*').in('uid', uids)
-      setRows((data as Airline[]) ?? [])
-    } else {
-      setRows([])
-    }
-    const { data: c } = await supabase
-      .from('airline_claims')
-      .select('*')
-      .eq('resonant_id', resonantId)
-      .order('created_at', { ascending: false })
-    setClaims((c as AirlineClaim[]) ?? [])
-  }
-
-  useEffect(() => {
-    void load()
-  }, [resonantId])
-
-  const save = async (uid: string, patch: Record<string, string | null>) => {
-    setSaved(null)
-    const { error } = await supabase.from('airlines').update(patch).eq('uid', uid)
-    if (!error) {
-      setSaved(uid)
-      setTimeout(() => setSaved(null), 2500)
-    }
-  }
-
-  const pending = claims.filter((c) => c.status === 'pending')
-
-  if (rows === null || (rows.length === 0 && pending.length === 0)) return null
-
-  return (
-    <section className="mt-10">
-      <h2 className="display text-2xl">Your airlines</h2>
-
-      {pending.map((c) => (
-        <div key={c.claim_id} className="panel mt-4 flex items-center justify-between p-4">
-          <span className="text-ink-dim">Claim submitted as @{c.discord_username}</span>
-          <span className="mono text-[11px] uppercase tracking-[0.12em] text-warn">Under review</span>
-        </div>
-      ))}
-
-      {rows.map((a) => (
-        <div key={a.uid} className="panel mt-4 p-5">
-          <div className="flex items-baseline justify-between gap-3">
-            <Link to={`/d/${a.division_code}/${a.airline_slug}`} className="display text-xl hover:text-cyan">
-              {a.airline_name}
-            </Link>
-            <span className="mono text-[11px] text-ink-faint">{a.carrier_code}</span>
-          </div>
-          <div className="mt-4 grid gap-4">
-            <label className="block">
-              <span className="eyebrow mb-1.5 block text-ink-faint">Description</span>
-              <textarea
-                defaultValue={a.description_md ?? ''}
-                onBlur={(e) => void save(a.uid, { description_md: e.target.value || null })}
-                rows={3}
-                className="w-full border border-edge bg-ground-2 px-3 py-2.5 text-ink outline-none focus:border-accent"
-              />
-            </label>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <label className="block">
-                <span className="eyebrow mb-1.5 block text-ink-faint">Website</span>
-                <input
-                  defaultValue={a.website_url ?? ''}
-                  onBlur={(e) => void save(a.uid, { website_url: e.target.value || null })}
-                  className="w-full border border-edge bg-ground-2 px-3 py-2.5 text-ink outline-none focus:border-accent"
-                />
-              </label>
-              <label className="block">
-                <span className="eyebrow mb-1.5 block text-ink-faint">Booking link</span>
-                <input
-                  defaultValue={a.booking_url ?? ''}
-                  onBlur={(e) => void save(a.uid, { booking_url: e.target.value || null })}
-                  className="w-full border border-edge bg-ground-2 px-3 py-2.5 text-ink outline-none focus:border-accent"
-                />
-              </label>
-            </div>
-          </div>
-          {saved === a.uid && (
-            <p className="mono mt-3 text-[11px] uppercase tracking-[0.12em] text-good">Saved</p>
-          )}
-        </div>
-      ))}
-    </section>
-  )
-}
 
 /**
  * Resonance: sign in, keep a profile, and see every trip on the account.
@@ -318,8 +213,6 @@ export default function Resonance() {
 
           {/* Not shown twice: while recovering it is already at the top. */}
           {!recovering && <PasswordCard />}
-
-          <MyAirlines resonantId={resonant.resonant_id} />
 
           <section className="mt-10">
             <h2 className="display text-2xl">Your trips</h2>

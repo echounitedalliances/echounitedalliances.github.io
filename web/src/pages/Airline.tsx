@@ -3,133 +3,10 @@ import { Link, useParams } from 'react-router-dom'
 import RouteMap from '../components/RouteMap'
 import { Loading, Mark, NotConfigured } from '../components/ui'
 import { isConfigured, supabase } from '../lib/supabase'
-import { useAuth } from '../lib/auth'
 import type { Airline, Arc, FleetRow, NetworkNode, RoutePairRow, TimetableRow } from '../lib/types'
 import { accentOf, duration, flag, num, usd } from '../lib/format'
 
 const DAYS = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
-
-/**
- * "Is this your airline?" -- a Resonant can ask to be recognised as one
- * carrier's owner. Filing the claim is all this does; a person reviews it on
- * Discord (see database/sql/19_airline_claims.sql), so nothing here grants
- * anything by itself.
- */
-function ClaimAirline({ airlineUid }: { airlineUid: string }) {
-  const { user, resonant } = useAuth()
-  const [owned, setOwned] = useState<boolean | null>(null)
-  const [open, setOpen] = useState(false)
-  const [discordUsername, setDiscordUsername] = useState('')
-  const [notes, setNotes] = useState('')
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
-  const [error, setError] = useState('')
-
-  useEffect(() => {
-    if (!resonant) {
-      setOwned(null)
-      return
-    }
-    void supabase
-      .from('airline_owners')
-      .select('airline_uid')
-      .eq('airline_uid', airlineUid)
-      .maybeSingle()
-      .then(({ data }) => setOwned(!!data))
-  }, [resonant, airlineUid])
-
-  const submit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!discordUsername.trim()) return
-    setStatus('sending')
-    setError('')
-    const { data, error } = await supabase.rpc('submit_airline_claim', {
-      p_airline_uid: airlineUid,
-      p_discord_username: discordUsername.trim(),
-      p_notes: notes.trim() || null,
-    })
-    if (error) {
-      setStatus('error')
-      setError(error.message)
-    } else {
-      // Best-effort: the claim already exists either way, so a hiccup here
-      // (bot not deployed yet, Discord briefly down) doesn't block the
-      // Resonant -- it just means a reviewer has to be told some other way.
-      void supabase.functions
-        .invoke('submit-airline-claim-notify', { body: { claim_id: data.claim_id } })
-        .catch(() => {})
-      setStatus('sent')
-    }
-  }
-
-  if (!user) {
-    return (
-      <Link
-        to="/resonance"
-        className="mono text-[11px] uppercase tracking-[0.14em] text-ink-faint hover:text-ink-dim"
-      >
-        Run this airline? Sign in to claim it →
-      </Link>
-    )
-  }
-
-  // Owned already, or we haven't checked yet -- either way there is nothing
-  // useful to show here (an owner manages their carrier from Resonance).
-  if (owned !== false) return null
-
-  if (status === 'sent') {
-    return (
-      <p className="mono text-[11px] uppercase tracking-[0.14em] text-good">
-        Claim submitted — sent for review on Discord.
-      </p>
-    )
-  }
-
-  if (!open) {
-    return (
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className="mono text-[11px] uppercase tracking-[0.14em] text-ink-faint hover:text-ink-dim"
-      >
-        Run this airline? Claim it →
-      </button>
-    )
-  }
-
-  return (
-    <form onSubmit={submit} className="panel mt-2 flex max-w-sm flex-col gap-2.5 p-4">
-      <label className="block">
-        <span className="eyebrow mb-1 block text-ink-faint">Discord username</span>
-        <input
-          value={discordUsername}
-          onChange={(e) => setDiscordUsername(e.target.value)}
-          placeholder="yourname"
-          className="w-full border border-edge bg-ground-2 px-3 py-2 text-sm text-ink outline-none focus:border-accent"
-        />
-      </label>
-      <label className="block">
-        <span className="eyebrow mb-1 block text-ink-faint">Notes (optional)</span>
-        <textarea
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-          rows={2}
-          placeholder="Anything a reviewer should know"
-          className="w-full border border-edge bg-ground-2 px-3 py-2 text-sm text-ink outline-none focus:border-accent"
-        />
-      </label>
-      <button
-        type="submit"
-        disabled={!discordUsername.trim() || status === 'sending'}
-        className="btn btn-primary"
-      >
-        {status === 'sending' ? 'Sending…' : 'Submit claim'}
-      </button>
-      {status === 'error' && (
-        <p className="text-[12px] text-danger">{error}</p>
-      )}
-    </form>
-  )
-}
 
 export default function AirlinePage() {
   const { code = '', slug = '' } = useParams()
@@ -344,10 +221,6 @@ export default function AirlinePage() {
                   Website ↗
                 </a>
               )}
-            </div>
-
-            <div className="mt-4">
-              <ClaimAirline airlineUid={a.uid} />
             </div>
           </div>
 
