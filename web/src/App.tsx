@@ -41,7 +41,7 @@ function OnlineBadge() {
   const onlineCount = useOnlineCount()
   if (onlineCount == null) return null
   return (
-    <div className="mono ml-2 flex items-center gap-1.5 border border-edge px-2.5 py-1.5 text-[11px] text-ink-faint">
+    <div className="mono flex items-center gap-1.5 border border-edge px-2.5 py-1.5 text-[11px] text-ink-faint">
       <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
       {num(onlineCount)} online
     </div>
@@ -53,7 +53,7 @@ function SiteVisitorBadge() {
   const visitorCount = useSiteVisitorCount()
   if (visitorCount == null) return null
   return (
-    <div className="mono ml-2 flex items-center gap-1.5 border border-edge px-2.5 py-1.5 text-[11px] text-ink-faint">
+    <div className="mono flex items-center gap-1.5 border border-edge px-2.5 py-1.5 text-[11px] text-ink-faint">
       <span className="h-1.5 w-1.5 rounded-full bg-cyan" />
       {num(visitorCount)} on site
     </div>
@@ -149,8 +149,10 @@ function Shell({ children }: { children: React.ReactNode }) {
                 {l.label}
               </NavLink>
             ))}
-            <OnlineBadge />
-            <SiteVisitorBadge />
+            <div className="ml-2 flex items-center gap-2">
+              <OnlineBadge />
+              <SiteVisitorBadge />
+            </div>
             {discordConfigured && (
               <a
                 href={SITE.discordInvite}
@@ -186,6 +188,10 @@ function Shell({ children }: { children: React.ReactNode }) {
             className="border-t border-edge-soft bg-[color:var(--color-ground)] px-4 pb-4 pt-3 lg:hidden"
           >
             <div className="flex flex-col gap-1">
+              <div className="flex flex-wrap items-center gap-2 pb-2">
+                <OnlineBadge />
+                <SiteVisitorBadge />
+              </div>
               {links.map((l) => (
                 <NavLink
                   key={l.to}
