@@ -123,7 +123,10 @@ begin
         || ' is a member of Echo United Alliances, flying in the '
         || d.division_name || ' division';
     if a.airline_country is not null then
-        out_text := out_text || ' under the flag of ' || a.airline_country;
+        -- the_name, not the code: "under the flag of the United States", not
+        -- "under the flag of US".
+        out_text := out_text || ' under the flag of '
+                 || public.echo_country_phrase(a.airline_country);
     end if;
     out_text := out_text || '.';
 

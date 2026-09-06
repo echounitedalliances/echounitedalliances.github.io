@@ -11,6 +11,27 @@
    applied inline, not here -- the palette below is the ground they sit on.
    ===================================================================== */
 
+/* Country flags -------------------------------------------------------
+   Windows ships no flag glyphs. A flag emoji is a pair of regional
+   indicator letters, so with nothing to draw them Chrome and Edge fall back
+   to rendering the letters themselves -- which is why a US carrier read
+   "US US" on this site: the flag WAS there, it just came out as the same
+   two letters printed beside the country code.
+
+   This is the Twemoji flag set, self-hosted rather than pulled from a CDN at
+   render time. unicode-range scopes it to the regional indicator block, so
+   it is the only thing the font is ever consulted for and it is not
+   downloaded at all until a flag is actually on screen.
+
+   Artwork: Twemoji by Twitter, CC-BY 4.0. Packaged by
+   country-flag-emoji-polyfill (MIT). */
+@font-face {
+  font-family: "Twemoji Country Flags";
+  src: url("/brand/TwemojiCountryFlags.woff2") format("woff2");
+  unicode-range: U+1F1E6-1F1FF;
+  font-display: swap;
+}
+
 @theme {
   --color-ground:     #0B0713;
   --color-ground-2:   #110A1F;
@@ -32,10 +53,10 @@
      deletes it, and that needed a colour nothing else on the site uses. */
   --color-danger:     #FF6B6B;
 
-  --font-brand: "Archivo", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
-  --font-sans: "Public Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+  --font-brand: "Twemoji Country Flags", "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Twemoji Country Flags", "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-sans: "Twemoji Country Flags", "Public Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "Twemoji Country Flags", "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
 }
 
 html {

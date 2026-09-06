@@ -222,6 +222,23 @@ what was reviewed.
 
 ---
 
+## Third-party assets
+
+`brand/TwemojiCountryFlags.woff2` is the [Twemoji](https://github.com/twitter/twemoji)
+country flag set, artwork by Twitter under **CC-BY 4.0**, packaged by
+[country-flag-emoji-polyfill](https://github.com/talkjs/country-flag-emoji-polyfill)
+(MIT). It is self-hosted and scoped by `unicode-range` to the regional
+indicator block, so it is consulted only for flag characters and is not
+downloaded until one is on screen.
+
+It exists because **Windows ships no flag glyphs**. A flag emoji is a pair of
+regional indicator letters; with nothing to draw them, Chrome and Edge render
+the letters themselves — which is why a US carrier used to read "US US" here.
+The flag was always in the markup, it just came out as the same two letters
+already printed beside it.
+
+---
+
 ## Joining Echo
 
 Every division requires an application **in two places**: in The Airline

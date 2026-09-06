@@ -243,4 +243,32 @@ begin
 end;
 $$;
 
+
+-- ---------------------------------------------------------------------
+-- The form a country takes mid-sentence.
+--
+-- The generated carrier profile used to read "under the flag of US". The
+-- readable forms have been in the table above all along; this is what lets a
+-- sentence use them. Falls back to the raw code for a country we do not know,
+-- which is what the sentence did before.
+--
+-- Lives here, with the table, rather than in the file that calls it:
+-- 11_profiles_admin runs BEFORE this one, and its caller is plpgsql, whose
+-- body is not resolved until it is actually called -- by which time this
+-- exists.
+-- ---------------------------------------------------------------------
+create or replace function public.echo_country_phrase(p_code text)
+returns text language sql stable parallel safe as $$
+    select coalesce(
+        (select c.the_name from public.countries c
+          where c.country_code = upper(btrim(coalesce(p_code, '')))),
+        nullif(btrim(coalesce(p_code, '')), '')
+    );
+$$;
+
+comment on function public.echo_country_phrase(text) is
+    'A country code as it should read after "of": "the United States", "Japan". The code itself if the country is unknown.';
+
+grant execute on function public.echo_country_phrase(text) to anon, authenticated;
+
 commit;
