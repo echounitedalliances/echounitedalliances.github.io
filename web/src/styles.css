@@ -11,6 +11,27 @@
    applied inline, not here -- the palette below is the ground they sit on.
    ===================================================================== */
 
+/* Country flags -------------------------------------------------------
+   Windows ships no flag glyphs. A flag emoji is a pair of regional
+   indicator letters, so with nothing to draw them Chrome and Edge fall back
+   to rendering the letters themselves -- which is why a US carrier read
+   "US US" on this site: the flag WAS there, it just came out as the same
+   two letters printed beside the country code.
+
+   This is the Twemoji flag set, self-hosted rather than pulled from a CDN at
+   render time. unicode-range scopes it to the regional indicator block, so
+   it is the only thing the font is ever consulted for and it is not
+   downloaded at all until a flag is actually on screen.
+
+   Artwork: Twemoji by Twitter, CC-BY 4.0. Packaged by
+   country-flag-emoji-polyfill (MIT). */
+@font-face {
+  font-family: "Twemoji Country Flags";
+  src: url("/brand/TwemojiCountryFlags.woff2") format("woff2");
+  unicode-range: U+1F1E6-1F1FF;
+  font-display: swap;
+}
+
 @theme {
   --color-ground:     #0B0713;
   --color-ground-2:   #110A1F;
@@ -32,10 +53,10 @@
      deletes it, and that needed a colour nothing else on the site uses. */
   --color-danger:     #FF6B6B;
 
-  --font-brand: "Archivo", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
-  --font-sans: "Public Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+  --font-brand: "Twemoji Country Flags", "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Twemoji Country Flags", "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-sans: "Twemoji Country Flags", "Public Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "Twemoji Country Flags", "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
 }
 
 html {
@@ -208,6 +229,232 @@ body {
   border-color: var(--color-danger);
 }
 
+/* The division palette, for CSS that cannot read the database.
+   The source of truth is database/sql/19_division_colours.sql; these exist
+   only because a loading state has to paint before any query has answered,
+   which is the one moment the real colours are not available yet. Change
+   both together. */
+:root {
+  --division-kyra:    #7B35FF;
+  --division-aegis:   #D0FF4D;
+  --division-elysium: #E46EFF;
+  --division-proxima: #81FBFE;
+  --division-rhea:    #5DFE95;
+  --division-vilis:   #FF7E42;
+  --division-elion:   #7EA0F4;
+  --division-aura:    #EF9D9E;
+}
+
+/* The Echo wing ------------------------------------------------------
+   The art is a white silhouette, so it is used as a mask over a coloured
+   box: one file, any accent. */
+.echo-mark {
+  display: inline-block;
+  flex: none;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/* Loading ------------------------------------------------------------
+   The wing holds still and the colour moves through it: white, then a
+   division, then white, then the next, right to left, for as long as
+   whatever we are waiting for takes.
+
+   It is one gradient nine times the width of the mark, slid leftwards
+   under it. background-position 0% -> 100% moves the image LEFT (its right
+   edge ends up against the box's right edge), so the colours enter from the
+   right, which is the way the wing points. No JavaScript, no frame loop:
+   the compositor runs it and it stops existing when the element unmounts. */
+.echo-loader {
+  background-image: linear-gradient(
+    90deg,
+    #fff, var(--division-kyra),
+    #fff, var(--division-aegis),
+    #fff, var(--division-elysium),
+    #fff, var(--division-proxima),
+    #fff, var(--division-rhea),
+    #fff, var(--division-vilis),
+    #fff, var(--division-elion),
+    #fff, var(--division-aura),
+    #fff
+  );
+  background-size: 900% 100%;
+  animation: echo-loader-sweep 3s linear infinite;
+}
+
+@keyframes echo-loader-sweep {
+  from { background-position: 0% 50%; }
+  to   { background-position: 100% 50%; }
+}
+
+/* A colour cycling every fifth of a second is exactly what reduced-motion is
+   asking us not to do. The global rule would collapse the duration to
+   nothing and freeze it mid-gradient; this stops it deliberately, on one
+   flat colour. */
+@media (prefers-reduced-motion: reduce) {
+  .echo-loader {
+    background-image: none;
+    background-color: var(--color-accent);
+    animation: none;
+  }
+}
+
+/* The arrival sequence ----------------------------------------------
+   Runs once per browser. Transform and opacity only, so the compositor
+   owns every frame and nothing here touches layout. */
+.welcome {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(60rem 40rem at 50% 45%,
+      color-mix(in srgb, var(--color-accent) 16%, transparent), transparent 70%),
+    var(--color-ground);
+  animation: welcome-out 700ms cubic-bezier(.6,0,.9,.3) 3800ms both;
+}
+.welcome-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+  text-align: center;
+}
+
+.welcome-line {
+  font-family: var(--font-brand);
+  text-transform: uppercase;
+  color: var(--color-ink);
+  opacity: 0;
+  animation: welcome-rise 620ms cubic-bezier(.2,.7,.3,1) both;
+}
+.welcome-kicker {
+  font-size: clamp(13px, 2.4vw, 20px);
+  letter-spacing: 0.42em;
+  text-indent: 0.42em;
+  color: var(--color-ink-dim);
+  animation-delay: 1100ms;
+}
+
+/* The wing owns the top of the frame; every word sits under it. */
+.welcome-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(92vw, 720px);
+  height: clamp(150px, 26vw, 230px);
+  margin-bottom: clamp(28px, 6vh, 64px);
+}
+.welcome-echo {
+  margin-top: 10px;
+  font-size: clamp(46px, 13vw, 132px);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-indent: 0.06em;
+  line-height: 1;
+  animation-delay: 1300ms;
+}
+
+.welcome-mark {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  /* The exit lives here, on the pair, so both halves leave together however
+     staggered their arrivals were. */
+  animation: welcome-mark-out 900ms cubic-bezier(.5,0,.85,.2) 2600ms both;
+}
+/* The strike stretches BEHIND the direction of travel, so the anchor is the
+   leading edge. */
+.welcome-mark .echo-mark { transform-origin: left center; }
+.welcome-mark .echo-mark { grid-area: 1 / 1; }
+
+/* Opposite parabolas, from the two right-hand corners of the page.
+   x falls linearly toward nothing while y falls with the SQUARE of what is
+   left, so each half comes in steeply from its corner and flattens as it
+   arrives. scaleX carries the strike: stretched to nearly three times its
+   length at speed, back to true as it stops.
+
+   The stops are spaced by t, not evenly, and the easing between them is
+   LINEAR -- with a bezier on each segment the wing would ease in and out six
+   separate times and arrive in visible steps. Spacing carries the
+   deceleration; linear keeps it smooth. */
+.welcome-wing-top {
+  animation: welcome-arc-top 1500ms linear 250ms both;
+}
+.welcome-wing-bottom {
+  animation: welcome-arc-bottom 1500ms linear 500ms both;
+}
+
+@keyframes welcome-arc-top {
+  0%   { transform: translate(95vw, -70vh)   scaleX(2.8);  opacity: 0; }
+  12%  { opacity: 1; }
+  25%  { transform: translate(57vw, -25.2vh) scaleX(2.08); opacity: 1; }
+  45%  { transform: translate(34.2vw, -9.07vh) scaleX(1.65); }
+  62%  { transform: translate(19vw, -2.8vh)  scaleX(1.36); }
+  78%  { transform: translate(9.5vw, -0.7vh) scaleX(1.18); }
+  100% { transform: translate(0, 0)          scaleX(1);    opacity: 1; }
+}
+@keyframes welcome-arc-bottom {
+  0%   { transform: translate(95vw, 95vh)    scaleX(2.8);  opacity: 0; }
+  12%  { opacity: 1; }
+  25%  { transform: translate(57vw, 34.2vh)  scaleX(2.08); opacity: 1; }
+  45%  { transform: translate(34.2vw, 12.31vh) scaleX(1.65); }
+  62%  { transform: translate(19vw, 3.8vh)   scaleX(1.36); }
+  78%  { transform: translate(9.5vw, 0.95vh) scaleX(1.18); }
+  100% { transform: translate(0, 0)          scaleX(1);    opacity: 1; }
+}
+
+@keyframes welcome-mark-out {
+  0%   { transform: translateX(0) scaleX(1); opacity: 1; }
+  100% { transform: translateX(-130vw) scaleX(.16); opacity: 0; }
+}
+
+/* One line, two voices: the name, then the slogan in the alliance purple. */
+.welcome-strap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: clamp(14px, 4vw, 42px);
+  margin-top: clamp(18px, 3vh, 30px);
+  font-size: clamp(11px, 1.9vw, 17px);
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  animation-delay: 1650ms;
+}
+.welcome-strap-name { color: var(--color-ink-dim); }
+.welcome-strap-slogan { color: var(--color-accent); }
+
+@keyframes welcome-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes welcome-out {
+  from { opacity: 1; }
+  to   { opacity: 0; visibility: hidden; }
+}
+
+.welcome-skip {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  background: none;
+  border: 1px solid var(--color-edge);
+  padding: 7px 12px;
+  cursor: pointer;
+}
+.welcome-skip:hover { color: var(--color-ink); border-color: var(--color-accent); }
+
 /* Board hub chips ---------------------------------------------------
    Small enough not to compete with the board, and they carry the alliance
    purple only when selected, so the current hub is never in doubt. */
@@ -338,7 +585,7 @@ body {
   background:
     radial-gradient(42rem 26rem at 18% 8%,  color-mix(in srgb, var(--color-accent) 20%, transparent), transparent 62%),
     radial-gradient(34rem 22rem at 82% 34%, color-mix(in srgb, var(--color-cyan)   12%, transparent), transparent 60%),
-    radial-gradient(30rem 20rem at 55% 92%, color-mix(in srgb, #E549C9 12%, transparent), transparent 62%);
+    radial-gradient(30rem 20rem at 55% 92%, color-mix(in srgb, #E46EFF 12%, transparent), transparent 62%);
   animation: drift 26s ease-in-out infinite alternate;
 }
 @keyframes drift {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Loading, NotConfigured } from '../components/ui'
 import { isConfigured, supabase } from '../lib/supabase'
@@ -115,14 +115,16 @@ function MyAirlines({ resonantId }: { resonantId: string }) {
 /**
  * Resonance: sign in, keep a profile, and see every trip on the account.
  *
- * Two ways in -- a password or a one-time email link -- because a link is a
- * good way to join and a poor way to come back on a phone. Either way the
- * site only ever holds the session that comes back; the sign-in form lives in
- * components/ResonanceAuth.
+ * Sign-in is a password; the one-time email link that used to sit beside it
+ * is gone. Email survives only as password reset, which is the sole way back
+ * into an account nobody can sign into. The form lives in
+ * components/ResonanceAuth; the site only ever holds the session.
  */
 export default function Resonance() {
   const { ready, user, resonant, recovering, endRecovery, signOut, refreshResonant } = useAuth()
   const [error, setError] = useState<string | null>(null)
+  const [sort, setSort] = useState<TripSort>('departure')
+  const [newestFirst, setNewestFirst] = useState(false)
 
   const [trips, setTrips] = useState<BookingDetails[] | null>(null)
   const [divisions, setDivisions] = useState<Division[]>([])
@@ -179,6 +181,15 @@ export default function Resonance() {
       setError(error.message)
     }
   }
+
+  // Derived, not stored: re-sorting a list you already have should not mean
+  // asking the server for it again.
+  const ordered = useMemo(() => {
+    if (!trips) return null
+    const key =
+      sort === 'departure' ? tripDeparture : sort === 'arrival' ? tripArrival : bookedAt
+    return [...trips].sort((a, b) => (newestFirst ? key(b) - key(a) : key(a) - key(b)))
+  }, [trips, sort, newestFirst])
 
   if (!isConfigured) return <NotConfigured />
   if (!ready) return <Loading label="Checking your session" />
@@ -322,7 +333,36 @@ export default function Resonance() {
           <MyAirlines resonantId={resonant.resonant_id} />
 
           <section className="mt-10">
-            <h2 className="display text-2xl">Your trips</h2>
+            <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+              <h2 className="display text-2xl">Your trips</h2>
+              {trips && trips.length > 1 && (
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="mono mr-1 text-[10px] uppercase tracking-[0.16em] text-ink-faint">
+                    Sort by
+                  </span>
+                  {TRIP_SORTS.map((o) => (
+                    <button
+                      key={o.key}
+                      type="button"
+                      onClick={() => setSort(o.key)}
+                      aria-pressed={sort === o.key}
+                      className={`chip ${sort === o.key ? 'chip-on' : ''}`}
+                    >
+                      {o.label}
+                    </button>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() => setNewestFirst((v) => !v)}
+                    aria-label={newestFirst ? 'Showing latest first' : 'Showing earliest first'}
+                    className="chip"
+                    title={newestFirst ? 'Latest first' : 'Earliest first'}
+                  >
+                    {newestFirst ? 'Latest ↓' : 'Earliest ↑'}
+                  </button>
+                </div>
+              )}
+            </div>
             {trips === null ? (
               <Loading />
             ) : trips.length === 0 ? (
@@ -336,7 +376,7 @@ export default function Resonance() {
               </div>
             ) : (
               <div className="mt-4 flex flex-col gap-3">
-                {trips.map((t) => (
+                {(ordered ?? []).map((t) => (
                   <article key={t.booking_id} className="panel p-5">
                     <div className="flex flex-wrap items-baseline justify-between gap-3">
                       <div className="mono text-2xl tracking-[0.2em] text-cyan">{t.pnr}</div>

@@ -54,22 +54,23 @@ truncate table
 -- ---------------------------------------------------------------------
 -- Division identity.
 --
--- These are read off the divisions' own chevron marks, so the site matches
--- the badges people already know. Each is the dominant hue of that chevron;
--- the marks are two-tone gradients, and this is the colour that reads at a
--- glance. Change a value here and every surface follows: division pages,
--- carrier accents, the globe arcs and the directory filters.
+-- The colours the group uses for itself. Change a value here and every
+-- surface follows: division pages, carrier accents, the map arcs and the
+-- directory filters.
+--
+-- 19_division_colours.sql sets the same values on an existing database, and
+-- refreshes the two materialised views that cache them. Change both together.
 -- ---------------------------------------------------------------------
 update public.divisions set accent_color = v.accent
   from (values
-    ('kyra',    '#8B5CF6'),   -- violet
-    ('aegis',   '#B9F227'),   -- chartreuse
-    ('elysium', '#E549C9'),   -- magenta
-    ('proxima', '#45C8F0'),   -- cyan
-    ('vilis',   '#F4622A'),   -- orange
-    ('rhea',    '#2FBF5B'),   -- green
-    ('elion',   '#2E6FF2'),   -- blue
-    ('aura',    '#F0605F')    -- coral
+    ('kyra',    '#7B35FF'),   -- violet
+    ('aegis',   '#D0FF4D'),   -- chartreuse
+    ('elysium', '#E46EFF'),   -- orchid
+    ('proxima', '#81FBFE'),   -- pale cyan
+    ('vilis',   '#FF7E42'),   -- orange
+    ('rhea',    '#5DFE95'),   -- mint
+    ('elion',   '#7EA0F4'),   -- periwinkle
+    ('aura',    '#EF9D9E')    -- rose
   ) as v(code, accent)
  where divisions.division_code = v.code;
 

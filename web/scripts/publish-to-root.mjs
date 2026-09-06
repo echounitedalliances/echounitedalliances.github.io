@@ -29,7 +29,10 @@ const dist = join(webDir, 'dist')
 
 // Anything the build owns at the repo root. Everything else there is source and
 // must not be touched.
-const OWNED = ['assets', 'index.html', '.nojekyll', '404.html']
+// Everything the build owns at the repository root. 'brand' holds the logo
+// and the favicons: they are NOT under assets/, so both this list and the
+// deploy workflow have to name it or they quietly stop being published.
+const OWNED = ['assets', 'brand', 'index.html', '.nojekyll', '404.html']
 
 console.log('building…')
 execSync('npm run build', { cwd: webDir, stdio: 'inherit' })

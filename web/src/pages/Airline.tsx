@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import RouteMap from '../components/RouteMap'
 import { Loading, Mark, NotConfigured } from '../components/ui'
@@ -141,11 +141,34 @@ export default function AirlinePage() {
   const [missing, setMissing] = useState(false)
   const [timetable, setTimetable] = useState<TimetableRow[] | null>(null)
   const [ttAirport, setTtAirport] = useState<string>('')
+  /** True when the unfiltered timetable came back at the server's row cap. */
+  const [ttCapped, setTtCapped] = useState(false)
+
+  /**
+   * The map answers two different questions and they need different data.
+   *
+   * "airline" is this carrier's own routes — what the page is about, and the
+   * default. "division" is everything its division flies, which is a much
+   * bigger set and comes from its own materialised view, so it is fetched
+   * once on demand rather than on every page load.
+   */
+  const [mapMode, setMapMode] = useState<'airline' | 'division'>('airline')
+  const [divArcs, setDivArcs] = useState<Arc[] | null>(null)
+  const [divNodes, setDivNodes] = useState<NetworkNode[]>([])
+  const [divLoading, setDivLoading] = useState(false)
+  /** Which route the timetable is pinned to, if any. */
+  const [ttRoute, setTtRoute] = useState<{ a: string; b: string } | null>(null)
+  const timetableRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     if (!isConfigured) return
     setA(null)
     setMissing(false)
+    setMapMode('airline')
+    setDivArcs(null)
+    setDivNodes([])
+    setTtAirport('')
+    setTtRoute(null)
     void (async () => {
       const { data } = await supabase
         .from('v_airline_profile')
@@ -160,7 +183,7 @@ export default function AirlinePage() {
       }
       setA(air)
 
-      const [f, r, t] = await Promise.all([
+      const [f, r] = await Promise.all([
         supabase
           .from('v_fleet')
           .select('aircraft_model, manufacturer, aircraft_count')
@@ -175,9 +198,7 @@ export default function AirlinePage() {
           .eq('airline_uid', air.uid)
           .order('departures_per_week', { ascending: false })
           .limit(400),
-        supabase.rpc('airline_timetable', { p_uid: air.uid, p_airport: null }),
       ])
-      setTimetable((t.data as TimetableRow[]) ?? [])
       const routeRows = (r.data as RoutePairRow[]) ?? []
       setFleet((f.data as FleetRow[]) ?? [])
       setRoutes(routeRows)
@@ -223,6 +244,72 @@ export default function AirlinePage() {
   }, [code, slug])
 
   if (!isConfigured) return <NotConfigured />
+  /**
+   * The timetable, fetched for whatever is currently selected.
+   *
+   * It used to be fetched once, unfiltered, and narrowed in the browser. That
+   * quietly lied: PostgREST caps a result at 1,000 rows and does not say so,
+   * and this carrier files 2,790 services — so everything alphabetically after
+   * HAN was missing, and asking for SGN's departures returned nothing from an
+   * airport it serves 140 times a week.
+   *
+   * Filtering on the server instead means each scope is complete. Only the
+   * unfiltered view can still hit the cap, and it now admits it.
+   */
+  useEffect(() => {
+    if (!isConfigured || !a) return
+    let cancelled = false
+    setTimetable(null)
+    void (async () => {
+      const { data } = await supabase.rpc('airline_timetable', {
+        p_uid: a.uid,
+        p_airport: ttRoute ? ttRoute.a : ttAirport || null,
+        p_pair_with: ttRoute ? ttRoute.b : null,
+      })
+      if (cancelled) return
+      const rows = (data as TimetableRow[]) ?? []
+      setTimetable(rows)
+      setTtCapped(!ttAirport && !ttRoute && rows.length === 1000)
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [a, ttAirport, ttRoute])
+
+  // Fetched the first time Division mode is asked for, and kept. The whole
+  // division is a much bigger draw than one carrier's routes and most visitors
+  // never switch, so it does not belong in the page's initial load.
+  useEffect(() => {
+    if (!isConfigured || mapMode !== 'division' || divArcs || !a) return
+    let cancelled = false
+    setDivLoading(true)
+    void (async () => {
+      const { data } = await supabase.rpc('division_arcs', {
+        p_division: a.division_code,
+        p_limit: 700,
+      })
+      if (cancelled) return
+      const list = (data as Arc[]) ?? []
+      setDivArcs(list)
+      const codes = Array.from(
+        new Set(list.flatMap((x) => [x.origin_iata, x.destination_iata])),
+      ).slice(0, 700)
+      if (codes.length) {
+        const { data: pts } = await supabase
+          .from('mv_airport_directory')
+          .select('iata_code, city_name, country_code, latitude, longitude, weekly_departures, carriers, hub_for')
+          .in('iata_code', codes)
+        if (!cancelled) {
+          setDivNodes(((pts as NetworkNode[]) ?? []).filter((p) => p.latitude != null))
+        }
+      }
+      if (!cancelled) setDivLoading(false)
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [mapMode, divArcs, a])
+
   if (missing) {
     return (
       <div className="mx-auto max-w-[1180px] px-5 py-24 text-center">
@@ -237,9 +324,42 @@ export default function AirlinePage() {
 
   const accent = accentOf(a)
   const named = a.airline_name?.trim()
-  const shown = (timetable ?? []).filter(
-    (t) => !ttAirport || t.origin_iata === ttAirport,
-  )
+  // Already scoped by the query above — a second pass here would only be a
+  // chance for the two to disagree.
+  const shown = timetable ?? []
+
+  // Not memoised, and not a hook: everything below here sits after the early
+  // returns above, where a hook would change the call order between renders.
+  // It is a filter over at most 400 rows.
+  const airportRoutes = !ttAirport
+    ? []
+    : routes
+        .filter((r) => r.airport_a === ttAirport || r.airport_b === ttAirport)
+        .map((r) => ({ ...r, other: r.airport_a === ttAirport ? r.airport_b : r.airport_a }))
+        .sort((x, y) => y.departures_per_week - x.departures_per_week)
+
+  const showFullTimetable = (other: string) => {
+    setTtRoute({ a: ttAirport, b: other })
+    // The timetable is a long way down the page; jumping to it is the point of
+    // the button. A timeout rather than requestAnimationFrame, because this
+    // only needs React to have committed the state, not a painted frame --
+    // and rAF does not fire at all in a backgrounded tab, which would leave
+    // the button silently doing nothing.
+    let smooth = true
+    try {
+      smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    } catch {
+      /* older browsers: scroll smoothly */
+    }
+    window.setTimeout(
+      () =>
+        timetableRef.current?.scrollIntoView({
+          behavior: smooth ? 'smooth' : 'auto',
+          block: 'start',
+        }),
+      0,
+    )
+  }
 
   return (
     <div>
@@ -352,17 +472,110 @@ export default function AirlinePage() {
           </div>
 
           <div>
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+              <div className="flex gap-2">
+                {(['airline', 'division'] as const).map((m) => (
+                  <button
+                    key={m}
+                    type="button"
+                    onClick={() => {
+                      setMapMode(m)
+                      // The clicked airport belongs to whichever network was
+                      // on screen; carrying it across modes would open a
+                      // routes panel for an airport this carrier may not serve.
+                      setTtAirport('')
+                    }}
+                    aria-pressed={mapMode === m}
+                    className={`chip ${mapMode === m ? 'chip-on' : ''}`}
+                  >
+                    {m === 'airline' ? named || 'This carrier' : `${a.division_name} division`}
+                  </button>
+                ))}
+              </div>
+              {mapMode === 'division' && divLoading && (
+                <span className="mono text-[10px] uppercase tracking-[0.14em] text-ink-faint">
+                  Drawing the division…
+                </span>
+              )}
+            </div>
+
             <RouteMap
-              arcs={arcs}
-              nodes={nodes}
+              arcs={mapMode === 'division' ? (divArcs ?? []) : arcs}
+              nodes={mapMode === 'division' ? divNodes : nodes}
               className="w-full"
               zoomOnFocus
               focusedAirport={ttAirport || null}
-              onPickAirport={(iata) => setTtAirport(iata)}
+              onPickAirport={(iata) => {
+                setTtAirport(iata)
+                setTtRoute(null)
+              }}
             />
             <p className="mono mt-1 text-center text-[10px] uppercase tracking-[0.16em] text-ink-faint">
-              {num(routes.length)} routes · click an airport to filter the timetable
+              {mapMode === 'division'
+                ? `${num((divArcs ?? []).length)} city pairs across ${a.division_name}`
+                : `${num(routes.length)} routes · click an airport for its routes`}
             </p>
+
+            {/* Airline mode only: the division network is not this carrier's,
+                so a list of "its" routes from an airport would be a lie. */}
+            {mapMode === 'airline' && ttAirport && (
+              <div className="panel mt-4">
+                <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-edge-soft px-4 py-3">
+                  <h3 className="mono text-[11px] uppercase tracking-[0.14em] text-ink">
+                    {airportRoutes.length > 0 ? (
+                      <>
+                        {num(airportRoutes.length)}{' '}
+                        {airportRoutes.length === 1 ? 'route' : 'routes'} from{' '}
+                        <span className="text-cyan">{ttAirport}</span>
+                      </>
+                    ) : (
+                      <>
+                        Nothing from <span className="text-cyan">{ttAirport}</span>
+                      </>
+                    )}
+                  </h3>
+                  <button
+                    onClick={() => setTtAirport('')}
+                    className="mono text-[10px] uppercase tracking-[0.12em] text-ink-faint hover:text-ink"
+                  >
+                    Clear
+                  </button>
+                </div>
+
+                {airportRoutes.length === 0 ? (
+                  <p className="px-4 py-5 text-sm text-ink-dim">
+                    {named || 'This carrier'} does not serve {ttAirport}.
+                  </p>
+                ) : (
+                  <ul className="max-h-[320px] overflow-auto">
+                    {airportRoutes.map((r) => (
+                      <li
+                        key={`${r.airport_a}-${r.airport_b}`}
+                        className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-edge-soft px-4 py-3 last:border-b-0"
+                      >
+                        <span className="mono text-sm text-ink">
+                          {ttAirport}
+                          <span className="text-ink-faint"> {r.directions === 1 ? '→' : '⇄'} </span>
+                          <Link to={`/airports/${r.other}`} className="hover:text-cyan">
+                            {r.other}
+                          </Link>
+                        </span>
+                        <span className="mono text-[11px] text-ink-faint">
+                          {r.departures_per_week}/wk · {duration(r.fastest_minutes)}
+                          {r.cheapest_economy_usd != null && ` · from ${usd(r.cheapest_economy_usd)}`}
+                        </span>
+                        <button
+                          onClick={() => showFullTimetable(r.other)}
+                          className="mono ml-auto border border-edge px-2.5 py-1 text-[10px] uppercase tracking-[0.12em] text-ink-dim transition-colors hover:border-accent hover:text-ink"
+                        >
+                          Show full timetable
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -440,17 +653,26 @@ export default function AirlinePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1180px] px-5 pb-16">
+      <section ref={timetableRef} className="mx-auto max-w-[1180px] px-5 pb-16">
         <div className="flex flex-wrap items-baseline justify-between gap-3">
           <h2 className="display text-2xl">Timetable</h2>
-          <div className="mono flex items-center gap-2 text-[11px]">
-            {ttAirport && (
+          <div className="mono flex flex-wrap items-center gap-2 text-[11px]">
+            {ttRoute ? (
               <button
-                onClick={() => setTtAirport('')}
-                className="border border-edge px-2.5 py-1 uppercase tracking-[0.12em] text-ink-faint hover:text-ink"
+                onClick={() => setTtRoute(null)}
+                className="border border-[color:var(--color-accent)] px-2.5 py-1 uppercase tracking-[0.12em] text-ink hover:bg-surface-2"
               >
-                {ttAirport} ×
+                {ttRoute.a} ⇄ {ttRoute.b} ×
               </button>
+            ) : (
+              ttAirport && (
+                <button
+                  onClick={() => setTtAirport('')}
+                  className="border border-edge px-2.5 py-1 uppercase tracking-[0.12em] text-ink-faint hover:text-ink"
+                >
+                  {ttAirport} ×
+                </button>
+              )
             )}
             <span className="text-ink-faint">
               {timetable ? `${num(shown.length)} services` : ''}
@@ -458,14 +680,34 @@ export default function AirlinePage() {
           </div>
         </div>
         <p className="mt-1 text-ink-faint">
-          Departure times are local to the departure airport. 0 = Monday.
+          {ttRoute
+            ? `Every service between ${ttRoute.a} and ${ttRoute.b}, both directions.`
+            : ttAirport
+              ? `Every departure from ${ttAirport}. Times are local to it.`
+              : 'Departure times are local to the departure airport. 0 = Monday.'}
         </p>
+
+        {/* Saying "1,000 services" when there are 2,790 is worse than saying
+            nothing; the way out is to pick an airport, so the notice says so. */}
+        {ttCapped && (
+          <p className="mono mt-3 border-l-2 border-l-[color:var(--color-warn)] bg-surface px-4 py-3 text-[12px] text-ink-dim">
+            Showing the first 1,000 services — the server will not return more in
+            one request. Click an airport on the map, or pick a route, for a
+            complete list.
+          </p>
+        )}
 
         {timetable === null ? (
           <Loading />
         ) : shown.length === 0 ? (
           <p className="panel mt-4 p-8 text-center text-ink-dim">
-            No scheduled services{ttAirport ? ` from ${ttAirport}` : ''}.
+            No scheduled services
+            {ttRoute
+              ? ` between ${ttRoute.a} and ${ttRoute.b}`
+              : ttAirport
+                ? ` from ${ttAirport}`
+                : ''}
+            .
           </p>
         ) : (
           <div className="panel mt-4 max-h-[560px] overflow-auto">

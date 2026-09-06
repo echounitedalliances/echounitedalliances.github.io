@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import SplitFlap, { toFlap } from './SplitFlap'
+import { Loading } from './ui'
 import type { BoardRow } from './SplitFlap'
 import { isConfigured, supabase } from '../lib/supabase'
 import type { BoardDeparture } from '../lib/types'
@@ -195,13 +196,13 @@ export default function DepartureBoard({ origin }: { origin?: string }) {
         <SplitFlap rows={rows} />
       ) : (
         <div className="board">
-          <div className="mono py-16 text-center text-[11px] uppercase tracking-[0.16em] text-ink-faint">
-            {!isConfigured
-              ? 'Board offline'
-              : loaded
-                ? 'No departures scheduled'
-                : 'Reading the board…'}
-          </div>
+          {isConfigured && !loaded ? (
+            <Loading label="Reading the board" />
+          ) : (
+            <div className="mono py-16 text-center text-[11px] uppercase tracking-[0.16em] text-ink-faint">
+              {isConfigured ? 'No departures scheduled' : 'Board offline'}
+            </div>
+          )}
         </div>
       )}
 

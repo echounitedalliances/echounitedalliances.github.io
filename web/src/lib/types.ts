@@ -252,3 +252,16 @@ export type PlaceRow = {
   place_airports: number
   place_rank: number
 }
+
+/**
+ * A country with the number of carriers registered in it.
+ *
+ * Counted across the whole directory by airline_countries(), not over the page
+ * of results already fetched — which is what made the old chips claim "VN 1"
+ * for a country with sixteen.
+ */
+export type CountryCount = {
+  country_code: string
+  country_name: string
+  carriers: number
+}

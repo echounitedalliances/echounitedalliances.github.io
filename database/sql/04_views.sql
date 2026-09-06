@@ -560,6 +560,11 @@ begin
     exception when undefined_table then
         null;   -- 07_connections has not been applied yet
     end;
+    begin
+        refresh materialized view public.mv_division_arcs;
+    exception when undefined_table then
+        null;   -- 20_division_network has not been applied yet
+    end;
     analyze public.mv_leg_departures;
 end;
 $$;

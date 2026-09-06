@@ -4,12 +4,23 @@ The website for Echo United Alliances, a virtual airline group in
 **The Airline Simulator** — eight divisions, 590 member carriers, one network.
 
 Live at **https://echounitedalliances.github.io**
+Check out our 2nd testing site **https://lacnka.github.io/echotesting/**
 
 ---
 
 ## What the site does today
 
 ### The alliance
+
+**About** (`/about`). The slogan, and the board — which is currently the eight
+division leaders, listed by the name and Discord handle they go by rather than
+by airline, since several of them own more than one. The roster is in
+`web/src/lib/alliance.ts`; division names, order and colours come from the
+database, so the page follows a rename without being edited.
+
+**Our activities** (`/activities`). FFA sales, the discount aircraft market
+and the recurring events, each with the facts down the side. All of it happens
+on Discord — the page says so once rather than in every section.
 
 **Home.** The headline figures, then a live departure board, then the eight
 divisions, the network drawn flat, and a carrier spotlight.
@@ -55,7 +66,9 @@ of four cabins, one to six travellers, and a stop limit.
 **One query, 590 airlines.** `search_itineraries()` returns nonstop through
 two-stop journeys across the whole group, so a trip no single member flies end
 to end is still one search, one booking and one reference. Typically 44–73 ms.
-Results sort by price, duration or stops.
+Results sort by price, duration, stops, departure or arrival — arrival
+reckons with the date, so a flight landing after midnight sorts after one
+landing at 22:55 the same evening rather than first.
 
 **Real inventory.** Seats are tracked per departure and cabin, against a
 deliberately gentle background demand simulation — enough that a
@@ -67,13 +80,17 @@ The whole reservation goes through one security-definer function, because the
 three writes it makes have to succeed together.
 
 **Manage a booking** (`/trips`) with the PNR and a passenger surname — no
-account, the way every airline does it.
+account, the way every airline does it — and cancel it from there. On a
+Resonance account the trips list sorts by first departure, last arrival, or
+booking date.
 
 ### Resonance
 
-Sign in with a one-time email link; there is no password anywhere in the flow.
-A Resonant gets a profile — display name, home airport, home division — and
-every trip on the account in one place. Booking without an account still works.
+Sign in with an email and password, held by Supabase Auth and never by this
+project. Forgotten passwords are reset over email — the one place email still
+appears, and the only way back into an account nobody can sign into. A Resonant
+gets a profile — display name, home airport, home division — and every trip on
+the account in one place. Booking without an account still works.
 
 ### Underneath
 
@@ -91,10 +108,6 @@ sideways inside its own frame rather than dragging the page with it.
 
 A lot. In rough order of how much is already there to build on:
 
-- **Cancelling a booking from the site.** `cancel_booking()` is in the database,
-  granted, and tested — it refuses a wrong surname and refuses a second
-  cancellation — but nothing in the UI calls it yet. Today a cancellation is a
-  database call.
 - **Admin editing.** `echo_is_admin()` exists and Resonance shows an Admin
   badge, but there is no editor behind it. Overwriting a carrier profile means
   writing the row by hand.
@@ -206,6 +219,23 @@ what was reviewed.
 
 `npm --prefix web run publish` is the only way to update the live site. Editing
 `index.html` or `assets/` by hand will be overwritten.
+
+---
+
+## Third-party assets
+
+`brand/TwemojiCountryFlags.woff2` is the [Twemoji](https://github.com/twitter/twemoji)
+country flag set, artwork by Twitter under **CC-BY 4.0**, packaged by
+[country-flag-emoji-polyfill](https://github.com/talkjs/country-flag-emoji-polyfill)
+(MIT). It is self-hosted and scoped by `unicode-range` to the regional
+indicator block, so it is consulted only for flag characters and is not
+downloaded until one is on screen.
+
+It exists because **Windows ships no flag glyphs**. A flag emoji is a pair of
+regional indicator letters; with nothing to draw them, Chrome and Edge render
+the letters themselves — which is why a US carrier used to read "US US" here.
+The flag was always in the markup, it just came out as the same two letters
+already printed beside it.
 
 ---
 

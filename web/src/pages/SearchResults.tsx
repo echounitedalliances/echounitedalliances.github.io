@@ -5,8 +5,17 @@ import { Loading, NotConfigured } from '../components/ui'
 import { isConfigured, supabase } from '../lib/supabase'
 import type { Itinerary } from '../lib/types'
 import { duration, num, shortDate, usd } from '../lib/format'
+import { itineraryArrival, itineraryDeparture } from '../lib/trips'
 
-type Sort = 'price' | 'duration' | 'stops'
+type Sort = 'price' | 'duration' | 'stops' | 'departure' | 'arrival'
+
+const SORTS: { key: Sort; label: string }[] = [
+  { key: 'price', label: 'Price' },
+  { key: 'duration', label: 'Duration' },
+  { key: 'stops', label: 'Stops' },
+  { key: 'departure', label: 'Departs' },
+  { key: 'arrival', label: 'Arrives' },
+]
 
 function LegRow({ leg, last }: { leg: Itinerary['legs'][number]; last: boolean }) {
   const dayShift =
@@ -81,9 +90,16 @@ export default function SearchResults() {
     let r = rows
     if (interlineOnly) r = r.filter((x) => x.is_interline)
     const c = [...r]
-    if (sort === 'duration') c.sort((a, b) => a.total_minutes - b.total_minutes)
-    else if (sort === 'stops') c.sort((a, b) => a.stops - b.stops || a.total_price_usd - b.total_price_usd)
-    else c.sort((a, b) => a.total_price_usd - b.total_price_usd)
+    // Ties break on price throughout: two flights leaving at the same minute
+    // are otherwise ordered by whatever the server happened to return.
+    const price = (a: Itinerary, b: Itinerary) => a.total_price_usd - b.total_price_usd
+    if (sort === 'duration') c.sort((a, b) => a.total_minutes - b.total_minutes || price(a, b))
+    else if (sort === 'stops') c.sort((a, b) => a.stops - b.stops || price(a, b))
+    else if (sort === 'departure')
+      c.sort((a, b) => itineraryDeparture(a) - itineraryDeparture(b) || price(a, b))
+    else if (sort === 'arrival')
+      c.sort((a, b) => itineraryArrival(a) - itineraryArrival(b) || price(a, b))
+    else c.sort(price)
     return c
   }, [rows, sort, interlineOnly])
 
@@ -109,15 +125,16 @@ export default function SearchResults() {
           </p>
         </div>
         <div className="mono flex flex-wrap gap-1 text-[11px] uppercase tracking-[0.1em]">
-          {(['price', 'duration', 'stops'] as Sort[]).map((s) => (
+          {SORTS.map((o) => (
             <button
-              key={s}
-              onClick={() => setSort(s)}
+              key={o.key}
+              onClick={() => setSort(o.key)}
+              aria-pressed={sort === o.key}
               className={`border px-2.5 py-1 transition-colors ${
-                sort === s ? 'border-[color:var(--color-accent)] text-ink' : 'border-edge-soft text-ink-faint hover:text-ink-dim'
+                sort === o.key ? 'border-[color:var(--color-accent)] text-ink' : 'border-edge-soft text-ink-faint hover:text-ink-dim'
               }`}
             >
-              {s}
+              {o.label}
             </button>
           ))}
           <button

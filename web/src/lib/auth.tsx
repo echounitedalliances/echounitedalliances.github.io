@@ -5,12 +5,15 @@ import { isConfigured, supabase } from './supabase'
 /**
  * Resonance: the alliance's membership programme. A member is a Resonant.
  *
- * There are two ways in, because neither is right on its own. A magic link
- * needs nothing memorised but sends you out to a mail app, which is exactly
- * the wrong thing to do to someone checking a booking on a phone. A password
- * is instant and works offline of email -- but has to be set once, and reset
- * over email when forgotten. So: passwords for the people who want them,
- * links for the people who do not, and the same account either way.
+ * Sign-in is a password. There was a one-time email link too, and it is gone:
+ * it sent people out to a mail app and back, which is the wrong thing to do
+ * to someone checking a booking on a phone.
+ *
+ * Email has not left entirely, and cannot. resetPasswordForEmail is the only
+ * way back into an account whose password is forgotten, and it is also how
+ * everyone who joined before passwords existed gets their first one -- there
+ * is nothing on their record to sign in with otherwise. Take that away and a
+ * forgotten password is a permanently lost account.
  *
  * Passwords never touch this codebase's own storage. They are passed straight
  * to supabase-js, which sends them over TLS to GoTrue; the site only ever
@@ -37,7 +40,13 @@ export type Resonant = {
   joined_at: string
 }
 
-type Result = { error: string | null }
+/**
+ * The raw error, not just its text. GoTrue's codes are what distinguish "wrong
+ * password" from "you have sent too many emails this hour", and the page needs
+ * to say different things about those.
+ */
+export type AuthFailure = { message: string; code?: string; status?: number }
+type Result = { error: AuthFailure | null }
 
 type AuthState = {
   ready: boolean
@@ -47,7 +56,6 @@ type AuthState = {
   /** True while the user arrived on a reset link and owes us a new password. */
   recovering: boolean
   endRecovery: () => void
-  signInWithLink: (email: string) => Promise<Result>
   signInWithPassword: (email: string, password: string) => Promise<Result>
   /** Resolves with needsConfirmation when the project requires a confirmed email. */
   signUp: (email: string, password: string) => Promise<Result & { needsConfirmation: boolean }>
@@ -59,7 +67,7 @@ type AuthState = {
 
 const Ctx = createContext<AuthState | null>(null)
 
-/** Where the magic link comes back to. HashRouter, so the route is in the hash. */
+/** Where a reset link comes back to. HashRouter, so the route is in the hash. */
 function redirectTo() {
   const base = import.meta.env.BASE_URL || '/'
   return `${window.location.origin}${base}#/resonance`
@@ -135,14 +143,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       recovering,
       endRecovery: () => setRecovering(false),
 
-      signInWithLink: async (email: string) => {
-        const { error } = await supabase.auth.signInWithOtp({
-          email: email.trim(),
-          options: { emailRedirectTo: redirectTo() },
-        })
-        return { error: error ? error.message : null }
-      },
-
       signInWithPassword: async (email: string, password: string) => {
         const { error } = await supabase.auth.signInWithPassword({
           email: email.trim(),
@@ -151,7 +151,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // GoTrue answers "Invalid login credentials" whether the address is
         // unknown or the password is wrong, which is what stops this being a
         // way to find out who has an account. Passed through unchanged.
-        return { error: error ? error.message : null }
+        return { error }
       },
 
       signUp: async (email: string, password: string) => {
@@ -160,9 +160,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           password,
           options: { emailRedirectTo: redirectTo() },
         })
-        if (error) return { error: error.message, needsConfirmation: false }
-        // With "Confirm email" on -- the default for a hosted project -- there
-        // is no session yet and a confirmation mail is on its way.
+        if (error) return { error, needsConfirmation: false }
+        // With "Confirm email" ON there is no session yet and a confirmation
+        // mail is on its way. With it OFF, signUp returns a session and the
+        // page is already signed in by the time this resolves.
         return { error: null, needsConfirmation: !data.session }
       },
 
@@ -170,13 +171,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
           redirectTo: redirectTo(),
         })
-        return { error: error ? error.message : null }
+        return { error }
       },
 
       setPassword: async (password: string) => {
         const { error } = await supabase.auth.updateUser({ password })
         if (!error) setRecovering(false)
-        return { error: error ? error.message : null }
+        return { error }
       },
 
       signOut: async () => {

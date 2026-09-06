@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import type { Airline } from '../lib/types'
 import { accentOf, flag, initials, num } from '../lib/format'
+import EchoMark from './EchoMark'
 
 /** A carrier's stand-in identity: its code on its division's accent. */
 export function Mark({
@@ -113,10 +114,27 @@ export function AirlineCard({ a }: { a: Airline }) {
   )
 }
 
+/**
+ * Whatever we are waiting for, this is what waiting looks like.
+ *
+ * The wing holds still and the colour runs through it — white, a division,
+ * white, the next — for as long as it takes. It is a CSS gradient under a
+ * mask, so there is no frame loop and nothing to stop: it ends when the
+ * element unmounts, which is when the thing finished loading.
+ *
+ * The label stays. Every caller passes something specific ("Drawing the
+ * network", "Searching 590 carriers", "Checking your session"), and knowing
+ * what is slow is worth more than the two lines it costs.
+ */
 export function Loading({ label = 'Loading' }: { label?: string }) {
   return (
-    <div className="mono py-16 text-center text-[12px] tracking-[0.14em] text-ink-faint uppercase">
-      {label}…
+    <div
+      role="status"
+      aria-live="polite"
+      className="flex flex-col items-center justify-center gap-4 py-16"
+    >
+      <EchoMark height={28} color="transparent" className="echo-loader" />
+      <p className="mono text-[11px] uppercase tracking-[0.16em] text-ink-faint">{label}…</p>
     </div>
   )
 }

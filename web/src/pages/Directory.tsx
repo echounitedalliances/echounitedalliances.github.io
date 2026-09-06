@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { AirlineCard, Loading, NotConfigured } from '../components/ui'
+import CountryField from '../components/CountryField'
 import { isConfigured, supabase } from '../lib/supabase'
 import type { Airline, Division } from '../lib/types'
 import { accentOf, num } from '../lib/format'
@@ -29,13 +30,35 @@ export default function Directory() {
       .then(({ data }) => setDivisions((data as Division[]) ?? []))
   }, [])
 
+  // The box follows the URL when the URL changes from anywhere else -- the
+  // Back button, or Clear all. Without this the input keeps text the user has
+  // already cleared, and the next keystroke writes the stale value back.
+  useEffect(() => setDraft(q), [q])
+
   // Debounce the free-text box into the URL, so the filters are shareable.
+  // What the URL says right now, readable from inside a pending timeout.
+  const qRef = useRef(q)
+  useEffect(() => {
+    qRef.current = q
+  }, [q])
+
   useEffect(() => {
     const t = setTimeout(() => {
-      const next = new URLSearchParams(params)
-      if (draft) next.set('q', draft)
-      else next.delete('q')
-      if (next.toString() !== params.toString()) setParams(next, { replace: true })
+      // The debounce exists to push a CHANGE from the box into the URL. If the
+      // box already says what the URL says, there is nothing to push -- and
+      // writing anyway is what made Clear all fail: it cleared every filter,
+      // then this fired 220ms later and rebuilt the query from a stale
+      // snapshot, putting division and country back.
+      if (draft === qRef.current) return
+      setParams(
+        (prev) => {
+          const next = new URLSearchParams(prev)
+          if (draft) next.set('q', draft)
+          else next.delete('q')
+          return next
+        },
+        { replace: true },
+      )
     }, 220)
     return () => clearTimeout(t)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -78,19 +101,41 @@ export default function Directory() {
   }
 
   const setFilter = (key: string, value: string) => {
-    const next = new URLSearchParams(params)
-    if (value) next.set(key, value)
-    else next.delete(key)
-    setParams(next)
+    setParams((prev) => {
+      const next = new URLSearchParams(prev)
+      if (value) next.set(key, value)
+      else next.delete(key)
+      return next
+    })
   }
 
-  const countries = useMemo(() => {
-    const set = new Map<string, number>()
-    for (const r of rows ?? []) {
-      if (r.airline_country) set.set(r.airline_country, (set.get(r.airline_country) ?? 0) + 1)
-    }
-    return [...set.entries()].sort((a, b) => b[1] - a[1]).slice(0, 24)
-  }, [rows])
+  const clearAll = () => {
+    setDraft('')
+    setParams(new URLSearchParams())
+  }
+
+  /**
+   * Every filter currently narrowing the list, each with its own way off.
+   *
+   * This is built from the FILTERS, never from the results. The country chips
+   * used to be built from the rows that came back, so filtering down to a
+   * country with one carrier collapsed the list to a single entry and the
+   * whole row -- clear button included -- unmounted. Filtering down to NO
+   * results removed it entirely, and the empty state then advised clearing
+   * filters it had just taken the controls away for.
+   */
+  const active = [
+    q ? { key: 'q', label: `“${q}”`, off: () => { setDraft(''); setFilter('q', '') } } : null,
+    division
+      ? {
+          key: 'division',
+          label:
+            divisions.find((d) => d.division_code === division)?.division_name ?? division,
+          off: () => setFilter('division', ''),
+        }
+      : null,
+    country ? { key: 'country', label: country, off: () => setFilter('country', '') } : null,
+  ].filter((f): f is NonNullable<typeof f> => f !== null)
 
   if (!isConfigured) return <NotConfigured />
 
@@ -141,10 +186,10 @@ export default function Directory() {
           <div className="mono mt-2 flex flex-wrap gap-1.5 text-[11px]">
             {country ? (
               <button
-                onClick={() => setFilter('country', '')}
-                className="border border-[color:var(--color-accent)] px-2 py-0.5 text-ink"
+                onClick={clearAll}
+                className="ml-1 uppercase tracking-[0.12em] text-ink-faint underline-offset-4 hover:text-ink hover:underline"
               >
-                {country} ×
+                Clear all
               </button>
             ) : (
               countries.map(([c, n]) => (
@@ -164,9 +209,14 @@ export default function Directory() {
       {rows === null ? (
         <Loading />
       ) : rows.length === 0 ? (
-        <p className="panel mt-6 p-8 text-center text-ink-dim">
-          No carrier matches that. Try a division, or clear the filters.
-        </p>
+        <div className="panel mt-6 p-8 text-center">
+          <p className="text-ink-dim">No carrier matches that.</p>
+          {active.length > 0 && (
+            <button onClick={clearAll} className="btn btn-ghost mt-4">
+              Clear {active.length === 1 ? 'the filter' : 'all filters'}
+            </button>
+          )}
+        </div>
       ) : (
         <>
           <p className="mono mt-6 text-[11px] uppercase tracking-[0.12em] text-ink-faint">
