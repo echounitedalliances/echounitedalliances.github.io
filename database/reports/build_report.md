@@ -1,24 +1,24 @@
 # Echo United Alliances -- build report
 
-Generated 2026-09-04 23:17 UTC by `database/scripts/build_database.py`.
+Generated 2026-09-06 23:07 UTC by `database/scripts/build_database.py`.
 
 ## Row counts
 
 | table | rows |
 |---|---:|
-| airlines | 590 |
+| airlines | 602 |
 | airports | 2,187 |
 | aircraft_models | 79 |
-| aircraft | 153,688 |
-| flights | 341,710 |
-| flight_assignments | 411,027 |
-| airline_hubs | 4,043 |
+| aircraft | 157,000 |
+| flights | 345,941 |
+| flight_assignments | 416,290 |
+| airline_hubs | 3,313 |
 | airline_stats | 78 |
 
 ## Data conditions handled
 
-- 5,632 flights depart outside the 0-86399s day and were split into a time of day plus a signed day offset; the raw value is kept in `departure_daily_seconds_raw`.
-- 134 aircraft have cabin ratios that do not sum to 1.0; they are loaded as exported and flagged by `v_aircraft_ratio_anomalies`.
+- 5,729 flights depart outside the 0-86399s day and were split into a time of day plus a signed day offset; the raw value is kept in `departure_daily_seconds_raw`.
+- 131 aircraft have cabin ratios that do not sum to 1.0; they are loaded as exported and flagged by `v_aircraft_ratio_anomalies`.
 - 16 individual cabin ratios carried float noise just outside [0,1] (worst: -1.37e-17) and were snapped to the boundary.
 
 ### fleet
@@ -67,23 +67,33 @@ Generated 2026-09-04 23:17 UTC by `database/scripts/build_database.py`.
 
 ### hubs
 
-- 79 airlines had no hubAirports in their roster; their hubs were derived from the base airports of their fleet
+- 586 airlines had no hubAirports in their roster; their hubs were derived from the base airports of their fleet
 
 ### identity
 
-- 405 of 590 airlines needed a division-qualified carrier_code because the game code is shared
+- 411 of 602 airlines needed a division-qualified carrier_code because the game code is shared
 - proxima/unknown_81846bbb: airline has no name in the export (uid 81846bbb-d6db-4c13-a507-7a1fd8df0cf8)
-- aegis/unknown_01e8ed2c: airline has no name in the export (uid 01e8ed2c-981b-4438-b215-4f64cd016009)
+
+### livery
+
+- 537 of 602 liveries yield a brand colour; the rest fly white and fall back to the division accent
 
 ### roster
 
 - proxima: alliance-object roster - no hubAirports or airlineId for its members; hubs are derived from fleet bases
+- aegis: alliance-object roster - no hubAirports or airlineId for its members; hubs are derived from fleet bases
+- aura: alliance-object roster - no hubAirports or airlineId for its members; hubs are derived from fleet bases
+- elion: alliance-object roster - no hubAirports or airlineId for its members; hubs are derived from fleet bases
+- elysium: alliance-object roster - no hubAirports or airlineId for its members; hubs are derived from fleet bases
+- kyra: alliance-object roster - no hubAirports or airlineId for its members; hubs are derived from fleet bases
+- rhea: alliance-object roster - no hubAirports or airlineId for its members; hubs are derived from fleet bases
+- vilis: alliance-object roster - no hubAirports or airlineId for its members; hubs are derived from fleet bases
 
 ### schedule
 
-- 33 (airline, flight number, origin, destination) combinations appear on more than one flight_id - players may file the same number twice, so that tuple is indexed but not unique
-- all 13176 stopover children resolve to a known flight
+- 36 (airline, flight number, origin, destination) combinations appear on more than one flight_id - players may file the same number twice, so that tuple is indexed but not unique
+- all 13358 stopover children resolve to a known flight
 
 ### stats
 
-- member stats exist for 78 of 590 airlines (only Aegis exported members_stats.json)
+- member stats exist for 78 of 602 airlines (only Aegis exported members_stats.json)

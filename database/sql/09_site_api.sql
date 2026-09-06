@@ -63,7 +63,9 @@ select
     a.uid,
     a.division_code,
     d.division_name,
-    coalesce(a.accent_color, d.accent_color)  as accent_color,
+    -- The carrier's own livery first: 537 of 602 have one, and eight
+    -- division colours spread across 600 airlines told you nothing.
+    coalesce(lv.brand_color, a.accent_color, d.accent_color) as accent_color,
     a.airline_slug,
     a.carrier_code,
     a.airline_code,
@@ -90,6 +92,7 @@ select
           || ' ' || d.division_name)          as search_blob
 from public.airlines a
 join public.divisions d on d.division_code = a.division_code
+left join public.airline_liveries lv on lv.airline_uid = a.uid
 join public.v_airline_metrics m on m.airline_uid = a.uid
 left join public.v_airline_description_seed s on s.airline_uid = a.uid
 where a.is_published;

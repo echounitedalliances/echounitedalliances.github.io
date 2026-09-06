@@ -139,6 +139,26 @@ create unique index if not exists airline_hubs_one_major_key
 -- Headline numbers reported by the game. Only Aegis exported members_stats.json,
 -- so this table is sparse by design; v_airline_metrics computes the same figures
 -- from the schedule for everyone else.
+-- An airline's livery: the colours it paints its aircraft, and which tail mark
+-- it wears. The game has no logo image to download -- this IS the brand, and
+-- it is far more specific than the eight division accents.
+create table if not exists public.airline_liveries (
+    airline_uid     uuid primary key references public.airlines (uid) on delete cascade,
+    livery_type     text,
+    -- the first colour in the livery that reads as a brand rather than as
+    -- paint; null where the airline flies white throughout
+    brand_color     text check (brand_color ~ '^#[0-9A-Fa-f]{6}$'),
+    tail_color      text,
+    fuselage_color  text,
+    winglet_color   text,
+    engine_color    text,
+    tail_logo_type  text,
+    tail_logo_color text
+);
+
+comment on table public.airline_liveries is
+    'Per-carrier livery from player_livery_config. brand_color is the accent the site paints a carrier with; null means it flies white and the division colour stands in.';
+
 create table if not exists public.airline_stats (
     airline_uid             uuid primary key references public.airlines (uid) on delete cascade,
     num_aircraft            integer check (num_aircraft >= 0),
@@ -243,7 +263,10 @@ create table if not exists public.flights (
 
     outbound_duration_minutes integer not null check (outbound_duration_minutes > 0),
     inbound_duration_minutes  integer not null check (inbound_duration_minutes  > 0),
-    turnaround_offset_minutes numeric(12,6) not null default 0,
+    -- QUARTER HOURS, not minutes: ground time is 60 + this * 15.
+    -- Named _minutes once, which is how every return leg on the 8.6%
+    -- of flights with a non-zero offset came out wrong.
+    turnaround_offset_slots numeric(12,6) not null default 0,
 
     is_stopover               boolean not null default false,
     child_stopover_flight_id  uuid,
@@ -278,6 +301,19 @@ create index if not exists flights_child_idx
 
 -- Which airframe works a flight pair. Several may share one pair, each covering
 -- different weekdays; the export has up to seven on a single flight.
+-- Migration for databases built before the turnaround unit was understood.
+-- `create table if not exists` leaves an existing table alone, so a rename has
+-- to be spelled out or the loader fails against yesterday's schema.
+do $$
+begin
+    if exists (select 1 from information_schema.columns
+                where table_schema = 'public' and table_name = 'flights'
+                  and column_name = 'turnaround_offset_minutes') then
+        alter table public.flights
+            rename column turnaround_offset_minutes to turnaround_offset_slots;
+    end if;
+end $$;
+
 create table if not exists public.flight_assignments (
     flight_id               uuid not null references public.flights (flight_id) on delete cascade,
     aircraft_id             uuid not null references public.aircraft (aircraft_id) on delete cascade,

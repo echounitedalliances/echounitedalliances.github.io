@@ -32,14 +32,28 @@ returns time language sql immutable parallel safe as $$
     select (make_interval(secs => ((total_seconds::bigint % 86400) + 86400) % 86400))::time;
 $$;
 
--- Ground time before the return leg departs. turnaround_offset_minutes is 0 on
--- most of the export, which would have the return leg depart the instant the
--- outbound lands, so 60 minutes is the floor. Change the constant here and
--- every timetable in the database follows.
+-- Ground time before the return leg departs.
+--
+-- turnaroundOffset is NOT a number of minutes. It is a count of 15-minute
+-- slots ON TOP OF a fixed 60-minute turnaround, which is what the game shows:
+--
+--     ground minutes = 60 + turnaroundOffset * 15
+--
+-- This was read as "minutes, floored at 60", and the two agree exactly when
+-- the offset is 0 -- which is 91.4% of the export, so it looked right almost
+-- everywhere. On the other 8.6% every return leg was wrong, and the further
+-- from zero the worse: TK2432 IST-AYT lands at 23:15 with offset 29, and the
+-- return was published at 00:15 when the aircraft actually leaves at 07:30,
+-- 60 + 29*15 = 495 minutes later.
+--
+-- Change the 60 or the 15 here and every timetable in the database follows.
 create or replace function public.echo_ground_minutes(turnaround_offset numeric)
 returns numeric language sql immutable parallel safe as $$
-    select greatest(coalesce(turnaround_offset, 0), 60::numeric);
+    select 60::numeric + coalesce(turnaround_offset, 0) * 15::numeric;
 $$;
+
+comment on function public.echo_ground_minutes(numeric) is
+    'Minutes on the ground before the return leg departs: a fixed 60 plus turnaroundOffset counted in quarter hours. The offset is slots, not minutes.';
 
 -- ---------------------------------------------------------------------
 -- Weekday masks
@@ -86,7 +100,12 @@ comment on function public.echo_min_connect_minutes() is
 -- ---------------------------------------------------------------------
 -- v_flight_legs -- one row per directional leg
 -- ---------------------------------------------------------------------
-create or replace view public.v_flight_legs
+-- Dropped rather than replaced: v_flight_legs exposes a column that was
+-- renamed (turnaround_offset_minutes -> _slots), and CREATE OR REPLACE VIEW
+-- refuses to rename an existing view column. Everything below rebuilds in
+-- order, so the cascade costs nothing.
+drop view if exists public.v_flight_legs cascade;
+create view public.v_flight_legs
 with (security_invoker = on) as
 with legs as (
     -- outbound: departs the origin at exactly the exported time. The stored
@@ -103,7 +122,7 @@ with legs as (
                                     as departure_seconds,
         f.is_stopover,
         f.child_stopover_flight_id,
-        f.turnaround_offset_minutes
+        f.turnaround_offset_slots
     from public.flights f
 
     union all
@@ -121,11 +140,11 @@ with legs as (
         f.inbound_duration_minutes,
         (f.departure_daily_seconds + f.departure_day_offset * 86400)
           + f.outbound_duration_minutes * 60
-          + public.echo_ground_minutes(f.turnaround_offset_minutes) * 60
+          + public.echo_ground_minutes(f.turnaround_offset_slots) * 60
           + coalesce(far.utc_offset_minutes - home.utc_offset_minutes, 0) * 60,
         f.is_stopover,
         f.child_stopover_flight_id,
-        f.turnaround_offset_minutes
+        f.turnaround_offset_slots
     from public.flights f
     join public.airports home on home.iata_code = f.origin_iata
     join public.airports far  on far.iata_code  = f.destination_iata
@@ -166,7 +185,7 @@ select
     (l.child_stopover_flight_id is not null)     as has_onward_leg,
     (parent.flight_id is not null)               as is_second_leg,
     l.departure_seconds                          as departure_seconds_raw,
-    l.turnaround_offset_minutes
+    l.turnaround_offset_slots
 from legs l
 join public.airlines al  on al.uid = l.airline_uid
 join public.airports org on org.iata_code = l.origin_iata

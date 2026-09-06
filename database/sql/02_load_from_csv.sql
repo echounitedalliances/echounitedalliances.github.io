@@ -20,6 +20,7 @@ truncate table
     public.flights,
     public.aircraft,
     public.airline_stats,
+    public.airline_liveries,
     public.airline_hubs,
     public.interline_agreements,
     public.airlines,
@@ -34,6 +35,7 @@ truncate table
 \copy public.divisions (division_code, division_name, sort_order, alliance_uid, alliance_name, alliance_description, alliance_type, alliance_logo, alliance_logo_color, created_time, leader_uid) from 'database/csv/divisions.csv' with (format csv, header true, null '')
 
 \copy public.airlines (uid, division_code, airline_code, carrier_code, airline_name, airline_slug, airline_country, airline_handle, flagship_aircraft_model, extra_special_livery_slot, version_string, claim_profit_time, is_division_leader) from 'database/csv/airlines.csv' with (format csv, header true, null '')
+\copy public.airline_liveries (airline_uid, livery_type, brand_color, tail_color, fuselage_color, winglet_color, engine_color, tail_logo_type, tail_logo_color) from 'database/csv/airline_liveries.csv' with (format csv, header true, null '')
 
 \copy public.airline_hubs (airline_uid, airport_iata, is_major_hub, hub_source) from 'database/csv/airline_hubs.csv' with (format csv, header true, null '')
 
@@ -45,7 +47,7 @@ truncate table
 
 \copy public.aircraft (aircraft_id, airline_uid, aircraft_model, registration, delivery_date, hub_airport_iata, eco_ratio, prem_eco_ratio, biz_ratio, first_ratio, eco_product, prem_eco_product, biz_product, first_product, eco_config_type, eco_pitch, prem_eco_pitch, biz_pitch, first_pitch, engine_option, winglet_option, eyemask_option, background_image_index, weekly_flight_time, is_placeholder) from 'database/csv/aircraft.csv' with (format csv, header true, null '')
 
-\copy public.flights (flight_id, airline_uid, outbound_flight_number, inbound_flight_number, flight_string, origin_iata, destination_iata, departure_daily_seconds, departure_day_offset, departure_daily_seconds_raw, outbound_duration_minutes, inbound_duration_minutes, turnaround_offset_minutes, is_stopover, child_stopover_flight_id) from 'database/csv/flights.csv' with (format csv, header true, null '')
+\copy public.flights (flight_id, airline_uid, outbound_flight_number, inbound_flight_number, flight_string, origin_iata, destination_iata, departure_daily_seconds, departure_day_offset, departure_daily_seconds_raw, outbound_duration_minutes, inbound_duration_minutes, turnaround_offset_slots, is_stopover, child_stopover_flight_id) from 'database/csv/flights.csv' with (format csv, header true, null '')
 
 \copy public.flight_assignments (flight_id, aircraft_id, operating_days_per_week, operating_days_mask, flight_profit, eco_price, prem_eco_price, biz_price, first_price, eco_seats, prem_eco_seats, biz_seats, first_seats, eco_weekly_seats, prem_eco_weekly_seats, biz_weekly_seats, first_weekly_seats) from 'database/csv/flight_assignments.csv' with (format csv, header true, null '')
 

@@ -35,6 +35,7 @@ import threading
 import time
 import unicodedata
 import urllib.error
+import urllib.parse
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 
@@ -173,11 +174,36 @@ def slugify(name, uid):
 
 # -------------------------------------------------------------------------- roster
 
+def fetch_live_roster(division, apikey, jwt):
+    """The division's CURRENT membership, from the game's own alliance table.
+
+    A roster saved to disk is a photograph. Players join, leave, move between
+    divisions and rename their airline, and none of that reaches a file. The
+    snapshot this scraper used to trust had drifted badly: Essequibo Air had
+    joined Elysium and was absent entirely, one uid had rebranded from ScotJet
+    XPlore to GenZ Air Lines AND moved to Aura but still appeared under its old
+    name in Elysium, and eighteen airlines across the group were missing.
+
+    Reading `alliance` costs one request and cannot go stale.
+    """
+    name = "Echo " + division.capitalize()
+    url = f"{BASE}/rest/v1/alliance?select=*&allianceName=eq.{urllib.parse.quote(name)}"
+    rows = json.loads(request(url, make_headers(apikey, jwt)).decode())
+    if not rows:
+        return None
+    a = rows[0]
+    uids = list(dict.fromkeys(
+        ([a["leaderUid"]] if a.get("leaderUid") else []) +
+        list(a.get("allianceMemberUidList") or [])))
+    return {"alliance": a, "uids": uids}
+
+
 def load_roster(path, extra_uids):
     """Return (label, [record, ...]) where each record has at least a uid.
 
-    Records may also carry airlineName/airlineCode/airlineCountry, in which case
-    query C is skipped for them.
+    The offline fallback, for when the live table cannot be reached. Names in a
+    saved roster are NOT trusted -- see resolve_identity: they are only a hint
+    for folder naming, and query C decides what an airline is actually called.
     """
     data = json.load(open(path, encoding="utf-8"))
     if isinstance(data, dict):
@@ -223,33 +249,29 @@ def fetch_airline(record, members_dir, apikey, jwt, force, taken, taken_lock):
     get_h = make_headers(apikey, jwt)
     post_h = make_headers(apikey, jwt, post=True)
 
-    name = (record.get("airlineName") or "").strip()
     orphaned = False
-    if name:
-        # Roster already carries the identity - no need to ask the server again.
-        info = {
-            "uid": uid,
-            "name": record.get("airlineName"),
-            "country": record.get("airlineCountry"),
-            "code": record.get("airlineCode"),
-        }
-    else:
-        # query C - identity, which also decides the folder name
-        player = request(f"{BASE}/rest/v1/rpc/get_player_by_uid", post_h,
-                         data=json.dumps({"p_uid": uid}).encode("utf-8"))
-        rec = player[0] if isinstance(player, list) and player else player
-        if not isinstance(rec, dict) or not rec:
-            # The players row is gone (deleted/reset account) but the uid is still on
-            # the roster, and its flight/aircraft rows may still exist. Capture what
-            # is there instead of dropping the member silently.
-            rec, orphaned = {}, True
-        # Fall back to whatever the roster had if the server returns nothing.
-        info = {
-            "uid": uid,
-            "name": rec.get("airlineName") or record.get("airlineName"),
-            "country": rec.get("airlineCountry") or record.get("airlineCountry"),
-            "code": rec.get("airlineCode") or record.get("airlineCode"),
-        }
+    # Query C, always. This used to be skipped whenever the roster already
+    # carried a name -- which meant the roster's photograph of an airline
+    # outlived the airline. Four carriers were filed under names they no
+    # longer use: United was flying as Chandelier, Senegalair as Anansie,
+    # ScotJet XPlore as GenZ Air Lines, and one unnamed row had since become
+    # China Eastern. The saved name is now only a fallback for when the
+    # server has nothing to say.
+    player = request(f"{BASE}/rest/v1/rpc/get_player_by_uid", post_h,
+                     data=json.dumps({"p_uid": uid}).encode("utf-8"))
+    rec = player[0] if isinstance(player, list) and player else player
+    if not isinstance(rec, dict) or not rec:
+        # The players row is gone (deleted/reset account) but the uid is still on
+        # the roster, and its flight/aircraft rows may still exist. Capture what
+        # is there instead of dropping the member silently.
+        rec, orphaned = {}, True
+    # Fall back to whatever the roster had if the server returns nothing.
+    info = {
+        "uid": uid,
+        "name": rec.get("airlineName") or record.get("airlineName"),
+        "country": rec.get("airlineCountry") or record.get("airlineCountry"),
+        "code": rec.get("airlineCode") or record.get("airlineCode"),
+    }
 
     slug = record.get("_slug") or slugify(info["name"], uid)
     with taken_lock:
@@ -283,6 +305,8 @@ def main():
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--limit", type=int, help="only process the first N airlines")
     ap.add_argument("--force", action="store_true", help="re-fetch files that already exist")
+    ap.add_argument("--offline-roster", action="store_true",
+                    help="use the saved members.json instead of the live alliance table")
     ap.add_argument("--jwt")
     ap.add_argument("--apikey")
     ap.add_argument("--token-file")
@@ -291,8 +315,6 @@ def main():
     div_dir = os.path.join(DIVISIONS, args.division)
     members_dir = os.path.join(div_dir, "members")
     roster_path = os.path.join(div_dir, "members.json")
-    if not os.path.exists(roster_path):
-        sys.exit(f"ERROR: no roster at {roster_path}")
     os.makedirs(members_dir, exist_ok=True)
 
     apikey, jwt = load_credentials(args)
@@ -304,7 +326,33 @@ def main():
             sys.exit("ERROR: the bearer token is already expired. Capture a fresh one "
                      "from the app and set TAS_JWT or write it to " + TOKEN_FILE)
 
-    label, records = load_roster(roster_path, args.extra_uid)
+    # The live table first; the saved file only if the server cannot be reached.
+    label, records = None, None
+    if not args.offline_roster:
+        try:
+            live = fetch_live_roster(args.division, apikey, jwt)
+        except Exception as exc:
+            print(f"live roster lookup failed ({exc}); falling back to members.json",
+                  file=sys.stderr)
+            live = None
+        if live:
+            label = live["alliance"].get("allianceName", args.division)
+            records = [{"uid": u} for u in live["uids"]] +                       [{"uid": u} for u in args.extra_uid]
+            write_json(os.path.join(div_dir, "members.json"),
+                       [live["alliance"]])
+            print(f"live roster: {len(live['uids'])} members", file=sys.stderr)
+    if records is None:
+        if not os.path.exists(roster_path):
+            sys.exit(f"ERROR: no live roster and no file at {roster_path}")
+        label, records = load_roster(roster_path, args.extra_uid)
+        print("USING A SAVED ROSTER - names and membership may be out of date",
+              file=sys.stderr)
+        # de-dup, same as load_roster does
+        seen, deduped = set(), []
+        for r in records:
+            if r["uid"] not in seen:
+                seen.add(r["uid"]); deduped.append(r)
+        records = deduped
     if args.limit:
         records = records[:args.limit]
     print(f"{len(records)} airlines in {label}", file=sys.stderr)

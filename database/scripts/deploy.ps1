@@ -89,7 +89,7 @@ $files += @('04_views.sql', '05_reservations.sql', '06_inventory.sql',
             '16_division_policy.sql', '17_route_pairs.sql',
             '18_place_search.sql', '19_division_colours.sql',
             '20_division_network.sql', '21_timetable_pair.sql',
-            '22_airline_countries.sql')
+            '22_airline_countries.sql', '23_livery_accents.sql')
 
 # 09_site_api indexes the directory and typeahead with trigram GIN indexes.
 Write-Host ""

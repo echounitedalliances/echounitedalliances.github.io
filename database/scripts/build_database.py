@@ -16,6 +16,7 @@ problem it had to work around.
 import csv
 import json
 import os
+import re
 import sys
 import unicodedata
 from collections import Counter, defaultdict
@@ -168,6 +169,55 @@ def load_stats():
     return stats
 
 
+
+# -------------------------------------------------------------------- liveries
+
+HEX_RE = re.compile(r"^#[0-9A-Fa-f]{6}$")
+
+
+def _lum(h):
+    r, g, b = int(h[1:3], 16), int(h[3:5], 16), int(h[5:7], 16)
+    return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255
+
+
+def _sat(h):
+    r, g, b = [int(h[i:i + 2], 16) / 255 for i in (1, 3, 5)]
+    mx, mn = max(r, g, b), min(r, g, b)
+    return 0 if mx == 0 else (mx - mn) / mx
+
+
+def brand_color(livery):
+    """The colour a person would call this airline's.
+
+    The game has no logo images -- an airline's identity is a livery: a set of
+    named colours plus a chosen tail mark. Tail colour alone is not it; 283 of
+    602 airlines fly a white tail. So this walks tail, winglet, engine,
+    fuselage and then the livery's own named layers, and takes the first that
+    reads as a brand rather than as paint: not near-white, not near-black, and
+    saturated enough to be a colour at all. Failing that it accepts anything
+    that is not white, and failing that returns None and the division accent
+    stands in.
+    """
+    if not livery:
+        return None
+    cands = []
+    for k in ("tailColor", "wingletColor", "engineColor", "fuselageColor"):
+        v = livery.get(k)
+        if v and HEX_RE.match(v):
+            cands.append(v.upper())
+    for layer in (livery.get("layerColors") or []):
+        v = (layer or {}).get("color")
+        if v and HEX_RE.match(v):
+            cands.append(v.upper())
+    for v in cands:
+        if 0.10 < _lum(v) < 0.92 and _sat(v) > 0.25:
+            return v
+    for v in cands:
+        if _lum(v) < 0.92:
+            return v
+    return None
+
+
 def load_airlines(rosters):
     """One record per airline folder, in division then folder order."""
     airlines = []
@@ -178,10 +228,14 @@ def load_airlines(rosters):
             if not os.path.isdir(p):
                 continue
             info = json.load(open(os.path.join(p, "info.json"), encoding="utf-8"))
+            lp = os.path.join(p, "livery.json")
+            livery = json.load(open(lp, encoding="utf-8")) if os.path.exists(lp) else None
             airlines.append({
                 "uid": info["uid"],
                 "division": div,
                 "folder": folder,
+                "livery": livery,
+                "brand_color": brand_color(livery),
                 "name": (info.get("name") or "").strip(),
                 "raw_name": info.get("name"),
                 "code": (info.get("code") or "").strip().upper() or None,
@@ -292,6 +346,34 @@ def main():
     fh_air.close()
     counts["airlines"] = len(airlines)
 
+    # ---- liveries ----
+    # The game has no logo image to download. What it has is a livery: the
+    # colours an airline paints its aircraft, plus which tail mark it wears.
+    # That is the closest thing to a brand, and it is far more specific than
+    # the eight division accents -- 261 distinct brand colours across 602
+    # carriers.
+    fh_lv, w_lv = writer("airline_liveries.csv", [
+        "airline_uid", "livery_type", "brand_color", "tail_color", "fuselage_color",
+        "winglet_color", "engine_color", "tail_logo_type", "tail_logo_color",
+    ])
+    with_brand = 0
+    for a in airlines:
+        lv = a.get("livery")
+        if not lv:
+            continue
+        if a.get("brand_color"):
+            with_brand += 1
+        w_lv.writerow([
+            a["uid"], iso(lv.get("liveryTypeName")), iso(a.get("brand_color")),
+            iso(lv.get("tailColor")), iso(lv.get("fuselageColor")),
+            iso(lv.get("wingletColor")), iso(lv.get("engineColor")),
+            iso(lv.get("tailLogoType")), iso(lv.get("tailLogoColor")),
+        ])
+    fh_lv.close()
+    counts["airline_liveries"] = sum(1 for a in airlines if a.get("livery"))
+    note("livery", f"{with_brand} of {counts['airline_liveries']} liveries yield a brand "
+                   "colour; the rest fly white and fall back to the division accent")
+
     # ---- fleet ----
     fh_ac, w_ac = writer("aircraft.csv", [
         "aircraft_id", "airline_uid", "aircraft_model", "registration", "delivery_date",
@@ -345,7 +427,7 @@ def main():
         "flight_id", "airline_uid", "outbound_flight_number", "inbound_flight_number",
         "flight_string", "origin_iata", "destination_iata", "departure_daily_seconds",
         "departure_day_offset", "departure_daily_seconds_raw", "outbound_duration_minutes",
-        "inbound_duration_minutes", "turnaround_offset_minutes", "is_stopover",
+        "inbound_duration_minutes", "turnaround_offset_slots", "is_stopover",
         "child_stopover_flight_id",
     ])
     fh_as, w_as = writer("flight_assignments.csv", [
