@@ -6,6 +6,8 @@ import { useAuth } from '../lib/auth'
 import { PasswordCard, SignIn } from '../components/ResonanceAuth'
 import type { Airline, AirlineClaim, AirportRow, BookingDetails, Division } from '../lib/types'
 import { shortDate, usd } from '../lib/format'
+import { TRIP_SORTS, bookedAt, tripArrival, tripDeparture } from '../lib/trips'
+import type { TripSort } from '../lib/trips'
 
 /**
  * A Resonant's claimed carriers, editable right here -- the same columns an
