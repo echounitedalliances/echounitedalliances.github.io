@@ -182,36 +182,25 @@ export default function Directory() {
             )
           })}
         </div>
-        <div className="mt-4 border-t border-edge-soft pt-4">
-          <CountryField
-            value={country}
-            onChange={(c) => setFilter('country', c)}
-            query={q}
-            division={division}
-          />
-        </div>
-
-        {/* Always rendered while anything is filtering, whatever came back. */}
-        {active.length > 0 && (
-          <div className="mono mt-3 flex flex-wrap items-center gap-1.5 border-t border-edge-soft pt-3 text-[11px]">
-            <span className="mr-1 uppercase tracking-[0.14em] text-ink-faint">Filtering by</span>
-            {active.map((f) => (
-              <button
-                key={f.key}
-                onClick={f.off}
-                aria-label={`Remove filter ${f.label}`}
-                className="border border-[color:var(--color-accent)] px-2 py-0.5 text-ink transition-colors hover:bg-surface-2"
-              >
-                {f.label} ×
-              </button>
-            ))}
-            {active.length > 1 && (
+        {(country || countries.length > 1) && (
+          <div className="mono mt-2 flex flex-wrap gap-1.5 text-[11px]">
+            {country ? (
               <button
                 onClick={clearAll}
                 className="ml-1 uppercase tracking-[0.12em] text-ink-faint underline-offset-4 hover:text-ink hover:underline"
               >
                 Clear all
               </button>
+            ) : (
+              countries.map(([c, n]) => (
+                <button
+                  key={c}
+                  onClick={() => setFilter('country', c)}
+                  className="border border-edge-soft px-2 py-0.5 text-ink-faint transition-colors hover:text-ink-dim"
+                >
+                  {c} <span className="text-ink-faint">{n}</span>
+                </button>
+              ))
             )}
           </div>
         )}

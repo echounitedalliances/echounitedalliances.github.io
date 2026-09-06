@@ -15,6 +15,18 @@ export type Division = {
   top_hubs: string[] | null
 }
 
+export type AirlineClaim = {
+  claim_id: string
+  airline_uid: string
+  resonant_id: string
+  discord_username: string
+  notes: string | null
+  status: 'pending' | 'approved' | 'denied'
+  created_at: string
+  decided_at: string | null
+  decided_by: string | null
+}
+
 export type Airline = {
   uid: string
   division_code: string
