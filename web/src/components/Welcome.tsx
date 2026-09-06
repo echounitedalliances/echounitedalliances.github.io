@@ -3,7 +3,7 @@ import EchoMark from './EchoMark'
 import { SLOGAN } from '../lib/alliance'
 
 /**
- * The arrival sequence, shown once.
+ * The arrival sequence, shown on every visit.
  *
  * The two halves fly in from opposite corners of the page — the upper one down
  * from the top right, the lower one up from the bottom right — each stretched
@@ -16,10 +16,8 @@ import { SLOGAN } from '../lib/alliance'
  * own `transform`. The parent carries the exit, each wing carries its arc, and
  * the transforms compose.
  *
- * Three things keep it from being an obstacle:
+ * Two things keep it from being an obstacle:
  *
- *   - it runs ONCE per browser, remembered in localStorage, because an
- *     animation you cannot skip is a toll booth on the second visit;
  *   - any key, click or scroll ends it immediately;
  *   - prefers-reduced-motion skips it entirely rather than playing it faster.
  *
@@ -28,34 +26,13 @@ import { SLOGAN } from '../lib/alliance'
  * holds a frame loop.
  */
 
-const SEEN_KEY = 'echo.welcomed.v1'
 const RUN_MS = 4600
-
-function alreadyWelcomed() {
-  try {
-    return localStorage.getItem(SEEN_KEY) === '1'
-  } catch {
-    // Private windows and blocked storage throw. Showing it every time is a
-    // worse failure than never showing it, so treat unknown as seen.
-    return true
-  }
-}
-
-function remember() {
-  try {
-    localStorage.setItem(SEEN_KEY, '1')
-  } catch {
-    /* nothing to do; it simply plays again next time */
-  }
-}
 
 export default function Welcome() {
   const [show, setShow] = useState(() => {
     if (typeof window === 'undefined') return false
-    if (alreadyWelcomed()) return false
     try {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        remember()
         return false
       }
     } catch {
@@ -67,7 +44,6 @@ export default function Welcome() {
   useEffect(() => {
     if (!show) return
     const end = () => {
-      remember()
       setShow(false)
     }
     const timer = window.setTimeout(end, RUN_MS)
@@ -113,7 +89,7 @@ export default function Welcome() {
         </p>
       </div>
 
-      <button type="button" className="welcome-skip" onClick={() => { remember(); setShow(false) }}>
+      <button type="button" className="welcome-skip" onClick={() => setShow(false)}>
         Skip
       </button>
     </div>
