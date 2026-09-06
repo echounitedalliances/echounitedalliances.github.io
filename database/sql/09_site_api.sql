@@ -55,8 +55,14 @@ comment on view public.v_division_summary is
 -- Carriers -- the directory, and one carrier's profile
 -- ---------------------------------------------------------------------
 
--- Materialised: the directory sorts and filters across all 590 on every
+-- Materialised: the directory sorts and filters across all 602 on every
 -- keystroke, and v_airline_metrics is far too expensive to run per request.
+--
+-- WARNING: the CASCADE below reaches forward. v_airline_profile is defined in
+-- 11_profiles_admin.sql and selects from this view, so dropping this takes
+-- that with it -- and running 09 on its own leaves the carrier pages answering
+-- "No such carrier" until 11 is run again. Applying 09 means applying
+-- everything after it. deploy.ps1 does; a hand-run of one file does not.
 drop materialized view if exists public.mv_airline_directory cascade;
 create materialized view public.mv_airline_directory as
 select

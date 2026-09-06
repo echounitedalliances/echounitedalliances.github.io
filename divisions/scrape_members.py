@@ -13,9 +13,11 @@ Two roster shapes are understood, auto-detected from divisions/<division>/member
                      airlineCode and airlineCountry (aegis). Query C runs only for
                      records whose name is blank and for --extra-uid additions.
 
-Auth: the bearer JWT in test_instructions.md is short-lived (1 hour). Supply a fresh
+Auth: the bearer JWT is short-lived (1 hour). Supply a fresh
 one via the TAS_JWT environment variable or a token file (default: divisions/.token).
-The apikey is read from test_instructions.md unless TAS_APIKEY is set.
+The apikey is read from divisions/API.md unless TAS_APIKEY is set. The TOKEN is
+never read from there -- API.md is committed to a public repo. Use
+divisions/.token (gitignored) or TAS_JWT.
 
 Usage:
     python divisions/scrape_members.py --division proxima
@@ -41,7 +43,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 BASE = "https://urmwaqnhesasfaeprcga-all.supabase.co"
 DIVISIONS = os.path.dirname(os.path.abspath(__file__))
-INSTRUCTIONS = os.path.join(DIVISIONS, "proxima", "members", "test_instructions.md")
+INSTRUCTIONS = os.path.join(DIVISIONS, "API.md")
 TOKEN_FILE = os.path.join(DIVISIONS, ".token")
 
 UA = "AirlineSimulator/293 CFNetwork/3860.700.1 Darwin/25.6.0"
