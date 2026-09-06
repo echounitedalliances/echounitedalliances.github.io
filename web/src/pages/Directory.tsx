@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { AirlineCard, Loading, NotConfigured } from '../components/ui'
+import CountryField from '../components/CountryField'
 import { isConfigured, supabase } from '../lib/supabase'
 import type { Airline, Division } from '../lib/types'
 import { accentOf, num } from '../lib/format'
@@ -136,14 +137,6 @@ export default function Directory() {
     country ? { key: 'country', label: country, off: () => setFilter('country', '') } : null,
   ].filter((f): f is NonNullable<typeof f> => f !== null)
 
-  const countries = useMemo(() => {
-    const set = new Map<string, number>()
-    for (const r of rows ?? []) {
-      if (r.airline_country) set.set(r.airline_country, (set.get(r.airline_country) ?? 0) + 1)
-    }
-    return [...set.entries()].sort((a, b) => b[1] - a[1]).slice(0, 24)
-  }, [rows])
-
   if (!isConfigured) return <NotConfigured />
 
   return (
@@ -189,21 +182,14 @@ export default function Directory() {
             )
           })}
         </div>
-        {/* Suggestions, from whatever came back. Safe to hide: they only ADD
-            a filter, and the row below is what takes one off. */}
-        {!country && countries.length > 1 && (
-          <div className="mono mt-2 flex flex-wrap gap-1.5 text-[11px]">
-            {countries.map(([c, n]) => (
-              <button
-                key={c}
-                onClick={() => setFilter('country', c)}
-                className="border border-edge-soft px-2 py-0.5 text-ink-faint transition-colors hover:text-ink-dim"
-              >
-                {c} <span className="text-ink-faint">{n}</span>
-              </button>
-            ))}
-          </div>
-        )}
+        <div className="mt-4 border-t border-edge-soft pt-4">
+          <CountryField
+            value={country}
+            onChange={(c) => setFilter('country', c)}
+            query={q}
+            division={division}
+          />
+        </div>
 
         {/* Always rendered while anything is filtering, whatever came back. */}
         {active.length > 0 && (
