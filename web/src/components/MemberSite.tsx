@@ -46,6 +46,15 @@ const GRADE: Record<string, { label: string; tone: string; dot: string }> = {
   },
 }
 
+/**
+ * "A", "A and B", "A, B and C" -- a plain join reads as "A and B and C" once
+ * a group site carries more than two carriers, which the Starliner one does.
+ */
+function list(xs: string[]): string {
+  if (xs.length < 2) return xs[0] ?? ''
+  return `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`
+}
+
 const KIND: Record<string, string> = {
   booking: 'has its own booking search',
   brochure: 'is an information site',
@@ -99,7 +108,7 @@ export default function MemberSite({
 
           {also.length > 0 && (
             <p className="mt-4 text-[12px] text-ink-faint">
-              The same site also sells {also.join(' and ')}.
+              The same site also sells {list(also)}.
             </p>
           )}
 

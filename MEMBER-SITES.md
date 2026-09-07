@@ -16,7 +16,7 @@ actually compared.
 | Site | Airline(s) | What it does | Data |
 |---|---|---|---|
 | [Karination](https://flykarination.github.io/sales) | Karination | Full booking search | ✅ **Live** |
-| [Starliner Group](https://chai-debug-create.github.io/Tas) | Starliner, ASTRA by Starliner, Velora by STRLINR | Group booking search | ✅ **Live** |
+| [Starliner Group](https://chai-debug-create.github.io/Tas) | Starliner, ASTRA by Starliner, Velora by STRLINR, Meridian by STRLNR | Group booking search | ✅ **Live** |
 | [Explora Journeys](https://explorajourneysva.softr.app/) | Explora Journeys | Route table, no booking | ✅ **Live** |
 | [Sovietskyie](https://sites.google.com/view/sovietskyie) | Советские | Brochure + loyalty tiers, booking by form | ✅ **Live** |
 | [Bula Air](https://kariy4.github.io/Bula-Air/pages/index.html) | Bula Air | Full 5-step booking with seat maps | ⚠️ **Sample only** |
@@ -46,8 +46,9 @@ CXR, DAD, HAN, PQC and SGN — the same five. The gap is a few days of fleet
 growth, not a different dataset. Fares are described on the site as "lowest
 one-way Economy fare on each route", which is what they are.
 
-*It covers Karination only.* Velaris KX is a separate carrier and is not sold
-there.
+*It covers Karination only.* Velaris KX is not sold there and did not get the
+button: despite the shared "KX", the two are **separate groups under different
+owners** who happened to pick the same code for their group.
 
 ### Starliner Group
 
@@ -68,8 +69,11 @@ Frequencies are exact. Starliner's fare is exact. Velora's quoted fare sits
 consistently *between* our economy and business prices — HYD→BLR's midpoint is
 $220 against its $221 — so it is quoting a mid-cabin fare, not inventing one.
 
-> **Note:** *Meridian by STRLNR* (Elysium) shares the branding but is **not**
-> sold on the site, so it did not get the button. Say the word if it should.
+> **Note:** *Meridian by STRLNR* (Elysium) carries the button too, by the
+> alliance's decision — it is the same member's airline. It is **not** in the
+> site's airline picker, so a Meridian passenger cannot actually book there;
+> the notice names the three that are sellable, which is what keeps that
+> honest.
 
 ### Explora Journeys
 

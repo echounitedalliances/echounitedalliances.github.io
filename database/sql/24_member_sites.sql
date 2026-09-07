@@ -150,11 +150,14 @@ on conflict (site_slug) do update set
 
 with claim(site_slug, division_code, airline_slug) as (values
     ('karination',   'aegis',   'karination'),
-    -- The site's own airline picker offers exactly these three. Meridian by
-    -- STRLNR shares the branding but is not sold there, so it is left out.
+    -- The site's own airline picker offers the first three. Meridian by
+    -- STRLNR is not in it, but it is the same member's airline and carries
+    -- the button by their decision -- which is why the note below names the
+    -- three that are actually sellable there.
     ('starliner',    'rhea',    'starliner_480c930c'),
     ('starliner',    'rhea',    'astra_by_starliner'),
     ('starliner',    'rhea',    'velora_by_strlinr'),
+    ('starliner',    'elysium', 'meridian_by_strlnr'),
     ('explora',      'kyra',    'explora_journeys'),
     ('sovietskyie',  'proxima', 'советские'),
     ('bula-air',     'proxima', 'bula_air'),
@@ -182,9 +185,9 @@ declare
     n integer;
 begin
     select count(*) into n from public.member_site_airlines;
-    if n <> 13 then
+    if n <> 14 then
         raise exception
-            'member_site_airlines has % rows, expected 13 -- an airline_slug in this file no longer matches a carrier', n;
+            'member_site_airlines has % rows, expected 14 -- an airline_slug in this file no longer matches a carrier', n;
     end if;
 end
 $guard$;
