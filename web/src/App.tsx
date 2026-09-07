@@ -18,6 +18,7 @@ import { useSiteVisitorCount } from './lib/presence'
 import { num } from './lib/format'
 import Resonance from './pages/Resonance'
 import { AuthProvider, useAuth } from './lib/auth'
+import AdvisoryBar from './components/AdvisoryBar'
 import EchoMark from './components/EchoMark'
 import Welcome from './components/Welcome'
 
@@ -125,7 +126,13 @@ function Shell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen">
-      <header className="sticky top-0 z-40 border-b border-edge-soft bg-[color:var(--color-ground)]/88 backdrop-blur">
+      {/* The advisory outranks the alliance's own chrome while travel is
+          disrupted, so it sits above the bar rather than inside it. Both
+          share one sticky wrapper: two elements pinned to top-0 would
+          simply overlap. */}
+      <div className="sticky top-0 z-40">
+        <AdvisoryBar onHome={pathname === '/'} />
+        <header className="border-b border-edge-soft bg-[color:var(--color-ground)]/88 backdrop-blur">
         <div className="mx-auto flex max-w-[1180px] items-center gap-x-3 px-4 py-2.5 sm:px-5 sm:py-3">
           <Link to="/" className="flex items-baseline gap-2.5">
             {/* The wing, not a coloured square standing in for it. */}
@@ -211,7 +218,8 @@ function Shell({ children }: { children: React.ReactNode }) {
             </div>
           </nav>
         )}
-      </header>
+        </header>
+      </div>
 
       <main>{children}</main>
 

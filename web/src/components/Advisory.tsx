@@ -1,19 +1,6 @@
 import { useEffect, useState } from 'react'
 import Modal from './Modal'
-import { ADVISORIES } from '../lib/advisories'
-
-const KEY = 'echo.advisory.dismissed'
-
-function dismissed(): string[] {
-  try {
-    const raw = localStorage.getItem(KEY)
-    return raw ? (JSON.parse(raw) as string[]) : []
-  } catch {
-    // Private windows, cleared site data, storage blocked outright: the
-    // honest fallback is to show the advisory, not to hide it.
-    return []
-  }
-}
+import { currentAdvisory, dismiss, isDismissed } from '../lib/advisories'
 
 /**
  * The disruption notice on the home page.
@@ -26,18 +13,21 @@ function dismissed(): string[] {
  *   for the overlay to leave the DOM. When the animation is skipped entirely
  *   — reduced motion — there is nothing to wait for and it shows at once.
  *
- *   it is dismissed per advisory, not per session. Somebody who has read the
- *   Krakatoa notice should not meet it again on every visit; somebody meeting
- *   a NEW advisory should, which is why the id is stored rather than a flag.
+ *   it is dismissed per advisory, not per session. Somebody who has read this
+ *   notice should not meet it again on every visit; somebody meeting a NEW
+ *   advisory should, which is why the id is stored rather than a flag.
  *
- * If nothing is running, this renders nothing and costs one array read.
+ * Closing it does not end the story: AdvisoryBar picks the same advisory up
+ * as a line above the top bar, on every page, for as long as it is running.
+ *
+ * If nothing is running, this renders nothing.
  */
 export default function Advisory() {
+  const advisory = currentAdvisory()
   const [show, setShow] = useState(false)
-  const advisory = ADVISORIES.find((a) => !dismissed().includes(a.id))
 
   useEffect(() => {
-    if (!advisory) return
+    if (!advisory || isDismissed(advisory.id)) return
     // The arrival animation runs about 4.6s and can be cut short by any
     // click or key, so poll for its absence rather than assume a duration.
     if (!document.querySelector('.welcome')) {
@@ -57,12 +47,7 @@ export default function Advisory() {
 
   const close = () => {
     setShow(false)
-    try {
-      localStorage.setItem(KEY, JSON.stringify([...dismissed(), advisory.id]))
-    } catch {
-      // Not being able to remember the dismissal is not a reason to fail to
-      // close it. It will simply come back next visit.
-    }
+    dismiss(advisory.id)
   }
 
   return (
