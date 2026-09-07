@@ -253,3 +253,22 @@ export type CountryCount = {
   country_name: string
   carriers: number
 }
+
+/**
+ * A website a member built for their own airline, or for a group of them.
+ * data_grade is a hand-made judgement recorded on checked_on, not a live
+ * check -- see database/sql/24_member_sites.sql for what each grade means.
+ */
+export type MemberSiteRow = {
+  site_slug: string
+  site_name: string
+  url: string
+  alt_url: string | null
+  alt_label: string | null
+  kind: 'booking' | 'brochure' | 'aggregator' | 'account'
+  data_grade: 'live' | 'sample' | 'illustrative' | 'unverified'
+  data_note: string
+  checked_on: string
+  /** Other carriers the same site sells, so a group site can say so. */
+  also_serves: string[] | null
+}

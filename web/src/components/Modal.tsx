@@ -1,0 +1,85 @@
+import { useEffect, useRef } from 'react'
+
+/**
+ * A small centred dialog, used for the two things on this site that have to
+ * interrupt: the notice before we hand a traveller to a member's own website,
+ * and the disruption advisory on the home page.
+ *
+ * It is deliberately not a <dialog>. showModal() puts the element in the top
+ * layer, which sits above everything including the arrival animation, and it
+ * brings a ::backdrop that does not take our theme tokens. A plain fixed
+ * overlay is easier to reason about and styles like the rest of the site.
+ *
+ * What it does take care of, because every caller would otherwise get it
+ * wrong: Escape closes, the backdrop closes, focus moves into the dialog on
+ * open and returns to whatever opened it on close, and the page behind stops
+ * scrolling while it is up.
+ */
+export default function Modal({
+  title,
+  onClose,
+  children,
+  labelledBy = 'modal-title',
+}: {
+  title: React.ReactNode
+  onClose: () => void
+  children: React.ReactNode
+  labelledBy?: string
+}) {
+  const panel = useRef<HTMLDivElement>(null)
+  const opener = useRef<Element | null>(null)
+
+  useEffect(() => {
+    opener.current = document.activeElement
+    panel.current?.focus()
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    document.addEventListener('keydown', onKey)
+
+    const overflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = overflow
+      // Sending focus back matters for keyboard users: without it focus falls
+      // to <body> and the next Tab starts from the top of the page.
+      if (opener.current instanceof HTMLElement) opener.current.focus()
+    }
+  }, [onClose])
+
+  return (
+    <div
+      className="fixed inset-0 z-[95] grid place-items-center overflow-y-auto bg-[#0B0713]/80 p-4 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        ref={panel}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={labelledBy}
+        tabIndex={-1}
+        // Without this, a click that starts inside the dialog closes it.
+        onClick={(e) => e.stopPropagation()}
+        className="panel w-full max-w-lg p-6 outline-none sm:p-7"
+      >
+        <div className="mb-4 flex items-start justify-between gap-4">
+          <h2 id={labelledBy} className="display text-xl leading-tight">
+            {title}
+          </h2>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="-mr-1 -mt-1 shrink-0 px-2 py-1 text-lg leading-none text-ink-faint transition-colors hover:text-ink"
+          >
+            ×
+          </button>
+        </div>
+        {children}
+      </div>
+    </div>
+  )
+}

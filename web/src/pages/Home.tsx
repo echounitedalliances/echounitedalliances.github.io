@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import Advisory from '../components/Advisory'
 import RouteMap from '../components/RouteMap'
 import DepartureBoard from '../components/DepartureBoard'
 import SearchPanel from '../components/SearchPanel'
@@ -50,6 +51,9 @@ export default function Home() {
 
   return (
     <>
+      {/* Renders nothing unless something is actually disrupting travel. */}
+      <Advisory />
+
       {/* ---------- identity ----------
            One column, full width. This was a two-column grid with the board
            beside it, which squeezed the headline and the four headline figures

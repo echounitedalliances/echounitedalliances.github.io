@@ -1,9 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import MemberSite from '../components/MemberSite'
 import RouteMap from '../components/RouteMap'
 import { Loading, Mark, NotConfigured } from '../components/ui'
 import { isConfigured, supabase } from '../lib/supabase'
-import type { Airline, Arc, FleetRow, NetworkNode, RoutePairRow, TimetableRow } from '../lib/types'
+import type {
+  Airline,
+  Arc,
+  FleetRow,
+  MemberSiteRow,
+  NetworkNode,
+  RoutePairRow,
+  TimetableRow,
+} from '../lib/types'
 import { accentOf, duration, flag, num, usd } from '../lib/format'
 
 const DAYS = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
@@ -16,6 +25,8 @@ export default function AirlinePage() {
   const [arcs, setArcs] = useState<Arc[]>([])
   const [nodes, setNodes] = useState<NetworkNode[]>([])
   const [missing, setMissing] = useState(false)
+  /** The member-built website covering this carrier, if there is one. */
+  const [site, setSite] = useState<MemberSiteRow | null>(null)
   const [timetable, setTimetable] = useState<TimetableRow[] | null>(null)
   const [ttAirport, setTtAirport] = useState<string>('')
   /** True when the unfiltered timetable came back at the server's row cap. */
@@ -41,6 +52,7 @@ export default function AirlinePage() {
     if (!isConfigured) return
     setA(null)
     setMissing(false)
+    setSite(null)
     setMapMode('airline')
     setDivArcs(null)
     setDivNodes([])
@@ -60,7 +72,7 @@ export default function AirlinePage() {
       }
       setA(air)
 
-      const [f, r] = await Promise.all([
+      const [f, r, w] = await Promise.all([
         supabase
           .from('v_fleet')
           .select('aircraft_model, manufacturer, aircraft_count')
@@ -75,10 +87,14 @@ export default function AirlinePage() {
           .eq('airline_uid', air.uid)
           .order('departures_per_week', { ascending: false })
           .limit(400),
+        // Most carriers have no site of their own, so this returns no rows
+        // far more often than it returns one.
+        supabase.rpc('airline_site', { p_uid: air.uid }),
       ])
       const routeRows = (r.data as RoutePairRow[]) ?? []
       setFleet((f.data as FleetRow[]) ?? [])
       setRoutes(routeRows)
+      setSite(((w.data as MemberSiteRow[]) ?? [])[0] ?? null)
 
       // Draw this carrier's own network: look up the coordinates for the
       // airports it actually touches, then build arcs from its routes.
@@ -326,12 +342,17 @@ export default function AirlinePage() {
                 >
                   Book with {named ?? a.carrier_code} ↗
                 </a>
+              ) : site ? (
+                <MemberSite site={site} accent={accent} />
               ) : (
                 <span className="mono border border-edge px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-ink-faint">
                   Contact airline for booking
                 </span>
               )}
-              {a.website_url && (
+              {/* Only when no member site is shown: website_url mirrors that
+                  same address, and a bare link to it would step around the
+                  notice the button exists to give. */}
+              {a.website_url && !site && (
                 <a
                   href={a.website_url}
                   target="_blank"
