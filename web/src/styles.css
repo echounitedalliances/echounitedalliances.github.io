@@ -628,3 +628,13 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* Advisory bar ----------------------------------------------------- */
+/* It sits above a sticky header, over content that scrolls underneath it.
+   A translucent tint let that page text show through and collide with the
+   advisory's own words, so the fill is opaque: the warn colour mixed INTO
+   the ground rather than laid on top of it. Same hue, nothing behind it. */
+.advisory-bar {
+  background: color-mix(in srgb, var(--color-warn) 14%, var(--color-ground));
+  border-bottom: 1px solid color-mix(in srgb, var(--color-warn) 35%, var(--color-ground));
+}

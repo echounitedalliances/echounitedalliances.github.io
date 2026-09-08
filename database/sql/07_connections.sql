@@ -438,6 +438,11 @@ begin
                            case when l.direction = 'OUTBOUND' then f.outbound_flight_number
                                 else f.inbound_flight_number end,
                        'carrier_code',     al.carrier_code,
+                       -- The code alone does not tell a traveller who is
+                       -- flying them. "BTKY2" is not an answer to "which
+                       -- airline is this", and on an interline itinerary the
+                       -- legs can be three different carriers.
+                       'airline_name',     al.airline_name,
                        'division',         al.division_code,
                        'origin',           l.origin_iata,
                        'destination',      l.destination_iata,

@@ -118,6 +118,8 @@ export type Leg = {
   direction: 'OUTBOUND' | 'INBOUND'
   designator: string
   carrier_code: string
+  /** Who is actually flying it. A code is not an answer to "which airline". */
+  airline_name: string | null
   division: string
   origin: string
   destination: string

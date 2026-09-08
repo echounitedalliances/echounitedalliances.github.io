@@ -44,7 +44,7 @@ export default function AdvisoryBar({ onHome }: { onHome: boolean }) {
   if (onHome && !read) return null
 
   return (
-    <div className="border-b border-[color:var(--color-warn)]/25 bg-[color:var(--color-warn)]/10">
+    <div className="advisory-bar">
       <div className="mx-auto max-w-[1180px] px-4 sm:px-5">
         <button
           type="button"

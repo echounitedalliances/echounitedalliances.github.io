@@ -1,6 +1,6 @@
 # Member websites
 
-Ten members have built their own sites. Each one is now reachable from its
+Eleven members have built their own sites. Each one is now reachable from its
 carrier's page here, behind a notice that says what the traveller is walking
 into.
 
@@ -22,12 +22,14 @@ actually compared.
 | [Bula Air](https://kariy4.github.io/Bula-Air/pages/index.html) | Bula Air | Full 5-step booking with seat maps | ⚠️ **Sample only** |
 | [SwissLux Group](https://lacnka.github.io/swisslux) | SwissLux, SwissLux Private | Account-gated app | ❔ **Unverified** |
 | [Dream Island Air](https://dream-island-air.base44.app/) | Dream Island Air | Account-gated app | ❔ **Unverified** |
-| [Britannia Group](https://flybritanniagroup.base44.app/) | Fly Empire | Booking search | ❌ **Illustrative** |
+| [Britannia Group](https://flybritanniagroup.base44.app/) | Fly Empire, Soleado | Booking search | ❌ **Illustrative** |
 | [Book & Go](https://bookgo-chi.vercel.app/) | flyhop ("CAS") | Multi-airline search + newsfeed | ❌ **Illustrative** |
 | [AirFluff](https://airfluff-airlines-copy-54d2ba54.base44.app/) | AirFluff Airlines | Booking search | ❌ **Illustrative** |
+| [American Express Air](https://flyamex.base44.app/) | American express | Booking search | ⚠️ **Sample only** |
 
 **Four sites can be trusted for schedules and fares. Three cannot, and say so
-to varying degrees. Two would not let us look.**
+to varying degrees. Two publish only part of the network, and two would not
+let us look.**
 
 ---
 
@@ -46,9 +48,16 @@ CXR, DAD, HAN, PQC and SGN — the same five. The gap is a few days of fleet
 growth, not a different dataset. Fares are described on the site as "lowest
 one-way Economy fare on each route", which is what they are.
 
-*It covers Karination only.* Velaris KX is not sold there and did not get the
-button: despite the shared "KX", the two are **separate groups under different
-owners** who happened to pick the same code for their group.
+*It covers Karination only,* and this was re-checked specifically. Its
+timetable returns nothing but KX flights; asking for a route it does not serve
+answers **"Karination does not fly LHR to JFK. Try one of our hubs"** rather
+than offering a sibling carrier; RainbowOne earns miles "on every Karination
+flight"; and the footer reads "KX · A member of Echo Aegis". There is no
+second brand on the site to attach.
+
+Velaris KX is not sold there and did not get the button: despite the shared
+"KX", the two are **separate groups under different owners** who happened to
+pick the same code for their group.
 
 ### Starliner Group
 
@@ -116,13 +125,40 @@ HNL drift further). But Bula Air actually serves **81 destinations from Nadi**
 and 135 routes overall. A traveller who searched there and found nothing would
 wrongly conclude the route does not exist.
 
+### American Express Air
+
+A JFK-based luxury carrier with a Leaflet route map, lounges, a fleet page and
+a five-cabin booking flow. The home page teases six destinations; the booking
+page carries **47**, each with a block time.
+
+Every one of those 47 is a route American Express Air genuinely serves. Two
+things stop it being a *live* grade:
+
+- it reaches **87 destinations from JFK**, so roughly half the network is
+  missing from the picker;
+- the block times are its own estimates, consistently a little longer than the
+  filed ones — LHR 7h00 against our 6h10, ZRH 8h15 against 7h00, CDG 7h10
+  against 6h30. LAX is exact at 5h10, so it is an approximation that sometimes
+  lands rather than a copy.
+
+Its stated fleet of 60 also sits well under the 192 aircraft we hold.
+
 ---
 
 ## Illustrative — do not quote these fares
 
-### Britannia Group → Fly Empire
+### Britannia Group → Fly Empire and Soleado
 
-Search results are branded Fly Empire throughout. The flight numbers are real
+**Two brands, and only a search reveals it.** Nothing on the home page, the
+Deals page or the nav names a second airline — LHR–JFK returns Fly Empire
+(FEM) on every row, which is why the first pass recorded one carrier. LHR–EDI
+returns four **Soleado** (SOL) services and one Fly Empire. Soleado is ours too
+(SO, Elion, 430 routes), so both carriers now carry the button.
+
+The lesson for the next group site: read the *results*, on more than one kind
+of route, not the marketing.
+
+Search results are branded Fly Empire on the long-haul routes. The flight numbers are real
 Fly Empire numbers — 360, 517, 667, 903, 955 — but they are **attached to the
 wrong routes**: 360 is really LHR–SIN, 517 LHR–ORD, 667 LHR–LAX, 903 LHR–JFK,
 955 LHR–DXB. Durations are invented too, where ours are a constant 450 minutes.

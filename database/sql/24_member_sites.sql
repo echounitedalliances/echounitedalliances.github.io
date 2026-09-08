@@ -117,7 +117,7 @@ values
 
     ('britannia', 'Britannia Group', 'https://flybritanniagroup.base44.app/',
      null, null, 'booking', 'illustrative',
-     'Its results carry real Fly Empire flight numbers but attach them to the wrong routes, with invented durations. Read it as a showcase and book here.',
+     'It sells two of ours, Fly Empire and Soleado, depending on the route you search. Its results carry real Fly Empire flight numbers attached to the wrong routes, with invented durations. Read it as a showcase and book here.',
      date '2026-09-08'),
 
     ('bookgo', 'Book & Go', 'https://bookgo-chi.vercel.app/',
@@ -129,6 +129,11 @@ values
     ('airfluff', 'AirFluff Airlines', 'https://airfluff-airlines-copy-54d2ba54.base44.app/',
      null, null, 'booking', 'illustrative',
      'It flies our real routes with our real block times, but invents the flight numbers, departure times and fares around them — and says so itself in its own footer.',
+     date '2026-09-08'),
+
+    ('amex', 'American Express Air', 'https://flyamex.base44.app/',
+     null, null, 'booking', 'sample',
+     'Every destination it sells is one American Express Air really serves, but it publishes 47 of the 87 it reaches from JFK, and its journey times are its own estimates — it quotes 7h00 to London where the filed block time is 6h10.',
      date '2026-09-08')
 on conflict (site_slug) do update set
     site_name  = excluded.site_name,
@@ -164,8 +169,12 @@ with claim(site_slug, division_code, airline_slug) as (values
     ('swisslux',     'aegis',   'swisslux'),
     ('swisslux',     'vilis',   'swisslux_private'),
     ('dream-island', 'vilis',   'dream_island_air'),
-    -- Britannia Group's booking results are branded Fly Empire throughout.
+    -- Britannia Group sells two brands, which is only visible by searching a
+    -- route each one serves: LHR-JFK returns Fly Empire, LHR-EDI returns
+    -- Soleado. Both are ours, so both carry the button.
     ('britannia',    'kyra',    'fly_empire'),
+    ('britannia',    'elion',   'soleado'),
+    ('amex',         'aura',    'american_express'),
     -- "CAS - flyhop": Book & Go is the group's booking product.
     ('bookgo',       'proxima', 'flyhop'),
     ('airfluff',     'aura',    'airfluff_airlines')
@@ -185,9 +194,9 @@ declare
     n integer;
 begin
     select count(*) into n from public.member_site_airlines;
-    if n <> 14 then
+    if n <> 16 then
         raise exception
-            'member_site_airlines has % rows, expected 14 -- an airline_slug in this file no longer matches a carrier', n;
+            'member_site_airlines has % rows, expected 16 -- an airline_slug in this file no longer matches a carrier', n;
     end if;
 end
 $guard$;

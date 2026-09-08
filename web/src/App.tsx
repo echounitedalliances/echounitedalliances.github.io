@@ -17,6 +17,7 @@ import { useOnlineCount } from './lib/discordWidget'
 import { useSiteVisitorCount } from './lib/presence'
 import { num } from './lib/format'
 import Resonance from './pages/Resonance'
+import { Conduct, Privacy } from './pages/Policy'
 import { AuthProvider, useAuth } from './lib/auth'
 import AdvisoryBar from './components/AdvisoryBar'
 import EchoMark from './components/EchoMark'
@@ -230,7 +231,16 @@ function Shell({ children }: { children: React.ReactNode }) {
             <span className="text-ink-dim">The Airline Simulator</span>
           </span>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-            <span className="mono">590 carriers · 8 divisions · 2,187 airports</span>
+            {/* Hand-counted against the database on 8 September 2026. It says
+                590 the moment someone forgets, so re-check it when the roster
+                is rebuilt. */}
+            <span className="mono">602 carriers · 8 divisions · 2,186 airports</span>
+            <Link to="/conduct" className="hover:text-ink-dim">
+              Code of conduct
+            </Link>
+            <Link to="/privacy" className="hover:text-ink-dim">
+              Privacy
+            </Link>
             {discordConfigured && (
               <a
                 href={SITE.discordInvite}
@@ -268,6 +278,8 @@ export default function App() {
           <Route path="/book" element={<Book />} />
           <Route path="/trips" element={<Trips />} />
           <Route path="/resonance" element={<Resonance />} />
+          <Route path="/conduct" element={<Conduct />} />
+          <Route path="/privacy" element={<Privacy />} />
           <Route
             path="*"
             element={

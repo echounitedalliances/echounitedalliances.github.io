@@ -40,6 +40,12 @@ function LegRow({ leg, last }: { leg: Itinerary['legs'][number]; last: boolean }
           {dayShift > 0 && <sup className="ml-0.5 text-cyan">+{dayShift}</sup>}
         </span>
         <span className="mono text-[11px] text-ink-faint">{duration(leg.duration_minutes)}</span>
+        {/* Who is flying it. On an interline itinerary each leg can be a
+            different carrier, and the designator prefix alone does not say
+            which -- nobody reads "BTKY2" as Fly Empire. */}
+        {leg.airline_name && (
+          <span className="text-[11px] text-ink-dim">{leg.airline_name}</span>
+        )}
         {leg.aircraft_model && (
           <span className="text-[11px] text-ink-faint">{leg.aircraft_model}</span>
         )}
