@@ -59,8 +59,14 @@ begin
             public.echo_max_party_size() using errcode = 'check_violation';
     end if;
 
-    if v_segs < 1 or v_segs > 6 then
-        raise exception 'A booking must have between 1 and 6 flights'
+    -- Sized to what the product can actually build, so nothing valid is
+    -- refused at the last step. The longest journey the site offers is a
+    -- seven-stop round-the-world tour, and each of its hops may itself be a
+    -- two-stop connection -- seven hops of three flights is twenty-one. Six
+    -- was the old ceiling, and it rejected any tour past five hops after the
+    -- traveller had already chosen every flight.
+    if v_segs < 1 or v_segs > 21 then
+        raise exception 'A booking must have between 1 and 21 flights'
             using errcode = 'check_violation';
     end if;
 

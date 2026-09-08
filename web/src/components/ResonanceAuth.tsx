@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../lib/auth'
+import { useCarrierCount } from '../lib/carriers'
+import { num } from '../lib/format'
 
 /**
  * Getting into a Resonance account.
@@ -109,6 +111,7 @@ function Field({
 type Mode = 'password' | 'signup' | 'forgot'
 
 export function SignIn() {
+  const carrierCount = useCarrierCount()
   const { signInWithPassword, signUp, sendPasswordReset } = useAuth()
   const [mode, setMode] = useState<Mode>('password')
   const [email, setEmail] = useState('')
@@ -188,7 +191,7 @@ export function SignIn() {
 
         {mode === 'signup' && (
           <p className="-mt-2 text-sm text-ink-dim">
-            One account across all 590 carriers. You can also book without one.
+            One account across all {num(carrierCount)} carriers. You can also book without one.
           </p>
         )}
         {mode === 'forgot' && (

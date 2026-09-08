@@ -31,7 +31,20 @@ export type JourneyQuery = {
   stops: number
 }
 
-export const MAX_LEGS = 5
+/**
+ * The most legs one journey can carry.
+ *
+ * Seven, because that is the longest round-the-world tour the planner will
+ * validate, and the planner hands its hops straight to this search. At five
+ * it silently truncated a six- or seven-stop tour to the first five hops --
+ * the traveller planned a circumnavigation and got a one-way to wherever the
+ * fifth stop happened to be. create_booking takes up to 21 flights, which is
+ * seven hops at the two-stop maximum, so a full tour books as one PNR.
+ */
+export const MAX_LEGS = 7
+
+/** How many CONNECTING itineraries a leg returns. Nonstops are unlimited. */
+export const CONNECTION_LIMIT = 60
 
 const isCode = (s: string) => /^[A-Z]{3}$/.test(s)
 const isDate = (s: string) => /^\d{4}-\d{2}-\d{2}$/.test(s)
@@ -123,7 +136,10 @@ export async function searchJourney(
       p_cabin: q.cabin,
       p_seats: q.pax,
       p_max_stops: q.stops,
-      p_limit: 60,
+      // Nonstops come back in full whatever this says -- search_itineraries
+      // ranks them apart and never cuts them. This bounds the CONNECTING
+      // options only, which are the ones that grow combinatorially.
+      p_limit: CONNECTION_LIMIT,
     }),
   )
   const settled = await Promise.all(calls)

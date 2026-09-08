@@ -122,9 +122,11 @@ export function AirlineCard({ a }: { a: Airline }) {
  * mask, so there is no frame loop and nothing to stop: it ends when the
  * element unmounts, which is when the thing finished loading.
  *
- * The label stays. Every caller passes something specific ("Drawing the
- * network", "Searching 590 carriers", "Checking your session"), and knowing
- * what is slow is worth more than the two lines it costs.
+ * The label stays, and the colour runs through it too, off the same keyframes
+ * as the wing -- so the same colour is in the word as is in the mark above it.
+ * Every caller passes something specific ("Drawing the network", "Searching
+ * 602 carriers", "Checking your session"), and knowing what is slow is worth
+ * more than the two lines it costs.
  */
 export function Loading({ label = 'Loading' }: { label?: string }) {
   return (
@@ -134,7 +136,7 @@ export function Loading({ label = 'Loading' }: { label?: string }) {
       className="flex flex-col items-center justify-center gap-4 py-16"
     >
       <EchoMark height={28} color="transparent" className="echo-loader" />
-      <p className="mono text-[11px] uppercase tracking-[0.16em] text-ink-faint">{label}…</p>
+      <p className="echo-loader-text mono text-[11px] uppercase tracking-[0.16em]">{label}…</p>
     </div>
   )
 }

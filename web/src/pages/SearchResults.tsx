@@ -4,6 +4,7 @@ import FareCalendar from '../components/FareCalendar'
 import SearchPanel from '../components/SearchPanel'
 import { Loading, NotConfigured } from '../components/ui'
 import { isConfigured } from '../lib/supabase'
+import { useCarrierCount } from '../lib/carriers'
 import type { Itinerary } from '../lib/types'
 import { duration, num, shortDate, usd } from '../lib/format'
 import { itineraryArrival, itineraryDeparture } from '../lib/trips'
@@ -15,6 +16,17 @@ import {
   legLabel,
   searchJourney,
 } from '../lib/journey'
+
+/**
+ * Cards rendered per leg before "show the rest".
+ *
+ * Nonstops are no longer capped by the search, and a dense pair returns far
+ * more than anyone expects: SGN-SIN has 257 nonstop departures on one date,
+ * LHR-JFK 539. Every one of them is a real option and all of them are here,
+ * sorted and filtered as a whole -- this only governs how many are painted at
+ * once, because 539 cards laid out on arrival is a page nobody can scroll.
+ */
+const PAGE = 60
 
 type Sort = 'price' | 'duration' | 'stops' | 'departure' | 'arrival'
 
@@ -84,6 +96,9 @@ export default function SearchResults() {
   const [picks, setPicks] = useState<(Itinerary | null)[]>([])
   const [sort, setSort] = useState<Sort>('price')
   const [interlineOnly, setInterlineOnly] = useState(false)
+  const carrierCount = useCarrierCount()
+  /** How many cards each leg is currently painting. */
+  const [reveal, setReveal] = useState<number[]>([])
 
   useEffect(() => {
     if (!isConfigured || !journeyIsValid(q)) return
@@ -91,6 +106,7 @@ export default function SearchResults() {
     setResults(null)
     setErrors([])
     setPicks(q.legs.map(() => null))
+    setReveal(q.legs.map(() => PAGE))
     void (async () => {
       const { results: r, errors: e } = await searchJourney(q, signal)
       if (signal.aborted) return
@@ -124,6 +140,10 @@ export default function SearchResults() {
       return c
     })
   }, [results, sort, interlineOnly])
+
+  useEffect(() => {
+    setReveal((r) => r.map(() => PAGE))
+  }, [sort, interlineOnly])
 
   const single = q.legs.length === 1
   const total = journeyTotal(picks)
@@ -220,7 +240,13 @@ export default function SearchResults() {
       )}
 
       {journeyIsValid(q) && ordered === null && (
-        <Loading label={single ? 'Searching the alliance' : `Searching ${q.legs.length} flights`} />
+        <Loading
+          label={
+            single
+              ? `Searching ${num(carrierCount)} carriers`
+              : `Searching ${num(carrierCount)} carriers · ${q.legs.length} flights`
+          }
+        />
       )}
 
       {ordered?.map((rows, i) => {
@@ -259,7 +285,7 @@ export default function SearchResults() {
             )}
 
             <div className="mt-3 flex flex-col gap-3">
-              {rows?.map((it, n) => {
+              {rows?.slice(0, reveal[i] ?? PAGE).map((it, n) => {
                 const chosen = picked === it
                 return (
                   <article
@@ -322,6 +348,18 @@ export default function SearchResults() {
                 )
               })}
             </div>
+
+            {rows && rows.length > (reveal[i] ?? PAGE) && (
+              <button
+                type="button"
+                onClick={() =>
+                  setReveal((r) => r.map((v, n) => (n === i ? rows.length : v)))
+                }
+                className="mono mt-3 w-full border border-edge py-3 text-[11px] uppercase tracking-[0.14em] text-ink-dim transition-colors hover:border-accent hover:text-ink"
+              >
+                Show the other {num(rows.length - (reveal[i] ?? PAGE))} · {num(rows.length)} in all
+              </button>
+            )}
 
             <FareCalendar
               from={leg.from}

@@ -265,7 +265,12 @@ body {
    edge ends up against the box's right edge), so the colours enter from the
    right, which is the way the wing points. No JavaScript, no frame loop:
    the compositor runs it and it stops existing when the element unmounts. */
-.echo-loader {
+/* One gradient, two users: the wing and the label under it. Declared once so
+   the two cannot drift into different palettes, and shared so they run off the
+   same keyframes and stay in step -- the same colour is passing through the
+   word as is passing through the wing. */
+.echo-loader,
+.echo-loader-text {
   background-image: linear-gradient(
     90deg,
     #fff, var(--division-kyra),
@@ -282,6 +287,22 @@ body {
   animation: echo-loader-sweep 3s linear infinite;
 }
 
+/* The wing is a mask over the gradient; the text is the gradient clipped to
+   the glyphs. Same effect, different way of getting the paint into the shape.
+   The fallback colour matters: where background-clip:text is unsupported,
+   transparent text on a gradient box would be an unreadable smear, so the
+   colour is only given away inside the @supports. */
+.echo-loader-text {
+  color: var(--color-ink-faint);
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .echo-loader-text {
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
 @keyframes echo-loader-sweep {
   from { background-position: 0% 50%; }
   to   { background-position: 100% 50%; }
@@ -296,6 +317,13 @@ body {
     background-image: none;
     background-color: var(--color-accent);
     animation: none;
+  }
+  .echo-loader-text {
+    background-image: none;
+    animation: none;
+    -webkit-background-clip: border-box;
+    background-clip: border-box;
+    color: var(--color-accent);
   }
 }
 

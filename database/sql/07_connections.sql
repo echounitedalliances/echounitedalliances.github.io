@@ -420,8 +420,25 @@ begin
         union all select * from i2
     ),
     -- Cut to the result page BEFORE any JSON is built.
+    --
+    -- Nonstops are ranked SEPARATELY from connections and are never cut, which
+    -- is the difference between a search and a shortlist. One row_number over
+    -- everything meant p_limit was a cap on the whole answer, and on a dense
+    -- pair the whole answer is much larger than anyone guesses: SGN-SIN has
+    -- 257 nonstop departures on a single date from 66 carriers, so a limit of
+    -- 60 returned the 60 cheapest and silently dropped three quarters of the
+    -- route. A carrier priced above the cheapest sixty simply did not appear
+    -- on its own route, which is how this was found.
+    --
+    -- The limit still binds connections, where it belongs: those are built by
+    -- joining legs and grow combinatorially, and nobody wants the 400th
+    -- two-stop option. Nonstops cannot explode -- the densest pair in the
+    -- network is LHR-JFK at 539 a day, well inside the row cap PostgREST
+    -- applies to any result.
     best as (
-        select o.*, row_number() over (order by o.total_price, o.total_minutes) as rn
+        select o.*,
+               row_number() over (partition by (o.stops = 0)
+                                  order by o.total_price, o.total_minutes) as rn
           from all_options o
     )
     select b.stops, b.via, b.total_price, b.total_minutes, b.carriers, b.divisions,
@@ -467,7 +484,7 @@ begin
               join public.aircraft ac on ac.aircraft_id = l.aircraft_id
               join public.flights  f  on f.flight_id = l.flight_id)
       from best b
-     where b.rn <= v_lim
+     where b.stops = 0 or b.rn <= v_lim
      order by b.total_price, b.total_minutes;
 end;
 $$;

@@ -5,7 +5,8 @@ import { isConfigured, supabase } from '../lib/supabase'
 import { useAuth } from '../lib/auth'
 import { PasswordCard, SignIn } from '../components/ResonanceAuth'
 import type { AirportRow, BookingDetails, Division } from '../lib/types'
-import { shortDate, usd } from '../lib/format'
+import { num, shortDate, usd } from '../lib/format'
+import { useCarrierCount } from '../lib/carriers'
 import { TRIP_SORTS, bookedAt, tripArrival, tripDeparture } from '../lib/trips'
 import type { TripSort } from '../lib/trips'
 
@@ -18,6 +19,7 @@ import type { TripSort } from '../lib/trips'
  * components/ResonanceAuth; the site only ever holds the session.
  */
 export default function Resonance() {
+  const carrierCount = useCarrierCount()
   const { ready, user, resonant, recovering, endRecovery, signOut, refreshResonant } = useAuth()
   const [error, setError] = useState<string | null>(null)
   const [sort, setSort] = useState<TripSort>('departure')
@@ -100,7 +102,7 @@ export default function Resonance() {
           The alliance, remembered
         </h1>
         <p className="mt-4 max-w-[58ch] text-lg text-ink-dim">
-          A Resonance account keeps your trips together across all 590 carriers,
+          A Resonance account keeps your trips together across all {num(carrierCount)} carriers,
           and remembers where you fly from. It is optional — you can search and
           book without one.
         </p>
