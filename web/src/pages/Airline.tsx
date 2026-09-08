@@ -634,7 +634,10 @@ export default function AirlinePage() {
                       <span className="inline-flex gap-0.5">
                         {DAYS.map((d, di) => (
                           <span
-                            key={d}
+                            // The labels are not unique -- Tuesday and
+                            // Thursday are both "T", Saturday and Sunday both
+                            // "S" -- so the day's position is the identity.
+                            key={di}
                             title={d}
                             className="inline-block w-[15px] text-center text-[10px]"
                             style={{

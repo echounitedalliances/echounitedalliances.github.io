@@ -98,3 +98,23 @@ export const ACTIVITIES: Activity[] = [
     ],
   },
 ]
+
+/**
+ * Where the alliance came from, and what it offers someone thinking of
+ * joining. Written by the board; kept here as content rather than markup so
+ * it can be edited without touching the page.
+ *
+ * The founding facts are pulled out separately because they are facts, and a
+ * date buried in a paragraph is a date nobody can find.
+ */
+export const STORY = {
+  founded: '24 March 2026',
+  foundedAs: 'Axian Alliance',
+  foundingMembers: 3,
+  paragraphs: [
+    'Echo United Alliances started as Axian Alliance, with three founding members, on 24 March 2026. The growth of Echo since has been immense, and it is all thanks to the support of every single one of its members.',
+    'If you are a beginner, and you need guidance and tips, Echo is the perfect alliance for you. Eighty per cent of our members joined us when they had just started playing The Airline Simulator, and by joining the alliance their growth quadrupled. We also monitor our market strictly, so that aircraft orders do not get stolen and you can actually get them. We are a hot spot for many well established airlines as well.',
+    'Echo can be home to anyone — it does not matter who. Invite your friends, so they can make this community their home too.',
+  ],
+  closing: 'We are a family. We trust and we respect everyone equally.',
+}

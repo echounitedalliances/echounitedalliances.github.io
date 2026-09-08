@@ -18,6 +18,7 @@ import { useSiteVisitorCount } from './lib/presence'
 import { num } from './lib/format'
 import Resonance from './pages/Resonance'
 import { Conduct, Privacy } from './pages/Policy'
+import News from './pages/News'
 import { AuthProvider, useAuth } from './lib/auth'
 import AdvisoryBar from './components/AdvisoryBar'
 import EchoMark from './components/EchoMark'
@@ -34,6 +35,7 @@ const links = [
   { to: '/divisions', label: 'Divisions' },
   { to: '/airlines', label: 'Airlines' },
   { to: '/network', label: 'Network' },
+  { to: '/news', label: 'News' },
   { to: '/activities', label: 'Activities' },
   { to: '/trips', label: 'My trips' },
 ]
@@ -278,6 +280,7 @@ export default function App() {
           <Route path="/book" element={<Book />} />
           <Route path="/trips" element={<Trips />} />
           <Route path="/resonance" element={<Resonance />} />
+          <Route path="/news" element={<News />} />
           <Route path="/conduct" element={<Conduct />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route

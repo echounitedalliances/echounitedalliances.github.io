@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { isConfigured, supabase } from '../lib/supabase'
 import type { Division } from '../lib/types'
-import { LEADERS, SLOGAN } from '../lib/alliance'
+import { LEADERS, SLOGAN, STORY } from '../lib/alliance'
 import { accentOf, num } from '../lib/format'
 import { Loading, NotConfigured } from '../components/ui'
 import EchoMark from '../components/EchoMark'
@@ -67,6 +67,52 @@ export default function About() {
           {num(totals.carriers)} carriers · {num(totals.aircraft)} aircraft · 8 divisions
         </p>
       )}
+
+      {/* The board's own account of where Echo came from and who it is for.
+          It sits above the leadership roster because it answers the question
+          somebody actually arrived with. */}
+      <section className="mt-14 border-t border-edge-soft pt-10">
+        <h2 className="display text-2xl">Our story</h2>
+        <div className="mt-6 grid gap-8 lg:grid-cols-[1.7fr_1fr] lg:gap-12">
+          <div className="flex flex-col gap-4">
+            {STORY.paragraphs.map((p) => (
+              <p key={p.slice(0, 32)} className="max-w-[64ch] text-ink-dim">
+                {p}
+              </p>
+            ))}
+            <p className="display mt-2 max-w-[64ch] text-xl text-ink">{STORY.closing}</p>
+          </div>
+
+          <dl className="panel h-fit p-5">
+            <div>
+              <dt className="mono text-[10px] uppercase tracking-[0.14em] text-ink-faint">
+                Founded
+              </dt>
+              <dd className="mono mt-1 text-lg text-ink">{STORY.founded}</dd>
+            </div>
+            <div className="mt-5">
+              <dt className="mono text-[10px] uppercase tracking-[0.14em] text-ink-faint">
+                Founded as
+              </dt>
+              <dd className="mt-1 text-lg text-ink">{STORY.foundedAs}</dd>
+            </div>
+            <div className="mt-5">
+              <dt className="mono text-[10px] uppercase tracking-[0.14em] text-ink-faint">
+                Founding members
+              </dt>
+              <dd className="mono mt-1 text-lg text-ink">{STORY.foundingMembers}</dd>
+            </div>
+            {divisions !== null && (
+              <div className="mt-5 border-t border-edge-soft pt-5">
+                <dt className="mono text-[10px] uppercase tracking-[0.14em] text-ink-faint">
+                  Carriers today
+                </dt>
+                <dd className="mono mt-1 text-lg text-cyan">{num(totals.carriers)}</dd>
+              </div>
+            )}
+          </dl>
+        </div>
+      </section>
 
       <section className="mt-14">
         <h2 className="display text-2xl">The board</h2>

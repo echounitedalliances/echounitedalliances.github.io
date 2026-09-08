@@ -47,6 +47,14 @@ export default function Home() {
     { carriers: 0, aircraft: 0, routes: 0 },
   )
 
+  /**
+   * The roster size, shown in three places in this page's copy and
+   * previously typed into all three by hand. It said 590 against a real
+   * roster of 602 for as long as nobody looked. It is a live figure now,
+   * with a floor so the headline never reads "0 airlines" on first paint.
+   */
+  const carriers = totals.carriers || 602
+
   if (!isConfigured) return <NotConfigured />
 
   return (
@@ -65,7 +73,7 @@ export default function Home() {
             <p className="eyebrow text-cyan">Echo United Alliances</p>
             <h1 className="display mt-3 text-[clamp(34px,8vw,96px)] sm:mt-4">
               Eight divisions.{' '}
-              <span style={{ color: 'var(--color-accent)' }}>590 airlines.</span>{' '}
+              <span style={{ color: 'var(--color-accent)' }}>{num(carriers)} airlines.</span>{' '}
               One network.
             </h1>
             <p className="mt-4 max-w-[62ch] text-ink-dim sm:mt-6 sm:text-lg">
@@ -98,7 +106,7 @@ export default function Home() {
                 Meet the divisions
               </Link>
               <Link to="/airlines" className="btn btn-ghost">
-                All 590 carriers
+                All {num(carriers)} carriers
               </Link>
               <Join compact />
             </div>
@@ -186,7 +194,7 @@ export default function Home() {
         <div className="mx-auto max-w-[1180px] px-4 py-8 sm:px-5 sm:py-14">
           <h2 className="display text-3xl">Fly the whole alliance</h2>
           <p className="mt-2 max-w-[62ch] text-ink-dim">
-            One search across all 590 carriers. Connections are built across
+            One search across all {num(carriers)} carriers. Connections are built across
             divisions, so a journey no single airline flies is still one
             itinerary and one booking reference.
           </p>

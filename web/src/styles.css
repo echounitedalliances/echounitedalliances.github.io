@@ -638,3 +638,29 @@ body {
   background: color-mix(in srgb, var(--color-warn) 14%, var(--color-ground));
   border-bottom: 1px solid color-mix(in srgb, var(--color-warn) 35%, var(--color-ground));
 }
+
+/* News story body ---------------------------------------------------- */
+/* The article HTML comes from the source feed carrying its own Tailwind
+   classes for a blue-on-white site. Those classes do not exist in this build,
+   and the sanitiser strips every attribute anyway, so the markup arrives bare
+   and is styled here instead -- which is the point: the stories read in our
+   type and our palette, not somebody else's. */
+.news-body > * + * { margin-top: 0.9rem; }
+.news-body p { line-height: 1.7; }
+.news-body strong, .news-body b { color: var(--color-ink); font-weight: 600; }
+.news-body h2, .news-body h3, .news-body h4 {
+  font-family: var(--font-display, inherit);
+  color: var(--color-ink);
+  font-size: 1.05rem;
+  margin-top: 1.4rem;
+}
+.news-body ul, .news-body ol { padding-left: 1.25rem; }
+.news-body ul { list-style: disc; }
+.news-body ol { list-style: decimal; }
+.news-body li + li { margin-top: 0.4rem; }
+.news-body blockquote {
+  border-left: 2px solid var(--color-accent);
+  padding-left: 1rem;
+  color: var(--color-ink);
+}
+.news-body a { color: var(--color-cyan); text-decoration: underline; text-underline-offset: 2px; }

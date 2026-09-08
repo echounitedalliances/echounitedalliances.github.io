@@ -81,7 +81,7 @@ insert into public.member_sites
 values
     ('karination', 'Karination', 'https://flykarination.github.io/sales',
      null, null, 'booking', 'live',
-     'Its network and fares match ours: 766 routes to 481 destinations from five Vietnamese hubs, priced at the real lowest one-way economy fare.',
+     'It sells both Karination and FORZA, and its fares match ours on each — 766 routes to 481 destinations, at the real lowest one-way economy price. The branding is Karination throughout, so search a FORZA route and you will be quoted Z4 flights.',
      date '2026-09-08'),
 
     ('starliner', 'Starliner Group', 'https://chai-debug-create.github.io/Tas',
@@ -154,7 +154,14 @@ on conflict (site_slug) do update set
 -- ---------------------------------------------------------------------
 
 with claim(site_slug, division_code, airline_slug) as (values
+    -- Two carriers, and the site does not advertise it: the brand is
+    -- Karination throughout and the footer reads "KX · A member of Echo
+    -- Aegis", but ask its timetable for a FORZA route and it returns Z4
+    -- services at FORZA's fares. Its own destination list gives it away --
+    -- the cheapest fares are quoted "from HPH / VCL / BMV / CAH", which are
+    -- FORZA hubs, not Karination's five.
     ('karination',   'aegis',   'karination'),
+    ('karination',   'proxima', 'forza'),
     -- The site's own airline picker offers the first three. Meridian by
     -- STRLNR is not in it, but it is the same member's airline and carries
     -- the button by their decision -- which is why the note below names the
@@ -194,9 +201,9 @@ declare
     n integer;
 begin
     select count(*) into n from public.member_site_airlines;
-    if n <> 16 then
+    if n <> 17 then
         raise exception
-            'member_site_airlines has % rows, expected 16 -- an airline_slug in this file no longer matches a carrier', n;
+            'member_site_airlines has % rows, expected 17 -- an airline_slug in this file no longer matches a carrier', n;
     end if;
 end
 $guard$;

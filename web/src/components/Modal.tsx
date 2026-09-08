@@ -20,11 +20,14 @@ export default function Modal({
   onClose,
   children,
   labelledBy = 'modal-title',
+  wide = false,
 }: {
   title: React.ReactNode
   onClose: () => void
   children: React.ReactNode
   labelledBy?: string
+  /** For long-form content: a news story needs a reading measure, a notice does not. */
+  wide?: boolean
 }) {
   const panel = useRef<HTMLDivElement>(null)
   const opener = useRef<Element | null>(null)
@@ -63,7 +66,7 @@ export default function Modal({
         tabIndex={-1}
         // Without this, a click that starts inside the dialog closes it.
         onClick={(e) => e.stopPropagation()}
-        className="panel w-full max-w-lg p-6 outline-none sm:p-7"
+        className={`panel w-full p-6 outline-none sm:p-7 ${wide ? 'max-w-2xl my-8' : 'max-w-lg'}`}
       >
         <div className="mb-4 flex items-start justify-between gap-4">
           <h2 id={labelledBy} className="display text-xl leading-tight">
