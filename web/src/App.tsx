@@ -21,6 +21,7 @@ import { Conduct, Privacy } from './pages/Policy'
 import News from './pages/News'
 import { AuthProvider, useAuth } from './lib/auth'
 import AdvisoryBar from './components/AdvisoryBar'
+import MobileMenu from './components/MobileMenu'
 import EchoMark from './components/EchoMark'
 import Welcome from './components/Welcome'
 
@@ -192,37 +193,21 @@ function Shell({ children }: { children: React.ReactNode }) {
           </div>
         </div>
 
-        {open && (
-          <nav
-            id="site-menu"
-            className="border-t border-edge-soft bg-[color:var(--color-ground)] px-4 pb-4 pt-3 lg:hidden"
-          >
-            <div className="flex flex-col gap-1">
-              <div className="flex flex-wrap items-center gap-2 pb-2">
-                <OnlineBadge />
-                <SiteVisitorBadge />
-              </div>
-              {links.map((l) => (
-                <NavLink
-                  key={l.to}
-                  to={l.to}
-                  className={({ isActive }) =>
-                    `mono border-b border-edge-soft py-3 text-[12px] uppercase tracking-[0.14em] transition-colors ${
-                      isActive ? 'text-cyan' : 'text-ink-dim hover:text-ink'
-                    }`
-                  }
-                >
-                  {l.label}
-                </NavLink>
-              ))}
-              <div className="pt-3">
-                <AccountLink block />
-              </div>
-            </div>
-          </nav>
-        )}
         </header>
       </div>
+
+      <MobileMenu
+        open={open}
+        onClose={() => setOpen(false)}
+        links={links}
+        badges={
+          <>
+            <OnlineBadge />
+            <SiteVisitorBadge />
+          </>
+        }
+        account={<AccountLink block />}
+      />
 
       <main>{children}</main>
 

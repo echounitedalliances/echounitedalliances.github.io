@@ -664,3 +664,13 @@ body {
   color: var(--color-ink);
 }
 .news-body a { color: var(--color-cyan); text-decoration: underline; text-underline-offset: 2px; }
+
+/* Mobile navigation drawer ------------------------------------------- */
+/* The slide lives on a CSS transition driven by a state flip in
+   MobileMenu.tsx, NOT a keyframe animation, and that is deliberate.
+   An entrance animation only positions the panel correctly once it has run;
+   in any environment where the frame clock does not advance, the element
+   stays pinned at its 0% keyframe -- off-screen, behind its own backdrop,
+   with the page scroll locked. That is indistinguishable from the crash this
+   drawer was written to fix. A transition's resting state is the layout's,
+   so if it never runs the panel is simply already where it belongs. */
