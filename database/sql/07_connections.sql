@@ -106,6 +106,17 @@ returns integer language sql immutable parallel safe as $$ select 12; $$;
 comment on function public.echo_max_vias() is
     'Connecting points considered per search, highest-traffic first. Deeper searches are therefore a strong heuristic, not an exhaustive enumeration.';
 
+-- How many connecting itineraries to show at a depth that is not the only
+-- thing on offer. A traveller looking at 250 nonstops does not need forty
+-- one-stop alternatives underneath them; they need to know the option exists
+-- and how to see more. When a depth IS the only thing on offer -- no nonstops
+-- at all -- the full p_limit page is used instead.
+create or replace function public.echo_tier_limit()
+returns integer language sql immutable parallel safe as $$ select 10; $$;
+
+comment on function public.echo_tier_limit() is
+    'Connecting itineraries shown per depth when a shallower depth already has options. The rest are a "show more" away, fetched one depth at a time.';
+
 -- Ground time we are willing to sell as a connection. The floor matches the 60
 -- minutes every scheduled stopover in the network already turns in; the ceiling
 -- is the fare-rule line between a connection and a stopover.
@@ -183,6 +194,8 @@ $$;
 --     and 25 seconds on a one-stop search. Connect arithmetic is written out
 --     inline, and the JSON is built only for the rows that survive the LIMIT.
 -- ---------------------------------------------------------------------
+drop function if exists public.search_itineraries(text, text, date, text, integer, integer, integer);
+
 create or replace function public.search_itineraries(
     p_origin      text,
     p_destination text,
@@ -190,7 +203,12 @@ create or replace function public.search_itineraries(
     p_cabin       text default 'ECONOMY',
     p_seats       integer default 1,
     p_max_stops   integer default 2,   -- capped at 2; see the note above
-    p_limit       integer default 50
+    p_limit       integer default 50,
+    -- Fetch ONE depth instead of the tiered mix: 0, 1 or 2. Null is the
+    -- ordinary first page.
+    p_stops_exactly integer default null,
+    -- How many of that depth to skip. Only meaningful with p_stops_exactly.
+    p_offset        integer default 0
 )
 returns table (
     stops           integer,
@@ -215,6 +233,16 @@ declare
     v_vias  integer := public.echo_max_vias();
     v_lim   integer := greatest(coalesce(p_limit, 50), 1);
     v_days  integer := 4;      -- candidate departure dates for onward legs
+    v_only  integer := p_stops_exactly;
+    v_off   integer := greatest(coalesce(p_offset, 0), 0);
+    v_n0    bigint;
+    v_do0   boolean;
+    v_do1   boolean;
+    v_do2   boolean;
+    v_lim1  integer;
+    v_lim2  integer;
+    v_off1  integer;
+    v_off2  integer;
 begin
     -- The candidate legs go into an indexed temp table, not a CTE. A CTE has no
     -- indexes and no statistics, so the three- and four-way self-joins below
@@ -331,49 +359,86 @@ begin
     create index on echo_seg (destination_iata, origin_iata);
     analyze echo_seg;
 
-    return query
-    with
-    first_leg as (
-        select * from echo_seg where origin_iata = v_o and departure_date = p_travel_date
-    ),
-    sellable as (
-        select * from echo_seg
-    ),
-    via1 as (
-        select distinct e.destination_iata as a
-          from echo_seg e
-         where v_stops >= 1 and e.origin_iata = v_o and e.destination_iata <> v_d
-           and exists (select 1 from echo_seg x
-                        where x.origin_iata = e.destination_iata
-                          and x.destination_iata = v_d)
-    ),
-    via2 as (
-        select distinct e1.destination_iata as a, e2.destination_iata as b
-          from echo_seg e1
-          join echo_seg e2 on e2.origin_iata = e1.destination_iata
-         where v_stops >= 2 and e1.origin_iata = v_o
-           and e1.destination_iata not in (v_o, v_d)
-           and e2.destination_iata not in (v_o, v_d)
-           and exists (select 1 from echo_seg x
-                        where x.origin_iata = e2.destination_iata
-                          and x.destination_iata = v_d)
-    ),
-    blocked as (
-        select from_airline_uid, to_airline_uid
-          from public.interline_agreements where not is_allowed
-    ),
+    -- ---- how deep to go, and how much of each depth to return --------
+    --
+    -- Depth is a tier, not a ranking. Ranking every itinerary together and
+    -- cutting at a limit meant one dense depth crowded out the others: on
+    -- HAN-JFK even a limit of 400 returned no two-stop option at all, because
+    -- the one-stops are cheaper and there are hundreds of them. A traveller
+    -- who wants a two-stop routing was not being offered a worse option, they
+    -- were being told none existed.
+    --
+    -- So each depth gets its own quota, and the shallowest is always whole:
+    --
+    --   nonstop    every one, always, however many there are
+    --   one stop   a handful when nonstops exist, a full page when they do not
+    --   two stops  the same, measured against the one-stops
+    --
+    -- p_stops_exactly + p_offset is how "show more" asks for the next page of
+    -- one depth without re-fetching the others.
+    select count(*) into v_n0
+      from echo_seg
+     where origin_iata = v_o and destination_iata = v_d
+       and departure_date = p_travel_date;
 
-    i0 as (
-        select 0 as stops, array[]::text[] as via, f.price_usd as total_price,
-               f.duration_minutes as total_minutes,
-               array[f.carrier_code] as carriers, array[f.division_code] as divisions,
-               array[f.airline_uid] as uids,
-               array[f.flight_id] as fids, array[f.aircraft_id] as acids,
-               array[f.direction] as dirs, array[f.departure_date] as dates
-          from first_leg f
-         where f.destination_iata = v_d
-    ),
-    i1 as (
+    if v_only is null then
+        v_do0  := true;
+        v_do1  := v_stops >= 1;
+        v_do2  := false;                     -- decided below, once i1 is known
+        v_lim1 := case when v_n0 > 0 then public.echo_tier_limit() else v_lim end;
+        v_lim2 := v_lim;
+        v_off1 := 0;
+        v_off2 := 0;
+    else
+        v_do0  := v_only = 0;
+        v_do1  := v_only = 1 and v_stops >= 1;
+        v_do2  := v_only = 2 and v_stops >= 2;
+        v_lim1 := v_lim;
+        v_lim2 := v_lim;
+        v_off1 := v_off;
+        v_off2 := v_off;
+    end if;
+
+    set local client_min_messages = warning;
+    drop table if exists echo_opt;
+    create temporary table echo_opt (
+        stops integer, via text[], total_price integer, total_minutes integer,
+        carriers text[], divisions text[], uids uuid[],
+        fids uuid[], acids uuid[], dirs text[], dates date[]
+    ) on commit drop;
+
+    -- ---- nonstop: never cut ------------------------------------------
+    if v_do0 then
+        insert into echo_opt
+        select 0, array[]::text[], f.price_usd, f.duration_minutes,
+               array[f.carrier_code], array[f.division_code], array[f.airline_uid],
+               array[f.flight_id], array[f.aircraft_id], array[f.direction],
+               array[f.departure_date]
+          from echo_seg f
+         where f.origin_iata = v_o and f.destination_iata = v_d
+           and f.departure_date = p_travel_date
+         order by f.price_usd, f.duration_minutes
+        offset case when v_only = 0 then v_off else 0 end;
+    end if;
+
+    -- ---- one stop -----------------------------------------------------
+    if v_do1 then
+        insert into echo_opt
+        with first_leg as (
+            select * from echo_seg
+             where origin_iata = v_o and departure_date = p_travel_date
+        ),
+        -- Already at most echo_max_vias() airports: echo_seg only holds legs
+        -- for the via set the graph pass chose, so there is nothing left to
+        -- cap here.
+        via1 as (
+            select distinct e.destination_iata as a
+              from echo_seg e
+             where e.origin_iata = v_o and e.destination_iata <> v_d
+               and exists (select 1 from echo_seg x
+                            where x.origin_iata = e.destination_iata
+                              and x.destination_iata = v_d)
+        )
         select 1, array[v.a], l1.price_usd + l2.price_usd,
                l2.arr_min - l1.dep_min,
                array[l1.carrier_code, l2.carrier_code],
@@ -385,14 +450,59 @@ begin
                array[l1.departure_date, l2.departure_date]
           from via1 v
           join first_leg l1 on l1.destination_iata = v.a
-          join sellable  l2 on l2.origin_iata = v.a and l2.destination_iata = v_d
+          join echo_seg  l2 on l2.origin_iata = v.a and l2.destination_iata = v_d
          where l2.dep_min - l1.arr_min between v_minc and v_maxc
-           and not exists (select 1 from blocked b
-                            where b.from_airline_uid = l1.airline_uid
+           and not exists (select 1 from public.interline_agreements b
+                            where not b.is_allowed
+                              and b.from_airline_uid = l1.airline_uid
                               and b.to_airline_uid   = l2.airline_uid)
-    ),
-    i2 as (
-        select 2, array[v.a, v.b], l1.price_usd + l2.price_usd + l3.price_usd,
+         order by l1.price_usd + l2.price_usd, l2.arr_min - l1.dep_min
+        offset v_off1 limit v_lim1;
+    end if;
+
+    -- Two stops are only worth building when there is nothing shallower to
+    -- offer -- or when the traveller has asked for them by name. Building
+    -- them costs more than everything else here put together, and on the
+    -- densest pairs the unbounded join exhausted the server's temp space
+    -- outright, so it is not work to do speculatively.
+    if v_only is null and v_stops >= 2
+       and not exists (select 1 from echo_opt where stops = 1) then
+        v_do2 := true;
+    end if;
+
+    -- ---- two stops ----------------------------------------------------
+    if v_do2 then
+        insert into echo_opt
+        with first_thin as (
+            -- The cheapest departure in each hour, per destination. A pair
+            -- with 400 legs a day has at most 24 that can matter to a routing
+            -- chosen on price, and keeping one per hour keeps the SPREAD of
+            -- departure times that decides whether a connection is legal at
+            -- all. Without this the three-way join spilled tens of gigabytes
+            -- to disk and failed on LHR-JFK; with it the same search finishes.
+            select distinct on (destination_iata, dep_min / 60) *
+              from echo_seg
+             where origin_iata = v_o and departure_date = p_travel_date
+             order by destination_iata, dep_min / 60, price_usd
+        ),
+        thin as (
+            select distinct on (origin_iata, destination_iata, dep_min / 60) *
+              from echo_seg
+             order by origin_iata, destination_iata, dep_min / 60, price_usd
+        ),
+        via2 as (
+            select distinct e1.destination_iata as a, e2.destination_iata as b
+              from echo_seg e1
+              join echo_seg e2 on e2.origin_iata = e1.destination_iata
+             where e1.origin_iata = v_o
+               and e1.destination_iata not in (v_o, v_d)
+               and e2.destination_iata not in (v_o, v_d)
+               and exists (select 1 from echo_seg x
+                            where x.origin_iata = e2.destination_iata
+                              and x.destination_iata = v_d)
+        )
+        select 2, array[v.a, v.b],
+               l1.price_usd + l2.price_usd + l3.price_usd,
                l3.arr_min - l1.dep_min,
                array[l1.carrier_code, l2.carrier_code, l3.carrier_code],
                array[l1.division_code, l2.division_code, l3.division_code],
@@ -402,47 +512,30 @@ begin
                array[l1.direction, l2.direction, l3.direction],
                array[l1.departure_date, l2.departure_date, l3.departure_date]
           from via2 v
-          join first_leg l1 on l1.destination_iata = v.a
-          join sellable  l2 on l2.origin_iata = v.a and l2.destination_iata = v.b
-          join sellable  l3 on l3.origin_iata = v.b and l3.destination_iata = v_d
+          join first_thin l1 on l1.destination_iata = v.a
+          join thin       l2 on l2.origin_iata = v.a and l2.destination_iata = v.b
+          join thin       l3 on l3.origin_iata = v.b and l3.destination_iata = v_d
          where l2.dep_min - l1.arr_min between v_minc and v_maxc
            and l3.dep_min - l2.arr_min between v_minc and v_maxc
-           and not exists (select 1 from blocked b
-                            where b.from_airline_uid = l1.airline_uid
+           and not exists (select 1 from public.interline_agreements b
+                            where not b.is_allowed
+                              and b.from_airline_uid = l1.airline_uid
                               and b.to_airline_uid   = l2.airline_uid)
-           and not exists (select 1 from blocked b
-                            where b.from_airline_uid = l2.airline_uid
+           and not exists (select 1 from public.interline_agreements b
+                            where not b.is_allowed
+                              and b.from_airline_uid = l2.airline_uid
                               and b.to_airline_uid   = l3.airline_uid)
-    ),
-    all_options as (
-        select * from i0
-        union all select * from i1
-        union all select * from i2
-    ),
-    -- Cut to the result page BEFORE any JSON is built.
-    --
-    -- Nonstops are ranked SEPARATELY from connections and are never cut, which
-    -- is the difference between a search and a shortlist. One row_number over
-    -- everything meant p_limit was a cap on the whole answer, and on a dense
-    -- pair the whole answer is much larger than anyone guesses: SGN-SIN has
-    -- 257 nonstop departures on a single date from 66 carriers, so a limit of
-    -- 60 returned the 60 cheapest and silently dropped three quarters of the
-    -- route. A carrier priced above the cheapest sixty simply did not appear
-    -- on its own route, which is how this was found.
-    --
-    -- The limit still binds connections, where it belongs: those are built by
-    -- joining legs and grow combinatorially, and nobody wants the 400th
-    -- two-stop option. Nonstops cannot explode -- the densest pair in the
-    -- network is LHR-JFK at 539 a day, well inside the row cap PostgREST
-    -- applies to any result.
-    best as (
-        select o.*,
-               row_number() over (partition by (o.stops = 0)
-                                  order by o.total_price, o.total_minutes) as rn
-          from all_options o
-    )
-    select b.stops, b.via, b.total_price, b.total_minutes, b.carriers, b.divisions,
-           (select count(distinct x) from unnest(b.uids) x) > 1,
+         order by l1.price_usd + l2.price_usd + l3.price_usd,
+                  l3.arr_min - l1.dep_min
+        offset v_off2 limit v_lim2;
+    end if;
+
+    -- ---- the answer ---------------------------------------------------
+    -- Shallowest first, cheapest within a depth. The page re-sorts, but the
+    -- order it arrives in is the order the algorithm believes in.
+    return query
+    select o.stops, o.via, o.total_price, o.total_minutes, o.carriers, o.divisions,
+           (select count(distinct x) from unnest(o.uids) x) > 1,
            (select jsonb_agg(jsonb_build_object(
                        'flight_id',        l.flight_id,
                        'aircraft_id',      l.aircraft_id,
@@ -475,7 +568,7 @@ begin
                                       when 'BUSINESS'        then l.business_price
                                       when 'FIRST'           then l.first_price end)
                      order by k.ord)
-              from unnest(b.fids, b.acids, b.dirs, b.dates)
+              from unnest(o.fids, o.acids, o.dirs, o.dates)
                    with ordinality as k(fid, acid, dir, dt, ord)
               join public.mv_leg_departures l
                 on l.flight_id = k.fid and l.aircraft_id = k.acid
@@ -483,13 +576,12 @@ begin
               join public.airlines al on al.uid = l.airline_uid
               join public.aircraft ac on ac.aircraft_id = l.aircraft_id
               join public.flights  f  on f.flight_id = l.flight_id)
-      from best b
-     where b.stops = 0 or b.rn <= v_lim
-     order by b.total_price, b.total_minutes;
+      from echo_opt o
+     order by o.stops, o.total_price, o.total_minutes;
 end;
 $$;
 
-comment on function public.search_itineraries(text, text, date, text, integer, integer, integer) is
-    'Nonstop through three-stop itineraries across every carrier in the alliance, cheapest first. Connecting points are the highest-traffic echo_max_vias() candidates, so results beyond nonstop are a strong heuristic rather than an exhaustive enumeration.';
+comment on function public.search_itineraries(text, text, date, text, integer, integer, integer, integer, integer) is
+    'Nonstop through two-stop itineraries across every carrier in the alliance. Depth is a tier, not a ranking: every nonstop is returned, and each connecting depth has its own quota so a dense depth cannot crowd out a sparser one. p_stops_exactly with p_offset pages one depth at a time, which is how "show more" asks for the next set without refetching the rest.';
 
 commit;

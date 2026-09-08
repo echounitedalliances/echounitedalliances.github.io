@@ -43,8 +43,40 @@ export type JourneyQuery = {
  */
 export const MAX_LEGS = 7
 
-/** How many CONNECTING itineraries a leg returns. Nonstops are unlimited. */
+/** How many CONNECTING itineraries one "show more" fetches. */
 export const CONNECTION_LIMIT = 60
+
+/**
+ * Fetch a single stop-depth of one leg, skipping what is already on screen.
+ *
+ * This is what "show more" runs. The first search returns every nonstop plus a
+ * handful of each connecting depth; asking for more of one depth is a fresh
+ * query for that depth alone, so the rest of the page is not refetched and the
+ * expensive two-stop join is only ever run because somebody asked for it.
+ *
+ * Fewer rows back than asked for means that depth is exhausted.
+ */
+export async function searchDepth(
+  q: JourneyQuery,
+  leg: LegQuery,
+  depth: number,
+  offset: number,
+  limit = CONNECTION_LIMIT,
+): Promise<Itinerary[]> {
+  const { data, error } = await supabase.rpc('search_itineraries', {
+    p_origin: leg.from,
+    p_destination: leg.to,
+    p_travel_date: leg.date,
+    p_cabin: q.cabin,
+    p_seats: q.pax,
+    p_max_stops: q.stops,
+    p_limit: limit,
+    p_stops_exactly: depth,
+    p_offset: offset,
+  })
+  if (error) throw new Error(error.message)
+  return (data as Itinerary[]) ?? []
+}
 
 const isCode = (s: string) => /^[A-Z]{3}$/.test(s)
 const isDate = (s: string) => /^\d{4}-\d{2}-\d{2}$/.test(s)

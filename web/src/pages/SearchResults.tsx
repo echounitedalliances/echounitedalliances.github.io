@@ -9,6 +9,8 @@ import type { Itinerary } from '../lib/types'
 import { duration, num, shortDate, usd } from '../lib/format'
 import { itineraryArrival, itineraryDeparture } from '../lib/trips'
 import {
+  CONNECTION_LIMIT,
+  searchDepth,
   decodeJourney,
   encodeJourney,
   journeyIsValid,
@@ -27,6 +29,29 @@ import {
  * once, because 539 cards laid out on arrival is a page nobody can scroll.
  */
 const PAGE = 60
+
+/**
+ * Depth is a tier, and each tier is its own list with its own "show more".
+ *
+ * Sorting everything together buried the point: on a route with 250 nonstops
+ * the connecting options were either invisible or, if a sort brought them up,
+ * mixed in with no way to tell how many of each kind existed. Nonstop first,
+ * always, then each connecting depth under its own heading.
+ */
+/**
+ * How many of a connecting depth to show before "show more".
+ *
+ * Matches echo_tier_limit() in 07_connections.sql. If the two drift the page
+ * still works -- it just offers a "show more" that returns nothing new, or
+ * hides rows it already has.
+ */
+const TIER_TEASER = 10
+
+const TIERS = [
+  { depth: 0, label: 'Nonstop', adjective: 'nonstop' },
+  { depth: 1, label: 'One stop', adjective: 'one-stop' },
+  { depth: 2, label: 'Two stops', adjective: 'two-stop' },
+]
 
 type Sort = 'price' | 'duration' | 'stops' | 'departure' | 'arrival'
 
@@ -97,8 +122,11 @@ export default function SearchResults() {
   const [sort, setSort] = useState<Sort>('price')
   const [interlineOnly, setInterlineOnly] = useState(false)
   const carrierCount = useCarrierCount()
-  /** How many cards each leg is currently painting. */
+  /** How many NONSTOP cards each leg is painting; connections page from the server. */
   const [reveal, setReveal] = useState<number[]>([])
+  /** "leg:depth" while a show-more is in flight, and once a depth is spent. */
+  const [loadingMore, setLoadingMore] = useState<Record<string, boolean>>({})
+  const [spent, setSpent] = useState<Record<string, boolean>>({})
 
   useEffect(() => {
     if (!isConfigured || !journeyIsValid(q)) return
@@ -107,6 +135,8 @@ export default function SearchResults() {
     setErrors([])
     setPicks(q.legs.map(() => null))
     setReveal(q.legs.map(() => PAGE))
+    setLoadingMore({})
+    setSpent({})
     void (async () => {
       const { results: r, errors: e } = await searchJourney(q, signal)
       if (signal.aborted) return
@@ -144,6 +174,65 @@ export default function SearchResults() {
   useEffect(() => {
     setReveal((r) => r.map(() => PAGE))
   }, [sort, interlineOnly])
+
+  const appendTo = (legIndex: number, rows: Itinerary[]) => {
+    if (rows.length === 0) return
+    setResults((prev) => {
+      if (!prev) return prev
+      return prev.map((cur, n) => (n === legIndex ? [...(cur ?? []), ...rows] : cur))
+    })
+  }
+
+  /**
+   * The two-stop tier, fetched after the first results are on screen.
+   *
+   * The initial search deliberately does not build two-stop routings when
+   * there is anything shallower to offer: it is far and away the most
+   * expensive thing this search can do, and on the densest pairs the
+   * unbounded version used to exhaust the database's temp space outright.
+   * Asking for a few separately, once the page has already painted, keeps
+   * that cost off the critical path.
+   */
+  useEffect(() => {
+    if (!results || q.stops < 2) return
+    let dead = false
+    void (async () => {
+      for (let n = 0; n < q.legs.length; n++) {
+        const rows = results[n]
+        if (!rows || rows.some((x) => x.stops === 2)) continue
+        try {
+          const more = await searchDepth(q, q.legs[n], 2, 0, TIER_TEASER)
+          if (dead) return
+          appendTo(n, more)
+          if (more.length < TIER_TEASER) setSpent((e) => ({ ...e, [`${n}:2`]: true }))
+        } catch {
+          // A depth that will not load is not worth an error on a page that
+          // already has flights on it.
+          if (!dead) setSpent((e) => ({ ...e, [`${n}:2`]: true }))
+        }
+      }
+    })()
+    return () => {
+      dead = true
+    }
+    // Once per set of results, not on every append.
+  }, [results === null, key]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const loadMore = async (legIndex: number, depth: number) => {
+    const tag = `${legIndex}:${depth}`
+    if (loadingMore[tag]) return
+    setLoadingMore((m) => ({ ...m, [tag]: true }))
+    const have = (results?.[legIndex] ?? []).filter((x) => x.stops === depth).length
+    try {
+      const rows = await searchDepth(q, q.legs[legIndex], depth, have)
+      appendTo(legIndex, rows)
+      if (rows.length < CONNECTION_LIMIT) setSpent((e) => ({ ...e, [tag]: true }))
+    } catch {
+      setSpent((e) => ({ ...e, [tag]: true }))
+    } finally {
+      setLoadingMore((m) => ({ ...m, [tag]: false }))
+    }
+  }
 
   const single = q.legs.length === 1
   const total = journeyTotal(picks)
@@ -284,8 +373,30 @@ export default function SearchResults() {
               </div>
             )}
 
-            <div className="mt-3 flex flex-col gap-3">
-              {rows?.slice(0, reveal[i] ?? PAGE).map((it, n) => {
+            {rows && TIERS.filter((t) => t.depth <= q.stops).map((tier) => {
+              const tierRows = rows.filter((x) => x.stops === tier.depth)
+              // A depth with nothing in it and nothing left to ask for is not
+              // an empty section worth drawing.
+              if (tierRows.length === 0 && (tier.depth === 0 || spent[`${i}:${tier.depth}`])) {
+                return null
+              }
+              // Nonstops are all here already and page in the browser;
+              // connections page from the server.
+              const shownN = tier.depth === 0 ? (reveal[i] ?? PAGE) : tierRows.length
+              const tag = `${i}:${tier.depth}`
+              return (
+              <div key={tier.depth} className="mt-6">
+                <div className="flex items-baseline gap-3">
+                  <p className="eyebrow text-cyan">{tier.label}</p>
+                  <p className="mono text-[11px] text-ink-faint">
+                    {tierRows.length === 0
+                      ? 'none found yet'
+                      : `${num(tierRows.length)}${tier.depth > 0 && !spent[tag] ? '+' : ''}`}
+                  </p>
+                </div>
+
+                <div className="mt-3 flex flex-col gap-3">
+              {tierRows.slice(0, shownN).map((it, n) => {
                 const chosen = picked === it
                 return (
                   <article
@@ -347,19 +458,35 @@ export default function SearchResults() {
                   </article>
                 )
               })}
-            </div>
+                </div>
 
-            {rows && rows.length > (reveal[i] ?? PAGE) && (
-              <button
-                type="button"
-                onClick={() =>
-                  setReveal((r) => r.map((v, n) => (n === i ? rows.length : v)))
-                }
-                className="mono mt-3 w-full border border-edge py-3 text-[11px] uppercase tracking-[0.14em] text-ink-dim transition-colors hover:border-accent hover:text-ink"
-              >
-                Show the other {num(rows.length - (reveal[i] ?? PAGE))} · {num(rows.length)} in all
-              </button>
-            )}
+                {tier.depth === 0 && tierRows.length > shownN && (
+                  <button
+                    type="button"
+                    onClick={() => setReveal((r) => r.map((v, n) => (n === i ? tierRows.length : v)))}
+                    className="mono mt-3 w-full border border-edge py-3 text-[11px] uppercase tracking-[0.14em] text-ink-dim transition-colors hover:border-accent hover:text-ink"
+                  >
+                    Show the other {num(tierRows.length - shownN)} nonstop · {num(tierRows.length)} in all
+                  </button>
+                )}
+
+                {tier.depth > 0 && !spent[tag] && (
+                  <button
+                    type="button"
+                    disabled={loadingMore[tag]}
+                    onClick={() => void loadMore(i, tier.depth)}
+                    className="mono mt-3 w-full border border-edge py-3 text-[11px] uppercase tracking-[0.14em] text-ink-dim transition-colors hover:border-accent hover:text-ink disabled:opacity-50"
+                  >
+                    {loadingMore[tag]
+                      ? 'Searching…'
+                      : tierRows.length === 0
+                        ? `Look for ${tier.adjective} routings`
+                        : `Show more ${tier.adjective} flights`}
+                  </button>
+                )}
+              </div>
+              )
+            })}
 
             <FareCalendar
               from={leg.from}
