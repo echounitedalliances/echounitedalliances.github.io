@@ -1,11 +1,20 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import FareCalendar from '../components/FareCalendar'
 import SearchPanel from '../components/SearchPanel'
 import { Loading, NotConfigured } from '../components/ui'
-import { isConfigured, supabase } from '../lib/supabase'
+import { isConfigured } from '../lib/supabase'
 import type { Itinerary } from '../lib/types'
 import { duration, num, shortDate, usd } from '../lib/format'
 import { itineraryArrival, itineraryDeparture } from '../lib/trips'
+import {
+  decodeJourney,
+  encodeJourney,
+  journeyIsValid,
+  journeyTotal,
+  legLabel,
+  searchJourney,
+} from '../lib/journey'
 
 type Sort = 'price' | 'duration' | 'stops' | 'departure' | 'arrival'
 
@@ -54,80 +63,125 @@ function LegRow({ leg, last }: { leg: Itinerary['legs'][number]; last: boolean }
   )
 }
 
+/**
+ * Results for a journey of one leg or several.
+ *
+ * A one-way, a return and a multi-city differ only in how many legs there are,
+ * so this renders one picker per leg and books whatever has been chosen. The
+ * one-way path is unchanged from when this page only did one-ways: with a
+ * single leg, choosing a flight goes straight to the booking page. With more
+ * than one there is something still to choose, so choosing selects, and the
+ * summary at the bottom carries on once every leg is settled.
+ */
 export default function SearchResults() {
   const [params] = useSearchParams()
   const nav = useNavigate()
-  const from = (params.get('from') ?? '').toUpperCase()
-  const to = (params.get('to') ?? '').toUpperCase()
-  const date = params.get('date') ?? ''
-  const cabin = params.get('cabin') ?? 'ECONOMY'
-  const pax = Number(params.get('pax') ?? 1)
-  const stops = Number(params.get('stops') ?? 2)
+  const q = useMemo(() => decodeJourney(params), [params])
+  const key = params.toString()
 
-  const [rows, setRows] = useState<Itinerary[] | null>(null)
-  const [error, setError] = useState<string | null>(null)
+  const [results, setResults] = useState<(Itinerary[] | null)[] | null>(null)
+  const [errors, setErrors] = useState<(string | null)[]>([])
+  const [picks, setPicks] = useState<(Itinerary | null)[]>([])
   const [sort, setSort] = useState<Sort>('price')
   const [interlineOnly, setInterlineOnly] = useState(false)
 
   useEffect(() => {
-    if (!isConfigured || !from || !to || !date) return
-    let cancelled = false
-    setRows(null)
-    setError(null)
+    if (!isConfigured || !journeyIsValid(q)) return
+    const signal = { aborted: false }
+    setResults(null)
+    setErrors([])
+    setPicks(q.legs.map(() => null))
     void (async () => {
-      const { data, error } = await supabase.rpc('search_itineraries', {
-        p_origin: from,
-        p_destination: to,
-        p_travel_date: date,
-        p_cabin: cabin,
-        p_seats: pax,
-        p_max_stops: stops,
-        p_limit: 60,
-      })
-      if (cancelled) return
-      if (error) setError(error.message)
-      setRows((data as Itinerary[]) ?? [])
+      const { results: r, errors: e } = await searchJourney(q, signal)
+      if (signal.aborted) return
+      setResults(r)
+      setErrors(e)
     })()
-    return () => { cancelled = true }
-  }, [from, to, date, cabin, pax, stops])
+    return () => {
+      signal.aborted = true
+    }
+    // The URL is the query. Depending on the decoded object would re-run on
+    // every render, because decodeJourney returns a new object each time.
+  }, [key]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const shown = useMemo(() => {
-    if (!rows) return null
-    let r = rows
-    if (interlineOnly) r = r.filter((x) => x.is_interline)
-    const c = [...r]
-    // Ties break on price throughout: two flights leaving at the same minute
-    // are otherwise ordered by whatever the server happened to return.
+  const ordered = useMemo(() => {
+    if (!results) return null
     const price = (a: Itinerary, b: Itinerary) => a.total_price_usd - b.total_price_usd
-    if (sort === 'duration') c.sort((a, b) => a.total_minutes - b.total_minutes || price(a, b))
-    else if (sort === 'stops') c.sort((a, b) => a.stops - b.stops || price(a, b))
-    else if (sort === 'departure')
-      c.sort((a, b) => itineraryDeparture(a) - itineraryDeparture(b) || price(a, b))
-    else if (sort === 'arrival')
-      c.sort((a, b) => itineraryArrival(a) - itineraryArrival(b) || price(a, b))
-    else c.sort(price)
-    return c
-  }, [rows, sort, interlineOnly])
+    return results.map((rows) => {
+      if (!rows) return null
+      let r = rows
+      if (interlineOnly) r = r.filter((x) => x.is_interline)
+      const c = [...r]
+      // Ties break on price throughout: two flights leaving at the same minute
+      // are otherwise ordered by whatever the server happened to return.
+      if (sort === 'duration') c.sort((a, b) => a.total_minutes - b.total_minutes || price(a, b))
+      else if (sort === 'stops') c.sort((a, b) => a.stops - b.stops || price(a, b))
+      else if (sort === 'departure')
+        c.sort((a, b) => itineraryDeparture(a) - itineraryDeparture(b) || price(a, b))
+      else if (sort === 'arrival')
+        c.sort((a, b) => itineraryArrival(a) - itineraryArrival(b) || price(a, b))
+      else c.sort(price)
+      return c
+    })
+  }, [results, sort, interlineOnly])
 
-  const select = (it: Itinerary) => {
-    sessionStorage.setItem('echo.itinerary', JSON.stringify({ it, cabin, pax }))
+  const single = q.legs.length === 1
+  const total = journeyTotal(picks)
+
+  const hold = (chosen: (Itinerary | null)[]) => {
+    sessionStorage.setItem(
+      'echo.itinerary',
+      JSON.stringify({
+        picks: chosen,
+        legs: q.legs,
+        trip: q.trip,
+        cabin: q.cabin,
+        pax: q.pax,
+      }),
+    )
     nav('/book')
+  }
+
+  const choose = (i: number, it: Itinerary) => {
+    if (single) {
+      hold([it])
+      return
+    }
+    setPicks((p) => p.map((x, n) => (n === i ? it : x)))
+    // Move them to whatever is still undecided.
+    const next = picks.findIndex((x, n) => n !== i && x === null)
+    if (next >= 0) {
+      document.getElementById(`leg-${next}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }
+
+  /** Re-run the journey with one leg moved to another date. */
+  const moveLeg = (i: number, date: string) => {
+    const legs = q.legs.map((l, n) => (n === i ? { ...l, date } : l))
+    nav(`/search?${encodeJourney({ ...q, legs }).toString()}`)
   }
 
   if (!isConfigured) return <NotConfigured />
 
   return (
     <div className="mx-auto max-w-[1180px] px-4 py-7 sm:px-5 sm:py-10">
-      <SearchPanel compact />
+      <SearchPanel compact initial={q} />
 
       <div className="mt-8 flex flex-wrap items-baseline justify-between gap-4">
         <div>
           <h1 className="display text-3xl">
-            {from} <span className="text-ink-faint">→</span> {to}
+            {q.legs[0]?.from} <span className="text-ink-faint">→</span> {q.legs[0]?.to}
+            {q.trip === 'return' && (
+              <span className="text-ink-faint"> → {q.legs[0]?.from}</span>
+            )}
+            {q.trip === 'multi' && q.legs.length > 1 && (
+              <span className="text-ink-faint"> +{q.legs.length - 1} more</span>
+            )}
           </h1>
           <p className="mono mt-1 text-[12px] text-ink-faint">
-            {date && shortDate(date)} · {cabin.replace('_', ' ').toLowerCase()} ·{' '}
-            {pax} {pax === 1 ? 'traveller' : 'travellers'}
+            {q.legs[0]?.date && shortDate(q.legs[0].date)} ·{' '}
+            {q.cabin.replace('_', ' ').toLowerCase()} · {q.pax}{' '}
+            {q.pax === 1 ? 'traveller' : 'travellers'}
           </p>
         </div>
         <div className="mono flex flex-wrap gap-1 text-[11px] uppercase tracking-[0.1em]">
@@ -137,7 +191,9 @@ export default function SearchResults() {
               onClick={() => setSort(o.key)}
               aria-pressed={sort === o.key}
               className={`border px-2.5 py-1 transition-colors ${
-                sort === o.key ? 'border-[color:var(--color-accent)] text-ink' : 'border-edge-soft text-ink-faint hover:text-ink-dim'
+                sort === o.key
+                  ? 'border-[color:var(--color-accent)] text-ink'
+                  : 'border-edge-soft text-ink-faint hover:text-ink-dim'
               }`}
             >
               {o.label}
@@ -145,8 +201,11 @@ export default function SearchResults() {
           ))}
           <button
             onClick={() => setInterlineOnly((v) => !v)}
+            aria-pressed={interlineOnly}
             className={`border px-2.5 py-1 transition-colors ${
-              interlineOnly ? 'border-[color:var(--color-cyan)] text-cyan' : 'border-edge-soft text-ink-faint hover:text-ink-dim'
+              interlineOnly
+                ? 'border-[color:var(--color-cyan)] text-cyan'
+                : 'border-edge-soft text-ink-faint hover:text-ink-dim'
             }`}
           >
             Interline only
@@ -154,81 +213,158 @@ export default function SearchResults() {
         </div>
       </div>
 
-      {error && (
-        <div className="panel mt-6 border-l-2 border-l-[color:var(--color-warn)] p-4 text-ink-dim">
-          The search could not run: {error}
+      {!journeyIsValid(q) && (
+        <div className="panel mt-6 p-8 text-center text-ink-dim">
+          That search is missing something. Pick an origin, a destination and a date.
         </div>
       )}
 
-      {shown === null ? (
-        <Loading label="Searching 590 carriers" />
-      ) : shown.length === 0 ? (
-        <div className="panel mt-6 p-10 text-center">
-          <p className="text-lg text-ink">Nothing flies that on {shortDate(date)}.</p>
-          <p className="mt-2 text-ink-dim">
-            Try another date, allow more stops, or check the airports are ones the
-            alliance serves.
-          </p>
-          <Link to="/network" className="mono mt-5 inline-block text-cyan">
-            Explore the network →
-          </Link>
-        </div>
-      ) : (
-        <>
-          <p className="mono mt-6 text-[11px] uppercase tracking-[0.12em] text-ink-faint">
-            {num(shown.length)} itineraries
-          </p>
-          <div className="mt-3 flex flex-col gap-3">
-            {shown.map((it, i) => (
-              <article
-                key={`${it.legs.map((l) => l.flight_id).join('-')}-${i}`}
-                className="panel lift rise grid gap-5 p-5 md:grid-cols-[1fr_auto]"
-                style={{ animationDelay: `${Math.min(i, 12) * 30}ms` }}
-              >
-                <div className="min-w-0">
-                  <div className="mono mb-3 flex flex-wrap items-center gap-2 text-[10px] uppercase tracking-[0.12em]">
-                    <span className="text-ink-dim">
-                      {it.stops === 0 ? 'Nonstop' : `${it.stops} stop${it.stops > 1 ? 's' : ''}`}
-                    </span>
-                    {it.via.length > 0 && (
-                      <span className="text-ink-faint">via {it.via.join(' · ')}</span>
-                    )}
-                    {it.is_interline && (
-                      <span className="border border-[color:var(--color-cyan)] px-2 py-0.5 text-cyan">
-                        Interline
-                      </span>
-                    )}
-                    {Array.from(new Set(it.divisions)).map((d) => (
-                      <Link key={d} to={`/d/${d}`} className="text-ink-faint hover:text-ink-dim">
-                        {d}
-                      </Link>
-                    ))}
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    {it.legs.map((leg, li) => (
-                      <LegRow key={leg.flight_id + li} leg={leg} last={li === it.legs.length - 1} />
-                    ))}
-                  </div>
-                </div>
+      {journeyIsValid(q) && ordered === null && (
+        <Loading label={single ? 'Searching the alliance' : `Searching ${q.legs.length} flights`} />
+      )}
 
-                <div className="flex shrink-0 flex-row items-center justify-between gap-4 border-t border-edge-soft pt-4 md:flex-col md:items-end md:justify-center md:border-l md:border-t-0 md:pl-5 md:pt-0">
-                  <div className="md:text-right">
-                    <div className="mono text-2xl text-ink">{usd(it.total_price_usd)}</div>
-                    <div className="mono text-[11px] text-ink-faint">
-                      {pax > 1 ? `per traveller · ${duration(it.total_minutes)}` : duration(it.total_minutes)}
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => select(it)}
-                    className="btn btn-book"
+      {ordered?.map((rows, i) => {
+        const leg = q.legs[i]
+        const picked = picks[i]
+        return (
+          <section key={i} id={`leg-${i}`} className="mt-10 scroll-mt-24">
+            <div className="flex flex-wrap items-baseline justify-between gap-3 border-b border-edge-soft pb-2">
+              <h2 className="display text-xl">
+                <span className="eyebrow mr-3 text-cyan">{legLabel(q, i)}</span>
+                {leg.from} <span className="text-ink-faint">→</span> {leg.to}
+              </h2>
+              <p className="mono text-[12px] text-ink-faint">
+                {shortDate(leg.date)}
+                {rows && ` · ${num(rows.length)} itineraries`}
+              </p>
+            </div>
+
+            {errors[i] && (
+              <div className="panel mt-4 border-l-2 border-l-[color:var(--color-warn)] p-4 text-ink-dim">
+                This flight could not be searched: {errors[i]}
+              </div>
+            )}
+
+            {rows && rows.length === 0 && (
+              <div className="panel mt-4 p-8 text-center">
+                <p className="text-ink">Nothing flies that on {shortDate(leg.date)}.</p>
+                <p className="mt-2 text-ink-dim">
+                  Try another date below, allow more stops, or check the airports are
+                  ones the alliance serves.
+                </p>
+                <Link to="/network" className="mono mt-4 inline-block text-cyan">
+                  Explore the network →
+                </Link>
+              </div>
+            )}
+
+            <div className="mt-3 flex flex-col gap-3">
+              {rows?.map((it, n) => {
+                const chosen = picked === it
+                return (
+                  <article
+                    key={`${it.legs.map((l) => l.flight_id).join('-')}-${n}`}
+                    className={`panel lift rise grid gap-5 p-5 md:grid-cols-[1fr_auto] ${
+                      chosen ? 'border-[color:var(--color-accent)]' : ''
+                    }`}
+                    style={{ animationDelay: `${Math.min(n, 12) * 30}ms` }}
                   >
-                    Select
-                  </button>
+                    <div className="min-w-0">
+                      <div className="mono mb-3 flex flex-wrap items-center gap-2 text-[10px] uppercase tracking-[0.12em]">
+                        <span className="text-ink-dim">
+                          {it.stops === 0
+                            ? 'Nonstop'
+                            : `${it.stops} stop${it.stops > 1 ? 's' : ''}`}
+                        </span>
+                        {it.via.length > 0 && (
+                          <span className="text-ink-faint">via {it.via.join(' · ')}</span>
+                        )}
+                        {it.is_interline && (
+                          <span className="border border-[color:var(--color-cyan)] px-2 py-0.5 text-cyan">
+                            Interline
+                          </span>
+                        )}
+                        {Array.from(new Set(it.divisions)).map((d) => (
+                          <Link
+                            key={d}
+                            to={`/d/${d}`}
+                            className="text-ink-faint hover:text-ink-dim"
+                          >
+                            {d}
+                          </Link>
+                        ))}
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        {it.legs.map((leg2, li) => (
+                          <LegRow
+                            key={leg2.flight_id + li}
+                            leg={leg2}
+                            last={li === it.legs.length - 1}
+                          />
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex shrink-0 flex-row items-center justify-between gap-4 border-t border-edge-soft pt-4 md:flex-col md:items-end md:justify-center md:border-l md:border-t-0 md:pl-5 md:pt-0">
+                      <div className="md:text-right">
+                        <div className="mono text-2xl text-ink">{usd(it.total_price_usd)}</div>
+                        <div className="mono text-[11px] text-ink-faint">
+                          {q.pax > 1
+                            ? `per traveller · ${duration(it.total_minutes)}`
+                            : duration(it.total_minutes)}
+                        </div>
+                      </div>
+                      <button onClick={() => choose(i, it)} className="btn btn-book">
+                        {single ? 'Select' : chosen ? 'Chosen ✓' : 'Choose'}
+                      </button>
+                    </div>
+                  </article>
+                )
+              })}
+            </div>
+
+            <FareCalendar
+              from={leg.from}
+              to={leg.to}
+              date={leg.date}
+              cabin={q.cabin}
+              pax={q.pax}
+              onPick={(d) => moveLeg(i, d)}
+            />
+          </section>
+        )
+      })}
+
+      {/* The running total, once there is more than one thing to decide. */}
+      {!single && ordered && (
+        <div className="sticky bottom-0 z-30 mt-10 border-t border-edge bg-[color:var(--color-ground)] py-4">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="mono flex flex-wrap gap-x-4 gap-y-1 text-[11px] uppercase tracking-[0.12em]">
+              {q.legs.map((l, i) => (
+                <span key={i} className={picks[i] ? 'text-ink' : 'text-ink-faint'}>
+                  {legLabel(q, i)}: {picks[i] ? usd(picks[i]!.total_price_usd) : 'not chosen'}
+                </span>
+              ))}
+            </div>
+            <div className="flex items-center gap-4">
+              {total != null && (
+                <div className="text-right">
+                  <div className="mono text-2xl text-ink">{usd(total)}</div>
+                  <div className="mono text-[11px] text-ink-faint">
+                    {q.pax > 1 ? 'per traveller, all flights' : 'all flights'}
+                  </div>
                 </div>
-              </article>
-            ))}
+              )}
+              <button
+                onClick={() => hold(picks)}
+                disabled={total == null}
+                className="btn btn-book disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                Continue
+              </button>
+            </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   )

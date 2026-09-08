@@ -5,7 +5,21 @@ import { isConfigured, supabase } from '../lib/supabase'
 import type { Itinerary } from '../lib/types'
 import { duration, shortDate, usd } from '../lib/format'
 
-type Held = { it: Itinerary; cabin: string; pax: number }
+/**
+ * What the results page handed over. `picks` is one chosen itinerary per leg
+ * of the journey: one for a one-way, two for a return, up to five for a
+ * multi-city. They are booked together, under one PNR.
+ */
+type Held = {
+  picks: Itinerary[]
+  legs: { from: string; to: string; date: string }[]
+  trip: string
+  cabin: string
+  pax: number
+}
+
+/** The shape this page used to be handed, before journeys had more than one leg. */
+type LegacyHeld = { it: Itinerary; cabin: string; pax: number }
 type Passenger = { given_name: string; family_name: string; passenger_type: string }
 
 /**
@@ -28,7 +42,25 @@ export default function Book() {
   useEffect(() => {
     const raw = sessionStorage.getItem('echo.itinerary')
     if (!raw) return
-    const parsed = JSON.parse(raw) as Held
+    const stored = JSON.parse(raw) as Held | LegacyHeld
+    // Somebody mid-booking when this deployed has the old single-itinerary
+    // shape sitting in their tab. Carry it forward rather than losing it.
+    const parsed: Held =
+      'picks' in stored
+        ? stored
+        : {
+            picks: [stored.it],
+            legs: [
+              {
+                from: stored.it.legs[0].origin,
+                to: stored.it.legs[stored.it.legs.length - 1].destination,
+                date: stored.it.legs[0].departure_date,
+              },
+            ],
+            trip: 'oneway',
+            cabin: stored.cabin,
+            pax: stored.pax,
+          }
     setHeld(parsed)
     setPax(
       Array.from({ length: parsed.pax }, () => ({
@@ -51,8 +83,11 @@ export default function Book() {
     )
   }
 
-  const { it, cabin } = held
-  const total = it.total_price_usd * pax.length
+  const { picks, cabin } = held
+  /** Every flight of every leg, in the order they will be flown. */
+  const allLegs = picks.flatMap((p) => p.legs)
+  const perTraveller = picks.reduce((sum, p) => sum + p.total_price_usd, 0)
+  const total = perTraveller * pax.length
   const complete =
     /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) &&
     pax.every((p) => p.given_name.trim() && p.family_name.trim())
@@ -72,7 +107,10 @@ export default function Book() {
           family_name: p.family_name.trim(),
           passenger_type: p.passenger_type,
         })),
-        p_segments: it.legs.map((leg) => ({
+        // One PNR for the whole journey: create_booking already takes a
+        // segment list, so a return or a multi-city is the same call with
+        // more of them.
+        p_segments: allLegs.map((leg) => ({
           flight_id: leg.flight_id,
           aircraft_id: leg.aircraft_id,
           direction: leg.direction,
@@ -232,27 +270,51 @@ export default function Book() {
             Your itinerary
           </div>
           <div className="mono mt-1 text-lg text-ink">
-            {it.legs[0].origin} → {it.legs[it.legs.length - 1].destination}
+            {allLegs[0].origin} → {allLegs[allLegs.length - 1].destination}
           </div>
           <div className="mono mt-0.5 text-[12px] text-ink-faint">
-            {shortDate(it.legs[0].departure_date)} ·{' '}
-            {it.stops === 0 ? 'Nonstop' : `${it.stops} stop${it.stops > 1 ? 's' : ''}`} ·{' '}
-            {duration(it.total_minutes)}
+            {shortDate(allLegs[0].departure_date)}
+            {picks.length > 1 && ` · ${picks.length} flights`}
           </div>
 
-          <div className="mt-5 flex flex-col gap-3">
-            {it.legs.map((leg, i) => (
-              <div key={leg.flight_id + i} className="border-t border-edge-soft pt-3 first:border-0 first:pt-0">
-                <div className="mono flex justify-between text-[11px] text-ink-faint">
-                  <span>{leg.designator}</span>
-                  <span>{leg.division}</span>
-                </div>
-                <div className="mono mt-1 text-sm text-ink">
-                  {leg.departure_time} {leg.origin} → {leg.arrival_time} {leg.destination}
-                </div>
-                {leg.aircraft_model && (
-                  <div className="text-[11px] text-ink-faint">{leg.aircraft_model}</div>
+          <div className="mt-5 flex flex-col gap-4">
+            {picks.map((p, pi) => (
+              <div key={pi}>
+                {picks.length > 1 && (
+                  <div className="mono mb-2 text-[10px] uppercase tracking-[0.14em] text-cyan">
+                    {held.trip === 'return'
+                      ? pi === 0
+                        ? 'Outbound'
+                        : 'Return'
+                      : `Flight ${pi + 1}`}
+                    <span className="ml-2 text-ink-faint">
+                      {p.stops === 0 ? 'Nonstop' : `${p.stops} stop${p.stops > 1 ? 's' : ''}`} ·{' '}
+                      {duration(p.total_minutes)}
+                    </span>
+                  </div>
                 )}
+                <div className="flex flex-col gap-3">
+                  {p.legs.map((leg, i) => (
+                    <div
+                      key={leg.flight_id + i}
+                      className="border-t border-edge-soft pt-3 first:border-0 first:pt-0"
+                    >
+                      <div className="mono flex justify-between text-[11px] text-ink-faint">
+                        <span>{leg.designator}</span>
+                        <span>{leg.division}</span>
+                      </div>
+                      <div className="mono mt-1 text-sm text-ink">
+                        {leg.departure_time} {leg.origin} → {leg.arrival_time} {leg.destination}
+                      </div>
+                      {leg.airline_name && (
+                        <div className="text-[11px] text-ink-dim">{leg.airline_name}</div>
+                      )}
+                      {leg.aircraft_model && (
+                        <div className="text-[11px] text-ink-faint">{leg.aircraft_model}</div>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
@@ -260,7 +322,7 @@ export default function Book() {
           <div className="mt-5 border-t border-edge pt-4">
             <div className="flex justify-between text-sm text-ink-dim">
               <span>{cabin.replace('_', ' ').toLowerCase()} × {pax.length}</span>
-              <span className="mono">{usd(it.total_price_usd)} each</span>
+              <span className="mono">{usd(perTraveller)} each</span>
             </div>
             <div className="mt-2 flex items-baseline justify-between">
               <span className="text-ink">Total</span>

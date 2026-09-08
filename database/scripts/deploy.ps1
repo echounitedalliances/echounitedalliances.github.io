@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Deploy the Echo United Alliances database to Supabase with psql.
 
@@ -90,7 +90,8 @@ $files += @('04_views.sql', '05_reservations.sql', '06_inventory.sql',
             '18_place_search.sql', '19_division_colours.sql',
             '20_division_network.sql', '21_timetable_pair.sql',
             '22_airline_countries.sql', '23_livery_accents.sql',
-            '24_member_sites.sql')
+            '24_member_sites.sql',
+            '25_journeys.sql')
 
 # 09_site_api indexes the directory and typeahead with trigram GIN indexes.
 Write-Host ""
@@ -143,3 +144,4 @@ order by t;
 Write-Host ""
 Write-Host "Deployed." -ForegroundColor Green
 Write-Host "Try it:  select * from public.search_itineraries('SGN','LIM',current_date+7,'ECONOMY',1,1,10);"
+

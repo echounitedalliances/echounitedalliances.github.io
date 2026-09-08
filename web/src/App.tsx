@@ -19,6 +19,7 @@ import { num } from './lib/format'
 import Resonance from './pages/Resonance'
 import { Conduct, Privacy } from './pages/Policy'
 import News from './pages/News'
+import RoundTheWorld from './pages/RoundTheWorld'
 import { AuthProvider, useAuth } from './lib/auth'
 import AdvisoryBar from './components/AdvisoryBar'
 import MobileMenu from './components/MobileMenu'
@@ -266,6 +267,7 @@ export default function App() {
           <Route path="/trips" element={<Trips />} />
           <Route path="/resonance" element={<Resonance />} />
           <Route path="/news" element={<News />} />
+          <Route path="/rtw" element={<RoundTheWorld />} />
           <Route path="/conduct" element={<Conduct />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route
