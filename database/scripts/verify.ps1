@@ -61,7 +61,8 @@ $relations = @(
     @{ name = 'mv_division_arcs';        min = 1000   },
     @{ name = 'v_airline_profile';       min = 500    },
     @{ name = 'v_division_summary';      min = 8      },
-    @{ name = 'v_route_pairs';           min = 1000   }
+    @{ name = 'v_route_pairs';           min = 1000   },
+    @{ name = 'v_airline_directory_live'; min = 500  }   # admin name/blurb overrides
 )
 
 # One representative call per RPC the site makes, and the least it may return.

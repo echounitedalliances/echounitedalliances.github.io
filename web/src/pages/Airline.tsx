@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import AdminAirlineEdit from '../components/AdminAirlineEdit'
 import MemberSite from '../components/MemberSite'
 import RouteMap from '../components/RouteMap'
 import { Loading, Mark, NotConfigured } from '../components/ui'
@@ -290,6 +291,8 @@ export default function AirlinePage() {
                       Division leader
                     </span>
                   )}
+                  {/* Renders nothing unless the signed-in account is an admin. */}
+                  <AdminAirlineEdit airline={a} onSaved={setA} />
                 </div>
               </div>
             </div>

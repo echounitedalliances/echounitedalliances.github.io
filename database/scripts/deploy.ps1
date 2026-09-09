@@ -91,7 +91,7 @@ $files += @('04_views.sql', '05_reservations.sql', '06_inventory.sql',
             '20_division_network.sql', '21_timetable_pair.sql',
             '22_airline_countries.sql', '23_livery_accents.sql',
             '24_member_sites.sql',
-            '25_journeys.sql')
+            '25_journeys.sql', '26_airline_overrides.sql')
 
 # 09_site_api indexes the directory and typeahead with trigram GIN indexes.
 Write-Host ""
@@ -152,4 +152,5 @@ if ($LASTEXITCODE -ne 0) { throw "deploy finished but verification failed -- see
 Write-Host ""
 Write-Host "Deployed." -ForegroundColor Green
 Write-Host "Try it:  select * from public.search_itineraries('SGN','LIM',current_date+7,'ECONOMY',1,1,10);"
+
 
