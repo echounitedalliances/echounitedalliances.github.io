@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
  * sites like this one. If the widget is ever turned off, this just quietly
  * returns null and the count stops rendering.
  */
-const WIDGET_URL = 'https://discord.com/api/guilds/1535904782622138409/widget.json'
+const WIDGET_URL = 'https://discord.com/api/guilds/1485632790035955722/widget.json'
 
 async function fetchOnlineCount(): Promise<number | null> {
   try {
