@@ -4,6 +4,7 @@ import AdminAirlineEdit from '../components/AdminAirlineEdit'
 import MemberSite from '../components/MemberSite'
 import RouteMap from '../components/RouteMap'
 import { Loading, Mark, NotConfigured } from '../components/ui'
+import Pager, { usePaged } from '../components/Pager'
 import { isConfigured, supabase } from '../lib/supabase'
 import type {
   Airline,
@@ -48,6 +49,14 @@ export default function AirlinePage() {
   /** Which route the timetable is pinned to, if any. */
   const [ttRoute, setTtRoute] = useState<{ a: string; b: string } | null>(null)
   const timetableRef = useRef<HTMLElement>(null)
+
+  // Up here with the other hooks on purpose. This component returns early
+  // twice below -- not configured, and still loading -- so a hook called
+  // further down runs on some renders and not others, which is exactly the
+  // "rendered more hooks than during the previous render" crash.
+  const fleetPage = usePaged(fleet)
+  const routePage = usePaged(routes)
+  const timetablePage = usePaged(timetable ?? [])
 
   useEffect(() => {
     if (!isConfigured) return
@@ -492,7 +501,7 @@ export default function AirlinePage() {
                 </tr>
               </thead>
               <tbody>
-                {fleet.map((f) => (
+                {fleetPage.slice.map((f) => (
                   <tr key={f.aircraft_model} className="border-t border-edge-soft">
                     <td className="px-4 py-2 text-ink">{f.aircraft_model}</td>
                     <td className="mono px-4 py-2 text-right text-ink-dim">{f.aircraft_count}</td>
@@ -504,6 +513,7 @@ export default function AirlinePage() {
               </tbody>
             </table>
           </div>
+          <Pager paged={fleetPage} label="types" />
         </div>
 
         <div>
@@ -520,7 +530,7 @@ export default function AirlinePage() {
                 </tr>
               </thead>
               <tbody>
-                {routes.slice(0, 60).map((r) => {
+                {routePage.slice.map((r) => {
                   // Both ways is the normal case, and the arrow says so. A pair
                   // flown one way only is drawn in the direction it is flown.
                   const oneWay = r.directions === 1
@@ -547,6 +557,7 @@ export default function AirlinePage() {
               </tbody>
             </table>
           </div>
+          <Pager paged={routePage} label="routes" />
         </div>
       </section>
 
@@ -619,7 +630,7 @@ export default function AirlinePage() {
                 </tr>
               </thead>
               <tbody>
-                {shown.slice(0, 300).map((t, i) => (
+                {timetablePage.slice.map((t, i) => (
                   <tr key={t.flight_designator + i} className="border-t border-edge-soft">
                     <td className="mono px-3 py-2 text-cyan">{t.flight_designator}</td>
                     <td className="mono px-3 py-2 text-ink">
@@ -659,6 +670,7 @@ export default function AirlinePage() {
                 ))}
               </tbody>
             </table>
+            <Pager paged={timetablePage} label="flights" />
           </div>
         )}
       </section>

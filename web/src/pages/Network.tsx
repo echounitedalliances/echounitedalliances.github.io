@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import RouteMap from '../components/RouteMap'
 import { Loading, NotConfigured } from '../components/ui'
+import Pager, { usePaged } from '../components/Pager'
 import { isConfigured, supabase } from '../lib/supabase'
 import type { AirportRoute, AirportRow, Arc, Division, NetworkNode } from '../lib/types'
 import { accentOf, num } from '../lib/format'
@@ -12,6 +13,7 @@ export default function NetworkPage() {
   const [nodes, setNodes] = useState<NetworkNode[]>([])
   const [divisions, setDivisions] = useState<Division[]>([])
   const [busiest, setBusiest] = useState<AirportRow[]>([])
+  const busiestPage = usePaged(busiest)
   const [focus, setFocus] = useState<string | null>(null)
   const [ready, setReady] = useState(false)
   // When an airport is picked the map zooms to it and shows only what it
@@ -167,7 +169,7 @@ export default function NetworkPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {busiest.map((a) => (
+                  {busiestPage.slice.map((a) => (
                     <tr key={a.iata_code} className="border-t border-edge-soft">
                       <td className="mono px-3 py-2">
                         <Link to={`/airports/${a.iata_code}`} className="text-cyan">
@@ -184,6 +186,7 @@ export default function NetworkPage() {
                 </tbody>
               </table>
             </div>
+            <Pager paged={busiestPage} label="airports" />
           </div>
         </div>
       )}

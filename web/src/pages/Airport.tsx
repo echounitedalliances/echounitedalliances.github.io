@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Loading, NotConfigured } from '../components/ui'
+import Pager, { usePaged } from '../components/Pager'
 import { isConfigured, supabase } from '../lib/supabase'
 import type { AirportRow } from '../lib/types'
 import { flag, num } from '../lib/format'
@@ -22,6 +23,9 @@ export default function AirportPage() {
   const { iata = '' } = useParams()
   const [airport, setAirport] = useState<AirportRow | null>(null)
   const [carriers, setCarriers] = useState<Carrier[] | null>(null)
+  // Above the early return below: a hook after it runs on some renders
+  // and not others, which crashes the page.
+  const carrierPage = usePaged(carriers ?? [])
 
   useEffect(() => {
     if (!isConfigured) return
@@ -125,7 +129,7 @@ export default function AirportPage() {
                 </tr>
               </thead>
               <tbody>
-                {carriers.map((c) => (
+                {carrierPage.slice.map((c) => (
                   <tr key={c.uid} className="border-t border-edge-soft">
                     <td className="px-4 py-2.5">
                       <Link
@@ -151,6 +155,7 @@ export default function AirportPage() {
                 ))}
               </tbody>
             </table>
+            <Pager paged={carrierPage} label="carriers" />
           </div>
         )}
       </section>
