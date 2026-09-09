@@ -22,6 +22,8 @@ import News from './pages/News'
 import RoundTheWorld from './pages/RoundTheWorld'
 import { AuthProvider, useAuth } from './lib/auth'
 import AdvisoryBar from './components/AdvisoryBar'
+import NavGroup from './components/NavGroup'
+import { NAV } from './lib/nav'
 import MobileMenu from './components/MobileMenu'
 import EchoMark from './components/EchoMark'
 import Welcome from './components/Welcome'
@@ -32,15 +34,6 @@ import Welcome from './components/Welcome'
  * refresh. The hash keeps every route client-side.
  */
 
-const links = [
-  { to: '/about', label: 'About' },
-  { to: '/divisions', label: 'Divisions' },
-  { to: '/airlines', label: 'Airlines' },
-  { to: '/network', label: 'Network' },
-  { to: '/news', label: 'News' },
-  { to: '/activities', label: 'Activities' },
-  { to: '/trips', label: 'My trips' },
-]
 
 /** The live count from Discord's public widget. Renders nothing until it loads. */
 function OnlineBadge() {
@@ -148,19 +141,23 @@ function Shell({ children }: { children: React.ReactNode }) {
             </span>
           </Link>
           <nav className="ml-auto hidden items-center gap-1 lg:flex">
-            {links.map((l) => (
-              <NavLink
-                key={l.to}
-                to={l.to}
-                className={({ isActive }) =>
-                  `mono px-2.5 py-1.5 text-[11px] uppercase tracking-[0.12em] transition-colors ${
-                    isActive ? 'text-cyan' : 'text-ink-faint hover:text-ink-dim'
-                  }`
-                }
-              >
-                {l.label}
-              </NavLink>
-            ))}
+            {NAV.map((l) =>
+              l.children ? (
+                <NavGroup key={l.to} item={l} />
+              ) : (
+                <NavLink
+                  key={l.to}
+                  to={l.to}
+                  className={({ isActive }) =>
+                    `mono px-2.5 py-1.5 text-[11px] uppercase tracking-[0.12em] transition-colors ${
+                      isActive ? 'text-cyan' : 'text-ink-faint hover:text-ink-dim'
+                    }`
+                  }
+                >
+                  {l.label}
+                </NavLink>
+              ),
+            )}
             <div className="ml-2 flex items-center gap-2">
               <OnlineBadge />
               <SiteVisitorBadge />
@@ -200,7 +197,7 @@ function Shell({ children }: { children: React.ReactNode }) {
       <MobileMenu
         open={open}
         onClose={() => setOpen(false)}
-        links={links}
+        links={NAV}
         badges={
           <>
             <OnlineBadge />

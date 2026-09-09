@@ -39,6 +39,11 @@ const GRADE: Record<string, { label: string; tone: string; dot: string }> = {
     tone: 'text-danger',
     dot: 'var(--color-danger)',
   },
+  showcase: {
+    label: 'A design, not a booking site',
+    tone: 'text-warn',
+    dot: 'var(--color-warn)',
+  },
   unverified: {
     label: 'We could not check it',
     tone: 'text-ink-faint',

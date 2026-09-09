@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import EchoMark from './EchoMark'
 import { SITE, discordConfigured } from '../lib/site'
+import type { NavItem } from '../lib/nav'
 
 /**
  * The phone navigation: a drawer in from the right, not a block that pushes
@@ -33,7 +34,7 @@ export default function MobileMenu({
 }: {
   open: boolean
   onClose: () => void
-  links: { to: string; label: string }[]
+  links: NavItem[]
   /** The live counters, passed in so this file does not reach for them itself. */
   badges: React.ReactNode
   account: React.ReactNode
@@ -125,20 +126,37 @@ export default function MobileMenu({
           </button>
         </div>
 
+        {/* A drawer has the height a top bar does not, so a group is just its
+            children indented underneath rather than another thing to open. */}
         <nav className="flex flex-col px-5 py-2">
           {links.map((l) => (
-            <NavLink
-              key={l.to}
-              to={l.to}
-              onClick={onClose}
-              className={({ isActive }) =>
-                `mono border-b border-edge-soft py-3.5 text-[12px] uppercase tracking-[0.14em] transition-colors ${
-                  isActive ? 'text-cyan' : 'text-ink-dim hover:text-ink'
-                }`
-              }
-            >
-              {l.label}
-            </NavLink>
+            <div key={l.to} className="border-b border-edge-soft">
+              <NavLink
+                to={l.to}
+                onClick={onClose}
+                className={({ isActive }) =>
+                  `mono block py-3.5 text-[12px] uppercase tracking-[0.14em] transition-colors ${
+                    isActive ? 'text-cyan' : 'text-ink-dim hover:text-ink'
+                  }`
+                }
+              >
+                {l.label}
+              </NavLink>
+              {l.children?.map((c) => (
+                <NavLink
+                  key={c.to}
+                  to={c.to}
+                  onClick={onClose}
+                  className={({ isActive }) =>
+                    `mono block border-l border-edge-soft py-3 pl-4 text-[11px] uppercase tracking-[0.14em] transition-colors ${
+                      isActive ? 'text-cyan' : 'text-ink-faint hover:text-ink-dim'
+                    }`
+                  }
+                >
+                  {c.label}
+                </NavLink>
+              ))}
+            </div>
           ))}
         </nav>
 

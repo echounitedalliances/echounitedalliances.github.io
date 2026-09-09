@@ -29,6 +29,8 @@
 --    live          schedules and fares trace to the live game data
 --    sample        real, but only a small slice of the network is published
 --    illustrative  results are generated; treat times and fares as decoration
+--    showcase      a design rather than a booking site: nothing to book, and
+--                  so nothing that can be right or wrong about a fare
 --    unverified    sign-in required, so we could not check it
 --
 --  airlines.website_url is kept in step at the bottom, because it is the
@@ -54,6 +56,12 @@ create table if not exists public.member_sites (
     constraint member_sites_alt_labelled
         check ((alt_url is null) = (alt_label is null))
 );
+
+-- 'showcase' was added after the table existed, and CREATE TABLE IF NOT
+-- EXISTS will not revisit a constraint on a table that is already there.
+alter table public.member_sites drop constraint if exists member_sites_data_grade_check;
+alter table public.member_sites add constraint member_sites_data_grade_check
+    check (data_grade in ('live', 'sample', 'illustrative', 'showcase', 'unverified'));
 
 comment on table public.member_sites is
     'Websites members built for their own airlines, with an honest note on how far each one''s schedule and fare data can be trusted. One row per site: a group site that sells several carriers is still one row.';
@@ -131,6 +139,11 @@ values
      'It flies our real routes with our real block times, but invents the flight numbers, departure times and fares around them — and says so itself in its own footer.',
      date '2026-09-08'),
 
+    ('vaultera', 'Vaultera', 'https://dome-record-86929245.figma.site/',
+     null, null, 'brochure', 'showcase',
+     'A single designed page rather than a working booking site: the search box does not return flights and the footer links do not lead anywhere. What it does publish is right — its airport picker marks all fourteen of the hubs we hold as hubs, and marks JFK and EWR as not — though the page says fifteen.',
+     date '2026-09-10'),
+
     ('amex', 'American Express Air', 'https://flyamex.base44.app/',
      null, null, 'booking', 'sample',
      'Every destination it sells is one American Express Air really serves, but it publishes 47 of the 87 it reaches from JFK, and its journey times are its own estimates — it quotes 7h00 to London where the filed block time is 6h10.',
@@ -184,7 +197,8 @@ with claim(site_slug, division_code, airline_slug) as (values
     ('amex',         'aura',    'american_express'),
     -- "CAS - flyhop": Book & Go is the group's booking product.
     ('bookgo',       'proxima', 'flyhop'),
-    ('airfluff',     'aura',    'airfluff_airlines')
+    ('airfluff',     'aura',    'airfluff_airlines'),
+    ('vaultera',     'proxima', 'vaultera')
 )
 insert into public.member_site_airlines (site_slug, airline_uid)
 select c.site_slug, a.uid
@@ -201,9 +215,9 @@ declare
     n integer;
 begin
     select count(*) into n from public.member_site_airlines;
-    if n <> 17 then
+    if n <> 18 then
         raise exception
-            'member_site_airlines has % rows, expected 17 -- an airline_slug in this file no longer matches a carrier', n;
+            'member_site_airlines has % rows, expected 18 -- an airline_slug in this file no longer matches a carrier', n;
     end if;
 end
 $guard$;

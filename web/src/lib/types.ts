@@ -268,7 +268,7 @@ export type MemberSiteRow = {
   alt_url: string | null
   alt_label: string | null
   kind: 'booking' | 'brochure' | 'aggregator' | 'account'
-  data_grade: 'live' | 'sample' | 'illustrative' | 'unverified'
+  data_grade: 'live' | 'sample' | 'illustrative' | 'showcase' | 'unverified'
   data_note: string
   checked_on: string
   /** Other carriers the same site sells, so a group site can say so. */
