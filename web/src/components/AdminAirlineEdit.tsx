@@ -92,6 +92,7 @@ export default function AdminAirlineEdit({
           <input
             id="admin-name"
             value={name}
+            autoFocus
             maxLength={80}
             onChange={(e) => setName(e.target.value)}
             placeholder="Leave empty to use the name from the game"
@@ -127,7 +128,7 @@ export default function AdminAirlineEdit({
               onClick={() => void save()}
               className="mono bg-accent px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#0B0713] transition-opacity hover:opacity-90 disabled:opacity-50"
             >
-              {busy ? 'Saving…' : 'Save'}
+              {busy ? 'Updating…' : 'Update'}
             </button>
             <button
               type="button"

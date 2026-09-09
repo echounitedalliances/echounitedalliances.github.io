@@ -47,6 +47,16 @@ export default function MobileMenu({
    */
   const [shown, setShown] = useState(false)
 
+  // Read through a ref rather than depending on it: onClose is an inline
+  // arrow from the Shell, so it changes identity on every render -- and the
+  // Shell re-renders whenever the live counters tick. As a dependency it
+  // re-ran this effect every few seconds, cancelling the slide's timer and
+  // yanking focus back to the panel. Same defect as Modal had.
+  const closeRef = useRef(onClose)
+  useEffect(() => {
+    closeRef.current = onClose
+  })
+
   useEffect(() => {
     if (!open) {
       setShown(false)
@@ -56,7 +66,7 @@ export default function MobileMenu({
     panel.current?.focus()
 
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
+      if (e.key === 'Escape') closeRef.current()
     }
     document.addEventListener('keydown', onKey)
 
@@ -68,7 +78,7 @@ export default function MobileMenu({
       document.removeEventListener('keydown', onKey)
       document.body.style.overflow = overflow
     }
-  }, [open, onClose])
+  }, [open])
 
   if (!open) return null
 

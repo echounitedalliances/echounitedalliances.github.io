@@ -32,12 +32,36 @@ export default function Modal({
   const panel = useRef<HTMLDivElement>(null)
   const opener = useRef<Element | null>(null)
 
+  /**
+   * The current onClose, without it being an effect dependency.
+   *
+   * Every caller passes an inline arrow, so its identity changes on each
+   * render of the parent. With onClose in the dependency list, the setup and
+   * teardown below ran on EVERY render -- and the teardown moves focus back
+   * to whatever opened the dialog. Typing one character into a field inside a
+   * modal therefore re-rendered the parent, tore the effect down, and threw
+   * focus out of the field: the box appeared to close itself after each
+   * keystroke. The listener still needs the latest callback, so it reads it
+   * from here instead.
+   */
+  const closeRef = useRef(onClose)
+  useEffect(() => {
+    closeRef.current = onClose
+  })
+
+  // Once, on open. Modal is always mounted conditionally, so mounting IS
+  // opening and there is nothing else this should re-run for.
   useEffect(() => {
     opener.current = document.activeElement
-    panel.current?.focus()
+
+    // Only claim focus if nothing inside has already taken it -- a form can
+    // autoFocus its first field, and that should win over the container.
+    if (!panel.current?.contains(document.activeElement)) {
+      panel.current?.focus()
+    }
 
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
+      if (e.key === 'Escape') closeRef.current()
     }
     document.addEventListener('keydown', onKey)
 
@@ -51,7 +75,7 @@ export default function Modal({
       // to <body> and the next Tab starts from the top of the page.
       if (opener.current instanceof HTMLElement) opener.current.focus()
     }
-  }, [onClose])
+  }, [])
 
   return (
     <div
