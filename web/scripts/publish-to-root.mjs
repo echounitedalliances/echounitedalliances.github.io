@@ -19,15 +19,7 @@
  */
 
 import { execSync } from 'node:child_process'
-import {
-  cpSync,
-  existsSync,
-  mkdirSync,
-  readFileSync,
-  readdirSync,
-  rmSync,
-  writeFileSync,
-} from 'node:fs'
+import { cpSync, existsSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -48,35 +40,6 @@ execSync('npm run build', { cwd: webDir, stdio: 'inherit' })
 if (!existsSync(join(dist, 'index.html'))) {
   console.error('build produced no index.html; refusing to publish')
   process.exit(1)
-}
-
-/*
- * The application form has now been deleted twice by an innocent rebuild.
- *
- * VITE_DISCORD_APPLY_WEBHOOK_URL is compiled in, and it is gitignored, so it
- * only exists on a machine where somebody has typed it into web/.env.local.
- * Build anywhere else and applyWebhookConfigured is false, Join.tsx quietly
- * drops back to the bare Discord invite, and nothing anywhere says so. Both
- * times it was caught by a person noticing the form had gone.
- *
- * So: notice it here instead. --allow-missing-webhook is the deliberate way
- * past, for a build that genuinely does not need the form.
- */
-if (!process.argv.includes('--allow-missing-webhook')) {
-  const bundles = readdirSync(join(dist, 'assets')).filter((f) => f.endsWith('.js'))
-  const wired = bundles.some((f) =>
-    readFileSync(join(dist, 'assets', f), 'utf8').includes('api/webhooks'),
-  )
-  if (!wired) {
-    console.error(
-      '\nrefusing to publish: this build has no Discord apply webhook in it.\n\n' +
-        '  VITE_DISCORD_APPLY_WEBHOOK_URL is missing from web/.env.local, so the\n' +
-        '  in-site application form would silently vanish from the published site.\n\n' +
-        '  Put the value in web/.env.local and run this again, or pass\n' +
-        '  --allow-missing-webhook if dropping the form is actually what you want.\n',
-    )
-    process.exit(1)
-  }
 }
 
 console.log('clearing previously published files…')
