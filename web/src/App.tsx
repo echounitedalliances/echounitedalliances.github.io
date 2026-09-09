@@ -17,7 +17,7 @@ import { useOnlineCount } from './lib/discordWidget'
 import { useSiteVisitorCount } from './lib/presence'
 import { num } from './lib/format'
 import Resonance from './pages/Resonance'
-import { Conduct, Privacy } from './pages/Policy'
+import { Conduct, Privacy, Terms } from './pages/Policy'
 import News from './pages/News'
 import RoundTheWorld from './pages/RoundTheWorld'
 import { AuthProvider, useAuth } from './lib/auth'
@@ -220,6 +220,9 @@ function Shell({ children }: { children: React.ReactNode }) {
                 590 the moment someone forgets, so re-check it when the roster
                 is rebuilt. */}
             <span className="mono">602 carriers · 8 divisions · 2,186 airports</span>
+            <Link to="/terms" className="hover:text-ink-dim">
+              Terms
+            </Link>
             <Link to="/conduct" className="hover:text-ink-dim">
               Code of conduct
             </Link>
@@ -265,6 +268,7 @@ export default function App() {
           <Route path="/resonance" element={<Resonance />} />
           <Route path="/news" element={<News />} />
           <Route path="/rtw" element={<RoundTheWorld />} />
+          <Route path="/terms" element={<Terms />} />
           <Route path="/conduct" element={<Conduct />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route

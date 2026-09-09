@@ -37,6 +37,81 @@ export type Policy = {
 }
 
 const UPDATED = '8 September 2026'
+const TERMS_UPDATED = '9 September 2026'
+
+export const TERMS: Policy = {
+  eyebrow: 'Terms of Service',
+  title: 'Resonance accounts',
+  lede: 'This covers creating and using a Resonance account. If you only browse the site, none of it applies to you — an account is optional, and this page only matters once you make one. For how members are expected to treat each other, see the Code of Conduct instead.',
+  updated: TERMS_UPDATED,
+  sections: [
+    {
+      heading: 'What Echo United Alliances is',
+      body: [
+        'Echo United Alliances is a virtual airline group in The Airline Simulator, run by its members as a hobby. It is not a company, and this site is not operated on behalf of one.',
+        'It is not affiliated with, endorsed by, or connected to The Airline Simulator, any real airline, or any company whose name a member has borrowed for a fictional carrier.',
+        'Nothing on this site involves real money, and no booking made here entitles anyone to real travel of any kind. Every schedule, fare, and reservation describes flights inside a game.',
+      ],
+    },
+    {
+      heading: 'Who can make an account',
+      body: [
+        'You must be at least 13 years old, matching Discord\'s own minimum age — membership in the alliance itself happens through Discord, and a Resonance account is meant for people who are already, or intend to be, part of that.',
+      ],
+    },
+    {
+      heading: 'Creating an account',
+      body: [
+        'A Resonance account needs an email address and a password. That is the whole signup: no real name, no address, no age, no payment details.',
+        'Your password is sent straight to Supabase, the service that hosts this site\'s database and handles sign-in — it never touches this site\'s own code, and is never visible to anyone running the site.',
+      ],
+      list: [
+        'Keep your password to yourself, and use one you do not reuse somewhere that actually matters.',
+        'One account belongs to you — do not create one to impersonate someone else, or to act on behalf of an airline that is not yours.',
+        'Anything entered under your account, including bookings and profile details, should be something you actually meant to submit.',
+      ],
+    },
+    {
+      heading: 'What an account is for',
+      body: [
+        'Signed in, you can save a display name, a home division, and a home airport to your profile — all optional, and all editable any time — and book fictional flights that collect under "My trips" instead of scattering across a browser\'s history. You can also cancel a booking you made.',
+        'None of this is required to use the site. A guest can search the network and book a flight without ever signing in — an account only adds a place for that booking to be remembered.',
+      ],
+    },
+    {
+      heading: 'Acceptable use',
+      body: [
+        'The Code of Conduct governs how members treat each other, on this site or off it. Specific to the account system, do not:',
+      ],
+      list: [
+        'try to access another Resonant\'s account, bookings, or profile;',
+        'automate requests against this site or its database beyond what a person clicking around would generate;',
+        'use a booking, a profile field, or anything else on this site to harass, impersonate, or misrepresent yourself as someone else;',
+        'try to exploit a bug in the site or its database for advantage.',
+      ],
+    },
+    {
+      heading: 'Suspension and removal',
+      body: [
+        'Because a Resonance account exists to serve the alliance\'s own membership, a board member can suspend or remove an account that is being used to violate these terms or the Code of Conduct. The usual path is the same one the Code of Conduct describes for anything else: a warning first, and removal only if the problem continues or was serious on its own.',
+        'You can ask for your own account to be deleted at any time, for any reason or none — see the Privacy page for how.',
+      ],
+    },
+    {
+      heading: 'No warranty',
+      body: [
+        'This site is run by volunteers, for free, as a hobby project. It is provided as-is, with no guarantee it will be available, error-free, or that data in it — including your bookings — will never be lost. There is no service level to promise and no company standing behind one.',
+        'If something breaks, tell us on Discord and we will do what a hobby project can — but we cannot offer more than that.',
+      ],
+    },
+    {
+      heading: 'When this page changes',
+      body: [
+        'These terms change when the way Resonance accounts work changes, in the same commit as the code that changed. The date at the top is when that last happened.',
+      ],
+    },
+  ],
+}
 
 export const CONDUCT: Policy = {
   eyebrow: 'Code of conduct',

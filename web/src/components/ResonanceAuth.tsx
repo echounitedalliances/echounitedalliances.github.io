@@ -228,6 +228,20 @@ export function SignIn() {
           />
         )}
 
+        {mode === 'signup' && (
+          <p className="text-[12px] text-ink-faint">
+            Creating an account means you agree to the{' '}
+            <Link to="/terms" className="text-cyan hover:underline">
+              Terms
+            </Link>{' '}
+            and the{' '}
+            <Link to="/privacy" className="text-cyan hover:underline">
+              Privacy Policy
+            </Link>
+            .
+          </p>
+        )}
+
         <div className="flex flex-wrap items-center gap-3">
           <button type="submit" disabled={!canSubmit} className="btn btn-book">
             {busy ? 'Working…' : cta}

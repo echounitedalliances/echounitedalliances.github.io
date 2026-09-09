@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { CONDUCT, PRIVACY, type Policy } from '../lib/policies'
+import { CONDUCT, PRIVACY, TERMS, type Policy } from '../lib/policies'
 import { SITE, discordConfigured } from '../lib/site'
 
 /**
@@ -87,6 +87,10 @@ function PolicyPage({ policy }: { policy: Policy }) {
       </div>
     </div>
   )
+}
+
+export function Terms() {
+  return <PolicyPage policy={TERMS} />
 }
 
 export function Conduct() {
