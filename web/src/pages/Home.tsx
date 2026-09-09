@@ -194,9 +194,9 @@ export default function Home() {
         <div className="mx-auto max-w-[1180px] px-4 py-8 sm:px-5 sm:py-14">
           <h2 className="display text-3xl">Fly the whole alliance</h2>
           <p className="mt-2 max-w-[62ch] text-ink-dim">
-            One search across all {num(carriers)} carriers. Connections are built across
-            divisions, so a journey no single airline flies is still one
-            itinerary and one booking reference.
+            {num(carriers)} airlines, eight divisions, one alliance — and one
+            search across all of it. Fly them in any combination on a single
+            booking reference.
           </p>
           <div className="mt-6">
             <SearchPanel />

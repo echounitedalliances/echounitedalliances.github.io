@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { Arc, NetworkNode } from '../lib/types'
+import { WORLD_OUTLINE_PATH } from '../lib/worldOutline'
 
 /**
  * The network as a flat map.
@@ -26,6 +27,18 @@ const H = 500
 
 /** How far in a picked airport pulls the map. */
 const ZOOM = 4.5
+
+type View = { scale: number; tx: number; ty: number; zoomed: boolean }
+
+/**
+ * Keep the drawing covering the frame.
+ *
+ * At scale s the map is W*s wide, so the translation may run from W - W*s
+ * (right edge flush) to 0 (left edge flush). Without this a drag pulls empty
+ * space into view and the map appears to have fallen off its own canvas.
+ */
+const clampTx = (v: number, s: number) => Math.min(Math.max(v, W - W * s), 0)
+const clampTy = (v: number, s: number) => Math.min(Math.max(v, H - H * s), 0)
 
 const project = (lat: number, lon: number): [number, number] => [
   ((lon + 180) / 360) * W,
@@ -112,22 +125,39 @@ export default function RouteMap({
    * space into frame — Anchorage and Auckland would otherwise leave a third of
    * the picture blank.
    */
-  const view = useMemo(() => {
+  const focusView = useMemo(() => {
     const target =
       zoomOnFocus && focusedAirport
         ? points.find((p) => p.n.iata_code === focusedAirport)
         : undefined
     if (!target) return { scale: 1, tx: 0, ty: 0, zoomed: false }
     const s = ZOOM
-    const clamp = (v: number, lo: number, hi: number) => Math.min(Math.max(v, lo), hi)
     return {
       scale: s,
-      tx: clamp(W / 2 - target.x * s, W - W * s, 0),
-      ty: clamp(H / 2 - target.y * s, H - H * s, 0),
+      tx: clampTx(W / 2 - target.x * s, s),
+      ty: clampTy(H / 2 - target.y * s, s),
       zoomed: true,
     }
   }, [zoomOnFocus, focusedAirport, points])
 
+  /**
+   * What the reader has done with the map by hand, if anything.
+   *
+   * Picking an airport still frames it; this only takes over once somebody
+   * drags or scrolls, and picking another airport hands control back. A map
+   * you cannot move is the complaint this answers — the arcs were legible and
+   * the thing under them was not reachable.
+   */
+  const [manual, setManual] = useState<View | null>(null)
+  const [dragging, setDragging] = useState(false)
+  const drag = useRef<{ x: number; y: number; tx: number; ty: number } | null>(null)
+
+  // A new focus wins: choosing an airport should always frame that airport.
+  useEffect(() => {
+    setManual(null)
+  }, [focusedAirport, zoomOnFocus])
+
+  const view = manual ?? focusView
   const k = view.scale
   // map units per screen pixel, at the current zoom
   const unit = W / Math.max(boxW, 1) / k
@@ -186,14 +216,84 @@ export default function RouteMap({
       <svg
         viewBox={`0 0 ${W} ${H}`}
         className="block h-auto w-full"
-        style={{ background: '#0A0614' }}
+        style={{
+          background: '#0A0614',
+          cursor: dragging ? 'grabbing' : 'grab',
+          touchAction: 'none',
+        }}
         role="img"
-        aria-label={`Alliance route map, ${arcs.length} city pairs`}
+        aria-label={`Alliance route map, ${arcs.length} city pairs. Drag to pan, scroll to zoom.`}
+        onPointerDown={(e) => {
+          // Only the primary button, and never on a marker: clicking an
+          // airport should still pick it rather than start a drag.
+          if (e.button !== 0) return
+          ;(e.currentTarget as SVGSVGElement).setPointerCapture(e.pointerId)
+          drag.current = { x: e.clientX, y: e.clientY, tx: view.tx, ty: view.ty }
+          setDragging(true)
+        }}
+        onPointerMove={(e) => {
+          const d = drag.current
+          if (!d) return
+          // Screen pixels to map units: the viewBox is W wide however many
+          // pixels the box happens to be.
+          const perPx = W / Math.max(boxW, 1)
+          const nx = d.tx + (e.clientX - d.x) * perPx
+          const ny = d.ty + (e.clientY - d.y) * perPx
+          setManual({
+            scale: view.scale,
+            tx: clampTx(nx, view.scale),
+            ty: clampTy(ny, view.scale),
+            zoomed: view.zoomed,
+          })
+        }}
+        onPointerUp={(e) => {
+          ;(e.currentTarget as SVGSVGElement).releasePointerCapture(e.pointerId)
+          drag.current = null
+          setDragging(false)
+        }}
+        onPointerCancel={() => {
+          drag.current = null
+          setDragging(false)
+        }}
+        onWheel={(e) => {
+          // Zoom about the pointer, so the place under the cursor stays put.
+          const box = (e.currentTarget as SVGSVGElement).getBoundingClientRect()
+          const perPx = W / Math.max(box.width, 1)
+          const mx = (e.clientX - box.left) * perPx
+          const my = (e.clientY - box.top) * perPx
+          const next = Math.min(
+            18,
+            Math.max(1, view.scale * (e.deltaY < 0 ? 1.18 : 1 / 1.18)),
+          )
+          // The world point under the cursor, before and after.
+          const wx = (mx - view.tx) / view.scale
+          const wy = (my - view.ty) / view.scale
+          setManual({
+            scale: next,
+            tx: clampTx(mx - wx * next, next),
+            ty: clampTy(my - wy * next, next),
+            zoomed: next > 1.02,
+          })
+        }}
       >
         <g
           transform={`translate(${view.tx.toFixed(2)} ${view.ty.toFixed(2)}) scale(${k})`}
-          style={{ transition: 'transform 620ms cubic-bezier(.32,.72,.24,1)' }}
+          // No easing while the hand is on it: a 620ms transition on every
+          // pointermove makes the map feel like it is on elastic.
+          style={{
+            transition: manual ? 'none' : 'transform 620ms cubic-bezier(.32,.72,.24,1)',
+          }}
         >
+          {/* Land, under everything. Without it the arcs float on nothing and
+              there is no telling one ocean from another. */}
+          <path
+            d={WORLD_OUTLINE_PATH}
+            fill="#140C24"
+            stroke="var(--color-edge)"
+            strokeWidth={px(0.4)}
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
+          />
           {/* graticule: enough to read the map as a map, cheap to draw */}
           <g stroke="var(--color-edge-soft)" strokeWidth={px(0.5)} opacity="0.5">
             {[-60, -30, 0, 30, 60].map((lat) => {

@@ -15,9 +15,15 @@ export const SITE = {
    */
   discordInvite: 'https://discord.gg/E6ZccFNWnd',
 
+  /**
+   * The source. The privacy page tells people every claim on it can be
+   * checked, which is only true if it says where to look.
+   */
+  repoUrl: 'https://github.com/echounitedalliances/echounitedalliances.github.io',
+
   /** Where applications actually happen, stated plainly. */
   joinRequirement:
-    'Every division of Echo requires an application in two places: in The Airline Simulator itself, and with Echo Alliances — either on the Discord server or through the form on this page, whichever is easier. Both steps are needed — an in-game request alone will not be actioned, and neither will an alliance application without the in-game request.',
+    'Every division of Echo requires an application in two places: in The Airline Simulator itself, and with Echo Alliances on the Discord server. Both steps are needed — an in-game request alone will not be actioned, and neither will an alliance application without the in-game request.',
 
   joinSteps: [
     {

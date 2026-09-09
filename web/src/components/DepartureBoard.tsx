@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import AirportField from './AirportField'
 import SplitFlap, { toFlap } from './SplitFlap'
 import { Loading } from './ui'
 import type { BoardRow } from './SplitFlap'
@@ -15,10 +16,17 @@ import type { BoardDeparture } from '../lib/types'
  * zone, so a viewer in Ho Chi Minh City and a viewer in Boston were both shown
  * a number that meant nothing to either of them.
  *
- * board_departures now returns departs_at as a real instant, so rendering it is
- * Intl's problem, and Intl already knows the viewer's zone. The one thing this
- * component tells the database is what that zone is called, so the board can be
- * scoped to the alliance hub the viewer would actually be standing in.
+ * board_departures returns departs_at as a real instant, so rendering it is
+ * Intl's problem. It is rendered in the AIRPORT's zone, not the viewer's,
+ * because that is what a departure board is: the times on the screen at
+ * Changi are Singapore's, whoever is reading them. Showing a Frankfurt board
+ * on a Melbourne clock was technically defensible and practically useless.
+ *
+ * It also no longer asks where the viewer is. It used to send the browser's
+ * timezone so the database could pick the hub the viewer was probably
+ * standing in, which is a location guess nobody asked to make. The board now
+ * opens at the alliance's busiest airport and lets anyone choose any other --
+ * not just the six biggest, which was the other half of the same complaint.
  *
  * Three clocks, on purpose, because they cost different amounts:
  *   - the flights are refetched once a minute (a network round trip),
@@ -31,37 +39,46 @@ import type { BoardDeparture } from '../lib/types'
 const REFETCH_MS = 60_000
 const TICK_MS = 15_000
 
-const timeFmt = new Intl.DateTimeFormat(undefined, {
-  hour: '2-digit',
-  minute: '2-digit',
-  hourCycle: 'h23',
-})
-
-const clockFmt = new Intl.DateTimeFormat(undefined, {
-  hour: '2-digit',
-  minute: '2-digit',
-  second: '2-digit',
-  hourCycle: 'h23',
-})
-
-/** The viewer's zone, named the way their own browser names it. */
-function viewerZone() {
+/**
+ * Formatters bound to one airport's zone.
+ *
+ * An unknown or missing zone falls back to the viewer's, which is what Intl
+ * does with an undefined timeZone anyway -- better a clock that is at least
+ * internally consistent than a thrown RangeError on a board.
+ */
+function timeFormatter(tz?: string | null) {
   try {
-    return Intl.DateTimeFormat().resolvedOptions().timeZone ?? ''
+    return new Intl.DateTimeFormat(undefined, {
+      hour: '2-digit',
+      minute: '2-digit',
+      hourCycle: 'h23',
+      timeZone: tz || undefined,
+    })
   } catch {
-    return ''
+    return new Intl.DateTimeFormat(undefined, {
+      hour: '2-digit',
+      minute: '2-digit',
+      hourCycle: 'h23',
+    })
   }
 }
 
-/** GMT+7, EDT, AEST — whatever their browser calls that offset. */
-function viewerAbbrev() {
+function clockFormatter(tz?: string | null) {
   try {
-    const parts = new Intl.DateTimeFormat(undefined, {
-      timeZoneName: 'short',
-    }).formatToParts(new Date())
-    return parts.find((p) => p.type === 'timeZoneName')?.value ?? ''
+    return new Intl.DateTimeFormat(undefined, {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hourCycle: 'h23',
+      timeZone: tz || undefined,
+    })
   } catch {
-    return ''
+    return new Intl.DateTimeFormat(undefined, {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hourCycle: 'h23',
+    })
   }
 }
 
@@ -82,14 +99,14 @@ function statusFor(departsAt: number, now: number) {
   return 'ON TIME'
 }
 
-/** Isolated so its once-a-second render never reaches the board. */
-function WallClock() {
+function WallClock({ tz }: { tz?: string | null }) {
   const [now, setNow] = useState(() => new Date())
+  const fmt = useMemo(() => clockFormatter(tz), [tz])
   useEffect(() => {
     const id = window.setInterval(() => setNow(new Date()), 1000)
     return () => window.clearInterval(id)
   }, [])
-  return <span className="tabular-nums">{clockFmt.format(now)}</span>
+  return <span className="tabular-nums">{fmt.format(now)}</span>
 }
 
 type Hub = { iata_code: string; city_name: string | null; airport_name: string | null }
@@ -97,18 +114,22 @@ type Hub = { iata_code: string; city_name: string | null; airport_name: string |
 export default function DepartureBoard({ origin }: { origin?: string }) {
   const [departures, setDepartures] = useState<BoardDeparture[]>([])
   const [hubs, setHubs] = useState<Hub[]>([])
-  // null means "wherever the viewer is"; the database picks from their zone.
+  // null means "the alliance's busiest airport" -- NOT "wherever you are".
   const [pick, setPick] = useState<string | null>(origin ?? null)
   const [now, setNow] = useState(() => Date.now())
   const [loaded, setLoaded] = useState(false)
-  const zone = useRef({ name: viewerZone(), abbrev: viewerAbbrev() })
+  /** What has been typed into the "any airport" box. */
+  const [typed, setTyped] = useState('')
 
   const load = useCallback(async () => {
     if (!isConfigured) return
     const { data, error } = await supabase.rpc('board_departures', {
       p_origin: pick,
       p_limit: 8,
-      p_viewer_tz: zone.current.name || null,
+      // Deliberately null. This used to be the browser's timezone, which the
+      // database used to guess which airport the viewer was standing in --
+      // a location inference for a board nobody had asked to personalise.
+      p_viewer_tz: null,
     })
     if (!error) setDepartures((data as BoardDeparture[]) ?? [])
     setLoaded(true)
@@ -151,6 +172,9 @@ export default function DepartureBoard({ origin }: { origin?: string }) {
     return () => window.clearInterval(id)
   }, [])
 
+  const hubTz = departures[0]?.origin_tz ?? null
+  const timeFmt = useMemo(() => timeFormatter(hubTz), [hubTz])
+
   const rows: BoardRow[] = useMemo(
     () =>
       departures.map((r) => {
@@ -164,15 +188,10 @@ export default function DepartureBoard({ origin }: { origin?: string }) {
           accent: r.accent_color,
         }
       }),
-    [departures, now],
+    [departures, now, timeFmt],
   )
 
   const hub = departures[0]
-  // The hub is picked to match the viewer's zone, so usually these agree. When
-  // no member airline flies from anywhere on the viewer's clock, it falls back
-  // to the alliance's busiest hub, and then the times on the board are the
-  // viewer's own rather than the airport's — worth saying out loud.
-  const shifted = hub != null && hub.origin_tz !== zone.current.name
 
   return (
     <>
@@ -185,10 +204,10 @@ export default function DepartureBoard({ origin }: { origin?: string }) {
             </span>
           )}
         </h2>
-        <p className="mono flex flex-wrap items-baseline gap-x-2 text-[10px] uppercase tracking-[0.16em] text-ink-faint">
-          <span>Your local time{zone.current.abbrev ? ` · ${zone.current.abbrev}` : ''}</span>
+        <p className="mono flex flex-wrap items-baseline gap-x-2 text-[10px] uppercase tracking-[0.16em] text-ink-dim">
+          <span>Local time{hub ? ` at ${hub.origin_iata}` : ''}</span>
           <span aria-hidden="true">·</span>
-          <WallClock />
+          <WallClock tz={hubTz} />
         </p>
       </div>
 
@@ -217,7 +236,7 @@ export default function DepartureBoard({ origin }: { origin?: string }) {
             aria-pressed={pick === null}
             className={`chip ${pick === null ? 'chip-on' : ''}`}
           >
-            Nearest me
+            Busiest
           </button>
           {hubs.map((h) => (
             <button
@@ -231,14 +250,29 @@ export default function DepartureBoard({ origin }: { origin?: string }) {
               {h.iata_code}
             </button>
           ))}
+          {/* The six chips are shortcuts, not the whole choice. Any airport
+              the alliance serves has a board, and this is how to reach the
+              other two thousand. */}
+          <div className="w-full sm:w-64">
+            <AirportField
+              id="board-any-airport"
+              label=""
+              value={typed}
+              onChange={(code) => {
+                setTyped(code)
+                if (code.length === 3) setPick(code)
+              }}
+              placeholder="Any other airport"
+            />
+          </div>
         </div>
       )}
 
-      <p className="mt-3 text-[11px] text-ink-faint">
+      <p className="mt-3 text-[11px] text-ink-dim">
         {hub
-          ? `Next departures from ${hub.origin_city}, shown in ${
-              zone.current.name || 'your local time'
-            }${shifted ? ` — the airport itself is on ${hub.origin_tz}` : ''}. Refreshed every minute.`
+          ? `Next departures from ${hub.origin_city}. Every time here is local to ${hub.origin_iata}${
+              hub.origin_tz ? ` (${hub.origin_tz})` : ''
+            }, the way the board at the airport reads. Refreshed every minute.`
           : 'Live from the alliance schedule.'}
       </p>
     </>

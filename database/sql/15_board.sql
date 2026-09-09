@@ -131,7 +131,11 @@ language sql stable parallel safe as $$
              case when p.direction = 'OUTBOUND' then f.outbound_flight_number
                   else f.inbound_flight_number end,
            p.destination_iata,
-           coalesce(d.city_name, d.airport_name, p.destination_iata),
+           -- place_label, not city_name: a board that lists ROME twice for
+           -- two different airports is not telling anyone where to stand.
+           -- The origin above keeps the bare city, because its code is
+           -- already printed next to it.
+           coalesce(d.place_label, d.city_name, d.airport_name, p.destination_iata),
            a.carrier_code,
            a.airline_name,
            a.division_code,

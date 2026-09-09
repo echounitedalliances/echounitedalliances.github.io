@@ -8,11 +8,13 @@
  * Resonance account. Saying exactly that is more use to an applicant than a
  * page of clauses about "affiliates and processors".
  *
- * Everything here is checkable against the code:
- *   the application form  -> components/Join.tsx, lib/discord.ts
- *   accounts              -> lib/auth.ts, components/ResonanceAuth.tsx
+ * Everything here is checkable against the code, and the page now says so on
+ * the page rather than only in this comment:
+ *   joining               -> components/Join.tsx (links out; posts nothing)
+ *   accounts              -> lib/auth.tsx, components/ResonanceAuth.tsx
  *   the visitor counter   -> lib/presence.ts
  *   browser storage       -> lib/advisories.ts, and Supabase's own session
+ *   who can read what     -> database/sql/08_rls_policies.sql
  *
  * If any of those change, this changes with them. A privacy notice that has
  * drifted from what the software does is the one kind that actively harms.
@@ -89,9 +91,10 @@ export const CONDUCT: Policy = {
       ],
     },
     {
-      heading: 'Changes',
+      heading: 'When this page changes',
       body: [
-        'This page changes when the way we run the alliance changes. The date at the top is when it last did.',
+        'This page changes when the way we run the alliance changes, and the date at the top changes with it.',
+        'A change to what is expected of members, or to what happens when someone falls short, is announced in the Discord server before it takes effect. The previous wording stays in the repository history.',
       ],
     },
   ],
@@ -100,14 +103,14 @@ export const CONDUCT: Policy = {
 export const PRIVACY: Policy = {
   eyebrow: 'Privacy',
   title: 'What we hold, and why',
-  lede: 'We are a hobby group, not a company, and we collect as little as we can get away with. This page says exactly what that is — all of it checkable against the code that runs this site.',
+  lede: 'We are a hobby group, not a company, and we collect as little as we can get away with. This page says exactly what that is, and every claim on it can be checked: the site is open source, and the files that do each thing are named below.',
   updated: UPDATED,
   sections: [
     {
       heading: 'When you apply to join',
       body: [
-        'The application form on this site asks for your airline name, its tag, the division you want, and any notes you care to add. When you submit it, that text is posted straight into a private channel in our Discord server. There is no database in between and no server of ours that sees it first.',
-        'If you apply through Discord instead, we see whatever Discord shows us: your handle, your display name and your avatar. We do not ask for your real name, your address, your age or your location, and you should not send them.',
+        'Applying happens on Discord. This site has no application form and collects nothing from you when you set out to join — it links you to the server and stops there.',
+        'What we see is therefore whatever Discord shows us: your handle, your display name, your avatar, and what you write in the application. We do not ask for your real name, your address, your age or your location, and you should not send them.',
         'Applications stay in that Discord channel indefinitely, so leaders can look back at who joined when. If you want yours removed, ask — see below.',
       ],
     },
@@ -151,6 +154,17 @@ export const PRIVACY: Policy = {
       ],
     },
     {
+      heading: 'Who inside the alliance can see it',
+      body: [
+        'This page used to say only that nothing is passed to anyone "outside the alliance", which invites the obvious question about everyone inside it. So, precisely:',
+      ],
+      list: [
+        'Your application is visible to the division leaders and board members who read that Discord channel. That is the point of sending it, and it is not visible to the membership at large.',
+        'Your email address and your bookings are visible to nobody but you. No member, leader or board member can see another Resonance account from this site, and the database will not return one.',
+        'Your name on a booking is visible to whoever holds the booking reference, because that is what retrieves it.',
+      ],
+    },
+    {
       heading: 'What we never do',
       body: [
         'We do not sell your data, share it with advertisers, or pass it to anyone outside the alliance. There is nothing here worth selling and no one is trying to.',
@@ -164,6 +178,19 @@ export const PRIVACY: Policy = {
       ],
     },
     {
+      heading: 'Where to check all this',
+      body: [
+        'The site is open source, so none of the above has to be taken on trust. These are the files that do each thing described on this page:',
+      ],
+      list: [
+        'web/src/components/Join.tsx — the join panel, which links to Discord and posts nothing.',
+        'web/src/lib/auth.tsx and web/src/components/ResonanceAuth.tsx — accounts and sign-in.',
+        'web/src/lib/presence.ts — the open-tabs counter, including the random per-tab identifier.',
+        'web/src/lib/advisories.ts — the one thing we put in your browser storage.',
+        'database/sql/08_rls_policies.sql — the row-level rules that decide what any account is allowed to read.',
+      ],
+    },
+    {
       heading: 'Getting your data removed',
       body: [
         'Open a ticket in our Discord server, or send a direct message to any board member or division leader, and say what you want removed. We will delete your application message, your Resonance account, or both.',
@@ -171,9 +198,11 @@ export const PRIVACY: Policy = {
       ],
     },
     {
-      heading: 'Changes',
+      heading: 'When this page changes',
       body: [
-        'If what we collect changes, this page changes in the same commit. The date at the top is when it last did.',
+        'If what we collect changes, this page changes in the same commit, and the date at the top changes with it. That is the mechanism, not a promise of good intentions: the page and the code move together or the change does not ship.',
+        'A change that widens what we collect, or who can see it, is announced in the Discord server before it takes effect, and the old version stays in the repository history so you can see exactly what changed and when.',
+        'We are not subject to the GDPR and are not pretending otherwise. We are telling you when the rules change because that is the decent way to run something people have trusted with an email address.',
       ],
     },
   ],

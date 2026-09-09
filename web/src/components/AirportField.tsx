@@ -260,8 +260,8 @@ export default function AirportField({
               <li
                 key={`h-${o.key}`}
                 role="presentation"
-                className={`mono px-3 pb-1 pt-2.5 text-[10px] uppercase tracking-[0.14em] text-ink-faint ${
-                  i > 0 ? 'mt-1 border-t border-edge-soft' : ''
+                className={`mono px-3 pb-1.5 pt-3 text-[10px] uppercase tracking-[0.14em] text-ink-faint ${
+                  i > 0 ? 'mt-2 border-t border-edge' : ''
                 }`}
               >
                 {o.label}
@@ -269,7 +269,17 @@ export default function AirportField({
             ) : (
               <li
                 key={o.row.iata_code}
-                className={o.startsPlace && i > 0 ? 'mt-1 border-t border-edge-soft' : ''}
+                /* Two weights of rule, because there are two kinds of gap.
+                   A new city is a firm line; a second airport in the SAME
+                   city is a hairline, which is the case that was impossible
+                   to read -- Rome's FCO and CIA ran together as one block. */
+                className={
+                  o.startsPlace && i > 0
+                    ? 'mt-2 border-t border-edge'
+                    : i > 0
+                      ? 'border-t border-edge-soft'
+                      : ''
+                }
               >
                 <button
                   id={`${id}-opt-${o.row.iata_code}`}

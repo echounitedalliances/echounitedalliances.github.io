@@ -20,6 +20,16 @@ import {
 } from '../lib/journey'
 
 /**
+ * "ECONOMY" and "PREMIUM_ECONOMY" are database values, not English. They were
+ * being lowercased on the way out, which turned them into "economy" and
+ * "premium economy" sitting next to properly capitalised labels.
+ */
+function cabinLabel(cabin: string): string {
+  const words = cabin.replace(/_/g, ' ').toLowerCase().split(' ')
+  return words.map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+}
+
+/**
  * Cards rendered per leg before "show the rest".
  *
  * Nonstops are no longer capped by the search, and a dense pair returns far
@@ -31,14 +41,6 @@ import {
 const PAGE = 60
 
 /**
- * Depth is a tier, and each tier is its own list with its own "show more".
- *
- * Sorting everything together buried the point: on a route with 250 nonstops
- * the connecting options were either invisible or, if a sort brought them up,
- * mixed in with no way to tell how many of each kind existed. Nonstop first,
- * always, then each connecting depth under its own heading.
- */
-/**
  * How many of a connecting depth to show before "show more".
  *
  * Matches echo_tier_limit() in 07_connections.sql. If the two drift the page
@@ -47,6 +49,14 @@ const PAGE = 60
  */
 const TIER_TEASER = 10
 
+/**
+ * Depth is a tier, and each tier is its own list with its own "show more".
+ *
+ * Sorting everything together buried the point: on a route with 250 nonstops
+ * the connecting options were either invisible or, if a sort brought them up,
+ * mixed in with no way to tell how many of each kind existed. Nonstop first,
+ * always, then each connecting depth under its own heading.
+ */
 const TIERS = [
   { depth: 0, label: 'Nonstop', adjective: 'nonstop' },
   { depth: 1, label: 'One stop', adjective: 'one-stop' },
@@ -289,8 +299,8 @@ export default function SearchResults() {
           </h1>
           <p className="mono mt-1 text-[12px] text-ink-faint">
             {q.legs[0]?.date && shortDate(q.legs[0].date)} ·{' '}
-            {q.cabin.replace('_', ' ').toLowerCase()} · {q.pax}{' '}
-            {q.pax === 1 ? 'traveller' : 'travellers'}
+            {cabinLabel(q.cabin)} · {q.pax}{' '}
+            {q.pax === 1 ? 'Traveller' : 'Travellers'}
           </p>
         </div>
         <div className="mono flex flex-wrap gap-1 text-[11px] uppercase tracking-[0.1em]">
@@ -407,7 +417,10 @@ export default function SearchResults() {
                     style={{ animationDelay: `${Math.min(n, 12) * 30}ms` }}
                   >
                     <div className="min-w-0">
-                      <div className="mono mb-3 flex flex-wrap items-center gap-2 text-[10px] uppercase tracking-[0.12em]">
+                      {/* Stops, route and division ran together as three
+                          unrelated words with only a space between them. A hair
+                          rule between each reads as one line of facts. */}
+                      <div className="mono mb-3 flex flex-wrap items-center text-[10px] uppercase tracking-[0.12em] [&>*+*]:before:mx-2.5 [&>*+*]:before:inline-block [&>*+*]:before:h-[9px] [&>*+*]:before:w-px [&>*+*]:before:translate-y-[1px] [&>*+*]:before:bg-[color:var(--color-edge)] [&>*+*]:before:align-middle [&>*+*]:before:content-['']">
                         <span className="text-ink-dim">
                           {it.stops === 0
                             ? 'Nonstop'
@@ -417,15 +430,13 @@ export default function SearchResults() {
                           <span className="text-ink-faint">via {it.via.join(' · ')}</span>
                         )}
                         {it.is_interline && (
-                          <span className="border border-[color:var(--color-cyan)] px-2 py-0.5 text-cyan">
-                            Interline
-                          </span>
+                          <span className="text-cyan">Interline</span>
                         )}
                         {Array.from(new Set(it.divisions)).map((d) => (
                           <Link
                             key={d}
                             to={`/d/${d}`}
-                            className="text-ink-faint hover:text-ink-dim"
+                            className="capitalize text-ink-faint hover:text-ink-dim"
                           >
                             {d}
                           </Link>
@@ -447,7 +458,7 @@ export default function SearchResults() {
                         <div className="mono text-2xl text-ink">{usd(it.total_price_usd)}</div>
                         <div className="mono text-[11px] text-ink-faint">
                           {q.pax > 1
-                            ? `per traveller · ${duration(it.total_minutes)}`
+                            ? `Per traveller · ${duration(it.total_minutes)}`
                             : duration(it.total_minutes)}
                         </div>
                       </div>
@@ -516,7 +527,7 @@ export default function SearchResults() {
                 <div className="text-right">
                   <div className="mono text-2xl text-ink">{usd(total)}</div>
                   <div className="mono text-[11px] text-ink-faint">
-                    {q.pax > 1 ? 'per traveller, all flights' : 'all flights'}
+                    {q.pax > 1 ? 'Per traveller, all flights' : 'All flights'}
                   </div>
                 </div>
               )}

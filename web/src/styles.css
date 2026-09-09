@@ -42,7 +42,11 @@
 
   --color-ink:        #F1ECFA;
   --color-ink-dim:    #B6AAD6;
-  --color-ink-faint:  #7C7099;
+  /* 5.76:1 on the ground colour. It was #7C7099, which measures 4.40:1 --
+     under the 4.5:1 floor, and this is the token the site uses for its
+     SMALLEST text (10-12px labels, counts, captions), so it was failing
+     exactly where it mattered most. */
+  --color-ink-faint:  #8F84AD;
 
   --color-accent:     #A855F7;
   --color-accent-dim: #7C3AED;

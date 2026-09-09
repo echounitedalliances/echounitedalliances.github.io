@@ -75,6 +75,14 @@ function PolicyPage({ policy }: { policy: Policy }) {
           <Link to="/about" className="mono text-[11px] uppercase tracking-[0.14em] text-cyan">
             Who runs the alliance →
           </Link>
+          <a
+            href={SITE.repoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mono text-[11px] uppercase tracking-[0.14em] text-cyan"
+          >
+            Read the source ↗
+          </a>
         </div>
       </div>
     </div>

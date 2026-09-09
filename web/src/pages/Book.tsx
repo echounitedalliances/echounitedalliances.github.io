@@ -321,7 +321,7 @@ export default function Book() {
 
           <div className="mt-5 border-t border-edge pt-4">
             <div className="flex justify-between text-sm text-ink-dim">
-              <span>{cabin.replace('_', ' ').toLowerCase()} × {pax.length}</span>
+              <span className="capitalize">{cabin.replace(/_/g, ' ').toLowerCase()} × {pax.length}</span>
               <span className="mono">{usd(perTraveller)} each</span>
             </div>
             <div className="mt-2 flex items-baseline justify-between">

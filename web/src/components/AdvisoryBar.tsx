@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react'
-import { ADVISORY_DISMISSED, currentAdvisory, isDismissed } from '../lib/advisories'
+import {
+  ADVISORY_DISMISSED,
+  currentAdvisory,
+  dismissBanner,
+  isBannerDismissed,
+  isDismissed,
+} from '../lib/advisories'
 
 /**
  * The running advisory, condensed to one line above the top bar.
@@ -17,18 +23,26 @@ import { ADVISORY_DISMISSED, currentAdvisory, isDismissed } from '../lib/advisor
  *   deep-links to a carrier never meets the pop-up at all and would otherwise
  *   see nothing.
  *
- * What it does NOT do is offer a close button. The banner IS the dismissed
- * state — the way to make it go away is for the disruption to end and the
- * entry to be deleted from lib/advisories.ts.
+ * It can be closed, which it could not be at first. Leaving it permanent was
+ * deliberate — a live disruption should not vanish on one click — but with no
+ * close at all there was no way to put it down, and that reads as a bug
+ * rather than as a decision. Closing it is remembered separately from closing
+ * the pop-up, so a NEW advisory still arrives in full.
  */
 export default function AdvisoryBar({ onHome }: { onHome: boolean }) {
   const advisory = currentAdvisory()
   const [read, setRead] = useState(() => (advisory ? isDismissed(advisory.id) : false))
+  const [closed, setClosed] = useState(() =>
+    advisory ? isBannerDismissed(advisory.id) : false,
+  )
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
     if (!advisory) return
-    const sync = () => setRead(isDismissed(advisory.id))
+    const sync = () => {
+      setRead(isDismissed(advisory.id))
+      setClosed(isBannerDismissed(advisory.id))
+    }
     window.addEventListener(ADVISORY_DISMISSED, sync)
     // Another tab dismissing it should settle this one too.
     window.addEventListener('storage', sync)
@@ -38,14 +52,14 @@ export default function AdvisoryBar({ onHome }: { onHome: boolean }) {
     }
   }, [advisory])
 
-  if (!advisory) return null
+  if (!advisory || closed) return null
   // On the home page the pop-up is still to come; two of the same message at
   // once is noise.
   if (onHome && !read) return null
 
   return (
     <div className="advisory-bar">
-      <div className="mx-auto max-w-[1180px] px-4 sm:px-5">
+      <div className="relative mx-auto max-w-[1180px] px-4 pr-10 sm:px-5 sm:pr-10">
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
@@ -64,6 +78,18 @@ export default function AdvisoryBar({ onHome }: { onHome: boolean }) {
           <span className="mono shrink-0 text-[10px] uppercase tracking-[0.14em] text-ink-faint">
             {open ? 'Less' : 'More'}
           </span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => {
+            setClosed(true)
+            dismissBanner(advisory.id)
+          }}
+          aria-label="Dismiss this advisory"
+          className="absolute right-3 top-1.5 px-1.5 py-0.5 text-[13px] leading-none text-ink-faint transition-colors hover:text-ink"
+        >
+          ×
         </button>
 
         <div id="advisory-detail" hidden={!open} className="pb-4 pl-4">

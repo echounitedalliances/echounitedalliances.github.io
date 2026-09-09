@@ -60,7 +60,7 @@ export default function NavGroup({ item }: { item: NavItem }) {
           aria-expanded={open}
           aria-haspopup="true"
           aria-label={`More under ${item.label}`}
-          className={`py-1.5 pr-2 text-[9px] transition-colors ${
+          className={`py-1.5 pr-2 text-[11px] leading-none transition-colors ${
             active ? 'text-cyan' : 'text-ink-faint hover:text-ink-dim'
           }`}
         >

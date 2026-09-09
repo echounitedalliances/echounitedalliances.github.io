@@ -74,6 +74,40 @@ export function isDismissed(id: string): boolean {
   return dismissedIds().includes(id)
 }
 
+/**
+ * The banner, dismissed for good.
+ *
+ * The pop-up and the banner are two separate acts. Closing the pop-up means "I
+ * have read this"; the banner then keeps the notice one click away, which was
+ * deliberate — a live disruption should not vanish because somebody clicked
+ * once. But with no close on it at all there was no way to put it down, which
+ * read as a bug rather than as a decision, and people were right to call it
+ * one. Both are stored, so an advisory with a NEW id still arrives in full.
+ */
+const BANNER_KEY = 'echo.advisory.banner.dismissed'
+
+export function bannerDismissedIds(): string[] {
+  try {
+    const raw = localStorage.getItem(BANNER_KEY)
+    return raw ? (JSON.parse(raw) as string[]) : []
+  } catch {
+    return []
+  }
+}
+
+export function isBannerDismissed(id: string): boolean {
+  return bannerDismissedIds().includes(id)
+}
+
+export function dismissBanner(id: string): void {
+  try {
+    localStorage.setItem(BANNER_KEY, JSON.stringify([...bannerDismissedIds(), id]))
+  } catch {
+    /* not remembering it is not a reason to refuse to close it */
+  }
+  window.dispatchEvent(new Event(ADVISORY_DISMISSED))
+}
+
 export function dismiss(id: string): void {
   try {
     localStorage.setItem(KEY, JSON.stringify([...dismissedIds(), id]))
