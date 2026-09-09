@@ -159,6 +159,75 @@ export default function RouteMap({
 
   const view = manual ?? focusView
   const k = view.scale
+
+  const svgRef = useRef<SVGSVGElement>(null)
+
+  /**
+   * Zoom by a factor about a point given in map units.
+   *
+   * Kept in a ref so the native wheel listener below always calls the current
+   * one without having to be torn down and re-attached on every render.
+   */
+  const zoomAbout = (factor: number, mx: number, my: number) => {
+    const cur = manualRef.current ?? focusRef.current
+    const next = Math.min(18, Math.max(1, cur.scale * factor))
+    const wx = (mx - cur.tx) / cur.scale
+    const wy = (my - cur.ty) / cur.scale
+    setManual({
+      scale: next,
+      tx: clampTx(mx - wx * next, next),
+      ty: clampTy(my - wy * next, next),
+      zoomed: next > 1.02,
+    })
+  }
+
+  const manualRef = useRef(manual)
+  const focusRef = useRef(focusView)
+  const zoomRef = useRef(zoomAbout)
+  useEffect(() => {
+    manualRef.current = manual
+    focusRef.current = focusView
+    zoomRef.current = zoomAbout
+  })
+
+  /**
+   * Wheel handling, and why it is not a React onWheel.
+   *
+   * React attaches wheel at the root as a PASSIVE listener, so calling
+   * preventDefault inside onWheel does nothing but log a warning. That
+   * matters here for one specific reason: a trackpad pinch arrives as a wheel
+   * event with ctrlKey set, and if nobody prevents it the BROWSER zooms the
+   * whole page. Zooming the map was zooming the site.
+   *
+   * So: a native listener with passive:false, and a deliberate split.
+   *
+   *   pinch, or ctrl/cmd + wheel  -> zoom the map, and swallow the event so
+   *                                  the page does not zoom with it
+   *   an ordinary scroll          -> left alone entirely, so the page scrolls
+   *
+   * The second half is the other half of the same courtesy. Trapping a plain
+   * scroll would mean the map eats the gesture somebody was using to get past
+   * it, which is its own kind of broken. The + and - buttons are there for
+   * anyone who would rather not use a gesture at all.
+   */
+  useEffect(() => {
+    const el = svgRef.current
+    if (!el) return
+    const onWheel = (e: WheelEvent) => {
+      if (!e.ctrlKey && !e.metaKey) return
+      e.preventDefault()
+      const box = el.getBoundingClientRect()
+      if (box.width === 0) return
+      const perPx = W / box.width
+      zoomRef.current(
+        e.deltaY < 0 ? 1.18 : 1 / 1.18,
+        (e.clientX - box.left) * perPx,
+        (e.clientY - box.top) * perPx,
+      )
+    }
+    el.addEventListener('wheel', onWheel, { passive: false })
+    return () => el.removeEventListener('wheel', onWheel)
+  }, [])
   // map units per screen pixel, at the current zoom
   const unit = W / Math.max(boxW, 1) / k
   const px = (n: number) => n * unit
@@ -214,15 +283,19 @@ export default function RouteMap({
   return (
     <div ref={boxRef} className={`relative ${className}`}>
       <svg
+        ref={svgRef}
         viewBox={`0 0 ${W} ${H}`}
         className="block h-auto w-full"
         style={{
           background: '#0A0614',
           cursor: dragging ? 'grabbing' : 'grab',
-          touchAction: 'none',
+          // pan-y, not none: 'none' meant a finger anywhere over the map
+          // could not scroll the page past it. Vertical drags scroll, and
+          // horizontal drags still pan.
+          touchAction: 'pan-y',
         }}
         role="img"
-        aria-label={`Alliance route map, ${arcs.length} city pairs. Drag to pan, scroll to zoom.`}
+        aria-label={`Alliance route map, ${arcs.length} city pairs. Drag to pan; use the zoom buttons, or hold ctrl while scrolling.`}
         onPointerDown={(e) => {
           // Only the primary button, and never on a marker: clicking an
           // airport should still pick it rather than start a drag.
@@ -254,26 +327,6 @@ export default function RouteMap({
         onPointerCancel={() => {
           drag.current = null
           setDragging(false)
-        }}
-        onWheel={(e) => {
-          // Zoom about the pointer, so the place under the cursor stays put.
-          const box = (e.currentTarget as SVGSVGElement).getBoundingClientRect()
-          const perPx = W / Math.max(box.width, 1)
-          const mx = (e.clientX - box.left) * perPx
-          const my = (e.clientY - box.top) * perPx
-          const next = Math.min(
-            18,
-            Math.max(1, view.scale * (e.deltaY < 0 ? 1.18 : 1 / 1.18)),
-          )
-          // The world point under the cursor, before and after.
-          const wx = (mx - view.tx) / view.scale
-          const wy = (my - view.ty) / view.scale
-          setManual({
-            scale: next,
-            tx: clampTx(mx - wx * next, next),
-            ty: clampTy(my - wy * next, next),
-            zoomed: next > 1.02,
-          })
         }}
       >
         <g
@@ -381,6 +434,39 @@ export default function RouteMap({
           </div>
         </div>
       )}
+
+      {/* Zoom without a gesture at all. A trackpad pinch is prevented from
+          zooming the page, and a plain scroll is deliberately left to the
+          page, so these are the way in for anyone who wants neither. */}
+      <div className="absolute bottom-2 left-2 flex flex-col gap-1">
+        <button
+          type="button"
+          aria-label="Zoom in"
+          onClick={() => zoomAbout(1.35, W / 2, H / 2)}
+          className="mono h-8 w-8 border border-edge bg-[color:var(--color-ground)]/85 text-[15px] leading-none text-ink-dim transition-colors hover:border-accent hover:text-ink"
+        >
+          +
+        </button>
+        <button
+          type="button"
+          aria-label="Zoom out"
+          onClick={() => zoomAbout(1 / 1.35, W / 2, H / 2)}
+          className="mono h-8 w-8 border border-edge bg-[color:var(--color-ground)]/85 text-[15px] leading-none text-ink-dim transition-colors hover:border-accent hover:text-ink"
+        >
+          −
+        </button>
+        {manual && (
+          <button
+            type="button"
+            aria-label="Reset the view"
+            title="Reset the view"
+            onClick={() => setManual(null)}
+            className="mono h-8 w-8 border border-edge bg-[color:var(--color-ground)]/85 text-[11px] leading-none text-ink-dim transition-colors hover:border-accent hover:text-ink"
+          >
+            ⤢
+          </button>
+        )}
+      </div>
 
       {focusedAirport && (
         <div className="panel absolute right-2 top-2 px-3 py-2">
