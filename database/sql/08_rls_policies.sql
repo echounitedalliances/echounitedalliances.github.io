@@ -174,7 +174,9 @@ grant select on public.departure_inventory to anon, authenticated;
 
 grant execute on function
     public.search_flights(text, text, date, text, integer),
-    public.search_itineraries(text, text, date, text, integer, integer, integer),
+    -- Nine arguments since the search became tiered: the last two are
+    -- p_stops_exactly and p_offset, which page one stop-depth at a time.
+    public.search_itineraries(text, text, date, text, integer, integer, integer, integer, integer),
     public.find_booking(text, text),
     public.echo_available_seats(uuid, uuid, text, date, text)
 to anon, authenticated;

@@ -19,6 +19,23 @@
 --  Dates, not day offsets. A first leg can land the same day or the next, so
 --  onward legs consider three candidate departure dates and apply the weekday
 --  test per date.
+--
+--  !! NEVER RUN THIS FILE ON ITS OWN. Run 07 through the last file, in order.
+--
+--  The two matviews below are dropped WITH CASCADE, and the cascade reaches
+--  FORWARD into files numbered after this one. Running 07 alone silently
+--  destroys, and does not recreate:
+--
+--      mv_airport_directory   (09)  the departure board, airport pages
+--      mv_network_arcs        (09)  the network map
+--      mv_network_nodes       (09)  the network map
+--      search_airports        (09)  the airport autocomplete
+--
+--  Nothing errors. The site keeps building, keeps deploying, and those
+--  features return nothing until somebody notices. That has now happened
+--  twice -- once from 09, once from here -- so if you touch this file, the
+--  job is not finished until 08 onwards have been re-run and
+--  scripts/verify.ps1 passes.
 -- =====================================================================
 
 begin;

@@ -141,6 +141,14 @@ union all select 'leg_departures', count(*) from public.mv_leg_departures
 order by t;
 "@
 
+# Nothing above this line fails when a cascade has quietly removed an object
+# that a later file was supposed to recreate -- every statement succeeds and
+# the hole only shows up as an empty feature on the live site. Check.
+Write-Host ""
+Write-Host "==> verifying every object the site reads" -ForegroundColor Cyan
+& "$PSScriptRoot/verify.ps1" -ConnectionString $ConnectionString
+if ($LASTEXITCODE -ne 0) { throw "deploy finished but verification failed -- see above" }
+
 Write-Host ""
 Write-Host "Deployed." -ForegroundColor Green
 Write-Host "Try it:  select * from public.search_itineraries('SGN','LIM',current_date+7,'ECONOMY',1,1,10);"
