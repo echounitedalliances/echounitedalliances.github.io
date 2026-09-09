@@ -114,6 +114,31 @@ foreach ($c in $calls) {
     }
 }
 
+# As the ANON role, which is what a visitor actually is.
+#
+# Everything above runs as the owner, who can read anything -- so a missing
+# GRANT, or a security_invoker view over a table the public cannot read, sails
+# straight through it. That exact mistake returned 401 "No such carrier" on
+# every carrier page while the owner's own checks were all green.
+Write-Output "as a visitor"
+foreach ($v in @(
+    @{ name = 'v_airline_profile';        sql = "select count(*) from public.v_airline_profile" },
+    @{ name = 'v_airline_directory_live'; sql = "select count(*) from public.v_airline_directory_live" },
+    @{ name = 'search_airlines';          sql = "select count(*) from public.search_airlines(null,null,null,5,0)" },
+    @{ name = 'mv_network_arcs';          sql = "select count(*) from public.mv_network_arcs" },
+    @{ name = 'mv_airport_directory';     sql = "select count(*) from public.mv_airport_directory" }
+)) {
+    # No RESET: each psql call is its own session, and the last line of
+    # output has to be the count rather than the word RESET.
+    $n = Invoke-Scalar ("set role anon; " + $v.sql)
+    if ($null -eq $n -or [int64]$n -lt 1) {
+        Write-Output ("  DENIED   {0}" -f $v.name)
+        $failures.Add("anon cannot read $($v.name) -- check GRANT and security_invoker")
+    } else {
+        Write-Output ("  ok       {0}  {1}" -f $v.name, $n)
+    }
+}
+
 # Every published carrier must resolve on its own page. This is the check that
 # would have caught the "No such carrier" outage.
 $published = Invoke-Scalar "select count(*) from public.airlines where is_published"

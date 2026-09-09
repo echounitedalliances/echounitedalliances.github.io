@@ -63,8 +63,15 @@ comment on column public.airline_overrides.airline_name is
 --  What everything reads
 -- ---------------------------------------------------------------------
 
-create or replace view public.v_airline_directory_live
-with (security_invoker = on) as
+-- NOT security_invoker, and that is the whole point of this view.
+--
+-- airline_overrides is revoked from anon and authenticated: nobody reads the
+-- edit table directly. With security_invoker the caller would need SELECT on
+-- it to read THIS view, and every carrier page returned 401 "No such carrier"
+-- the moment that was tried. A definer view is the right tool -- it exposes
+-- the coalesced result and nothing else, which is exactly the access anyone
+-- should have.
+create or replace view public.v_airline_directory_live as
 select d.uid,
        d.division_code,
        d.division_name,
