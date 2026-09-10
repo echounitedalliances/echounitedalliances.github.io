@@ -4,6 +4,7 @@ import { Loading, NotConfigured } from '../components/ui'
 import { isConfigured, supabase } from '../lib/supabase'
 import { useAuth } from '../lib/auth'
 import { PasswordCard, SignIn } from '../components/ResonanceAuth'
+import AdminApplyModal from '../components/AdminApplyModal'
 import type { AirportRow, BookingDetails, Division } from '../lib/types'
 import { num, shortDate, usd } from '../lib/format'
 import { useCarrierCount } from '../lib/carriers'
@@ -30,6 +31,7 @@ export default function Resonance() {
   const [airportQuery, setAirportQuery] = useState('')
   const [airportHits, setAirportHits] = useState<AirportRow[]>([])
   const [saved, setSaved] = useState(false)
+  const [showAdminModal, setShowAdminModal] = useState(false)
 
   useEffect(() => {
     if (!isConfigured || !resonant) return
@@ -229,6 +231,27 @@ export default function Resonance() {
           {/* Not shown twice: while recovering it is already at the top. */}
           {!recovering && <PasswordCard />}
 
+          {!resonant.is_admin && (
+            <section className="panel mt-4 flex flex-wrap items-center justify-between gap-3 p-5">
+              <div>
+                <h2 className="mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">
+                  Board
+                </h2>
+                <p className="mt-2 max-w-[54ch] text-sm text-ink-dim">
+                  Interested in helping run the alliance? Apply for admin —
+                  it goes straight to the board on Discord.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowAdminModal(true)}
+                className="btn btn-ghost"
+              >
+                Apply for admin
+              </button>
+            </section>
+          )}
+
           <section className="mt-10">
             <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
               <h2 className="display text-2xl">Your trips</h2>
@@ -299,6 +322,14 @@ export default function Resonance() {
             )}
           </section>
         </>
+      )}
+
+      {showAdminModal && (
+        <AdminApplyModal
+          createAccount={false}
+          initialEmail={user.email ?? ''}
+          onClose={() => setShowAdminModal(false)}
+        />
       )}
     </div>
   )

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../lib/auth'
 import { useCarrierCount } from '../lib/carriers'
 import { num } from '../lib/format'
+import AdminApplyModal from './AdminApplyModal'
 
 /**
  * Getting into a Resonance account.
@@ -22,7 +23,7 @@ import { num } from '../lib/format'
  */
 
 /** What the server enforces is set in the dashboard; this is the front door. */
-const MIN_PASSWORD = 8
+export const MIN_PASSWORD = 8
 
 /**
  * GoTrue's own wording, translated where it would leave someone stuck.
@@ -33,7 +34,7 @@ const MIN_PASSWORD = 8
  * rate limit) is a wall you can hit just by retrying a form that looked
  * broken for an unrelated reason.
  */
-function explain(error: { message: string; code?: string; status?: number }) {
+export function explain(error: { message: string; code?: string; status?: number }) {
   const code = error.code ?? ''
   const msg = error.message ?? ''
   if (code === 'over_email_send_rate_limit' || /rate limit/i.test(msg)) {
@@ -119,16 +120,27 @@ export function SignIn() {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [note, setNote] = useState<string | null>(null)
+  const [wantsAdmin, setWantsAdmin] = useState(false)
+  const [showAdminModal, setShowAdminModal] = useState(false)
 
   const go = (m: Mode) => {
     setMode(m)
     setError(null)
     setNote(null)
     setPassword('')
+    setWantsAdmin(false)
   }
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    // Applying for admin needs a Discord username the form below does not
+    // collect, so it hands off to its own modal instead of signing up here.
+    if (mode === 'signup' && wantsAdmin) {
+      setShowAdminModal(true)
+      return
+    }
+
     setBusy(true)
     setError(null)
     setNote(null)
@@ -178,7 +190,13 @@ export function SignIn() {
         : 'Sign in'
 
   const cta =
-    mode === 'signup' ? 'Create account' : mode === 'forgot' ? 'Send reset link' : 'Sign in'
+    mode === 'signup'
+      ? wantsAdmin
+        ? 'Continue'
+        : 'Create account'
+      : mode === 'forgot'
+        ? 'Send reset link'
+        : 'Sign in'
 
   const emailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)
   const wantsPassword = mode !== 'forgot'
@@ -226,6 +244,18 @@ export function SignIn() {
                 : undefined
             }
           />
+        )}
+
+        {mode === 'signup' && (
+          <label className="flex items-center gap-2 text-sm text-ink-dim">
+            <input
+              type="checkbox"
+              checked={wantsAdmin}
+              onChange={(e) => setWantsAdmin(e.target.checked)}
+              className="h-4 w-4 border-edge bg-ground-2 accent-cyan"
+            />
+            Admin? Check this box to apply for admin
+          </label>
         )}
 
         {mode === 'signup' && (
@@ -295,6 +325,15 @@ export function SignIn() {
         </Link>
         .
       </p>
+
+      {showAdminModal && (
+        <AdminApplyModal
+          createAccount
+          initialEmail={email}
+          initialPassword={password}
+          onClose={() => setShowAdminModal(false)}
+        />
+      )}
     </>
   )
 }
