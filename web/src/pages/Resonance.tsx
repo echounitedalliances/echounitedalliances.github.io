@@ -5,6 +5,7 @@ import { isConfigured, supabase } from '../lib/supabase'
 import { useAuth } from '../lib/auth'
 import { PasswordCard, SignIn } from '../components/ResonanceAuth'
 import AdminApplyModal from '../components/AdminApplyModal'
+import AdminApplications from '../components/AdminApplications'
 import type { AirportRow, BookingDetails, Division } from '../lib/types'
 import { num, shortDate, usd } from '../lib/format'
 import { useCarrierCount } from '../lib/carriers'
@@ -227,6 +228,9 @@ export default function Resonance() {
               </p>
             )}
           </section>
+
+          {/* Renders nothing at all unless this account is an admin. */}
+          <AdminApplications />
 
           {/* Not shown twice: while recovering it is already at the top. */}
           {!recovering && <PasswordCard />}

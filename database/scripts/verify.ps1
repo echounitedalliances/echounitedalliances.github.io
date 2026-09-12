@@ -78,10 +78,26 @@ $calls = @(
     @{ name = 'rtw_quote';          sql = "select count(*) from public.rtw_quote(array['LHR','DXB','SIN','SYD','LAX'], 'ECONOMY')"; min = 1 }
 )
 
+# Returns the last line psql printed, or $null if the query failed at all.
+#
+# The stderr handling is not incidental. This script runs with
+# $ErrorActionPreference = 'Stop', and Windows PowerShell turns a native
+# executable's stderr into a NativeCommandError record -- so `2>&1` made a
+# refusal from psql terminate the whole run. That was harmless while every
+# check here expected success; the "locked down" checks below expect psql to
+# refuse, which is the point of them. Sending stderr to a file, with Continue
+# in scope, lets a failed query be an answer rather than the end of the run.
 function Invoke-Scalar([string]$sql) {
-    $out = & $psql $ConnectionString -t -A -c $sql 2>&1
-    if ($LASTEXITCODE -ne 0) { return $null }
-    return ($out | Select-Object -Last 1).Trim()
+    $ErrorActionPreference = 'Continue'
+    $errFile = [System.IO.Path]::GetTempFileName()
+    try {
+        $out = & $psql $ConnectionString -t -A -c $sql 2>$errFile
+        if ($LASTEXITCODE -ne 0) { return $null }
+        if ($null -eq $out) { return $null }
+        return ($out | Select-Object -Last 1).Trim()
+    } finally {
+        Remove-Item $errFile -Force -ErrorAction SilentlyContinue
+    }
 }
 
 $failures = New-Object System.Collections.Generic.List[string]
@@ -137,6 +153,45 @@ foreach ($v in @(
     } else {
         Write-Output ("  ok       {0}  {1}" -f $v.name, $n)
     }
+}
+
+# Locked down -- the opposite assertion to the one above. These must NOT
+# answer, and a green tick here means somebody was correctly turned away.
+#
+# Worth its own section because PostgreSQL grants EXECUTE on every new
+# function to PUBLIC, and every role is a member of PUBLIC. So a rewrite of
+# 28_admin_applications.sql that loses the REVOKE hands the admin queue --
+# which is every applicant's email address -- to anyone holding the publishable
+# key, and not one check above this line would go red.
+Write-Output "locked down"
+foreach ($d in @(
+    @{ name = 'admin_applications, as a visitor'; sql = "set role anon; select count(*) from public.admin_applications" },
+    @{ name = 'the queue, as a visitor';          sql = "set role anon; select count(*) from public.admin_applications_list('all')" },
+    @{ name = 'the queue, signed in but not admin'; sql = "set role authenticated; select count(*) from public.admin_applications_list('all')" }
+)) {
+    $n = Invoke-Scalar $d.sql
+    if ($null -ne $n) {
+        Write-Output ("  OPEN     {0}  answered with {1}" -f $d.name, $n)
+        $failures.Add("$($d.name): readable without being an admin")
+    } else {
+        Write-Output ("  ok       {0}  refused" -f $d.name)
+    }
+}
+
+# And the grants themselves, rather than only the behaviour: this catches a
+# lost REVOKE on the write paths, which cannot be probed safely by calling them.
+$anonExec = Invoke-Scalar @"
+select count(*) from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+ where n.nspname = 'public'
+   and p.proname in ('apply_for_admin','my_admin_application','record_admin_application',
+                     'admin_applications_list','decide_admin_application')
+   and has_function_privilege('anon', p.oid, 'execute')
+"@
+if ($null -eq $anonExec -or [int64]$anonExec -ne 0) {
+    Write-Output ("  OPEN     anon may execute {0} of the admin functions" -f $anonExec)
+    $failures.Add("anon holds EXECUTE on $anonExec admin-application functions; expected 0")
+} else {
+    Write-Output "  ok       anon may execute none of the admin functions"
 }
 
 # Every published carrier must resolve on its own page. This is the check that

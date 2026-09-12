@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Modal from './Modal'
 import { useAuth } from '../lib/auth'
-import { adminApplyConfigured, submitAdminApplication } from '../lib/adminApply'
+import { submitAdminApplication } from '../lib/adminApply'
 import { MIN_PASSWORD, explain } from './ResonanceAuth'
 
 /**
@@ -14,7 +14,8 @@ import { MIN_PASSWORD, explain } from './ResonanceAuth'
  * application.
  *
  * Either way this is a request, not a grant. Nothing here changes is_admin;
- * a board member does that by hand once they have read it.
+ * a board member does that by hand once they have read it -- now from the
+ * queue on their own Resonance page rather than out of psql.
  */
 export default function AdminApplyModal({
   createAccount,
@@ -39,8 +40,7 @@ export default function AdminApplyModal({
   const canSubmit =
     emailOk &&
     discordUsername.trim().length > 0 &&
-    (!createAccount || password.length >= MIN_PASSWORD) &&
-    adminApplyConfigured
+    (!createAccount || password.length >= MIN_PASSWORD)
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -79,7 +79,7 @@ export default function AdminApplyModal({
           {createAccount && needsConfirmation
             ? `Confirm ${email} from the email we just sent, then sign in. `
             : ''}
-          Your admin application is on its way — a board member will follow up
+          Your admin application is with the board — someone will follow up
           with you on Discord.
         </p>
       </Modal>
@@ -90,8 +90,8 @@ export default function AdminApplyModal({
     <Modal title="Apply for admin" onClose={onClose}>
       <form onSubmit={submit} className="flex flex-col gap-3">
         <p className="text-sm text-ink-dim">
-          Sent straight to the board on Discord — someone will follow up with
-          you there. This is a request, not an approval.
+          This goes to the board, who will follow up with you on Discord. It
+          is a request, not an approval.
         </p>
 
         <label className="block">
@@ -133,12 +133,6 @@ export default function AdminApplyModal({
             className="w-full border border-edge bg-ground-2 px-3 py-2.5 text-ink outline-none focus:border-accent"
           />
         </label>
-
-        {!adminApplyConfigured && (
-          <p className="text-[12px] text-danger">
-            Admin applications are not set up on this build yet.
-          </p>
-        )}
 
         <button
           type="submit"

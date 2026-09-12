@@ -15,6 +15,7 @@
  *   the visitor counter   -> lib/presence.ts
  *   browser storage       -> lib/advisories.ts, and Supabase's own session
  *   who can read what     -> database/sql/08_rls_policies.sql
+ *   admin requests        -> database/sql/28_admin_applications.sql
  *
  * If any of those change, this changes with them. A privacy notice that has
  * drifted from what the software does is the one kind that actively harms.
@@ -36,7 +37,7 @@ export type Policy = {
   sections: PolicySection[]
 }
 
-const UPDATED = '8 September 2026'
+const UPDATED = '12 September 2026'
 const TERMS_UPDATED = '9 September 2026'
 
 export const TERMS: Policy = {
@@ -184,7 +185,8 @@ export const PRIVACY: Policy = {
     {
       heading: 'When you apply to join',
       body: [
-        'Applying happens on Discord. This site has no application form and collects nothing from you when you set out to join — it links you to the server and stops there.',
+        'Applying to join happens on Discord. This site has no form for it and collects nothing from you when you set out to join — it links you to the server and stops there.',
+        'Asking to help administer the site is a separate thing and does have a form, because only someone who already has an account can ask. It is described further down.',
         'What we see is therefore whatever Discord shows us: your handle, your display name, your avatar, and what you write in the application. We do not ask for your real name, your address, your age or your location, and you should not send them.',
         'Applications stay in that Discord channel indefinitely, so leaders can look back at who joined when. If you want yours removed, ask — see below.',
       ],
@@ -195,6 +197,14 @@ export const PRIVACY: Policy = {
         'A Resonance account is optional. Everything on this site except saving your own trips works without one.',
         'If you create one, we hold your email address and the bookings you make. Your password is never seen by this site: it goes to Supabase, our database host, which stores it hashed and handles signing you in.',
         'We do not send marketing email. The only mail an account can generate is a password reset you asked for.',
+      ],
+    },
+    {
+      heading: 'When you ask to help administer the site',
+      body: [
+        'Members with an account can ask to become a site admin, and the board can log a request that reached them through Discord instead. Either way the request is stored in our database rather than in a Discord channel, because it has to be actioned and then shown to have been actioned.',
+        'What is stored is the email address already on your account, the Discord handle you type, what you write about why, and afterwards the decision, the date, and which admin made it. You are not asked for anything else.',
+        'A request stays on the record after it is decided, including one that was turned down — an alliance ought to be able to see who was given the run of the site and by whom. Ask and we will remove yours; see below.',
       ],
     },
     {
@@ -236,6 +246,7 @@ export const PRIVACY: Policy = {
       list: [
         'Your application is visible to the division leaders and board members who read that Discord channel. That is the point of sending it, and it is not visible to the membership at large.',
         'Your email address and your bookings are visible to nobody but you. No member, leader or board member can see another Resonance account from this site, and the database will not return one.',
+        'The one exception, and it only applies if you make it apply: if you ask to help administer the site, the admins reading that queue see the address on your account, your display name and your Discord handle. That is unavoidable — the address is what the promotion is applied to — and it is why asking is a deliberate act rather than a setting.',
         'Your name on a booking is visible to whoever holds the booking reference, because that is what retrieves it.',
       ],
     },
@@ -263,6 +274,7 @@ export const PRIVACY: Policy = {
         'web/src/lib/presence.ts — the open-tabs counter, including the random per-tab identifier.',
         'web/src/lib/advisories.ts — the one thing we put in your browser storage.',
         'database/sql/08_rls_policies.sql — the row-level rules that decide what any account is allowed to read.',
+        'database/sql/28_admin_applications.sql — admin requests: what is stored, and the checks on who may read or decide one.',
       ],
     },
     {
