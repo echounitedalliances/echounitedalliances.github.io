@@ -167,7 +167,9 @@ Write-Output "locked down"
 foreach ($d in @(
     @{ name = 'admin_applications, as a visitor'; sql = "set role anon; select count(*) from public.admin_applications" },
     @{ name = 'the queue, as a visitor';          sql = "set role anon; select count(*) from public.admin_applications_list('all')" },
-    @{ name = 'the queue, signed in but not admin'; sql = "set role authenticated; select count(*) from public.admin_applications_list('all')" }
+    @{ name = 'the queue, signed in but not admin'; sql = "set role authenticated; select count(*) from public.admin_applications_list('all')" },
+    @{ name = 'moving a carrier, signed in but not admin'; sql = "set role authenticated; select count(*) from public.admin_move_airline('00000000-0000-0000-0000-000000000000'::uuid, 'kyra')" },
+    @{ name = 'the network rebuild, signed in';           sql = "set role authenticated; select public.echo_refresh_division_network()" }
 )) {
     $n = Invoke-Scalar $d.sql
     if ($null -ne $n) {
@@ -184,12 +186,13 @@ $anonExec = Invoke-Scalar @"
 select count(*) from pg_proc p join pg_namespace n on n.oid = p.pronamespace
  where n.nspname = 'public'
    and p.proname in ('apply_for_admin','my_admin_application','record_admin_application',
-                     'admin_applications_list','decide_admin_application')
+                     'admin_applications_list','decide_admin_application',
+                     'admin_move_airline','admin_update_airline','echo_refresh_division_network')
    and has_function_privilege('anon', p.oid, 'execute')
 "@
 if ($null -eq $anonExec -or [int64]$anonExec -ne 0) {
     Write-Output ("  OPEN     anon may execute {0} of the admin functions" -f $anonExec)
-    $failures.Add("anon holds EXECUTE on $anonExec admin-application functions; expected 0")
+    $failures.Add("anon holds EXECUTE on $anonExec admin functions; expected 0")
 } else {
     Write-Output "  ok       anon may execute none of the admin functions"
 }

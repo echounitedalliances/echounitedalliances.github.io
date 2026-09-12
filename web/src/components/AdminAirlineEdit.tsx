@@ -1,26 +1,31 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Modal from './Modal'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../lib/auth'
-import type { Airline } from '../lib/types'
+import type { Airline, Division } from '../lib/types'
 
 /**
- * The only thing an admin can change about a carrier: what it is called, and
- * the paragraph under the name.
+ * What an admin can change about a carrier: what it is called, the paragraph
+ * under the name, and which division it flies in.
  *
  * Everything else on the page — fleet, routes, hubs, fares — is scraped from
  * the game and rewritten by the next import, so editing it would produce a
- * value with a shelf life measured in days. Two fields is the whole feature,
- * and keeping it to two is the point rather than a limitation.
+ * value with a shelf life measured in days. The three here are the exceptions
+ * because each is something the scrape gets wrong in a way no amount of
+ * re-importing fixes.
  *
- * Both fields revert rather than blank: clearing the name restores whatever
- * the game calls the airline, and clearing the description restores the
- * generated one. That is why neither is required, and why the placeholder
- * shows what you would get back.
+ * Name and description revert rather than blank: clearing the name restores
+ * whatever the game calls the airline, and clearing the description restores
+ * the generated one. The division reverts the same way — set it back to where
+ * the game had it and the override is dropped entirely, rather than pinning
+ * the carrier there for ever.
  *
- * It appears only for an admin. A member who is not one never sees it, and
- * the RPC behind it checks again on the server — the hidden button is
- * courtesy, not security.
+ * Two RPCs, because they are genuinely different operations: a move rewrites
+ * public.airlines so that every per-division total follows it, and reports
+ * back that the network map is a rebuild behind. The edit does not.
+ *
+ * It appears only for an admin, and both RPCs check again on the server — the
+ * hidden button is courtesy, not security.
  */
 export default function AdminAirlineEdit({
   airline,
@@ -33,10 +38,27 @@ export default function AdminAirlineEdit({
   const [open, setOpen] = useState(false)
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
+  const [division, setDivision] = useState('')
+  const [divisions, setDivisions] = useState<Division[]>([])
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [moved, setMoved] = useState<string | null>(null)
 
-  if (!resonant?.is_admin) return null
+  const isAdmin = resonant?.is_admin ?? false
+
+  useEffect(() => {
+    if (!isAdmin || !open || divisions.length > 0) return
+    void (async () => {
+      const { data } = await supabase
+        .from('v_division_summary')
+        .select('*')
+        .order('sort_order')
+      setDivisions((data as Division[]) ?? [])
+    })()
+  }, [isAdmin, open, divisions.length])
+
+  // Hooks above every return, always.
+  if (!isAdmin) return null
 
   const start = () => {
     // Seed with what is overridden today, not with the generated text: the
@@ -44,30 +66,62 @@ export default function AdminAirlineEdit({
     // consistently means "use what the game says".
     setName(airline.airline_name ?? '')
     setDescription(airline.description_is_custom ? (airline.description_md ?? '') : '')
+    setDivision(airline.division_code)
     setError(null)
+    setMoved(null)
     setOpen(true)
   }
 
   const save = async () => {
     setBusy(true)
     setError(null)
+    const movingTo = division && division !== airline.division_code ? division : null
     try {
-      const { data, error } = await supabase.rpc('admin_update_airline', {
+      // The edit first. If the move then fails, the carrier is still named
+      // correctly and the error says the move did not happen — the other
+      // order would leave it moved under a name the admin meant to change.
+      const { error: editError } = await supabase.rpc('admin_update_airline', {
         p_uid: airline.uid,
         p_airline_name: name.trim() || null,
         p_description_md: description.trim() || null,
       })
-      if (error) throw new Error(error.message)
-      const rows = (data as Airline[]) ?? []
-      if (rows.length === 0) throw new Error('The carrier was not returned after saving.')
-      onSaved(rows[0])
-      setOpen(false)
+      if (editError) throw new Error(editError.message)
+
+      if (movingTo) {
+        const { error: moveError } = await supabase.rpc('admin_move_airline', {
+          p_uid: airline.uid,
+          p_division_code: movingTo,
+        })
+        if (moveError) throw new Error(moveError.message)
+      }
+
+      // Read the carrier back rather than patching it together from two
+      // returns: the division's name and colour both change with a move, and
+      // the profile view is the thing that knows.
+      const { data, error: readError } = await supabase
+        .from('v_airline_profile')
+        .select('*')
+        .eq('uid', airline.uid)
+        .maybeSingle()
+      if (readError) throw new Error(readError.message)
+      if (!data) throw new Error('The carrier was not returned after saving.')
+
+      const updated = data as Airline
+      onSaved(updated)
+
+      // A move is worth a word before the modal goes away: the map will not
+      // agree yet, and finding that out by noticing is a worse experience
+      // than being told.
+      if (movingTo) setMoved(updated.division_name)
+      else setOpen(false)
     } catch (e) {
       setError(e instanceof Error ? e.message : 'The change could not be saved.')
     } finally {
       setBusy(false)
     }
   }
+
+  const movingAway = division !== '' && division !== airline.division_code
 
   return (
     <>
@@ -80,64 +134,130 @@ export default function AdminAirlineEdit({
       </button>
 
       {open && (
-        <Modal wide title={`Edit ${airline.airline_name ?? airline.carrier_code}`} onClose={() => setOpen(false)}>
-          <p className="mb-5 text-sm leading-relaxed text-ink-dim">
-            Only these two. Everything else on a carrier's page comes from the game
-            and is rewritten by the next import, so it is not editable here.
-          </p>
+        <Modal
+          wide
+          title={`Edit ${airline.airline_name ?? airline.carrier_code}`}
+          onClose={() => setOpen(false)}
+        >
+          {moved ? (
+            <>
+              <p className="text-sm leading-relaxed text-ink-dim">
+                Moved to <span className="text-ink">{moved}</span>. The carrier
+                page, the directory, search and every division total are already
+                showing it there.
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-ink-dim">
+                The route map still draws its routes in the old division's
+                colour. That colouring is worked out across the whole network at
+                once and is rebuilt on the next deploy — nothing is wrong with
+                it in the meantime, it is just a rebuild behind.
+              </p>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="mono mt-6 bg-accent px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#0B0713] transition-opacity hover:opacity-90"
+              >
+                Done
+              </button>
+            </>
+          ) : (
+            <>
+              <p className="mb-5 text-sm leading-relaxed text-ink-dim">
+                Only these three. Everything else on a carrier's page comes from
+                the game and is rewritten by the next import, so it is not
+                editable here.
+              </p>
 
-          <label className="eyebrow mb-1.5 block text-ink-faint" htmlFor="admin-name">
-            Airline name
-          </label>
-          <input
-            id="admin-name"
-            value={name}
-            autoFocus
-            maxLength={80}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Leave empty to use the name from the game"
-            className="mono w-full border border-edge bg-ground-2 px-3 py-2.5 text-ink outline-none focus:border-accent"
-          />
+              <label className="eyebrow mb-1.5 block text-ink-faint" htmlFor="admin-name">
+                Airline name
+              </label>
+              <input
+                id="admin-name"
+                value={name}
+                autoFocus
+                maxLength={80}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Leave empty to use the name from the game"
+                className="mono w-full border border-edge bg-ground-2 px-3 py-2.5 text-ink outline-none focus:border-accent"
+              />
 
-          <label className="eyebrow mb-1.5 mt-5 block text-ink-faint" htmlFor="admin-desc">
-            Description
-          </label>
-          <textarea
-            id="admin-desc"
-            value={description}
-            maxLength={4000}
-            rows={8}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Leave empty to use the description generated from what this carrier flies"
-            className="w-full border border-edge bg-ground-2 px-3 py-2.5 text-sm leading-relaxed text-ink outline-none focus:border-accent"
-          />
-          <p className="mt-1.5 text-[11px] text-ink-faint">
-            {description.length}/4000 · empty restores the generated description
-          </p>
+              <label className="eyebrow mb-1.5 mt-5 block text-ink-faint" htmlFor="admin-division">
+                Division
+              </label>
+              <select
+                id="admin-division"
+                value={division}
+                onChange={(e) => setDivision(e.target.value)}
+                className="w-full border border-edge bg-ground-2 px-3 py-2.5 text-ink outline-none focus:border-accent"
+              >
+                {divisions.length === 0 && (
+                  <option value={airline.division_code}>{airline.division_name}</option>
+                )}
+                {divisions.map((d) => (
+                  <option key={d.division_code} value={d.division_code}>
+                    {d.division_name}
+                  </option>
+                ))}
+              </select>
 
-          {error && (
-            <p className="mt-4 border-l-2 border-l-[color:var(--color-danger)] pl-3 text-sm text-danger">
-              {error}
-            </p>
+              {movingAway && (
+                <div className="mt-2 border-l-2 border-l-[color:var(--color-warn)] pl-3">
+                  <p className="text-[12px] leading-relaxed text-ink-dim">
+                    Moving a carrier changes every per-division total it counts
+                    towards, and the colour its routes are drawn in.
+                  </p>
+                  {airline.is_division_leader && (
+                    <p className="mt-1.5 text-[12px] leading-relaxed text-warn">
+                      This carrier is flagged as a division leader. That flag
+                      comes from the game and is left alone here, so it will
+                      still read as a leader after the move — worth correcting
+                      in-game if it should not.
+                    </p>
+                  )}
+                </div>
+              )}
+
+              <label className="eyebrow mb-1.5 mt-5 block text-ink-faint" htmlFor="admin-desc">
+                Description
+              </label>
+              <textarea
+                id="admin-desc"
+                value={description}
+                maxLength={4000}
+                rows={8}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Leave empty to use the description generated from what this carrier flies"
+                className="w-full border border-edge bg-ground-2 px-3 py-2.5 text-sm leading-relaxed text-ink outline-none focus:border-accent"
+              />
+              <p className="mt-1.5 text-[11px] text-ink-faint">
+                {description.length}/4000 · empty restores the generated description
+              </p>
+
+              {error && (
+                <p className="mt-4 border-l-2 border-l-[color:var(--color-danger)] pl-3 text-sm text-danger">
+                  {error}
+                </p>
+              )}
+
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  disabled={busy}
+                  onClick={() => void save()}
+                  className="mono bg-accent px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#0B0713] transition-opacity hover:opacity-90 disabled:opacity-50"
+                >
+                  {busy ? 'Updating…' : 'Update'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  className="mono border border-edge px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-ink-dim transition-colors hover:text-ink"
+                >
+                  Cancel
+                </button>
+              </div>
+            </>
           )}
-
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            <button
-              type="button"
-              disabled={busy}
-              onClick={() => void save()}
-              className="mono bg-accent px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#0B0713] transition-opacity hover:opacity-90 disabled:opacity-50"
-            >
-              {busy ? 'Updating…' : 'Update'}
-            </button>
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              className="mono border border-edge px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-ink-dim transition-colors hover:text-ink"
-            >
-              Cancel
-            </button>
-          </div>
         </Modal>
       )}
     </>
