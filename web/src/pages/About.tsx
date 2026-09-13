@@ -16,7 +16,7 @@ import EchoMark from '../components/EchoMark'
  *
  * There is no origin story here yet, deliberately. Rather than fill the space
  * with something invented, the page carries what is actually known — the
- * slogan, the eight leaders, and the size of the thing they run.
+ * slogan, the division leaders, and the size of the thing they run.
  */
 export default function About() {
   const [divisions, setDivisions] = useState<Division[] | null>(null)
@@ -120,7 +120,7 @@ export default function About() {
       <section className="mt-14">
         <h2 className="display text-2xl">The board</h2>
         <p className="mt-1 max-w-[62ch] text-ink-faint">
-          Echo's board is its eight division leaders — the people who run each
+          Echo's board is its division leaders — the people who run each
           alliance also run the group. They are listed here by the name and
           handle they go by on Discord, which is where the group actually
           meets; several of them own more than one carrier.

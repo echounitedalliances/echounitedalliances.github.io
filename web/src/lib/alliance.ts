@@ -27,12 +27,14 @@ export type Leader = {
 }
 
 /**
- * The board is currently exactly the eight division leaders. If that stops
- * being true, this is where it stops being true.
+ * The board is the division leaders, and this is the whole of it. If that
+ * stops being true, this is where it stops being true.
  *
- * One row per leader, not per division: a division can be led by more than
- * one person, and Elion is. The About page groups them by division_code, so
- * adding a second row for a division is all a co-leadership takes.
+ * One row per leader, not per division, because the two do not match one to
+ * one in either direction: a division can be led by more than one person, and
+ * one person can lead more than one division -- Ahnaf currently leads both
+ * Aura and Elion. That is why nothing here counts the leaders and calls it
+ * the number of divisions; the About page groups by division_code instead.
  */
 export const LEADERS: Leader[] = [
   { division_code: 'kyra', name: 'Naofum', discord: 'w4leste' },
@@ -41,7 +43,6 @@ export const LEADERS: Leader[] = [
   { division_code: 'proxima', name: 'Rust', discord: '.rustyy' },
   { division_code: 'rhea', name: 'Reiner', discord: '_erwinsmith' },
   { division_code: 'vilis', name: 'Yukai', discord: 'ykw_1009' },
-  { division_code: 'elion', name: 'Tekkerz', discord: 'jaffacakes12' },
   { division_code: 'elion', name: 'Ahnaf', discord: '_ahnafabrar_' },
   { division_code: 'aura', name: 'Ahnaf', discord: '_ahnafabrar_' },
 ]
