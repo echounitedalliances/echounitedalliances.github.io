@@ -35,11 +35,14 @@ export default function About() {
   const byCode = new Map((divisions ?? []).map((d) => [d.division_code, d]))
   // Division order is group policy and lives in sort_order, so the board is
   // listed the way the divisions are listed everywhere else.
+  // filter, not find: a division can be led by more than one person, and
+  // taking only the first would drop a co-leader without saying so.
   const board = (divisions ?? [])
-    .map((d) => ({ division: d, leader: LEADERS.find((l) => l.division_code === d.division_code) }))
-    .filter((row): row is { division: Division; leader: NonNullable<typeof row.leader> } =>
-      Boolean(row.leader),
-    )
+    .map((d) => ({
+      division: d,
+      leaders: LEADERS.filter((l) => l.division_code === d.division_code),
+    }))
+    .filter((row) => row.leaders.length > 0)
 
   const totals = (divisions ?? []).reduce(
     (a, d) => ({
@@ -127,11 +130,11 @@ export default function About() {
           <Loading />
         ) : (
           <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {board.map(({ division, leader }, i) => {
+            {board.map(({ division, leaders }, i) => {
               const accent = accentOf(division)
               return (
                 <article
-                  key={leader.division_code}
+                  key={division.division_code}
                   className="panel rise flex flex-col justify-between gap-4 p-5"
                   style={{ animationDelay: `${i * 40}ms`, ['--card-accent' as string]: accent }}
                 >
@@ -146,8 +149,12 @@ export default function About() {
                         {division.division_name}
                       </Link>
                     </div>
-                    <p className="display mt-3 text-2xl text-ink">{leader.name}</p>
-                    <p className="mono mt-1 text-[12px] text-ink-faint">@{leader.discord}</p>
+                    {leaders.map((leader) => (
+                      <div key={leader.discord} className="mt-3">
+                        <p className="display text-2xl text-ink">{leader.name}</p>
+                        <p className="mono mt-1 text-[12px] text-ink-faint">@{leader.discord}</p>
+                      </div>
+                    ))}
                   </div>
                   <p className="mono text-[10px] uppercase tracking-[0.1em] text-ink-faint">
                     {num(division.carriers)} carriers
