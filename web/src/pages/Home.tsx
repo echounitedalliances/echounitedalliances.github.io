@@ -10,6 +10,7 @@ import EchoMark from '../components/EchoMark'
 import { isConfigured, supabase } from '../lib/supabase'
 import type { Airline, Arc, Division, NetworkNode } from '../lib/types'
 import { accentOf, num } from '../lib/format'
+import { useAirportCount, useCarrierCount } from '../lib/carriers'
 
 /**
  * Identity, then the divisions, then the search — in that order, because this
@@ -21,6 +22,8 @@ export default function Home() {
   const [arcs, setArcs] = useState<Arc[]>([])
   const [nodes, setNodes] = useState<NetworkNode[]>([])
   const [spotlight, setSpotlight] = useState<Airline[]>([])
+  const carrierCount = useCarrierCount()
+  const airportCount = useAirportCount()
 
   useEffect(() => {
     if (!isConfigured) return
@@ -50,10 +53,11 @@ export default function Home() {
   /**
    * The roster size, shown in three places in this page's copy and
    * previously typed into all three by hand. It said 590 against a real
-   * roster of 602 for as long as nobody looked. It is a live figure now,
-   * with a floor so the headline never reads "0 airlines" on first paint.
+   * roster of 602 for as long as nobody looked. It is a live figure now:
+   * the division totals once they land, and the shared carrier count until
+   * then, so the headline never reads "0 airlines" on first paint.
    */
-  const carriers = totals.carriers || 602
+  const carriers = totals.carriers || carrierCount
 
   if (!isConfigured) return <NotConfigured />
 
@@ -88,7 +92,9 @@ export default function Home() {
                 ['Carriers', totals.carriers],
                 ['Aircraft', totals.aircraft],
                 ['Routes', totals.routes],
-                ['Airports', 2187],
+                // Was the literal 2187, a week out of date the moment the
+                // scrape moved. Now the airports the network actually serves.
+                ['Airports', airportCount],
               ].map(([label, value]) => (
                 <div key={label as string}>
                   <div className="mono text-[clamp(24px,4vw,44px)] leading-none text-ink">

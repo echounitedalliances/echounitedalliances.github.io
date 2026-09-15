@@ -93,7 +93,16 @@ insert into public.airport_city_overrides (iata_code, city_name, note) values
     -- Hahn's municipality reads "Frankfurt am Main", 120km from Frankfurt.
     -- Naming it after the city it is not near is how a traveller ends up at
     -- the wrong airport, so it gets the name everyone actually uses.
-    ('HHN', 'Frankfurt Hahn', 'municipality claims Frankfurt am Main; it is 120km away')
+    ('HHN', 'Frankfurt Hahn', 'municipality claims Frankfurt am Main; it is 120km away'),
+    -- Three that arrived with the 16 September 2026 scrape.
+    ('YEI', 'Bursa',          'municipality is Yenisehir, the town beside it; it is Bursa''s airport'),
+    ('NEU', 'Sam Neua',       'OurAirports has no municipality and mwgg gives Nong Khang, the village it sits in'),
+    ('BOR', 'Bokeo',          'municipality is Ton Phueng district; the airport and the province are Bokeo'),
+    -- Pilbara mine airstrips with no municipality at all, so the destination
+    -- column printed nothing. Each is named for the mine it serves.
+    ('WHB', 'Eliwana',        'mine airstrip, no municipality in either dataset'),
+    ('OCM', 'Boolgeeda',      'mine airstrip, no municipality in either dataset'),
+    ('WLP', 'West Angelas',   'mine airstrip, no municipality in either dataset')
 on conflict (iata_code) do update
    set city_name = excluded.city_name, note = excluded.note;
 

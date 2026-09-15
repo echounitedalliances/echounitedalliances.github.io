@@ -2,51 +2,72 @@ import { useEffect, useState } from 'react'
 import { isConfigured, supabase } from './supabase'
 
 /**
- * How many carriers the alliance publishes.
+ * The network's headline figures -- how many carriers, how many airports.
  *
- * The number appears in the copy on five pages, and until now every one of
- * them had it typed in by hand. They all said 590 against a roster of 602,
- * and they had said so since the roster grew -- because there is nothing
- * about a hardcoded number that ever tells you it has gone wrong.
+ * Both appear in copy across the site, and until now most of them had the
+ * number typed in by hand. They said 590 against a roster of 602 for as long
+ * as nobody looked, and the footer said 2,186 airports on the weekly scrape
+ * that took the group to 2,180 -- because there is nothing about a hardcoded
+ * number that ever tells you it has gone wrong.
  *
- * One count, fetched once per page load and shared. It is a HEAD request with
- * an exact count, so nothing but the number crosses the wire.
+ * Each figure is one HEAD request with an exact count, so nothing but the
+ * number crosses the wire, fetched once per page load and shared by every
+ * component that asks.
  *
- * FALLBACK is what renders before the count lands and if it never does. It
- * will drift, and that is fine: it is a placeholder for the first paint, not
- * the answer. Anything reading this gets the real figure a moment later.
+ * The fallback is what renders before the count lands, and if it never does.
+ * It will drift, and that is fine: it is a placeholder for the first paint,
+ * not the answer. Anything reading these gets the real figure a moment later.
+ * Last set from the 16 September 2026 scrape.
  */
-const FALLBACK = 602
+type CountQuery = PromiseLike<{ count: number | null; error: unknown }>
 
-let cached: number | null = null
-let inFlight = false
-const listeners = new Set<(n: number) => void>()
+function sharedCount(fallback: number, query: () => CountQuery) {
+  let cached: number | null = null
+  let inFlight = false
+  const listeners = new Set<(n: number) => void>()
 
-function load(): void {
-  if (cached !== null || inFlight || !isConfigured) return
-  inFlight = true
-  void (async () => {
-    const { count, error } = await supabase
-      .from('mv_airline_directory')
-      .select('uid', { count: 'exact', head: true })
-    inFlight = false
-    if (error || count == null) return
-    cached = count
-    for (const notify of listeners) notify(count)
-  })()
+  const load = () => {
+    if (cached !== null || inFlight || !isConfigured) return
+    inFlight = true
+    void (async () => {
+      const { count, error } = await query()
+      inFlight = false
+      if (error || count == null) return
+      cached = count
+      for (const notify of listeners) notify(count)
+    })()
+  }
+
+  return function useSharedCount(): number {
+    const [n, setN] = useState<number>(cached ?? fallback)
+
+    useEffect(() => {
+      listeners.add(setN)
+      load()
+      if (cached !== null) setN(cached)
+      return () => {
+        listeners.delete(setN)
+      }
+    }, [])
+
+    return n
+  }
 }
 
-export function useCarrierCount(): number {
-  const [n, setN] = useState<number>(cached ?? FALLBACK)
+/** Carriers the alliance publishes. */
+export const useCarrierCount = sharedCount(583, () =>
+  supabase.from('mv_airline_directory').select('uid', { count: 'exact', head: true }),
+)
 
-  useEffect(() => {
-    listeners.add(setN)
-    load()
-    if (cached !== null) setN(cached)
-    return () => {
-      listeners.delete(setN)
-    }
-  }, [])
-
-  return n
-}
+/**
+ * Airports the network actually serves. The airports table holds more than
+ * that on purpose -- an airport stays when the last route to it goes, because
+ * an account's home airport or an old booking may still name it -- so the
+ * figure counts the ones with a flight in or out, not the rows.
+ */
+export const useAirportCount = sharedCount(2180, () =>
+  supabase
+    .from('mv_airport_directory')
+    .select('iata_code', { count: 'exact', head: true })
+    .or('out_degree.gt.0,in_degree.gt.0'),
+)

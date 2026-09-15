@@ -2329,6 +2329,16 @@
   "tz": "Europe/Oslo",
   "tz_source": "dataset"
  },
+ "BOR": {
+  "city": "Ton Phueng",
+  "country": "LA",
+  "iata": "BOR",
+  "lat": 20.323986,
+  "lon": 100.165392,
+  "name": "Bokeo International Airport",
+  "tz": "Asia/Vientiane",
+  "tz_source": "country_default"
+ },
  "BOS": {
   "city": "Boston",
   "country": "US",
@@ -2816,8 +2826,8 @@
   "lat": -8.31015,
   "lon": 114.3401,
   "name": "Banyuwangi Airport",
-  "tz": null,
-  "tz_source": null
+  "tz": "Asia/Jakarta",
+  "tz_source": "airport_override"
  },
  "BXG": {
   "city": "Bendigo",
@@ -4026,8 +4036,8 @@
   "lat": 17.735015,
   "lon": -88.032862,
   "name": "Caye Caulker Airport",
-  "tz": null,
-  "tz_source": null
+  "tz": "America/Belize",
+  "tz_source": "country_default"
  },
  "CUL": {
   "city": "Culiacán",
@@ -4476,8 +4486,8 @@
   "lat": -4.8557,
   "lon": 139.482006,
   "name": "Nop Goliat Dekai Airport",
-  "tz": null,
-  "tz_source": null
+  "tz": "Asia/Jayapura",
+  "tz_source": "airport_override"
  },
  "DFW": {
   "city": "Dallas-Fort Worth",
@@ -4546,8 +4556,8 @@
   "lat": -7.749527,
   "lon": 111.946831,
   "name": "Dhoho International Airport",
-  "tz": null,
-  "tz_source": null
+  "tz": "Asia/Jakarta",
+  "tz_source": "airport_override"
  },
  "DIB": {
   "city": "Dibrugarh",
@@ -4906,8 +4916,8 @@
   "lat": 5.1561,
   "lon": 73.1302,
   "name": "Dharavandhoo Airport",
-  "tz": null,
-  "tz_source": null
+  "tz": "Indian/Maldives",
+  "tz_source": "country_default"
  },
  "DRW": {
   "city": "Darwin",
@@ -5557,16 +5567,6 @@
   "lon": -3.413984,
   "name": "Exeter International Airport",
   "tz": "Europe/London",
-  "tz_source": "dataset"
- },
- "EYP": {
-  "city": "Yopal",
-  "country": "CO",
-  "iata": "EYP",
-  "lat": 5.31911,
-  "lon": -72.384,
-  "name": "El Alcaravan - Yopal Airport",
-  "tz": "America/Bogota",
   "tz_source": "dataset"
  },
  "EYW": {
@@ -6326,8 +6326,8 @@
   "lat": 8.458474,
   "lon": 48.568136,
   "name": "Garowe Airport",
-  "tz": null,
-  "tz_source": null
+  "tz": "Africa/Mogadishu",
+  "tz_source": "country_default"
  },
  "GGT": {
   "city": "Moss Town",
@@ -9499,16 +9499,6 @@
   "tz": "Asia/Shanghai",
   "tz_source": "dataset"
  },
- "KHS": {
-  "city": "Khasab",
-  "country": "OM",
-  "iata": "KHS",
-  "lat": 26.171,
-  "lon": 56.240601,
-  "name": "Khasab Airport",
-  "tz": "Asia/Muscat",
-  "tz_source": "dataset"
- },
  "KHV": {
   "city": "Khabarovsk",
   "country": "RU",
@@ -12326,8 +12316,8 @@
   "lat": -2.201143,
   "lon": 121.662884,
   "name": "Maleo Airport",
-  "tz": null,
-  "tz_source": null
+  "tz": "Asia/Makassar",
+  "tz_source": "airport_override"
  },
  "MOL": {
   "city": "Årø",
@@ -12456,8 +12446,8 @@
   "lat": 32.325001,
   "lon": 15.061,
   "name": "Misrata International Airport",
-  "tz": null,
-  "tz_source": null
+  "tz": "Africa/Tripoli",
+  "tz_source": "country_default"
  },
  "MRS": {
   "city": "Marignane, Bouches-du-Rhône",
@@ -13049,6 +13039,16 @@
   "tz": "Africa/Casablanca",
   "tz_source": "dataset"
  },
+ "NEU": {
+  "city": "Nong Khang",
+  "country": "LA",
+  "iata": "NEU",
+  "lat": 20.4184,
+  "lon": 104.067001,
+  "name": "Sam Neua Airport",
+  "tz": "Asia/Vientiane",
+  "tz_source": "dataset"
+ },
  "NGB": {
   "city": "Ningbo",
   "country": "CN",
@@ -13507,16 +13507,6 @@
   "lon": 76.52030181884766,
   "name": "Novy Urengoy Airport",
   "tz": "Asia/Yekaterinburg",
-  "tz_source": "dataset"
- },
- "NVA": {
-  "city": "Neiva",
-  "country": "CO",
-  "iata": "NVA",
-  "lat": 2.95015,
-  "lon": -75.294,
-  "name": "Benito Salas Airport",
-  "tz": "America/Bogota",
   "tz_source": "dataset"
  },
  "NVI": {
@@ -14649,16 +14639,6 @@
   "tz": "Atlantic/Azores",
   "tz_source": "dataset"
  },
- "PJM": {
-  "city": "Puerto Jimenez",
-  "country": "CR",
-  "iata": "PJM",
-  "lat": 8.533329963684082,
-  "lon": -83.30000305175781,
-  "name": "Puerto Jimenez Airport",
-  "tz": "America/Costa_Rica",
-  "tz_source": "dataset"
- },
  "PKC": {
   "city": "Petropavlovsk-Kamchatsky",
   "country": "RU",
@@ -14736,8 +14716,8 @@
   "lat": 16.536957,
   "lon": -88.361511,
   "name": "Placencia Airport",
-  "tz": null,
-  "tz_source": null
+  "tz": "America/Belize",
+  "tz_source": "country_default"
  },
  "PLM": {
   "city": "Palembang",
@@ -15589,6 +15569,16 @@
   "tz": "Asia/Riyadh",
   "tz_source": "dataset"
  },
+ "RAH": {
+  "city": "Rafha",
+  "country": "SA",
+  "iata": "RAH",
+  "lat": 29.626399993896484,
+  "lon": 43.4906005859375,
+  "name": "Rafha Domestic Airport",
+  "tz": "Asia/Riyadh",
+  "tz_source": "dataset"
+ },
  "RAI": {
   "city": "Praia",
   "country": "CV",
@@ -15667,16 +15657,6 @@
   "lon": -67.893984,
   "name": "Rio Branco-Plácido de Castro International Airport",
   "tz": "America/Rio_Branco",
-  "tz_source": "dataset"
- },
- "RCH": {
-  "city": "Riohacha",
-  "country": "CO",
-  "iata": "RCH",
-  "lat": 11.5262,
-  "lon": -72.926,
-  "name": "Almirante Padilla Airport",
-  "tz": "America/Bogota",
   "tz_source": "dataset"
  },
  "RDM": {
@@ -17446,8 +17426,8 @@
   "lat": 17.9139,
   "lon": -87.9711,
   "name": "John Greif II Airport",
-  "tz": null,
-  "tz_source": null
+  "tz": "America/Belize",
+  "tz_source": "country_default"
  },
  "SPU": {
   "city": "Split",
@@ -17476,8 +17456,8 @@
   "lat": 28.3797,
   "lon": 117.9643,
   "name": "Shangrao Sanqingshan Airport",
-  "tz": "America/Lima",
-  "tz_source": "dataset"
+  "tz": "Asia/Shanghai",
+  "tz_source": "country_default"
  },
  "SQJ": {
   "city": "Sanming (Sha)",
@@ -19049,16 +19029,6 @@
   "tz": "Asia/Manila",
   "tz_source": "dataset"
  },
- "TUI": {
-  "city": "Turaif",
-  "country": "SA",
-  "iata": "TUI",
-  "lat": 31.692188,
-  "lon": 38.731544,
-  "name": "Turaif Domestic Airport",
-  "tz": "Asia/Riyadh",
-  "tz_source": "dataset"
- },
  "TUL": {
   "city": "Tulsa",
   "country": "US",
@@ -19467,16 +19437,6 @@
   "lon": 99.135597229,
   "name": "Surat Thani Airport",
   "tz": "Asia/Bangkok",
-  "tz_source": "dataset"
- },
- "URY": {
-  "city": "Gurayat",
-  "country": "SA",
-  "iata": "URY",
-  "lat": 31.412413,
-  "lon": 37.278898,
-  "name": "Gurayat Domestic Airport",
-  "tz": "Asia/Riyadh",
   "tz_source": "dataset"
  },
  "USA": {
@@ -20019,16 +19979,6 @@
   "tz": "Asia/Kolkata",
   "tz_source": "dataset"
  },
- "VUP": {
-  "city": "Valledupar",
-  "country": "CO",
-  "iata": "VUP",
-  "lat": 10.435,
-  "lon": -73.2495,
-  "name": "Alfonso López Pumarejo Airport",
-  "tz": "America/Bogota",
-  "tz_source": "dataset"
- },
  "VVI": {
   "city": "Santa Cruz",
   "country": "BO",
@@ -20176,8 +20126,8 @@
   "lat": -22.428395,
   "lon": 116.887879,
   "name": "Eliwana",
-  "tz": null,
-  "tz_source": null
+  "tz": "Australia/Perth",
+  "tz_source": "airport_override"
  },
  "WIL": {
   "city": "Nairobi",
@@ -20717,6 +20667,16 @@
   "lon": -113.580002,
   "name": "Edmonton International Airport",
   "tz": "America/Edmonton",
+  "tz_source": "dataset"
+ },
+ "YEI": {
+  "city": "Yenişehir",
+  "country": "TR",
+  "iata": "YEI",
+  "lat": 40.255199,
+  "lon": 29.562599,
+  "name": "Bursa Yenişehir Airport",
+  "tz": "Europe/Istanbul",
   "tz_source": "dataset"
  },
  "YEV": {
@@ -21606,8 +21566,8 @@
   "lat": 38.801899,
   "lon": 100.675003,
   "name": "Zhangye Ganzhou Airport",
-  "tz": "America/Vancouver",
-  "tz_source": "dataset"
+  "tz": "Asia/Shanghai",
+  "tz_source": "country_default"
  },
  "ZAD": {
   "city": "Zadar",

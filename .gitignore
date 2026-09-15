@@ -20,6 +20,8 @@ database/reference/.cache/
 # ---------------------------------------------------------------------
 database/connection.txt
 divisions/.token
+# Last week's airline folders, moved aside by database/scripts/weekly.ps1.
+divisions/.previous/
 divisions/*/members/.token
 web/.env.local
 

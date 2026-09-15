@@ -5,13 +5,13 @@ Sources: OurAirports (name, city, country, coordinates) and mwgg/Airports
 
 | metric | value |
 |---|---:|
-| airports in the network | 2187 |
-| resolved to a real airport | 2186 |
-| with coordinates | 2186 |
-| with an IANA timezone | 2175 |
-| timezone from a dataset | 2140 |
-| timezone inferred from country | 35 |
-| still without a timezone | 12 |
+| airports in the network | 2183 |
+| resolved to a real airport | 2182 |
+| with coordinates | 2182 |
+| with an IANA timezone | 2182 |
+| timezone from a dataset | 2133 |
+| timezone inferred from country | 44 |
+| still without a timezone | 1 |
 | still unnamed | 1 |
 
 Airports without a timezone render departure times exactly as the game
@@ -26,4 +26,4 @@ invented, or codes retired from the real world.
 
 ## Without a timezone
 
-`BWX`, `CUK`, `DEX`, `DHX`, `DRV`, `GGR`, `MOH`, `MRA`, `PLJ`, `PXN`, `SPR`, `WHB`
+`PXN`

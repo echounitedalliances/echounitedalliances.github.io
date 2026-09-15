@@ -179,7 +179,9 @@ with claim(site_slug, division_code, airline_slug) as (values
     -- STRLNR is not in it, but it is the same member's airline and carries
     -- the button by their decision -- which is why the note below names the
     -- three that are actually sellable there.
-    ('starliner',    'rhea',    'starliner_480c930c'),
+    -- Starliner itself moved from Rhea to Kyra in the 16 September 2026
+    -- scrape. Alone in Kyra, it no longer needs the uid suffix it wore in Rhea.
+    ('starliner',    'kyra',    'starliner'),
     ('starliner',    'rhea',    'astra_by_starliner'),
     ('starliner',    'rhea',    'velora_by_strlinr'),
     ('starliner',    'elysium', 'meridian_by_strlnr'),
@@ -195,8 +197,9 @@ with claim(site_slug, division_code, airline_slug) as (values
     ('britannia',    'kyra',    'fly_empire'),
     ('britannia',    'elion',   'soleado'),
     ('amex',         'aura',    'american_express'),
-    -- "CAS - flyhop": Book & Go is the group's booking product.
-    ('bookgo',       'proxima', 'flyhop'),
+    -- "CAS - flyhop": Book & Go is the group's booking product. flyhop
+    -- renamed itself Fun Airways in the 16 September 2026 scrape; same uid.
+    ('bookgo',       'proxima', 'fun_airways'),
     ('airfluff',     'aura',    'airfluff_airlines'),
     ('vaultera',     'proxima', 'vaultera')
 )

@@ -1,7 +1,7 @@
 # Echo United Alliances
 
 The website for Echo United Alliances, a virtual airline group in
-**The Airline Simulator** — eight divisions, 590 member carriers, one network.
+**The Airline Simulator** — eight divisions, 583 member carriers, one network.
 
 Live at **https://echounitedalliances.github.io**
 Check out our 2nd testing site **https://lacnka.github.io/echotesting/**
@@ -31,12 +31,12 @@ order: Kyra, Aegis, Elysium, Proxima, Rhea, Vilis, Elion, Aura. Kyra is badged
 its roster — sortable by prominence, name or fleet size — and a map of what the
 division flies.
 
-**Airlines** (`/airlines`). All 590 carriers, filtered by name, division or
-country, 60 at a time. 85 countries are represented.
+**Airlines** (`/airlines`). Every carrier, filtered by name, division or
+country, 60 at a time — the one you name first. 85 countries are represented.
 
 **A page for every carrier.** A written profile, the fleet by type, every route,
 a route map, and a timetable by day of week. The profile is generated from what
-the airline actually flies — nobody was going to hand-write 590 — and can be
+the airline actually flies — nobody was going to hand-write six hundred — and can be
 overwritten; the generated text never lands on top of a written one.
 
 **A page for every airport** (`/airports/:iata`). Which members serve it, which
@@ -60,10 +60,10 @@ laptop stutter.
 
 ### Booking, across every carrier at once
 
-**Search.** Origin and destination by typeahead over 2,187 airports, a date, one
+**Search.** Origin and destination by typeahead over 2,180 airports, a date, one
 of four cabins, one to six travellers, and a stop limit.
 
-**One query, 590 airlines.** `search_itineraries()` returns nonstop through
+**One query, every airline.** `search_itineraries()` returns nonstop through
 two-stop journeys across the whole group, so a trip no single member flies end
 to end is still one search, one booking and one reference. Typically 44–73 ms.
 Results sort by price, duration, stops, departure or arrival — arrival
@@ -123,6 +123,27 @@ A lot. In rough order of how much is already there to build on:
 - **Some folder names are not ASCII** (`divisions/vilis/龙凤航空/`). Fine in this
   repository, awkward in some tooling.
 
+### The weekly scrape
+
+Put a fresh token from the app into `divisions/.token`, then from the
+repository root:
+
+```
+.\database\scripts\weekly.ps1
+npm --prefix web run publish
+```
+
+and commit and push what it lists. It scrapes all eight divisions from their
+live rosters, proves the scrape complete, merges it into the live database in
+one transaction, rebuilds what the site reads and verifies it.
+
+**Never refresh the data with `02_load_from_csv.sql`.** It truncates with
+CASCADE, and on the live database that reaches every account, booking,
+passenger and member-site row. `deploy.ps1` refuses to run it against a
+database that holds any. The merge in `database/weekly/` updates in place
+instead: a booking keeps pointing at the flight it bought, and a flight a
+traveller holds is retired rather than deleted if the player removes it.
+
 ---
 
 ## What this repository holds
@@ -131,12 +152,14 @@ A lot. In rough order of how much is already there to build on:
 divisions/          the alliance rosters, and the scraper that fetches them
   <division>/
     members.json    who is in the division  (committed)
-    members/        per-airline flights, fleet and info  (NOT committed - 574MB)
+    members/        per-airline flights, fleet and info  (NOT committed - 372MB)
   scrape_members.py
+  check_scrape.py   proves a scrape complete before anything loads it
 
 database/           the JSON turned into a relational database
-  sql/              01 .. 16, run in numeric order
-  scripts/          ETL, airport backfill, deploy, credential handling
+  sql/              01 .. 30, run in numeric order -- for building a database
+  weekly/           stage, merge, refresh -- for updating the live one
+  scripts/          ETL, airport backfill, deploy, weekly, credential handling
   reference/        merged open airport data
   connection.txt    your Supabase project  (NOT committed - see below)
 
@@ -190,8 +213,11 @@ about — airline codes are not unique, seven different carriers are called
 "Emirates", flight numbers run past 99999, and tail numbers repeat even inside
 one fleet. Every one of those is handled; `database/README.md` lists them.
 
-**The database is Postgres, sized to fit.** 341,710 flights and 153,688
-aircraft, in **432 MB** — small enough for a Supabase free project. Getting
+**The database is Postgres, sized to fit — just.** 346,200 flights and 163,206
+aircraft, in about **530 MB** as of the 16 September 2026 scrape. That is over the
+500 MB a Supabase free project allows, and the disk is small enough that
+refreshing the leg table *concurrently* runs out of space; the weekly refresh
+rebuilds it non-concurrently for that reason. Getting
 there meant storing operating days as a 7-bit mask rather than a row per day,
 folding the four fixed cabins into columns, and keeping only the indexes that
 are actually scanned.

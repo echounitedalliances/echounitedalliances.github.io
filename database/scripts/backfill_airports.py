@@ -71,7 +71,25 @@ COUNTRY_TZ = {
     "CR": "America/Costa_Rica", "GT": "America/Guatemala", "SV": "America/El_Salvador",
     "HN": "America/Tegucigalpa", "NI": "America/Managua", "DO": "America/Santo_Domingo",
     "NZ": "Pacific/Auckland", "FJ": "Pacific/Fiji",    "SG_": "Asia/Singapore",
+    # Added 16 September 2026, when new routes reached airports in these
+    # countries with no timezone from either dataset. Each is one zone.
+    "BZ": "America/Belize",  "MV": "Indian/Maldives",  "SO": "Africa/Mogadishu",
+    "LY": "Africa/Tripoli",
 }
+
+# Airports in countries that span several zones, where neither dataset gives a
+# timezone and the country cannot be used to infer one. Each checked against
+# the airport's own coordinates, not just its country.
+TZ_BY_AIRPORT = {
+    "BWX": "Asia/Jakarta",     # Banyuwangi, East Java, 114.3E -- west of the Bali Strait, so WIB
+    "DHX": "Asia/Jakarta",     # Kediri, East Java, 111.9E
+    "MOH": "Asia/Makassar",    # Morowali, Central Sulawesi, 121.7E -- WITA
+    "DEX": "Asia/Jayapura",    # Dekai, Highland Papua, 139.5E -- WIT
+    "WHB": "Australia/Perth",  # Eliwana, Pilbara WA; its neighbours OCM and WLP are Perth in the data
+}
+
+# The same country under two codes. Not a disagreement about which airport.
+COUNTRY_ALIASES = {"kosovo": {"XK", "KS"}}
 
 # Codes that appear in no open dataset. Filled by hand rather than left blank.
 MANUAL = {
@@ -107,6 +125,7 @@ def build_reference(cache_dir, refresh):
 
     needed = [r["iata_code"] for r in csv.DictReader(open(CSV_AIRPORTS, encoding="utf-8"))]
     out = {}
+    mismatched = []
     for code in needed:
         o = oa.get(code)
         m = mw_by_iata.get(code)
@@ -114,6 +133,22 @@ def build_reference(cache_dir, refresh):
             m = mw_by_icao.get(o.get("icao_code")) or mw_by_icao.get(o.get("ident"))
         if not o and m:
             o = oa_by_icao.get(m.get("icao")) or oa_by_ident.get(m.get("icao"))
+
+        # mwgg matches on the IATA code alone, and IATA codes are reused when
+        # an airport closes. Where the two datasets put the "same" airport in
+        # different countries they are describing two different airports, and
+        # mwgg's timezone belongs to the other one. Found 16 September 2026:
+        #   BOR  Bokeo International, Laos     -> Europe/Paris   (Fontaine, FR)
+        #   SQD  Shangrao Sanqingshan, China   -> America/Lima   (San Francisco, PE)
+        #   YZY  Zhangye Ganzhou, China        -> America/Vancouver (Mackenzie, CA)
+        # which put those airports' local departure times 7 to 15 hours out.
+        # OurAirports is the authority for WHICH airport a code is, so its
+        # country wins and the timezone falls back to that country's own.
+        if o and m and o.get("iso_country") and m.get("country"):
+            oc, mc = o["iso_country"].upper(), m["country"].upper()
+            if oc != mc and {oc, mc} != COUNTRY_ALIASES["kosovo"]:
+                mismatched.append((code, o.get("name"), oc, m.get("name"), mc, m.get("tz")))
+                m = None
 
         manual = MANUAL.get(code)
         name = (o or {}).get("name") or (m or {}).get("name") or (manual[0] if manual else None)
@@ -123,7 +158,10 @@ def build_reference(cache_dir, refresh):
         lat = (o or {}).get("latitude_deg") or (m or {}).get("lat") or (manual[4] if manual else None)
         lon = (o or {}).get("longitude_deg") or (m or {}).get("lon") or (manual[5] if manual else None)
 
-        if not tz and country in COUNTRY_TZ:
+        if not tz and code in TZ_BY_AIRPORT:
+            tz = TZ_BY_AIRPORT[code]
+            tz_source = "airport_override"
+        elif not tz and country in COUNTRY_TZ:
             tz = COUNTRY_TZ[country]
             tz_source = "country_default"
         elif tz:
@@ -141,6 +179,10 @@ def build_reference(cache_dir, refresh):
             "lat": float(lat) if lat not in (None, "") else None,
             "lon": float(lon) if lon not in (None, "") else None,
         }
+
+    for code, oname, oc, mname, mc, mtz in mismatched:
+        print(f"  {code}: OurAirports says {oname} ({oc}); mwgg's {mname} ({mc}) is a "
+              f"different airport, so its timezone {mtz} was not used", file=sys.stderr)
 
     os.makedirs(os.path.dirname(REFERENCE), exist_ok=True)
     json.dump(out, open(REFERENCE, "w", encoding="utf-8"),
@@ -176,10 +218,15 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--refresh", action="store_true",
                     help="re-download the open datasets before building")
+    ap.add_argument("--rebuild", action="store_true",
+                    help="rebuild the reference from the CACHED datasets for the current "
+                         "airports.csv, without touching the network. What a weekly scrape "
+                         "wants: new airports resolve against the same snapshot every other "
+                         "airport came from, so nothing already loaded quietly changes.")
     ap.add_argument("--cache-dir", default=os.path.join(ROOT, "database", "reference", ".cache"))
     args = ap.parse_args()
 
-    if args.refresh or not os.path.exists(REFERENCE):
+    if args.refresh or args.rebuild or not os.path.exists(REFERENCE):
         ref = build_reference(args.cache_dir, args.refresh)
     else:
         ref = json.load(open(REFERENCE, encoding="utf-8"))
@@ -225,9 +272,21 @@ def main():
 
 begin;
 
+-- Safe to re-run against a live database, which it now is every week.
+--
+-- 27_place_names.sql cleans city_name ("Spata-Artemida" -> "Athens") and keeps
+-- the raw value in municipality. Re-running this file used to write the raw
+-- value straight back over the cleaned one, so every re-run reverted all of
+-- those corrections until 27 happened to run again. city_name is now written
+-- only for an airport that has never been cleaned, and a row is touched only
+-- when something about it actually changed -- so the count psql prints is the
+-- number of airports that really moved.
+alter table public.airports add column if not exists municipality text;
+
 update public.airports a
    set airport_name       = v.airport_name,
-       city_name          = v.city_name,
+       city_name          = case when a.municipality is null then v.city_name
+                                 else a.city_name end,
        country_code       = v.country_code,
        timezone           = v.timezone,
        utc_offset_minutes = v.utc_offset_minutes,
@@ -240,7 +299,12 @@ update public.airports a
     footer = """
   ) as v(iata_code, airport_name, city_name, country_code, timezone,
          utc_offset_minutes, latitude, longitude)
- where a.iata_code = v.iata_code;
+ where a.iata_code = v.iata_code
+   and (a.airport_name, a.country_code, a.timezone, a.utc_offset_minutes,
+        a.latitude, a.longitude, a.municipality is null and a.city_name is distinct from v.city_name)
+       is distinct from
+       (v.airport_name, v.country_code, v.timezone, v.utc_offset_minutes,
+        v.latitude, v.longitude, false);
 
 commit;
 """

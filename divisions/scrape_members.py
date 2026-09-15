@@ -190,7 +190,12 @@ def fetch_live_roster(division, apikey, jwt):
     """
     name = "Echo " + division.capitalize()
     url = f"{BASE}/rest/v1/alliance?select=*&allianceName=eq.{urllib.parse.quote(name)}"
-    rows = json.loads(request(url, make_headers(apikey, jwt)).decode())
+    # request() already returns parsed JSON. This line used to wrap it in
+    # json.loads(...decode()), which raises on a list -- and main() swallowed
+    # that and fell back to the SAVED roster, printing one line to stderr. So
+    # the scrape quietly missed every airline that had joined since the file
+    # was written, which is the exact failure this function exists to prevent.
+    rows = request(url, make_headers(apikey, jwt))
     if not rows:
         return None
     a = rows[0]
@@ -299,6 +304,30 @@ def fetch_airline(record, members_dir, apikey, jwt, force, taken, taken_lock):
     return slug, counts, orphaned
 
 
+def fetch_liveries(results, members_dir, apikey, jwt):
+    """Query E, batched: members/<airline>/livery.json for every airline.
+
+    build_database.py reads this file for every carrier -- it is where each
+    airline's brand colour comes from -- but nothing in this script ever
+    fetched it, so a clean scrape silently dropped every livery and left 602
+    carriers painted in their division's colour. About 60 uids fit in one
+    request, so the whole group is a handful of calls.
+    """
+    by_uid = dict(results)
+    uids = list(by_uid)
+    written = 0
+    for i in range(0, len(uids), 60):
+        chunk = uids[i:i + 60]
+        url = (f"{BASE}/rest/v1/player_livery_config?select=*"
+               f"&uid=in.({','.join(chunk)})")
+        for row in request(url, make_headers(apikey, jwt)):
+            slug = by_uid.get(row.get("uid"))
+            if slug:
+                write_json(os.path.join(members_dir, slug, "livery.json"), row)
+                written += 1
+    return written, len(uids)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--division", default="proxima", help="subfolder under divisions/")
@@ -333,10 +362,18 @@ def main():
     if not args.offline_roster:
         try:
             live = fetch_live_roster(args.division, apikey, jwt)
+        except AuthExpired as exc:
+            sys.exit(f"ERROR: the server rejected the token reading the roster: {exc}")
         except Exception as exc:
-            print(f"live roster lookup failed ({exc}); falling back to members.json",
-                  file=sys.stderr)
-            live = None
+            # Not a fallback any more. A saved roster is missing everyone who
+            # joined since it was written, and an automatic retreat to it is
+            # how that went unnoticed. Using it has to be a decision.
+            sys.exit(f"ERROR: live roster lookup failed ({exc}). Refusing to fall back "
+                     "to members.json on my own; pass --offline-roster to use it "
+                     "deliberately.")
+        if not live:
+            sys.exit(f"ERROR: the server has no alliance named "
+                     f"'Echo {args.division.capitalize()}'.")
         if live:
             label = live["alliance"].get("allianceName", args.division)
             records = [{"uid": u} for u in live["uids"]] +                       [{"uid": u} for u in args.extra_uid]
@@ -387,6 +424,16 @@ def main():
 
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
         list(pool.map(work, records))
+
+    if results and not stop.is_set():
+        try:
+            written, asked = fetch_liveries(results, members_dir, apikey, jwt)
+            print(f"liveries: {written} of {asked} airlines have one", file=sys.stderr)
+        except AuthExpired as e:
+            stop.set()
+            failures.append(("liveries", f"AUTH: {e}"))
+        except Exception as e:
+            failures.append(("liveries", str(e)))
 
     print(f"\ndone: {len(results)} ok, {len(failures)} failed", file=sys.stderr)
     if stop.is_set():

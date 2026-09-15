@@ -1,0 +1,3212 @@
+{
+ "00dd70d9-511c-49b0-bbf7-732b49bdc092": {
+  "airline_code": "AV",
+  "airline_name": "AeroVista",
+  "carrier_code": "AVPX"
+ },
+ "01e8ed2c-981b-4438-b215-4f64cd016009": {
+  "airline_code": "AN",
+  "airline_name": "中国东方航空",
+  "carrier_code": "ANAG1"
+ },
+ "020f4184-2825-4069-864b-fccb0dc2184c": {
+  "airline_code": "CA",
+  "airline_name": "Concordia aura",
+  "carrier_code": "CAAU"
+ },
+ "0343b2ae-6436-4432-ab2a-1a9a2a3720ad": {
+  "airline_code": "FY",
+  "airline_name": "FLYRO",
+  "carrier_code": "FYVH"
+ },
+ "036eedae-5374-4f78-8473-1004ba6f013a": {
+  "airline_code": "CP",
+  "airline_name": "CONCORDIA PACIFIC",
+  "carrier_code": "CPVS"
+ },
+ "05318912-4af2-4bb3-b7ca-18ec2b4477eb": {
+  "airline_code": "TH",
+  "airline_name": "Angmo",
+  "carrier_code": "TH"
+ },
+ "05933783-4c34-4e6e-ab62-a285e66ebfd7": {
+  "airline_code": "MN",
+  "airline_name": "MAN Air",
+  "carrier_code": "MNVS1"
+ },
+ "075b3c2c-de6f-43a6-9f38-adda9524c567": {
+  "airline_code": "JV",
+  "airline_name": "JetVietnam",
+  "carrier_code": "JVPX"
+ },
+ "07c83d5a-dc95-4c13-9e6c-94234a1ca5fd": {
+  "airline_code": "EK",
+  "airline_name": "Emirates",
+  "carrier_code": "EKEY1"
+ },
+ "07c961b9-c97b-456b-914f-59603baa5755": {
+  "airline_code": "SP",
+  "airline_name": "SkyPath",
+  "carrier_code": "SPEN"
+ },
+ "08a5103a-2494-4d86-8eb4-d8a5b84837fc": {
+  "airline_code": "5J",
+  "airline_name": "Cebu Pacific Air",
+  "carrier_code": "5J"
+ },
+ "08cd4619-a33c-4722-89b2-22594b2ed438": {
+  "airline_code": "SZ",
+  "airline_name": "SEA Airways SG",
+  "carrier_code": "SZ"
+ },
+ "08ea8513-4e8a-4be0-af23-eccf27f58849": {
+  "airline_code": "EA",
+  "airline_name": "Egypt Airlines",
+  "carrier_code": "EAAG"
+ },
+ "0a59c7b9-3e8c-42bb-860e-2e3dc0cc310d": {
+  "airline_code": "TK",
+  "airline_name": "Turkish Airlines",
+  "carrier_code": "TK"
+ },
+ "0b645a94-0b6d-45de-b141-ea4234f98230": {
+  "airline_code": "NA",
+  "airline_name": "NASA",
+  "carrier_code": "NAVH"
+ },
+ "0c225e1c-a994-4f2c-b848-7ac34826eec9": {
+  "airline_code": "JF",
+  "airline_name": "JomFly",
+  "carrier_code": "JF"
+ },
+ "0c7953c6-efe6-48e5-bb4b-dd948c7fdd28": {
+  "airline_code": "NJ",
+  "airline_name": "FlyNarita Express",
+  "carrier_code": "NJ"
+ },
+ "0c8570a2-b0b6-45d0-a7bc-34cf27b9a3e0": {
+  "airline_code": "RA",
+  "airline_name": "Roseair",
+  "carrier_code": "RAPX"
+ },
+ "0c962845-069f-4887-87a0-279a42ad47e3": {
+  "airline_code": "QF",
+  "airline_name": "Qantas",
+  "carrier_code": "QF"
+ },
+ "0d9d2a66-19fe-4666-a293-684a851ac415": {
+  "airline_code": "LN",
+  "airline_name": "Levine Airways",
+  "carrier_code": "LNVS"
+ },
+ "0e7f4ef7-92dc-47bf-a198-1da7418572d6": {
+  "airline_code": "W6",
+  "airline_name": "WONDR",
+  "carrier_code": "W6"
+ },
+ "0eace067-ecd1-4abd-bf04-bfc8c94fc74d": {
+  "airline_code": "AT",
+  "airline_name": "Altaris",
+  "carrier_code": "ATPX"
+ },
+ "0ed8c869-8dbc-4625-87e0-526ff865533e": {
+  "airline_code": "HA",
+  "airline_name": "Hasana Airlines",
+  "carrier_code": "HAVS1"
+ },
+ "0f51387e-30d3-4a71-9c5e-cd7dc79d76f6": {
+  "airline_code": "AB",
+  "airline_name": "AirBangla",
+  "carrier_code": "ABKY"
+ },
+ "0f89cbf2-8d9b-440a-b855-34cb4f75013e": {
+  "airline_code": "NU",
+  "airline_name": "Nusantara Airways",
+  "carrier_code": "NU"
+ },
+ "0fd3672e-b97c-4827-8f41-debb6b8fbbe8": {
+  "airline_code": "UA",
+  "airline_name": "United Airlines",
+  "carrier_code": "UAEY1"
+ },
+ "0fd6c04e-6c14-40cc-922c-8021af0ab1c3": {
+  "airline_code": "MU",
+  "airline_name": "AERO PLUS ULTRA",
+  "carrier_code": "MU"
+ },
+ "0fdce97a-183d-497d-a44a-35ca227b0afd": {
+  "airline_code": "JR",
+  "airline_name": "Jiroland Airlines",
+  "carrier_code": "JR"
+ },
+ "0feead84-5782-4448-a358-195a600b85b7": {
+  "airline_code": "CN",
+  "airline_name": "AeroContinental",
+  "carrier_code": "CNAG"
+ },
+ "10138a85-a27b-4801-896d-f3ba3ec38c4a": {
+  "airline_code": "LC",
+  "airline_name": "AeroLahore Caribe",
+  "carrier_code": "LC"
+ },
+ "10297595-a4e9-4132-81c9-b282ff67dcc7": {
+  "airline_code": "FP",
+  "airline_name": "Play air",
+  "carrier_code": "FPAG1"
+ },
+ "11d26ebe-721b-455d-820f-b86c56b6d61e": {
+  "airline_code": "AP",
+  "airline_name": "AéroPearl TG",
+  "carrier_code": "APVS"
+ },
+ "120e6d6b-bdc6-4b14-b246-a322774a6fa0": {
+  "airline_code": "TR",
+  "airline_name": "Discover Türkiye",
+  "carrier_code": "TRAU"
+ },
+ "12d5dd92-d4cf-4a5b-b292-8e8a2b50808c": {
+  "airline_code": "AR",
+  "airline_name": "Aero Riwa",
+  "carrier_code": "ARAG1"
+ },
+ "138704fe-24fb-454c-b827-b066e34d0957": {
+  "airline_code": "SW",
+  "airline_name": "Snowie Airways",
+  "carrier_code": "SWKY1"
+ },
+ "13a83e7b-19b1-4edc-84a7-94247322e183": {
+  "airline_code": "IU",
+  "airline_name": "Italianu",
+  "carrier_code": "IU"
+ },
+ "13b6b185-c747-48f3-bc65-92ef06d02559": {
+  "airline_code": "OA",
+  "airline_name": "Oasis Air",
+  "carrier_code": "OAEN"
+ },
+ "13d24b9e-9f6d-4c32-b56e-05cce62da7bc": {
+  "airline_code": "XQ",
+  "airline_name": "Airartic FleX",
+  "carrier_code": "XQ"
+ },
+ "14fc251f-472b-4a39-bc12-0fd2c9c3c683": {
+  "airline_code": "PA",
+  "airline_name": "Pacific Airlines",
+  "carrier_code": "PAEY"
+ },
+ "14fcef94-88f2-4a78-be89-af3350bd47ba": {
+  "airline_code": "NA",
+  "airline_name": "North American",
+  "carrier_code": "NAEN"
+ },
+ "150e2cc5-fe48-4554-9565-328ab6fb4a2a": {
+  "airline_code": "GH",
+  "airline_name": "Gehenna Airlines",
+  "carrier_code": "GHPX"
+ },
+ "1517cf36-536d-49b5-a7e5-c35e805ee9ee": {
+  "airline_code": "KA",
+  "airline_name": "Kiuguyat Airlines",
+  "carrier_code": "KAAU"
+ },
+ "151a360b-19f0-44b0-b072-4536e16c396a": {
+  "airline_code": "SQ",
+  "airline_name": "SINGAPORE AIRLINES",
+  "carrier_code": "SQEY1"
+ },
+ "15596be6-0fea-4e50-a79f-b00057d320b0": {
+  "airline_code": "AS",
+  "airline_name": "Arab Skys",
+  "carrier_code": "ASAG1"
+ },
+ "1576a0e3-4597-4b0e-a7ba-9ee46becb704": {
+  "airline_code": "PR",
+  "airline_name": "Philippine Airline",
+  "carrier_code": "PREY"
+ },
+ "16a5d1b7-9003-4d95-b1fb-669d110094e4": {
+  "airline_code": "KJ",
+  "airline_name": "KHALEEJ AIRWAYS ",
+  "carrier_code": "KJ"
+ },
+ "17aa4400-7cef-479a-8131-4243ffd7b086": {
+  "airline_code": "BC",
+  "airline_name": "BlingoCityLink",
+  "carrier_code": "BCEN"
+ },
+ "17dee0d7-178a-4269-becf-4affefd58844": {
+  "airline_code": "PA",
+  "airline_name": "Pacific Airways",
+  "carrier_code": "PAPX1"
+ },
+ "1874318f-1681-409f-9a41-18154114ff0f": {
+  "airline_code": "EM",
+  "airline_name": "Meridian Emirates",
+  "carrier_code": "EM"
+ },
+ "1919b5a8-6aac-4a52-b71a-2e34b085f0e7": {
+  "airline_code": "SF",
+  "airline_name": "Scuderia Ferrari",
+  "carrier_code": "SFVS"
+ },
+ "1945ee29-c4ac-42bd-99c0-8675aeb493f7": {
+  "airline_code": "SH",
+  "airline_name": "Silkway Horizon",
+  "carrier_code": "SH"
+ },
+ "19618d01-ef0a-4372-be2e-2b9dc97d9940": {
+  "airline_code": "BL",
+  "airline_name": "Blingohagen Air",
+  "carrier_code": "BLEN"
+ },
+ "19c205ac-a0c5-468b-b2a2-f1fc6a11f258": {
+  "airline_code": "AX",
+  "airline_name": "American express",
+  "carrier_code": "AXAU"
+ },
+ "1a522c71-0fee-48bc-97a1-6e49e5054ae9": {
+  "airline_code": "FW",
+  "airline_name": "Fly Chirp",
+  "carrier_code": "FW"
+ },
+ "1a6e8bf2-61aa-47e3-9532-c2b2bd055847": {
+  "airline_code": "GA",
+  "airline_name": "Garuda Indonesia",
+  "carrier_code": "GAEN"
+ },
+ "1b5d9230-1303-47b4-8fb9-f006b551c2fd": {
+  "airline_code": "BG",
+  "airline_name": "Biman Bangladesh",
+  "carrier_code": "BG"
+ },
+ "1c2e3c1c-a15b-4675-83c7-8ec481833c83": {
+  "airline_code": "AJ",
+  "airline_name": "AmeriJet",
+  "carrier_code": "AJVH"
+ },
+ "1c31fc7b-6998-4ea8-9cbe-c46cac7b6d6e": {
+  "airline_code": "CX",
+  "airline_name": "ContiNex Cargo",
+  "carrier_code": "CXAU"
+ },
+ "1c9b4cc7-dfc1-4bcf-8f22-dba6c7c59d84": {
+  "airline_code": "MA",
+  "airline_name": "Melayu",
+  "carrier_code": "MAPX1"
+ },
+ "1d0a81b5-2733-40d4-92a8-677b55730cba": {
+  "airline_code": "MJ",
+  "airline_name": "MJJ Worldliner",
+  "carrier_code": "MJVH"
+ },
+ "1d61d8e7-3d31-4ae3-9ef9-8633258a23d2": {
+  "airline_code": "VT",
+  "airline_name": "Velmont ",
+  "carrier_code": "VTVS"
+ },
+ "1dca0e35-589e-4db9-bf3a-3757d8a78883": {
+  "airline_code": "SC",
+  "airline_name": "Scotland Air",
+  "carrier_code": "SC"
+ },
+ "1de9237a-7e51-41b1-90ed-34f9c168cafa": {
+  "airline_code": "HX",
+  "airline_name": "FlyMox HANA",
+  "carrier_code": "HX"
+ },
+ "1e24f802-29a8-4bdb-bf9d-5ec14ccfcb46": {
+  "airline_code": "WV",
+  "airline_name": "Aether air",
+  "carrier_code": "WV"
+ },
+ "1e9f6739-bde5-43df-bf82-0c1a0a08e7a5": {
+  "airline_code": "MN",
+  "airline_name": "Monetta",
+  "carrier_code": "MNVS2"
+ },
+ "1ee1559a-21f1-470e-9e90-ace9883e47ca": {
+  "airline_code": "8S",
+  "airline_name": "Jet Connect KR",
+  "carrier_code": "8S"
+ },
+ "1f10dc12-3faa-4f1b-acc5-f2d2c324a558": {
+  "airline_code": "NI",
+  "airline_name": "AirNara TG",
+  "carrier_code": "NI"
+ },
+ "2006139a-7184-4696-a2c3-47ff1c37eb50": {
+  "airline_code": "LC",
+  "airline_name": "LINKSTAR CHINA",
+  "carrier_code": "LCEN"
+ },
+ "204c8b7f-d899-4e38-9a9c-06f0b9938fe8": {
+  "airline_code": "CE",
+  "airline_name": "Conjet",
+  "carrier_code": "CEVH"
+ },
+ "218d6b96-76a8-4e8b-8288-1a02ead7a979": {
+  "airline_code": "VN",
+  "airline_name": "Vietnam Airlines",
+  "carrier_code": "VNEY1"
+ },
+ "219198ea-0a8e-4b4f-a0a9-0b49fe3e1ea8": {
+  "airline_code": "HV",
+  "airline_name": "Transavia",
+  "carrier_code": "HV"
+ },
+ "21f78445-39f8-48af-bfcb-15b946297d80": {
+  "airline_code": "BS",
+  "airline_name": "Baja Signature",
+  "carrier_code": "BSPX1"
+ },
+ "21fe19e4-2751-4a97-95ac-0b1f65fa6079": {
+  "airline_code": "AX",
+  "airline_name": "AURAX",
+  "carrier_code": "AXAU1"
+ },
+ "221d13bf-d4ae-4e30-a85c-5d237282df55": {
+  "airline_code": "SQ",
+  "airline_name": "Singapore Airlines",
+  "carrier_code": "SQEY2"
+ },
+ "2254b8ea-d252-4871-b1de-b295c495131a": {
+  "airline_code": "PL",
+  "airline_name": "LOT Polish Airline",
+  "carrier_code": "PL"
+ },
+ "2273279f-aef9-48fd-a533-a4b5f4322062": {
+  "airline_code": "AU",
+  "airline_name": "Aurelle Air",
+  "carrier_code": "AUVS"
+ },
+ "22bc1389-c6b0-495f-92bd-92eaeb7cee5e": {
+  "airline_code": "UK",
+  "airline_name": "VISTARA",
+  "carrier_code": "UKKY"
+ },
+ "231bd568-269e-440e-9809-7a88d423458a": {
+  "airline_code": "RA",
+  "airline_name": "Aer RB Asia",
+  "carrier_code": "RAAG"
+ },
+ "233b8866-5348-468f-9df4-1402084ab4ff": {
+  "airline_code": "KW",
+  "airline_name": "Kawaiian Airlines",
+  "carrier_code": "KW"
+ },
+ "23d3e3c7-137c-46ae-aa2d-d68516b515fa": {
+  "airline_code": "SP",
+  "airline_name": "España Air",
+  "carrier_code": "SPPX"
+ },
+ "23ea237e-7431-4569-8069-3260372e7a1d": {
+  "airline_code": "9B",
+  "airline_name": "Skylink.cn",
+  "carrier_code": "9B"
+ },
+ "24c8690c-39e8-47cc-9dc2-87cd71c6daa7": {
+  "airline_code": "LA",
+  "airline_name": "LynxAir",
+  "carrier_code": "LAKY"
+ },
+ "24d61ea9-0aba-43eb-9e9e-a2a47260b7e2": {
+  "airline_code": "JA",
+  "airline_name": "BlazeAsia",
+  "carrier_code": "JAAU"
+ },
+ "252b2800-3fbb-4199-8b43-64f1c725aaa7": {
+  "airline_code": "FC",
+  "airline_name": "AfricAir",
+  "carrier_code": "FCVS"
+ },
+ "2587a3cd-2ec9-489f-8b37-93c9ba7edffe": {
+  "airline_code": "CD",
+  "airline_name": "CONCORDIA",
+  "carrier_code": "CDVH1"
+ },
+ "25882611-c878-4d02-bf77-424022431d60": {
+  "airline_code": "ML",
+  "airline_name": "MELONIAN AIR",
+  "carrier_code": "MLAG"
+ },
+ "25ba97bf-3626-4947-af29-03d30eaba771": {
+  "airline_code": "FJ",
+  "airline_name": "FlyJapan US",
+  "carrier_code": "FJ"
+ },
+ "26695dcc-4038-46b7-a50b-1a64bc168106": {
+  "airline_code": "CA",
+  "airline_name": "Canadian Airways",
+  "carrier_code": "CAEY1"
+ },
+ "268ed399-5837-4c3a-b91e-effea1adbff9": {
+  "airline_code": "SU",
+  "airline_name": "Советские",
+  "carrier_code": "SUPX1"
+ },
+ "269239f6-556c-4f6a-ad39-2b7e0c3a0500": {
+  "airline_code": "KQ",
+  "airline_name": "Kenya airways",
+  "carrier_code": "KQ"
+ },
+ "2755e27e-b428-4a37-9306-c5b0fb093da8": {
+  "airline_code": "VA",
+  "airline_name": "Velocity Air",
+  "carrier_code": "VAKY"
+ },
+ "27e5b47f-9216-42a0-b3f0-4b679516b80f": {
+  "airline_code": "SW",
+  "airline_name": "Swissair",
+  "carrier_code": "SWAG"
+ },
+ "27ec5f37-3dd9-4abe-b781-76ad12569476": {
+  "airline_code": "ET",
+  "airline_name": "ETHIOPIAN",
+  "carrier_code": "ET"
+ },
+ "27f9e48c-55d8-4961-b399-860dc026f425": {
+  "airline_code": "FA",
+  "airline_name": "Fenix Airways",
+  "carrier_code": "FAVS"
+ },
+ "28a5b3a5-b998-4c1f-b393-475b347809a7": {
+  "airline_code": "EJ",
+  "airline_name": "Explora Journeys",
+  "carrier_code": "EJKY"
+ },
+ "28caf8e1-4c42-4851-b57a-b4f3c950a6a6": {
+  "airline_code": "JA",
+  "airline_name": "JA Aviation",
+  "carrier_code": "JAEN"
+ },
+ "29b39e96-50a2-4736-8ddb-a7c878ba23dc": {
+  "airline_code": "CA",
+  "airline_name": "Cascadia Airways",
+  "carrier_code": "CAKY"
+ },
+ "2a327760-3906-4e5f-b8f3-f787e4e78822": {
+  "airline_code": "AR",
+  "airline_name": "Aero Freight",
+  "carrier_code": "AREN"
+ },
+ "2b168203-7779-43c9-94e6-d33149b05ca1": {
+  "airline_code": "KC",
+  "airline_name": "FlyKC",
+  "carrier_code": "KC"
+ },
+ "2b3a2805-dfab-44ce-9ffd-fb617a545970": {
+  "airline_code": "AP",
+  "airline_name": "Aurora Pacific Air",
+  "carrier_code": "APEN1"
+ },
+ "2ba1c73f-5982-4d68-86a3-4f4de10f42fc": {
+  "airline_code": "CE",
+  "airline_name": "Cascadia Europe",
+  "carrier_code": "CEVS"
+ },
+ "2c62cd3e-d651-4109-b011-c5f35cd517fa": {
+  "airline_code": "HA",
+  "airline_name": "H AIR Atlantic",
+  "carrier_code": "HAEN"
+ },
+ "2d667a4a-021f-4ceb-9e99-445829724af1": {
+  "airline_code": "SW",
+  "airline_name": "Skyline West",
+  "carrier_code": "SWPX"
+ },
+ "2db0214e-8230-4aef-8d05-a26fba9c6dba": {
+  "airline_code": "SM",
+  "airline_name": "StarMAX",
+  "carrier_code": "SMKY"
+ },
+ "2e129762-43a4-4faa-b7b6-fde78bf71be2": {
+  "airline_code": "MK",
+  "airline_name": "Mekong Airways",
+  "carrier_code": "MKKY"
+ },
+ "2e877d2d-a361-40c1-92c8-0960ce9418e5": {
+  "airline_code": "HK",
+  "airline_name": "Hong Airlines",
+  "carrier_code": "HKPX"
+ },
+ "2ef3daad-2e7b-4d5f-b228-4cf17fc9e273": {
+  "airline_code": "S5",
+  "airline_name": "Uniwings",
+  "carrier_code": "S5"
+ },
+ "2f8fe12f-3734-4c8a-b452-0511fcd8dae2": {
+  "airline_code": "JX",
+  "airline_name": "STARLUX AIRLINES",
+  "carrier_code": "JXEN"
+ },
+ "2fa9849d-466c-4a79-a807-c0cc89aa0d04": {
+  "airline_code": "AJ",
+  "airline_name": "Asiajet",
+  "carrier_code": "AJAU"
+ },
+ "305c7aa8-6fae-4162-ab9f-ea3ea331e78b": {
+  "airline_code": "BT",
+  "airline_name": "BlueTail",
+  "carrier_code": "BTKY1"
+ },
+ "313a55d7-1a2f-4774-a0ab-b7a6b9423ac8": {
+  "airline_code": "FD",
+  "airline_name": "Fly AbuDhabi",
+  "carrier_code": "FDAG"
+ },
+ "31843642-3a4d-47b6-a627-1d09c7bed3b0": {
+  "airline_code": "NZ",
+  "airline_name": "Air New Zealand",
+  "carrier_code": "NZ"
+ },
+ "31b19b92-c605-40b5-8099-8ebb2dcd03e9": {
+  "airline_code": "AM",
+  "airline_name": "XELARIS",
+  "carrier_code": "AMPX"
+ },
+ "31c66cb0-0a1a-43d8-9f56-4a66e650e2b3": {
+  "airline_code": "CA",
+  "airline_name": "Connect América",
+  "carrier_code": "CAAG"
+ },
+ "31ce36a7-7c81-4d30-8f8b-d72a88157205": {
+  "airline_code": "SB",
+  "airline_name": "SAMAR AIRLINES",
+  "carrier_code": "SBVH1"
+ },
+ "326878ce-94ed-4e6d-a9b8-530d3b8a253e": {
+  "airline_code": "MK",
+  "airline_name": "Air Mauritius",
+  "carrier_code": "MKPX"
+ },
+ "3340d32f-b34e-4278-88f0-cc9f49f7f0b5": {
+  "airline_code": "BJ",
+  "airline_name": "blazeJet",
+  "carrier_code": "BJ"
+ },
+ "33611aad-9545-4482-971c-f18b8d1321e1": {
+  "airline_code": "IA",
+  "airline_name": "Indus Air",
+  "carrier_code": "IA"
+ },
+ "33eabed5-1225-49a2-bd50-4f8b2ab824e9": {
+  "airline_code": "LS",
+  "airline_name": "LINKSTAR",
+  "carrier_code": "LSKY"
+ },
+ "340e3364-9bea-4e6e-9bb1-27149f8bab5c": {
+  "airline_code": "SP",
+  "airline_name": "SwissLux Private",
+  "carrier_code": "SPVS"
+ },
+ "340e6b5b-9c80-4d3b-9119-94f54b868e2a": {
+  "airline_code": "SW",
+  "airline_name": "Swedish Wings",
+  "carrier_code": "SWVS"
+ },
+ "343fce94-f800-481b-9c89-11299fa74096": {
+  "airline_code": "MH",
+  "airline_name": "Malaysia Airlines",
+  "carrier_code": "MHPX1"
+ },
+ "345cf50b-c0c8-4db8-97f4-d80503d6b440": {
+  "airline_code": "FZ",
+  "airline_name": "FlyDubai",
+  "carrier_code": "FZ"
+ },
+ "346d2cb9-03a6-4a74-b4d9-9345b03d66e0": {
+  "airline_code": "CW",
+  "airline_name": "CanadaWings",
+  "carrier_code": "CWVH"
+ },
+ "35771415-4db6-4a0c-be25-c5b3fb2e9244": {
+  "airline_code": "TL",
+  "airline_name": "TerraLink Airways",
+  "carrier_code": "TLKY"
+ },
+ "35f15da8-8d6e-4058-9d8d-25887bed52c9": {
+  "airline_code": "TE",
+  "airline_name": "Turbulence express￼",
+  "carrier_code": "TEEN"
+ },
+ "364db971-9e7a-484f-9044-23e48fdcb25f": {
+  "airline_code": "RA",
+  "airline_name": "RoAir",
+  "carrier_code": "RAEY"
+ },
+ "366f65c8-e5ae-458e-8952-9c688c95e9b1": {
+  "airline_code": "FC",
+  "airline_name": "FlyChile",
+  "carrier_code": "FCAG"
+ },
+ "36b30106-887b-4fce-bec6-a08686847c4e": {
+  "airline_code": "DL",
+  "airline_name": "Delta Airlines",
+  "carrier_code": "DLVS"
+ },
+ "378f7ccf-f148-4320-aed5-5ddbcb0683ff": {
+  "airline_code": "SU",
+  "airline_name": "Aeroflot",
+  "carrier_code": "SUPX2"
+ },
+ "37a0e2b3-ebd5-47d6-a19c-fda273e61c90": {
+  "airline_code": "BS",
+  "airline_name": "US-Bangla Airlines",
+  "carrier_code": "BSEY"
+ },
+ "37b32b72-fc43-403c-a4ba-de28559c7819": {
+  "airline_code": "EC",
+  "airline_name": "Eclipse Airlines",
+  "carrier_code": "ECAG1"
+ },
+ "382ad5fe-3810-4526-ac81-91815627245e": {
+  "airline_code": "DA",
+  "airline_name": "Venture Airlines",
+  "carrier_code": "DAVS"
+ },
+ "382fce01-fc58-4bfc-b43f-924ee003af1a": {
+  "airline_code": "LA",
+  "airline_name": "Luxaurum Airways",
+  "carrier_code": "LAAG"
+ },
+ "383bd8e6-7641-4125-9f48-8c5591d1a6ad": {
+  "airline_code": "ML",
+  "airline_name": "MJJ EUROLINK",
+  "carrier_code": "MLPX1"
+ },
+ "388318f2-e319-4f0d-af18-e24ac58d9ee3": {
+  "airline_code": "6E",
+  "airline_name": "IndiGo",
+  "carrier_code": "6E"
+ },
+ "388f417c-4e60-4d0a-9746-57192f3b8e7b": {
+  "airline_code": "AQ",
+  "airline_name": "Athar",
+  "carrier_code": "AQ"
+ },
+ "38c5693d-9308-45b0-9dcd-9c7d2cb0ff81": {
+  "airline_code": "VA",
+  "airline_name": "Air Meridian",
+  "carrier_code": "VAPX"
+ },
+ "3962e37a-5c32-4b17-a5d2-0c854580ced1": {
+  "airline_code": "CA",
+  "airline_name": "AIR CHINA",
+  "carrier_code": "CAEY2"
+ },
+ "3a55e178-d9ba-4ad1-b777-4d99c9beb604": {
+  "airline_code": "PA",
+  "airline_name": "Pan American",
+  "carrier_code": "PAKY"
+ },
+ "3a57f702-b7e6-437b-b5c1-23eb3c354f17": {
+  "airline_code": "04",
+  "airline_name": "Tonka global",
+  "carrier_code": "04"
+ },
+ "3aa87924-5937-4d1b-b32c-58aaa3a4d6b3": {
+  "airline_code": "DI",
+  "airline_name": "Dream Island Air",
+  "carrier_code": "DI"
+ },
+ "3aecbfe4-433c-4143-890a-6ae04f43dfb1": {
+  "airline_code": "YK",
+  "airline_name": "TerbangYuk",
+  "carrier_code": "YK"
+ },
+ "3bea1cee-5249-4699-b49b-0b98e813602f": {
+  "airline_code": "DN",
+  "airline_name": "Deutsche NordHansa",
+  "carrier_code": "DN"
+ },
+ "3bfcd993-d709-4704-b2cb-a1a3826f1210": {
+  "airline_code": "VB",
+  "airline_name": "Voi Bay airline",
+  "carrier_code": "VBVS"
+ },
+ "3c5c3ae9-d404-433d-8647-082f713af8fc": {
+  "airline_code": "CD",
+  "airline_name": "CONCORDIA ID",
+  "carrier_code": "CDKY"
+ },
+ "3c7a07de-6b9f-41e9-9c2a-60cee65780af": {
+  "airline_code": "SI",
+  "airline_name": "Southern Indian",
+  "carrier_code": "SIPX"
+ },
+ "3c91c819-328d-41af-9dd8-920c1b85c894": {
+  "airline_code": "BA",
+  "airline_name": "British Airways",
+  "carrier_code": "BAAG"
+ },
+ "3d4d007c-c5ad-4592-a8ca-ba26666f6716": {
+  "airline_code": "AS",
+  "airline_name": "Sahara Airlines",
+  "carrier_code": "ASAU"
+ },
+ "3d79ec2c-a7f6-433d-a92a-6fe513b07a57": {
+  "airline_code": "PN",
+  "airline_name": "Ploins n buses air",
+  "carrier_code": "PNEN"
+ },
+ "3e45d54c-03c7-4cef-9dbb-5f8053eabf93": {
+  "airline_code": "CA",
+  "airline_name": "Californian Air",
+  "carrier_code": "CAPX"
+ },
+ "3efa3a8d-361a-4d47-b172-9d8f43640b2f": {
+  "airline_code": "CX",
+  "airline_name": "Cathay Paciic",
+  "carrier_code": "CXAG"
+ },
+ "3f561966-d5d0-4b13-9cac-92f7a2b14bd0": {
+  "airline_code": "AS",
+  "airline_name": "AeroSynn Int.",
+  "carrier_code": "ASEN"
+ },
+ "40b5ecf9-072a-44a9-85e1-fb307d05bfec": {
+  "airline_code": "BL",
+  "airline_name": "STARBLUE",
+  "carrier_code": "BLVH"
+ },
+ "410c6851-4a52-4cd2-911a-77db4d338bd0": {
+  "airline_code": "PK",
+  "airline_name": "PIA",
+  "carrier_code": "PK"
+ },
+ "4180e588-808b-4688-81ca-ab126d14987a": {
+  "airline_code": "LH",
+  "airline_name": "LahoreAir",
+  "carrier_code": "LHKY"
+ },
+ "41c588b7-bfb2-480d-97f8-cf4e637f5cf0": {
+  "airline_code": "HI",
+  "airline_name": "beggar airlines",
+  "carrier_code": "HI"
+ },
+ "41e1ccf5-01c3-402c-8416-110e38a6d077": {
+  "airline_code": "AL",
+  "airline_name": "ALTARA",
+  "carrier_code": "ALPX"
+ },
+ "4263141c-4887-42a7-8826-f248e3929120": {
+  "airline_code": "BL",
+  "airline_name": "Bula Air",
+  "carrier_code": "BLPX1"
+ },
+ "42a2608f-cfa7-4f0d-a3c7-e39042c17255": {
+  "airline_code": "IN",
+  "airline_name": "स्टार एयरलाइंस",
+  "carrier_code": "IN"
+ },
+ "42db9805-f43f-4ac8-b1ee-2f2b211ff060": {
+  "airline_code": "SN",
+  "airline_name": "Americas Int'l",
+  "carrier_code": "SNVH1"
+ },
+ "42f48449-ca7c-45d4-84e2-7ea07ec11d80": {
+  "airline_code": "FZ",
+  "airline_name": "Holidayzz.com",
+  "carrier_code": "FZVS"
+ },
+ "43152a22-7cbe-4534-920b-07b4fa7c4b7c": {
+  "airline_code": "AC",
+  "airline_name": "ACCEL CHARTERED",
+  "carrier_code": "ACEN1"
+ },
+ "43a0aa54-11ff-4c1b-939a-9ab86138bc9e": {
+  "airline_code": "CZ",
+  "airline_name": "中国南方航空",
+  "carrier_code": "CZ"
+ },
+ "44814201-8885-4628-ac4e-ef113f82762a": {
+  "airline_code": "MS",
+  "airline_name": "Mango Airlines",
+  "carrier_code": "MSPX"
+ },
+ "448a6cf4-9536-4d2e-96ad-4d9fd59dfa93": {
+  "airline_code": "SI",
+  "airline_name": "Asian",
+  "carrier_code": "SIEN"
+ },
+ "452227c8-0d48-4cbf-a1d1-01337eb626d5": {
+  "airline_code": "CF",
+  "airline_name": "Pacific Clipper",
+  "carrier_code": "CF"
+ },
+ "4599e528-806a-421a-964a-d4943417da8a": {
+  "airline_code": "GT",
+  "airline_name": "Gold Airlines",
+  "carrier_code": "GTAG"
+ },
+ "45ad12d0-e75b-4ae4-bc51-912a16afbb21": {
+  "airline_code": "AL",
+  "airline_name": "AeroLiberty",
+  "carrier_code": "ALVS1"
+ },
+ "45e77dd9-a1bc-4312-b8ea-4a9ba150dc44": {
+  "airline_code": "AC",
+  "airline_name": "AeroCanadian",
+  "carrier_code": "ACAU"
+ },
+ "4608e8d7-707f-4b9a-b63e-cc6ec4c8e2f7": {
+  "airline_code": "SR",
+  "airline_name": "Sofarobita",
+  "carrier_code": "SRAG"
+ },
+ "464ea933-e6b3-4b48-b3c2-8cb3d04dcf54": {
+  "airline_code": "SA",
+  "airline_name": "South African",
+  "carrier_code": "SAPX"
+ },
+ "46a94d23-3f3b-4cbb-8e3d-b6f29b7f448b": {
+  "airline_code": "AX",
+  "airline_name": "ASTRA by Starliner",
+  "carrier_code": "AXVH"
+ },
+ "46dac811-2712-4f36-b1cb-23e0c5293824": {
+  "airline_code": "AL",
+  "airline_name": "Aero Luco",
+  "carrier_code": "ALVS2"
+ },
+ "47952aca-b90a-4cd3-a5d0-e6645a71cee7": {
+  "airline_code": "AE",
+  "airline_name": "Amore Airlines",
+  "carrier_code": "AEKY"
+ },
+ "479d0ce6-1a6f-47de-82b2-fde8587f8f99": {
+  "airline_code": "SA",
+  "airline_name": "Sanggar Air",
+  "carrier_code": "SAAG"
+ },
+ "480c930c-f9b4-4c33-9903-12333ddf7c72": {
+  "airline_code": "SR",
+  "airline_name": "Starliner",
+  "carrier_code": "SRVH"
+ },
+ "487bb4a8-a1c4-4896-81c6-d96f89f51dec": {
+  "airline_code": "OZ",
+  "airline_name": "Asiana Airlines",
+  "carrier_code": "OZ"
+ },
+ "491b5c9e-477e-4a7a-b8c6-b86d0e2ca839": {
+  "airline_code": "SA",
+  "airline_name": "Sterling Airways",
+  "carrier_code": "SAEN"
+ },
+ "493563f5-c7d9-41c9-a6bc-d963c50548c2": {
+  "airline_code": "VM",
+  "airline_name": "Velocity Americas",
+  "carrier_code": "VM"
+ },
+ "49f355d2-4ed4-4c04-af7c-41a4d142d82f": {
+  "airline_code": "AA",
+  "airline_name": "Air Bharat",
+  "carrier_code": "AAEN1"
+ },
+ "4a22c19a-40a0-412c-9749-9eee52d57f77": {
+  "airline_code": "RD",
+  "airline_name": "Dubai Airlines",
+  "carrier_code": "RDVH"
+ },
+ "4a7659da-7c55-4395-a0a5-3ba3071314b6": {
+  "airline_code": "AR",
+  "airline_name": "Ardent Airways",
+  "carrier_code": "ARAG2"
+ },
+ "4b3ef8ae-1a92-462d-b564-e9b1d42ec42d": {
+  "airline_code": "EK",
+  "airline_name": "Emirates",
+  "carrier_code": "EKVS"
+ },
+ "4c1a54bd-9282-4641-b928-5f6f5555543a": {
+  "airline_code": "QG",
+  "airline_name": "Citilink Int’l",
+  "carrier_code": "QG"
+ },
+ "4c52bd6d-b875-4761-81bf-6b5ac9cb725e": {
+  "airline_code": "AR",
+  "airline_name": "ALTARA",
+  "carrier_code": "ARAG3"
+ },
+ "4c62b6aa-e095-4fb3-9bf5-d3a1a1a82571": {
+  "airline_code": "2A",
+  "airline_name": "Air Astra",
+  "carrier_code": "2A"
+ },
+ "4d31a250-5bb8-4931-aabd-ad608fdd3d28": {
+  "airline_code": "DO",
+  "airline_name": "Dominicana",
+  "carrier_code": "DO"
+ },
+ "4d9ed5a6-9825-4aa2-8cc6-358f8f22cd50": {
+  "airline_code": "JG",
+  "airline_name": "Jangle",
+  "carrier_code": "JG"
+ },
+ "4dbbc852-1987-44f6-891f-a55e38b22667": {
+  "airline_code": "SL",
+  "airline_name": "SteppeLink",
+  "carrier_code": "SLPX"
+ },
+ "4dc98249-81c4-4fa0-9276-e5bfcef9dbbd": {
+  "airline_code": "LJ",
+  "airline_name": "LuxJet",
+  "carrier_code": "LJ"
+ },
+ "4e4f1704-78b9-4728-b0a6-eece948bf50c": {
+  "airline_code": "HK",
+  "airline_name": "Hong Kong Airways",
+  "carrier_code": "HKVS"
+ },
+ "4ed02160-a527-4b24-8bac-7461f85ba83a": {
+  "airline_code": "XY",
+  "airline_name": "XIYONG Yun",
+  "carrier_code": "XY"
+ },
+ "5069d652-024b-4ead-b681-3b3592c72211": {
+  "airline_code": "AP",
+  "airline_name": "Air Prussia",
+  "carrier_code": "APEN2"
+ },
+ "50bd412b-69b2-4ef1-9aec-588befdab6ed": {
+  "airline_code": "CP",
+  "airline_name": "Compass Airlines",
+  "carrier_code": "CPKY"
+ },
+ "50c8d960-9d43-453a-9f12-95a48865ccbc": {
+  "airline_code": "BH",
+  "airline_name": "BritHop",
+  "carrier_code": "BH"
+ },
+ "50dd16ed-c609-490d-81e2-331f41e69f43": {
+  "airline_code": "XR",
+  "airline_name": "XPLORA",
+  "carrier_code": "XRPX"
+ },
+ "51a5f3b2-3c4c-4df0-942b-94ce1b1200cb": {
+  "airline_code": "EK",
+  "airline_name": "Emirates",
+  "carrier_code": "EKAU"
+ },
+ "51e2e24b-967b-4685-b3fc-2af2fdb95ff3": {
+  "airline_code": "PI",
+  "airline_name": "Pingui",
+  "carrier_code": "PI"
+ },
+ "5257f251-711e-4acd-94eb-bf8ba507d18b": {
+  "airline_code": "FT",
+  "airline_name": "𝘍𝘢𝘭𝘤𝘰𝘯𝘑𝘦𝘵",
+  "carrier_code": "FT"
+ },
+ "5293bd78-e32b-4e6d-af6e-8de69d620858": {
+  "airline_code": "NH",
+  "airline_name": "NordHansa",
+  "carrier_code": "NHPX"
+ },
+ "52b539c4-449c-45c7-adf5-b4b1443cf7d1": {
+  "airline_code": "LH",
+  "airline_name": "Ukeyhansa",
+  "carrier_code": "LHPX"
+ },
+ "52dc1fc2-735b-4c2b-a63a-91fb8cea4e0c": {
+  "airline_code": "EV",
+  "airline_name": "Echoverse Airlines",
+  "carrier_code": "EVAU"
+ },
+ "535ccbdb-4fe3-4fc2-a874-2784160b698b": {
+  "airline_code": "EV",
+  "airline_name": "Lotus Airlines",
+  "carrier_code": "EVEY"
+ },
+ "54896133-cebe-49c4-9234-2cd07fde5842": {
+  "airline_code": "6W",
+  "airline_name": "Californian Air",
+  "carrier_code": "6W"
+ },
+ "54ab8b40-4b39-420b-8192-96b8b416cf2c": {
+  "airline_code": "JL",
+  "airline_name": "JetVietnam Light",
+  "carrier_code": "JLPX"
+ },
+ "54b2f60b-aea3-40e4-9d4c-aeb07ad59663": {
+  "airline_code": "KM",
+  "airline_name": "KLM Royal Dutch",
+  "carrier_code": "KM"
+ },
+ "54e19d78-8670-4558-af2f-b585220157f2": {
+  "airline_code": "NX",
+  "airline_name": "NXGEN Worldwide",
+  "carrier_code": "NXKY"
+ },
+ "5546224e-8df9-4a6e-9b8c-c298ac31efe8": {
+  "airline_code": "GN",
+  "airline_name": "Travel asian airlines￼",
+  "carrier_code": "GN"
+ },
+ "55fd2070-11b4-46c4-bc38-e0f641bbc82e": {
+  "airline_code": "LL",
+  "airline_name": "LumeLink",
+  "carrier_code": "LL"
+ },
+ "57584640-b3cd-4869-b013-6bc7c59b94be": {
+  "airline_code": "GA",
+  "airline_name": "Germanair",
+  "carrier_code": "GAVH1"
+ },
+ "5823719b-2afb-4090-ab3d-a283ada2ae91": {
+  "airline_code": "FI",
+  "airline_name": "Forward Air",
+  "carrier_code": "FI"
+ },
+ "585785ca-c37f-446a-bd01-dff0571f8b2b": {
+  "airline_code": "NA",
+  "airline_name": "Nova Air",
+  "carrier_code": "NAAU"
+ },
+ "58b1650b-3ded-4974-b2e3-8e4861875d79": {
+  "airline_code": "KX",
+  "airline_name": "Karination",
+  "carrier_code": "KX"
+ },
+ "58c6fea5-eb06-49a6-b8d8-b46da47863d0": {
+  "airline_code": "MA",
+  "airline_name": "AirMarianne",
+  "carrier_code": "MAPX2"
+ },
+ "58f76ef1-5c46-47d6-bb1e-0880087a80a0": {
+  "airline_code": "LS",
+  "airline_name": "Lotus Air",
+  "carrier_code": "LS"
+ },
+ "59795276-45fe-441e-a16a-44c39590040e": {
+  "airline_code": "TL",
+  "airline_name": "TAL Tokyo Airlines",
+  "carrier_code": "TLVS"
+ },
+ "59ad6b25-fae7-4e93-a4fa-c226a4c7e7be": {
+  "airline_code": "PG",
+  "airline_name": "Pacific Go",
+  "carrier_code": "PG"
+ },
+ "59f2bd2d-f98b-4220-917f-2c7a7f2712d0": {
+  "airline_code": "SK",
+  "airline_name": "SAS",
+  "carrier_code": "SKAU"
+ },
+ "5b211670-0838-423f-a4c6-739d2f449f49": {
+  "airline_code": "OS",
+  "airline_name": "Orchid Skies",
+  "carrier_code": "OSAG"
+ },
+ "5b3dff43-b59b-4cea-a863-4d69c1a18475": {
+  "airline_code": "VX",
+  "airline_name": "Velora by STRLINR",
+  "carrier_code": "VX"
+ },
+ "5b5a0319-bc0b-4b20-b161-47a429f89bf2": {
+  "airline_code": "EU",
+  "airline_name": "Europe Air",
+  "carrier_code": "EUAG"
+ },
+ "5c63dea2-e0f4-44b3-bde4-8ed6a2241f59": {
+  "airline_code": "AG",
+  "airline_name": "ANTÜ",
+  "carrier_code": "AG"
+ },
+ "5c820244-339c-4112-8a63-d69f63fe320e": {
+  "airline_code": "NW",
+  "airline_name": "Northwest Airlines",
+  "carrier_code": "NW"
+ },
+ "5ca0b4b1-8557-4515-be6a-c252023df90b": {
+  "airline_code": "MH",
+  "airline_name": "Al Maha Airways",
+  "carrier_code": "MHPX2"
+ },
+ "5d202d73-9eef-4305-8ccf-44aad13bc03a": {
+  "airline_code": "SW",
+  "airline_name": "SAWADEE",
+  "carrier_code": "SWKY2"
+ },
+ "5d9a60ff-96da-4f1e-8b9d-aafd04983e72": {
+  "airline_code": "SC",
+  "airline_name": "Scandi",
+  "carrier_code": "SCVS"
+ },
+ "5dc71be1-1e4b-4fc5-a12a-ce6c1cc1c42b": {
+  "airline_code": "CT",
+  "airline_name": "Catto!",
+  "carrier_code": "CT"
+ },
+ "5dd7d896-8880-41fc-a066-bea010ef3707": {
+  "airline_code": "AO",
+  "airline_name": "Λero",
+  "carrier_code": "AO"
+ },
+ "5de100da-ef3d-443b-96bb-eac83218d426": {
+  "airline_code": "TP",
+  "airline_name": "TEAL Pacific",
+  "carrier_code": "TPEN"
+ },
+ "5f7be87b-ce5b-44f8-94a4-1806a6e8d2dd": {
+  "airline_code": "AH",
+  "airline_name": "Austro-Hungarian",
+  "carrier_code": "AHKY"
+ },
+ "5f993d2c-6650-45fb-a70a-0bacfd89ae0e": {
+  "airline_code": "PD",
+  "airline_name": "PanAm Deutschland",
+  "carrier_code": "PD"
+ },
+ "6031f612-52e7-4808-93e5-3e8fb4d07dec": {
+  "airline_code": "TP",
+  "airline_name": "Trans Pacific Air",
+  "carrier_code": "TPAU"
+ },
+ "6226bf44-6820-4272-8742-d44e9f5dcc0b": {
+  "airline_code": "DA",
+  "airline_name": "Delta",
+  "carrier_code": "DAVH"
+ },
+ "62cb5747-551c-477e-9aa4-0bddbcc29794": {
+  "airline_code": "JL",
+  "airline_name": "Japan Airlines",
+  "carrier_code": "JLVH"
+ },
+ "631a5bbb-75c5-41d9-9746-1c9dc745eecc": {
+  "airline_code": "GP",
+  "airline_name": "Global PH Airways",
+  "carrier_code": "GP"
+ },
+ "63b2de8e-1e9a-486d-ac63-09d9dc807ef2": {
+  "airline_code": "SS",
+  "airline_name": "SLCLS",
+  "carrier_code": "SSAU1"
+ },
+ "63e1993a-9132-4580-b475-83e1f3b7db7e": {
+  "airline_code": "ML",
+  "airline_name": "Mallaca",
+  "carrier_code": "MLPX2"
+ },
+ "642f0aea-7ae8-4dc5-a6e8-58cb5d12206a": {
+  "airline_code": "NS",
+  "airline_name": "NorthStarline",
+  "carrier_code": "NSAU1"
+ },
+ "646a9b8a-1ecb-44f2-a40a-83c929cfb722": {
+  "airline_code": "AV",
+  "airline_name": "Auervia",
+  "carrier_code": "AVPX1"
+ },
+ "64db11db-6e2a-4411-87fb-73c03e941ffa": {
+  "airline_code": "TG",
+  "airline_name": "Thai airways",
+  "carrier_code": "TG"
+ },
+ "651b97f4-3b47-44d8-99b7-3d6a4897e803": {
+  "airline_code": "CI",
+  "airline_name": "China Airlines",
+  "carrier_code": "CI"
+ },
+ "653c030f-6765-4896-9acf-8aab9cc1f9c2": {
+  "airline_code": "8M",
+  "airline_name": "Jet Connect PH",
+  "carrier_code": "8M"
+ },
+ "6606ee4e-2ebd-494f-8278-a5bdef0c65f3": {
+  "airline_code": "TR",
+  "airline_name": "Trinity",
+  "carrier_code": "TRPX"
+ },
+ "668f3178-45f6-4221-8d8a-1f8d7a52f3d5": {
+  "airline_code": "NY",
+  "airline_name": "Nayara",
+  "carrier_code": "NY"
+ },
+ "66bfb1bb-f909-47c9-8ecf-bf3a7a43c214": {
+  "airline_code": "CR",
+  "airline_name": "Crown",
+  "carrier_code": "CRAU1"
+ },
+ "67a93dee-857c-435f-b7d1-777547b6a479": {
+  "airline_code": "MA",
+  "airline_name": "MintAir",
+  "carrier_code": "MAEN"
+ },
+ "67d39f6a-d394-46d6-bae4-59280039ff39": {
+  "airline_code": "9Z",
+  "airline_name": "FlySwiss",
+  "carrier_code": "9Z"
+ },
+ "68485c26-9c42-424c-b0bd-b76a38250f42": {
+  "airline_code": "CA",
+  "airline_name": "Globally Air",
+  "carrier_code": "CAEN1"
+ },
+ "68666944-83b9-4934-9d04-963188dd677a": {
+  "airline_code": "AA",
+  "airline_name": "American",
+  "carrier_code": "AAKY1"
+ },
+ "68ffa11c-c01a-46fc-ba4b-de402526c53a": {
+  "airline_code": "AF",
+  "airline_name": "Air Fuji",
+  "carrier_code": "AFAG"
+ },
+ "696890df-bd16-4856-986a-8ade7188a9ee": {
+  "airline_code": "OA",
+  "airline_name": "Oasis Air",
+  "carrier_code": "OAVH"
+ },
+ "696dd2a5-da59-4314-9c77-5bb70d3a8063": {
+  "airline_code": "GA",
+  "airline_name": "Garuda Indonesia",
+  "carrier_code": "GAVH2"
+ },
+ "69c045ba-c993-420d-ae89-e7f430499394": {
+  "airline_code": "AJ",
+  "airline_name": "AstroJet Air",
+  "carrier_code": "AJAG"
+ },
+ "69e6dfc9-e18e-478a-91b4-f9bc58ecc237": {
+  "airline_code": "UT",
+  "airline_name": "Sunkist Airlines",
+  "carrier_code": "UTAU"
+ },
+ "69f667ae-5613-4509-9d12-cf932728002b": {
+  "airline_code": "TA",
+  "airline_name": "Turnesian Airline",
+  "carrier_code": "TAAU1"
+ },
+ "6a629798-477f-4262-b1da-ce8667e949d4": {
+  "airline_code": "7I",
+  "airline_name": "AEROLINK canarias",
+  "carrier_code": "7I"
+ },
+ "6adca264-0958-4428-a5a0-6788ef77bc7b": {
+  "airline_code": "HN",
+  "airline_name": "Horizon Nexus",
+  "carrier_code": "HN"
+ },
+ "6af6d657-0d92-46f9-a042-9e10094d17b0": {
+  "airline_code": "OS",
+  "airline_name": "OneLink Airways",
+  "carrier_code": "OSKY"
+ },
+ "6be11e2b-c812-42d3-96c1-71a59a485d01": {
+  "airline_code": "HU",
+  "airline_name": "LINKSTAR AUSTRALIA",
+  "carrier_code": "HU"
+ },
+ "6be7c9f0-ba7d-48a0-b50f-6552579e7965": {
+  "airline_code": "MI",
+  "airline_name": "Mikeria",
+  "carrier_code": "MIAG"
+ },
+ "6c626f88-c6ac-48ef-a873-9b8237a1334f": {
+  "airline_code": "AC",
+  "airline_name": "Aero Caribbean",
+  "carrier_code": "ACEN2"
+ },
+ "6d3c0298-84b1-4c1e-ae63-34bbe574b153": {
+  "airline_code": "MN",
+  "airline_name": "Meridian",
+  "carrier_code": "MNPX"
+ },
+ "6d3f9876-d475-48d5-9502-4d25a2a3b099": {
+  "airline_code": "DE",
+  "airline_name": "Baja Airways",
+  "carrier_code": "DE"
+ },
+ "6db29242-4023-4a35-a1fd-25a133329909": {
+  "airline_code": "DR",
+  "airline_name": "港龍航空 BG DRAGONAIR",
+  "carrier_code": "DR"
+ },
+ "6dbbe22b-d2ee-400a-9ea7-3ffc7bb251da": {
+  "airline_code": "HA",
+  "airline_name": "défens airways",
+  "carrier_code": "HAVS2"
+ },
+ "6e80ef0c-2096-41fc-b797-23e7d96425d2": {
+  "airline_code": "AA",
+  "airline_name": "Voltric (Holdings)",
+  "carrier_code": "AAEN2"
+ },
+ "6f75c031-7132-4613-822f-324a7142a509": {
+  "airline_code": "EK",
+  "airline_name": "Emirates",
+  "carrier_code": "EKEY2"
+ },
+ "6fdde821-28db-48c3-b1dd-d52432b75df4": {
+  "airline_code": "RB",
+  "airline_name": "Aer Red Bull",
+  "carrier_code": "RB"
+ },
+ "702d3c6e-fa39-44f0-bca6-f4a2bde6525b": {
+  "airline_code": "VF",
+  "airline_name": "Velocity Freight",
+  "carrier_code": "VF"
+ },
+ "705d4f4e-0ca1-4e4d-babe-dc3a880286b8": {
+  "airline_code": "RD",
+  "airline_name": "Staris Airways",
+  "carrier_code": "RDVS"
+ },
+ "71050e83-ae38-4449-a351-0d86afe0e6c3": {
+  "airline_code": "H2",
+  "airline_name": "Royal Himalaya",
+  "carrier_code": "H2"
+ },
+ "711be232-e626-41ae-ae7c-58065d65312c": {
+  "airline_code": "AK",
+  "airline_name": "Arunika Cont’",
+  "carrier_code": "AKAG"
+ },
+ "714e84f4-51b9-435c-9c84-d579654afd26": {
+  "airline_code": "CW",
+  "airline_name": "Crest Airways",
+  "carrier_code": "CWEN"
+ },
+ "7161dd99-f487-4203-85f2-34ce91d946fa": {
+  "airline_code": "JD",
+  "airline_name": "Jade Airways",
+  "carrier_code": "JD"
+ },
+ "719b27aa-eeef-4995-8948-4939d58bd5b0": {
+  "airline_code": "AA",
+  "airline_name": "Anubis Air",
+  "carrier_code": "AAAU1"
+ },
+ "71b97e6e-c805-49d0-ae56-fff014177a68": {
+  "airline_code": "KB",
+  "airline_name": "Tamurt.",
+  "carrier_code": "KB"
+ },
+ "720eb338-cad2-4c6f-a9a0-a90cf6f72d58": {
+  "airline_code": "FA",
+  "airline_name": "Franconian Air",
+  "carrier_code": "FAVH"
+ },
+ "72403a6a-5baf-42f3-a2b3-319546dd9ee9": {
+  "airline_code": "8V",
+  "airline_name": "Jet Connect EU",
+  "carrier_code": "8V"
+ },
+ "73942aaf-c3cc-44ca-b226-2f0f6c56120c": {
+  "airline_code": "FS",
+  "airline_name": "Fly Switzerland",
+  "carrier_code": "FS"
+ },
+ "7443cfff-ad45-4970-850c-3850cb193cf9": {
+  "airline_code": "DL",
+  "airline_name": "Delta Air Lines",
+  "carrier_code": "DLEY1"
+ },
+ "747bd011-af0e-480f-be0c-fa39a0b9233f": {
+  "airline_code": "DT",
+  "airline_name": "TAAG Angola",
+  "carrier_code": "DTKY"
+ },
+ "74cf44a2-c471-419c-9030-cd04a74997e2": {
+  "airline_code": "RF",
+  "airline_name": "Ridh Air",
+  "carrier_code": "RFKY"
+ },
+ "7521c3c7-88fb-414c-8e1e-2950f6699e12": {
+  "airline_code": "TA",
+  "airline_name": "Tai Air",
+  "carrier_code": "TAAU2"
+ },
+ "754313df-778d-4271-97b1-116e074e1fa5": {
+  "airline_code": "RF",
+  "airline_name": "Ridh Air Aura",
+  "carrier_code": "RFAU"
+ },
+ "754a2f59-1faa-41c4-b2b1-5c4d76e6da1e": {
+  "airline_code": "LZ",
+  "airline_name": "MJJ ECLIPSE",
+  "carrier_code": "LZAG"
+ },
+ "757cc57e-1f8b-4476-92e0-507e9a129a49": {
+  "airline_code": "AL",
+  "airline_name": "AeroLys",
+  "carrier_code": "ALKY1"
+ },
+ "76120e37-5c2b-48b1-ac3d-9f10407343a7": {
+  "airline_code": "LX",
+  "airline_name": "Swiss",
+  "carrier_code": "LXVS"
+ },
+ "76944d4b-1a9f-4be9-8be3-a8e66b49dd95": {
+  "airline_code": "JA",
+  "airline_name": "FlyJapan",
+  "carrier_code": "JAEY"
+ },
+ "783b1f53-5d07-4260-a688-8824d5d9569a": {
+  "airline_code": "FW",
+  "airline_name": "FrenchWorldAirline",
+  "carrier_code": "FWAG"
+ },
+ "787b12be-4303-4986-ac84-fa2a4c17096f": {
+  "airline_code": "AS",
+  "airline_name": "Aer RB S. America",
+  "carrier_code": "ASPX"
+ },
+ "78bd4dd5-a965-44ed-91c8-60e3b1ae2e58": {
+  "airline_code": "FP",
+  "airline_name": "FlyPhilippines",
+  "carrier_code": "FPAG2"
+ },
+ "792c01f7-d553-4b7b-abe7-78e07d6dc278": {
+  "airline_code": "AK",
+  "airline_name": "AIRLINK",
+  "carrier_code": "AKKY"
+ },
+ "79688959-d851-474b-82a6-5df241e18122": {
+  "airline_code": "AF",
+  "airline_name": "AirFluff Airlines",
+  "carrier_code": "AFAU"
+ },
+ "7ab46c7d-b06b-4ec8-bdc0-fec39c19b28d": {
+  "airline_code": "EU",
+  "airline_name": "EuroUnity Air",
+  "carrier_code": "EUKY"
+ },
+ "7abd459b-7c2d-46ee-91da-44b37da61c66": {
+  "airline_code": "CU",
+  "airline_name": "Continental EU",
+  "carrier_code": "CU"
+ },
+ "7b27a233-d4f9-4d92-aa86-13c105797c25": {
+  "airline_code": "SW",
+  "airline_name": "SWAN Air",
+  "carrier_code": "SWAU1"
+ },
+ "7b5aba94-1745-422d-9c1c-f4cf6b310976": {
+  "airline_code": "SV",
+  "airline_name": "Sveora Airways",
+  "carrier_code": "SVPX1"
+ },
+ "7bf7fb6b-5167-44cc-890f-b7e11dacce3d": {
+  "airline_code": "AU",
+  "airline_name": "AeroOriental TG",
+  "carrier_code": "AUEN"
+ },
+ "7c117101-c74c-4a53-aeec-875a00eb4727": {
+  "airline_code": "AX",
+  "airline_name": "Astra",
+  "carrier_code": "AXAG"
+ },
+ "7c6ff174-0b94-4198-a117-ccf0eeaf0663": {
+  "airline_code": "AM",
+  "airline_name": "A Airlines",
+  "carrier_code": "AMKY1"
+ },
+ "7c7b6b51-fdce-4ff2-9460-07656f79daee": {
+  "airline_code": "SK",
+  "airline_name": "SKY CROSS cargoway",
+  "carrier_code": "SKEN"
+ },
+ "7c7c77c4-9e9e-46b5-a6cd-88f4a0de35a1": {
+  "airline_code": "VA",
+  "airline_name": "SeerAir TG",
+  "carrier_code": "VAVH"
+ },
+ "7cc498bf-b07e-412a-a20b-4f0bb5a4a401": {
+  "airline_code": "XX",
+  "airline_name": "DATE",
+  "carrier_code": "XX"
+ },
+ "7d38e127-b792-40eb-9b55-0e296ca757c0": {
+  "airline_code": "BV",
+  "airline_name": "BelaviaAERO",
+  "carrier_code": "BV"
+ },
+ "7db91c0e-3133-43df-8ab1-e110ef623df8": {
+  "airline_code": "SW",
+  "airline_name": "Sweden Airline",
+  "carrier_code": "SWAU2"
+ },
+ "7ec8ce07-a832-4013-932a-b82cbd35aede": {
+  "airline_code": "MX",
+  "airline_name": "Mexicana ",
+  "carrier_code": "MXAG"
+ },
+ "7eee9375-9f49-42b3-848a-c8037b7e0aa7": {
+  "airline_code": "AA",
+  "airline_name": "American Eagle",
+  "carrier_code": "AAAG"
+ },
+ "7f887975-3d0a-4857-8e05-ff6acca3c2eb": {
+  "airline_code": "AN",
+  "airline_name": "Avian",
+  "carrier_code": "ANAG2"
+ },
+ "7f99c158-0686-487d-92f4-ee7fbecfc7f3": {
+  "airline_code": "SG",
+  "airline_name": "Anansie",
+  "carrier_code": "SGVH"
+ },
+ "7fd0f876-0b69-48c7-be86-bc055bf290bd": {
+  "airline_code": "MX",
+  "airline_name": "Meridian by STRLNR",
+  "carrier_code": "MXEY"
+ },
+ "800228bc-7faa-4312-9539-2af4b2195864": {
+  "airline_code": "OL",
+  "airline_name": "Air Olympus",
+  "carrier_code": "OL"
+ },
+ "8098e4cc-e4bc-4a64-a63f-21f40f2fa4ce": {
+  "airline_code": "GH",
+  "airline_name": "Ghaf Airways",
+  "carrier_code": "GHAU"
+ },
+ "814a7361-4499-4c27-b6de-394eee5bdab4": {
+  "airline_code": "PA",
+  "airline_name": "Premium Airlines",
+  "carrier_code": "PAPX2"
+ },
+ "81716493-c657-49c3-b730-53dfec13b02c": {
+  "airline_code": "GA",
+  "airline_name": "GenerAir",
+  "carrier_code": "GAEY"
+ },
+ "81846bbb-d6db-4c13-a507-7a1fd8df0cf8": {
+  "airline_code": "ZZ",
+  "airline_name": null,
+  "carrier_code": "ZZ"
+ },
+ "81896537-4de1-4b1b-a058-2635c34a7d8a": {
+  "airline_code": "CX",
+  "airline_name": "Chandelier",
+  "carrier_code": "CXAG1"
+ },
+ "81d84f38-9411-4c90-99b5-25fe6c051b7e": {
+  "airline_code": "FK",
+  "airline_name": "flykourtia.gr",
+  "carrier_code": "FK"
+ },
+ "82579d25-45a7-4ddf-a0b0-1caa6a85e549": {
+  "airline_code": "ZT",
+  "airline_name": "Zenite",
+  "carrier_code": "ZT"
+ },
+ "834cc385-a6b3-4a26-8f7c-a907125ef66d": {
+  "airline_code": "BA",
+  "airline_name": "British Airways",
+  "carrier_code": "BAEY"
+ },
+ "83be47f5-6180-4d4c-abfc-cc5a0f1d7d57": {
+  "airline_code": "P8",
+  "airline_name": "Alpine Air Service",
+  "carrier_code": "P8"
+ },
+ "845feeee-987b-47db-998c-ad80db15bcb2": {
+  "airline_code": "CL",
+  "airline_name": "CONCORDIA LATAM",
+  "carrier_code": "CLPX1"
+ },
+ "8549288e-a457-4faa-958b-3295ac938791": {
+  "airline_code": "AL",
+  "airline_name": "Aer Lingus",
+  "carrier_code": "ALKY2"
+ },
+ "857a4835-291c-4d10-b11d-0cb3c127b0fa": {
+  "airline_code": "WA",
+  "airline_name": "Western Airlines",
+  "carrier_code": "WAAU"
+ },
+ "85a08cb5-425e-4983-a515-eace852b1ab3": {
+  "airline_code": "AM",
+  "airline_name": "Aer Meridian",
+  "carrier_code": "AMKY"
+ },
+ "8617ed97-329a-47f3-8b1d-f23e4d4ac04e": {
+  "airline_code": "RP",
+  "airline_name": "Royal pacific lite",
+  "carrier_code": "RP"
+ },
+ "86a329c4-a71a-45ad-831f-a0f09ab8d608": {
+  "airline_code": "MB",
+  "airline_name": "MontBlanc",
+  "carrier_code": "MBKY"
+ },
+ "86d2d6f1-e7b6-4530-a9fd-c6f988fdfe4b": {
+  "airline_code": "VN",
+  "airline_name": "Vietnam Airlines",
+  "carrier_code": "VNEY2"
+ },
+ "86ddac21-4a5c-4986-ae48-764479cbba1e": {
+  "airline_code": "EK",
+  "airline_name": "Emir",
+  "carrier_code": "EKVH1"
+ },
+ "877a19fe-ae78-4032-b1a6-7489784b7da4": {
+  "airline_code": "LG",
+  "airline_name": "LahoreAir GO!",
+  "carrier_code": "LG"
+ },
+ "88c3cd2d-1d8f-4f4c-9ff7-a95012cd22fb": {
+  "airline_code": "UN",
+  "airline_name": "United",
+  "carrier_code": "UN"
+ },
+ "8904902b-9b74-4c64-aa08-e21eb466d424": {
+  "airline_code": "SG",
+  "airline_name": "Air Singapura",
+  "carrier_code": "SGVS"
+ },
+ "891cba79-1611-4238-a80c-670ab9e3f91b": {
+  "airline_code": "GO",
+  "airline_name": "GO Airways",
+  "carrier_code": "GOAG"
+ },
+ "895be489-5b13-4430-9d93-14f1240e6baf": {
+  "airline_code": "GF",
+  "airline_name": "GlobalFly",
+  "carrier_code": "GFVH1"
+ },
+ "8aa58c76-7463-4dfa-8ed0-335590275b2c": {
+  "airline_code": "BE",
+  "airline_name": "Bedana.",
+  "carrier_code": "BEVH"
+ },
+ "8af4e23f-26aa-4f95-9480-41610704f374": {
+  "airline_code": "OR",
+  "airline_name": "Orion air",
+  "carrier_code": "OR"
+ },
+ "8af5f538-86df-40d0-b812-83c9b25bc066": {
+  "airline_code": "AT",
+  "airline_name": "Air Tiger",
+  "carrier_code": "ATEN"
+ },
+ "8b1d9153-0d34-451a-b170-9525a0e64fbf": {
+  "airline_code": "FN",
+  "airline_name": "FUN! Airways",
+  "carrier_code": "FN"
+ },
+ "8b317480-ac2c-421b-8b5f-487a95306f8b": {
+  "airline_code": "EY",
+  "airline_name": "Etihad Airways",
+  "carrier_code": "EY"
+ },
+ "8b6ad4e7-2753-438f-9fb3-e0d6ff615ef1": {
+  "airline_code": "DP",
+  "airline_name": "Baja Premium",
+  "carrier_code": "DP"
+ },
+ "8c39a418-460a-41a7-90f4-88e44ac35f74": {
+  "airline_code": "GM",
+  "airline_name": "Deutsche Flügel",
+  "carrier_code": "GMEY"
+ },
+ "8c3cf856-0ff7-4fc6-9501-dca1f102b7f1": {
+  "airline_code": "8C",
+  "airline_name": "Jet Connect CA",
+  "carrier_code": "8C"
+ },
+ "8c798914-6abb-41ce-ac84-b066aa52b358": {
+  "airline_code": "AL",
+  "airline_name": "Alterra Air Corp",
+  "carrier_code": "ALAG"
+ },
+ "8d5f0fbd-54b7-4411-973c-809524696b4c": {
+  "airline_code": "AC",
+  "airline_name": "Alpine crown",
+  "carrier_code": "ACPX"
+ },
+ "8d9684e3-e362-4a1c-bfcd-4f29b8677c05": {
+  "airline_code": "FB",
+  "airline_name": "Fly Britannia",
+  "carrier_code": "FB"
+ },
+ "8db10115-58ac-4c37-8ecb-dbcf95b98c9d": {
+  "airline_code": "GO",
+  "airline_name": "SkyFly GO",
+  "carrier_code": "GOVH"
+ },
+ "8eaab827-c1b5-4841-bbaa-4cf14bba46c2": {
+  "airline_code": "AD",
+  "airline_name": "Air Dubai",
+  "carrier_code": "AD"
+ },
+ "8f812e79-b646-4de5-ac4d-3202f64709cf": {
+  "airline_code": "CX",
+  "airline_name": "Cathay Pacific",
+  "carrier_code": "CXAG2"
+ },
+ "90b50dae-4c2f-4e2d-a549-4a2fe419eb65": {
+  "airline_code": "RE",
+  "airline_name": "FlyPierrot TG",
+  "carrier_code": "RE"
+ },
+ "9101f1f6-1861-49ae-a99b-9e6dd823fa35": {
+  "airline_code": "U2",
+  "airline_name": "easyJet",
+  "carrier_code": "U2"
+ },
+ "911a2a7d-0c8c-49b2-8aa3-49699f013a65": {
+  "airline_code": "WN",
+  "airline_name": "Southwest Airlines",
+  "carrier_code": "WNVH"
+ },
+ "91814d64-9de2-4b9d-9053-6388f62b227d": {
+  "airline_code": "AS",
+  "airline_name": "AMS Int'l Airlines",
+  "carrier_code": "ASAG2"
+ },
+ "91bdd24b-83fd-4140-9590-0a88800b67b0": {
+  "airline_code": "CA",
+  "airline_name": "Continental Arabia",
+  "carrier_code": "CAEN2"
+ },
+ "932e2979-0f17-4127-90e1-20ea30121f6c": {
+  "airline_code": "SD",
+  "airline_name": "Sadhukhan Aviation",
+  "carrier_code": "SD"
+ },
+ "933c42c8-e5e6-4a0b-8f18-03dadac70c8a": {
+  "airline_code": "AN",
+  "airline_name": "AeroNova Airlines",
+  "carrier_code": "ANVH1"
+ },
+ "936c2664-d532-48da-bd20-138edb632e5c": {
+  "airline_code": "LA",
+  "airline_name": "Lloyd Airways",
+  "carrier_code": "LAEN1"
+ },
+ "93f6f973-01f5-4cb9-9442-52799696a34f": {
+  "airline_code": "W5",
+  "airline_name": "Mahan Air",
+  "carrier_code": "W5"
+ },
+ "9480fe86-fb0e-45b4-8c7e-4370f1242b20": {
+  "airline_code": "LH",
+  "airline_name": "Lufthansa",
+  "carrier_code": "LHVS"
+ },
+ "94975b60-f388-4976-8b26-3037eff50e40": {
+  "airline_code": "GE",
+  "airline_name": "Garuda Europe",
+  "carrier_code": "GEVH"
+ },
+ "96220233-5870-4902-a5f7-18d62e1d4264": {
+  "airline_code": "UR",
+  "airline_name": "NEPTUNE",
+  "carrier_code": "UR"
+ },
+ "962c39b7-ae8d-436d-bb9d-2d0962c07c8e": {
+  "airline_code": "AZ",
+  "airline_name": "AIR Zürich",
+  "carrier_code": "AZEN1"
+ },
+ "97030f60-458a-44fc-8794-7bd5fd01b22d": {
+  "airline_code": "QR",
+  "airline_name": "Qatar Airways",
+  "carrier_code": "QREN"
+ },
+ "97f77ca6-59ef-4aa0-a8a4-be848ec53082": {
+  "airline_code": "IB",
+  "airline_name": "Air Iberia",
+  "carrier_code": "IBEY"
+ },
+ "983980b4-1ba2-4941-8ed8-2c6cfe67b697": {
+  "airline_code": "RS",
+  "airline_name": "Red Star",
+  "carrier_code": "RS"
+ },
+ "987840c9-4e72-4691-bf35-0dd8670801bb": {
+  "airline_code": "BE",
+  "airline_name": "Connect.",
+  "carrier_code": "BEKY"
+ },
+ "989004a6-d1f4-4efe-a51f-f3c406b93843": {
+  "airline_code": "PA",
+  "airline_name": "Africanta Airlines",
+  "carrier_code": "PAVS"
+ },
+ "98ba2eb6-dd9f-469b-9588-32546a853acf": {
+  "airline_code": "EJ",
+  "airline_name": "EJet",
+  "carrier_code": "EJVH"
+ },
+ "99e0366a-6dc8-49e6-99a1-4b6bdb26f09e": {
+  "airline_code": "LA",
+  "airline_name": "LINKSTAR VIETNAM",
+  "carrier_code": "LAVH1"
+ },
+ "9a827a2f-313a-49a9-8b28-f830bd66f95c": {
+  "airline_code": "HY",
+  "airline_name": "Air Chariot",
+  "carrier_code": "HY"
+ },
+ "9b069dc6-2bce-48c2-abc7-177946422872": {
+  "airline_code": "VE",
+  "airline_name": "Vela Airways",
+  "carrier_code": "VEKY1"
+ },
+ "9b134779-0394-4581-871c-0ecc8555d73e": {
+  "airline_code": "YO",
+  "airline_name": "Yello! Air Lines",
+  "carrier_code": "YO"
+ },
+ "9b2a93fe-86fd-44ee-979a-a05eaaab6ecf": {
+  "airline_code": "BC",
+  "airline_name": "BlueArc Cargo",
+  "carrier_code": "BCPX1"
+ },
+ "9b2d2b6d-4afd-4fc5-a9a4-d594a8b88c2d": {
+  "airline_code": "BA",
+  "airline_name": "Imperial Airways",
+  "carrier_code": "BAVH"
+ },
+ "9bdc8945-ef12-4c91-82c4-9ff44781f6e3": {
+  "airline_code": "LK",
+  "airline_name": "Lion Rock Airways",
+  "carrier_code": "LK"
+ },
+ "9be7b3ff-1e9f-44af-8a95-e3e72f703610": {
+  "airline_code": "XA",
+  "airline_name": "Phoenix Airlines",
+  "carrier_code": "XA"
+ },
+ "9c9f5ba4-1540-411e-a0f9-039c285ce048": {
+  "airline_code": "BT",
+  "airline_name": "Fly Empire",
+  "carrier_code": "BTKY2"
+ },
+ "9cd06b68-9fae-4523-b673-f14354b62833": {
+  "airline_code": "RO",
+  "airline_name": "ROSE AIR",
+  "carrier_code": "RO"
+ },
+ "9d3cd86e-5dae-4a23-8742-65a0dedf0ee5": {
+  "airline_code": "GU",
+  "airline_name": "Essequibo Air",
+  "carrier_code": "GU"
+ },
+ "9db8b9f7-883a-4b78-81dd-bd22209549e8": {
+  "airline_code": "G9",
+  "airline_name": "Air Arabia",
+  "carrier_code": "G9"
+ },
+ "9df58847-11d6-4600-a5f3-3b9008028362": {
+  "airline_code": "LR",
+  "airline_name": "Asilat",
+  "carrier_code": "LREY"
+ },
+ "9e9abb70-b2c5-43f8-a63f-e96883096d1c": {
+  "airline_code": "HA",
+  "airline_name": "Horus Airways",
+  "carrier_code": "HAAG"
+ },
+ "9f09b8fc-e8d0-4d6d-a784-05b06e0737ac": {
+  "airline_code": "TI",
+  "airline_name": "Italiano Airways",
+  "carrier_code": "TI"
+ },
+ "9f12014f-a089-49c7-ad79-497b78251371": {
+  "airline_code": "LF",
+  "airline_name": "龙凤航空",
+  "carrier_code": "LF"
+ },
+ "9f49acd2-d233-43fd-8f95-290e15e7a6ac": {
+  "airline_code": "EK",
+  "airline_name": "Emirates",
+  "carrier_code": "EKVH2"
+ },
+ "9f7cf59a-9d6c-4fc6-ab69-7f0badde9a7a": {
+  "airline_code": "HC",
+  "airline_name": "HANAconnect",
+  "carrier_code": "HC"
+ },
+ "9f92d192-fb07-411d-bd4a-e1e6df00d319": {
+  "airline_code": "EO",
+  "airline_name": "EuroGo",
+  "carrier_code": "EO"
+ },
+ "9f9e3bc7-e351-40d5-b8ff-9ec7c347a17a": {
+  "airline_code": "00",
+  "airline_name": "COAST",
+  "carrier_code": "00"
+ },
+ "9fc353c1-01e9-4003-9138-e1be3546a54f": {
+  "airline_code": "P1",
+  "airline_name": "Pinco Fly Airlines",
+  "carrier_code": "P1"
+ },
+ "9fc66193-3bd4-44c5-93d6-c6e0e7749efe": {
+  "airline_code": "AW",
+  "airline_name": "Adlaw",
+  "carrier_code": "AWPX"
+ },
+ "9ff22dac-b595-4152-9c20-23d6c6e8ac22": {
+  "airline_code": "SX",
+  "airline_name": "Saminix Airlines",
+  "carrier_code": "SXAU1"
+ },
+ "a00028b6-b584-4078-89db-11a37238dd6d": {
+  "airline_code": "NX",
+  "airline_name": "Nexus",
+  "carrier_code": "NXVS"
+ },
+ "a03a508f-f31c-470c-b3c7-f5e6cdf1ad1d": {
+  "airline_code": "CP",
+  "airline_name": "Continental PH",
+  "carrier_code": "CPKY1"
+ },
+ "a076b0cb-bf5c-4b10-b291-47664b170c52": {
+  "airline_code": "F9",
+  "airline_name": "Frontier",
+  "carrier_code": "F9AU"
+ },
+ "a09bef3f-34ca-4a76-ae80-9eab5d6260e3": {
+  "airline_code": "MH",
+  "airline_name": "MJJ HORIZONS",
+  "carrier_code": "MHAG"
+ },
+ "a0a990f3-7295-4709-88e9-303fa5e6f619": {
+  "airline_code": "RO",
+  "airline_name": "ROX",
+  "carrier_code": "ROEY"
+ },
+ "a0e5e066-c7a1-4aaf-8d4a-23757973e923": {
+  "airline_code": "IC",
+  "airline_name": "Ickle Pickle",
+  "carrier_code": "IC"
+ },
+ "a1183679-3ac8-4a47-a3ca-a151738ad740": {
+  "airline_code": "TX",
+  "airline_name": "Texas Air",
+  "carrier_code": "TXKY"
+ },
+ "a3547714-d0b6-4d4e-a68f-54f00ee1c602": {
+  "airline_code": "SV",
+  "airline_name": "SkyVenture Airways",
+  "carrier_code": "SVAG"
+ },
+ "a36d138f-c5de-4c2a-8b6e-546a5f4b0891": {
+  "airline_code": "SF",
+  "airline_name": "SkyFly Generation",
+  "carrier_code": "SFPX1"
+ },
+ "a378c8cc-8fbc-467a-91cf-9be73d6a9df9": {
+  "airline_code": "AI",
+  "airline_name": "Air India",
+  "carrier_code": "AIEN"
+ },
+ "a39fcafd-1b72-4a4c-8a51-16a835268f5d": {
+  "airline_code": "M7",
+  "airline_name": "ManchuriaLink",
+  "carrier_code": "M7"
+ },
+ "a3de5062-8d67-47b2-9f26-9228fa9bfca9": {
+  "airline_code": "69",
+  "airline_name": "KaMate",
+  "carrier_code": "69"
+ },
+ "a4119e64-c94f-4491-8fa1-2c05badd55ac": {
+  "airline_code": "SL",
+  "airline_name": "Slough Global",
+  "carrier_code": "SLEN"
+ },
+ "a4708209-e811-4812-9365-a466c8b3d31e": {
+  "airline_code": "MA",
+  "airline_name": "MSC Airways",
+  "carrier_code": "MAEY"
+ },
+ "a4ab9fe4-6ed0-408d-b617-97d182cb9424": {
+  "airline_code": "LN",
+  "airline_name": "London(Luton)Air",
+  "carrier_code": "LNEN"
+ },
+ "a513caf5-3767-4358-b24c-6cf4c0f0a39b": {
+  "airline_code": "BL",
+  "airline_name": "BlueTail",
+  "carrier_code": "BLAG"
+ },
+ "a55dc28a-5b3f-4290-b2cd-ddf1dec13715": {
+  "airline_code": "BL",
+  "airline_name": "Baja Luxury",
+  "carrier_code": "BLVH1"
+ },
+ "a56f01bb-e8f0-4940-867d-9bfdba92c19f": {
+  "airline_code": "MA",
+  "airline_name": "Maravia Airways",
+  "carrier_code": "MAVH"
+ },
+ "a5d918ab-51a7-478e-9a46-cf29b2d548e7": {
+  "airline_code": "LZ",
+  "airline_name": "Leaper",
+  "carrier_code": "LZEN"
+ },
+ "a706487c-b85f-4cd2-ace5-1803e4a16e24": {
+  "airline_code": "SX",
+  "airline_name": "SEA Airways MY",
+  "carrier_code": "SXAU2"
+ },
+ "a7fbb184-f3b3-424c-b4cc-3126537a0028": {
+  "airline_code": "FX",
+  "airline_name": "FlyMox",
+  "carrier_code": "FX"
+ },
+ "a813d084-563d-446a-bfec-512bf67bdcb3": {
+  "airline_code": "RD",
+  "airline_name": "Royal Desert Airways￼",
+  "carrier_code": "RDAU"
+ },
+ "a853e449-ecdb-464a-b9b5-9fe739f94b1c": {
+  "airline_code": "AZ",
+  "airline_name": "Azure Isles",
+  "carrier_code": "AZEN2"
+ },
+ "a85b64d2-b887-48d0-a96c-1d482fa81dde": {
+  "airline_code": "BW",
+  "airline_name": "British World Air",
+  "carrier_code": "BWVS"
+ },
+ "a9626e9a-1dbf-42e9-93b1-67c05b834661": {
+  "airline_code": "BE",
+  "airline_name": "Baja Extreme",
+  "carrier_code": "BEEN"
+ },
+ "ab30ecc1-aaa7-4772-9329-35e2f30aeb31": {
+  "airline_code": "MX",
+  "airline_name": "Max Airlines",
+  "carrier_code": "MXAU"
+ },
+ "ab461091-0afa-4c90-9e47-f3cabf7a63a7": {
+  "airline_code": "N3",
+  "airline_name": "Northline Airlines",
+  "carrier_code": "N3"
+ },
+ "ab7cb92b-d19b-4baa-bd3a-90fd57056e8f": {
+  "airline_code": "ER",
+  "airline_name": "Era Airlines",
+  "carrier_code": "ER"
+ },
+ "abc43e4d-915d-49d0-ac73-fb7f2ce2e99b": {
+  "airline_code": "GF",
+  "airline_name": "Garuda Africa",
+  "carrier_code": "GFVH2"
+ },
+ "ac0549e7-6dd8-410c-a1ce-8e0c7c53b0a7": {
+  "airline_code": "ST",
+  "airline_name": "StarAlps Airways",
+  "carrier_code": "ST"
+ },
+ "acb3d3cf-e35b-4395-9967-c27fc95c170e": {
+  "airline_code": "CR",
+  "airline_name": "Air Cairn",
+  "carrier_code": "CRAU2"
+ },
+ "acc02d56-653e-41dd-9787-3a96e56fb4f0": {
+  "airline_code": "LU",
+  "airline_name": "LUA Brasil",
+  "carrier_code": "LUEY1"
+ },
+ "ada1e10a-7994-46a0-b304-d13e76409318": {
+  "airline_code": "SG",
+  "airline_name": "Sunstorm 義天",
+  "carrier_code": "SGEN"
+ },
+ "ae2c80d2-a3d8-4cb3-bc72-a74ded63d74f": {
+  "airline_code": "KW",
+  "airline_name": "Air Karakoram West",
+  "carrier_code": "KWAG"
+ },
+ "ae74ac92-e767-4298-a138-0ea5c9a39b73": {
+  "airline_code": "EK",
+  "airline_name": "Emirates",
+  "carrier_code": "EKEY3"
+ },
+ "affa39b0-e46a-43c7-b719-5f693f2107b7": {
+  "airline_code": "QJ",
+  "airline_name": "QuickJet Asia",
+  "carrier_code": "QJ"
+ },
+ "b0086051-9e2d-484f-8e28-2178abc3f670": {
+  "airline_code": "MX",
+  "airline_name": "MJJ AIRWAYS",
+  "carrier_code": "MXKY"
+ },
+ "b029f1b7-fe4b-4983-8f4b-4385cc3ce658": {
+  "airline_code": "BL",
+  "airline_name": "Belgica",
+  "carrier_code": "BLVH2"
+ },
+ "b0e581ff-c185-40e3-a1fe-277ed377133b": {
+  "airline_code": "8K",
+  "airline_name": "FlyKonya",
+  "carrier_code": "8K"
+ },
+ "b151b160-7524-4d72-8910-de217c6b67f5": {
+  "airline_code": "UT",
+  "airline_name": "UTair",
+  "carrier_code": "UT"
+ },
+ "b18cdb96-1d22-4bdc-a237-2b2ec0f67406": {
+  "airline_code": "HB",
+  "airline_name": "H AIR Baltic",
+  "carrier_code": "HBAU"
+ },
+ "b1950033-463e-41f5-88a9-770cae4f53d6": {
+  "airline_code": "LB",
+  "airline_name": "Lucht Benelux",
+  "carrier_code": "LB"
+ },
+ "b2988265-5118-48df-bf30-b1503f3fb269": {
+  "airline_code": "FD",
+  "airline_name": "Fly Doha",
+  "carrier_code": "FDVS"
+ },
+ "b2d06467-a588-490e-9493-1c62444b2383": {
+  "airline_code": "LE",
+  "airline_name": "LINKSTAR EUROPE",
+  "carrier_code": "LE"
+ },
+ "b2d621d7-80ba-4857-9a52-20c0471c082e": {
+  "airline_code": "RJ",
+  "airline_name": "RJet",
+  "carrier_code": "RJEN"
+ },
+ "b342ec0a-23b6-4498-b94c-efd36b3e267e": {
+  "airline_code": "MY",
+  "airline_name": "Air Borneo",
+  "carrier_code": "MY"
+ },
+ "b375b799-98aa-436c-a509-16bef5bfcc4c": {
+  "airline_code": "FL",
+  "airline_name": "Flower",
+  "carrier_code": "FL"
+ },
+ "b3ad8e90-e82c-4312-9083-974875f8b6dd": {
+  "airline_code": "SE",
+  "airline_name": "StarAlps Express",
+  "carrier_code": "SE"
+ },
+ "b4bdf868-c4b7-440b-b948-cfd4a7dcc004": {
+  "airline_code": "UI",
+  "airline_name": "AURUS Airlines",
+  "carrier_code": "UI"
+ },
+ "b5461f9f-131e-4a64-be6c-0b0a08920cd8": {
+  "airline_code": "IT",
+  "airline_name": "INTI Airways",
+  "carrier_code": "IT"
+ },
+ "b55ea5b6-ef89-4c23-ad62-8acc4038db17": {
+  "airline_code": "IB",
+  "airline_name": "Air Karakoram",
+  "carrier_code": "IBAG"
+ },
+ "b563361e-f817-4323-8007-6da1054f28b2": {
+  "airline_code": "SU",
+  "airline_name": "Sumi Air",
+  "carrier_code": "SUAU"
+ },
+ "b576f53b-3f5b-4c60-a441-6bc1feecbd42": {
+  "airline_code": "SV",
+  "airline_name": "Stavanger Air",
+  "carrier_code": "SVPX2"
+ },
+ "b5a04ba1-4964-412a-b1ba-9f5915f2cda3": {
+  "airline_code": "RJ",
+  "airline_name": "Royal Jordanian",
+  "carrier_code": "RJVS"
+ },
+ "b6a1a6e7-7924-4401-83ae-fc87c06b9f0e": {
+  "airline_code": "CH",
+  "airline_name": "EJet Asiana",
+  "carrier_code": "CHVH"
+ },
+ "b6c95ec1-1437-4b2c-b7d6-01508b4022eb": {
+  "airline_code": "AF",
+  "airline_name": "Air France",
+  "carrier_code": "AFEY"
+ },
+ "b6eb5684-8656-4f59-9377-0b31c25272df": {
+  "airline_code": "CX",
+  "airline_name": "Cathay Pacific",
+  "carrier_code": "CXEY"
+ },
+ "b7125a76-f4ce-4c68-8973-a85c2bf067d1": {
+  "airline_code": "SA",
+  "airline_name": "SwiftAir",
+  "carrier_code": "SAVS"
+ },
+ "b7f7ab01-77ce-42cc-96cd-20510f644c3b": {
+  "airline_code": "KA",
+  "airline_name": "Cathay Dragon",
+  "carrier_code": "KAEY"
+ },
+ "b82f5b52-39b9-4cda-a82c-f3f0534e66f3": {
+  "airline_code": "AA",
+  "airline_name": "Arabian Airlines",
+  "carrier_code": "AAAG1"
+ },
+ "b86b98ea-c7af-4322-878c-d779ce7af34b": {
+  "airline_code": "TS",
+  "airline_name": "Taishan Airlines",
+  "carrier_code": "TSVS"
+ },
+ "b8a1a913-4ba5-4c32-b2c5-da61df9700ca": {
+  "airline_code": "BL",
+  "airline_name": "B.L.A",
+  "carrier_code": "BLVH3"
+ },
+ "b90672d8-52b7-4725-a3e0-d3d9d0ee181d": {
+  "airline_code": "PL",
+  "airline_name": "Polaris air",
+  "carrier_code": "PL"
+ },
+ "b94ed19a-1f4a-4cda-bfdf-11d3b6d482d2": {
+  "airline_code": "O7",
+  "airline_name": "Stonks Air",
+  "carrier_code": "O7"
+ },
+ "ba018e79-7f55-49fc-8d23-517387654981": {
+  "airline_code": "9L",
+  "airline_name": "9Link",
+  "carrier_code": "9L"
+ },
+ "ba0fe969-0be3-4389-9a26-606b7f7eff64": {
+  "airline_code": "JV",
+  "airline_name": "Java Air Indonesia",
+  "carrier_code": "JVAU"
+ },
+ "ba395680-a3a3-4c1b-afbe-d7503a534337": {
+  "airline_code": "BX",
+  "airline_name": "BOSARA",
+  "carrier_code": "BX"
+ },
+ "bb00b3e3-833f-4fd0-bfd5-5c39120bca93": {
+  "airline_code": "DK",
+  "airline_name": "Hanguk Airways",
+  "carrier_code": "DKAG"
+ },
+ "bc58b812-1214-4098-92be-0c220eed11a8": {
+  "airline_code": "8T",
+  "airline_name": "Jet Connect JP",
+  "carrier_code": "8T"
+ },
+ "be37b944-6fa8-4b27-9a70-2a0572bde00c": {
+  "airline_code": "VB",
+  "airline_name": "Viti blue",
+  "carrier_code": "VBKY"
+ },
+ "bea95c21-a9e3-434b-a422-8264dc580443": {
+  "airline_code": "AA",
+  "airline_name": "American Airlines",
+  "carrier_code": "AAKY2"
+ },
+ "bedffe78-4545-4457-9fb5-c192c37f40d3": {
+  "airline_code": "EJ",
+  "airline_name": "British Airways",
+  "carrier_code": "EJAU1"
+ },
+ "bee13751-81f3-4d2e-b00b-0fec93434939": {
+  "airline_code": "AM",
+  "airline_name": "Air Munich",
+  "carrier_code": "AMAU"
+ },
+ "bf543864-9b1c-4230-81e0-b7a3ec2de0c6": {
+  "airline_code": "CL",
+  "airline_name": "CherryLink",
+  "carrier_code": "CLPX2"
+ },
+ "bfd4f637-5a35-4337-bc65-5419e97cbf0f": {
+  "airline_code": "HP",
+  "airline_name": "H AIR Pacific",
+  "carrier_code": "HP"
+ },
+ "bfddf7e6-10c9-4be2-b58f-cd3ca26cfa68": {
+  "airline_code": "AA",
+  "airline_name": "AeroAmerican",
+  "carrier_code": "AAAU2"
+ },
+ "c01e8061-2292-4f24-ac34-7567e74bb9ce": {
+  "airline_code": "VJ",
+  "airline_name": "Velocity APAC",
+  "carrier_code": "VJAU"
+ },
+ "c0347cd5-5836-4c65-a65f-96d2cf4be29d": {
+  "airline_code": "BS",
+  "airline_name": "BrightSky",
+  "carrier_code": "BSPX2"
+ },
+ "c1325eb4-2b31-43e2-909a-fa962e693668": {
+  "airline_code": "AY",
+  "airline_name": "AmeriFly",
+  "carrier_code": "AY"
+ },
+ "c17faaf5-898b-4140-a524-13ce3e1f4df0": {
+  "airline_code": "RA",
+  "airline_name": "Viti Air",
+  "carrier_code": "RAAU"
+ },
+ "c227180b-dc64-4bf2-8415-2000ce00ed80": {
+  "airline_code": "SX",
+  "airline_name": "SolAria",
+  "carrier_code": "SXPX"
+ },
+ "c260681a-f8e5-4bd6-85a2-bb6a31da82aa": {
+  "airline_code": "UL",
+  "airline_name": "Srilankan airlines",
+  "carrier_code": "UL"
+ },
+ "c2bf375d-1d86-49cf-b3ee-7b522f77ad74": {
+  "airline_code": "AV",
+  "airline_name": "AeroVistula",
+  "carrier_code": "AVAG"
+ },
+ "c396f27f-3d6e-42dc-bb8e-fa839019b0aa": {
+  "airline_code": "OA",
+  "airline_name": "Oceanic Airlines",
+  "carrier_code": "OAAG"
+ },
+ "c3ca15ec-e5dc-43da-9f4a-f20d39c3e893": {
+  "airline_code": "UP",
+  "airline_name": "UPS Airlines",
+  "carrier_code": "UP"
+ },
+ "c3cdc8bc-1b8c-40d2-814a-45f6395e3ffb": {
+  "airline_code": "CA",
+  "airline_name": "Central Pacific",
+  "carrier_code": "CAEN3"
+ },
+ "c4908415-7e8a-4e6e-ad20-e615b692ddd5": {
+  "airline_code": "PN",
+  "airline_name": "AIR Peninsula",
+  "carrier_code": "PNVH"
+ },
+ "c68f8b6e-6299-4490-87f6-bef914207971": {
+  "airline_code": "BA",
+  "airline_name": "British airways",
+  "carrier_code": "BAEN"
+ },
+ "c6b2dcc1-0c15-4882-81a4-dd8895210e3f": {
+  "airline_code": "VI",
+  "airline_name": "VIASA",
+  "carrier_code": "VI"
+ },
+ "c6c21d1a-932d-4e29-ba33-7417dbefc9bd": {
+  "airline_code": "RF",
+  "airline_name": "Ridh Air Vilis",
+  "carrier_code": "RFVS"
+ },
+ "c7246d95-dc85-469a-8ed5-5306105d449e": {
+  "airline_code": "AN",
+  "airline_name": "ASEAN AIRLINES",
+  "carrier_code": "ANVH2"
+ },
+ "c7642b4a-9ea3-4d23-8b77-7463a02e30be": {
+  "airline_code": "SX",
+  "airline_name": "SpaceX",
+  "carrier_code": "SXEN1"
+ },
+ "c78d3663-4b80-4894-bb0b-3724ed823d8c": {
+  "airline_code": "KP",
+  "airline_name": "Kapair",
+  "carrier_code": "KP"
+ },
+ "c7c81eb8-409d-4ed7-bbac-f171cb802000": {
+  "airline_code": "26",
+  "airline_name": "Alebrije aerolínea",
+  "carrier_code": "26"
+ },
+ "c83aad90-f45e-45d1-be88-e5b2de4d08ce": {
+  "airline_code": "CG",
+  "airline_name": "Commonwealth Go!",
+  "carrier_code": "CGAG"
+ },
+ "c8644583-1869-4397-a76e-d3ac6d5c6f35": {
+  "airline_code": "AE",
+  "airline_name": "Aer RB Europe",
+  "carrier_code": "AEVH"
+ },
+ "c9493b0c-57c8-433e-8256-3d3e422a4285": {
+  "airline_code": "CG",
+  "airline_name": "Avia Airlines",
+  "carrier_code": "CGVH1"
+ },
+ "c9cd427c-69f5-4336-a9fe-1802f6b8bff0": {
+  "airline_code": "W1",
+  "airline_name": "ビースターズエア",
+  "carrier_code": "W1"
+ },
+ "c9eb6b63-1eb5-4318-9aca-e2b242792b47": {
+  "airline_code": "XR",
+  "airline_name": "Aurex Air",
+  "carrier_code": "XREN"
+ },
+ "ca13f19f-65f6-484d-93e3-92cc837f0079": {
+  "airline_code": "NA",
+  "airline_name": "/",
+  "carrier_code": "NAVS"
+ },
+ "ca8c598e-0d62-4c13-8ac9-c22ea51277ed": {
+  "airline_code": "VB",
+  "airline_name": "LINKSTAR BRAZIL",
+  "carrier_code": "VBVS1"
+ },
+ "cabc3737-4cb5-4db7-8757-4715d806a60b": {
+  "airline_code": "AH",
+  "airline_name": "AerolíneasHonduras",
+  "carrier_code": "AHEN"
+ },
+ "cb14b0a2-1b34-4948-8e89-a3fa9c484c05": {
+  "airline_code": "DK",
+  "airline_name": "Duckies Air",
+  "carrier_code": "DKVS"
+ },
+ "cb745b6f-d0a6-4021-aa10-15baf0731880": {
+  "airline_code": "VE",
+  "airline_name": "Velocity Europe",
+  "carrier_code": "VEVH"
+ },
+ "cb7d7498-f9b0-4b75-aa7a-c11b1f50a1d7": {
+  "airline_code": "AU",
+  "airline_name": "Aurora",
+  "carrier_code": "AUAG"
+ },
+ "cba187bf-a9ac-4440-a66d-463679455040": {
+  "airline_code": "SN",
+  "airline_name": "SABENA",
+  "carrier_code": "SNVH2"
+ },
+ "cc63dd54-73a4-4e87-b002-89c56cbcda44": {
+  "airline_code": "KT",
+  "airline_name": "KITE",
+  "carrier_code": "KT"
+ },
+ "ccc2cddd-d1b5-4c5a-b02c-07d22e308e0f": {
+  "airline_code": "TV",
+  "airline_name": "Thrive",
+  "carrier_code": "TV"
+ },
+ "ccfa2827-7ea3-433d-893a-6423602efa74": {
+  "airline_code": "FY",
+  "airline_name": "Flyer",
+  "carrier_code": "FY"
+ },
+ "cd581ab0-b9f6-46ea-9e87-94c8e92cc384": {
+  "airline_code": "ME",
+  "airline_name": "QuiceAir TG",
+  "carrier_code": "ME"
+ },
+ "cdad2923-721e-4a02-8179-4a1ac107a26a": {
+  "airline_code": "ZA",
+  "airline_name": "Zipang Airlines",
+  "carrier_code": "ZAKY"
+ },
+ "cdc838c4-7a2b-4a67-8334-062939959b75": {
+  "airline_code": "TE",
+  "airline_name": "Velaris KX",
+  "carrier_code": "TEAG"
+ },
+ "cdedff34-6c1f-4e7b-b92a-27a00568ae0b": {
+  "airline_code": "LA",
+  "airline_name": "LleyAir 耀幸",
+  "carrier_code": "LAAU"
+ },
+ "ce3cc8ae-4c40-4104-89f1-c5e1bd4f656f": {
+  "airline_code": "EK",
+  "airline_name": "Emirates",
+  "carrier_code": "EKAG"
+ },
+ "ce48624f-5230-4882-97f8-00101eaba295": {
+  "airline_code": "SL",
+  "airline_name": "SwissLux",
+  "carrier_code": "SLAG"
+ },
+ "ce5e6f33-f390-4a35-a758-800020be5e4a": {
+  "airline_code": "VE",
+  "airline_name": "Vortex Express",
+  "carrier_code": "VEKY2"
+ },
+ "cea74aef-ce80-4945-8987-0f02ae150819": {
+  "airline_code": "YR",
+  "airline_name": "Yachiyo.R Airlines",
+  "carrier_code": "YR"
+ },
+ "cec750c6-19ee-4910-9542-9f566b799c7c": {
+  "airline_code": "ZN",
+  "airline_name": "Zenith",
+  "carrier_code": "ZN"
+ },
+ "cef0b6a1-8734-4ef1-8fd3-48e09c41da93": {
+  "airline_code": "VN",
+  "airline_name": "Air Vietnam",
+  "carrier_code": "VNVS"
+ },
+ "cf37cf0e-5c52-46f4-b4ff-dece300bfd7c": {
+  "airline_code": "O7",
+  "airline_name": "Air Ontario",
+  "carrier_code": "O7VH"
+ },
+ "cf8c2844-2bf6-493b-a367-419c7530e277": {
+  "airline_code": "TS",
+  "airline_name": "Toasted Air",
+  "carrier_code": "TSPX"
+ },
+ "cfb275e7-a85c-44c9-9a3f-59c326dcb78c": {
+  "airline_code": "AG",
+  "airline_name": "AmeriGo",
+  "carrier_code": "AGEY"
+ },
+ "cfcc6772-cad0-4313-a627-61040029de35": {
+  "airline_code": "CW",
+  "airline_name": "ChickenWings",
+  "carrier_code": "CWPX"
+ },
+ "d025cdca-6177-4a4d-a9d8-5dbc4d411f06": {
+  "airline_code": "BW",
+  "airline_name": "Baltic Amber Air",
+  "carrier_code": "BWVH"
+ },
+ "d043373d-5b4d-4fff-b661-03b4ff8db333": {
+  "airline_code": "AR",
+  "airline_name": "Aero America",
+  "carrier_code": "ARAG4"
+ },
+ "d0a778db-024e-490d-ba19-60f359226a1e": {
+  "airline_code": "AA",
+  "airline_name": "Azurion Airways",
+  "carrier_code": "AAVS"
+ },
+ "d0aee8e9-5482-4569-bebd-bb9bf5f04007": {
+  "airline_code": "BC",
+  "airline_name": "BlueTail Alaska",
+  "carrier_code": "BCPX2"
+ },
+ "d0e12439-7055-4bb0-b7ec-19c7899ba4a5": {
+  "airline_code": "TR",
+  "airline_name": "Scoot",
+  "carrier_code": "TREY"
+ },
+ "d153e1a8-3e42-42fc-81e9-7d4432907317": {
+  "airline_code": "KA",
+  "airline_name": "Kourtia Airlines",
+  "carrier_code": "KAKY"
+ },
+ "d15d95d1-0af8-4b93-8017-5111be1e2e8b": {
+  "airline_code": "EZ",
+  "airline_name": "EZ:Link Europe",
+  "carrier_code": "EZ"
+ },
+ "d170598d-1274-450f-9c63-773f8e6b892d": {
+  "airline_code": "GO",
+  "airline_name": "Garuda Oceania",
+  "carrier_code": "GOVS"
+ },
+ "d18125ce-f273-40d6-9d56-3b24aeb5a271": {
+  "airline_code": "ZJ",
+  "airline_name": "Zhejiang Air",
+  "carrier_code": "ZJ"
+ },
+ "d2452274-5624-4c3a-be9b-63b669ef6ef1": {
+  "airline_code": "S3",
+  "airline_name": "Sanguo Air",
+  "carrier_code": "S3"
+ },
+ "d2703a47-67a5-43df-8d47-924a061d421f": {
+  "airline_code": "LA",
+  "airline_name": "Liberty Airways",
+  "carrier_code": "LAVH"
+ },
+ "d2c7684e-a199-45bc-be20-d2fec9259983": {
+  "airline_code": "DL",
+  "airline_name": "Delta Airlines",
+  "carrier_code": "DLEY2"
+ },
+ "d2e87359-ddbe-4c8e-9f43-298eedde637d": {
+  "airline_code": "56",
+  "airline_name": "Aero England",
+  "carrier_code": "56"
+ },
+ "d3896313-1b1e-4014-9ac3-4811de341fd9": {
+  "airline_code": "AV",
+  "airline_name": "ACCEL VIP",
+  "carrier_code": "AVAU"
+ },
+ "d3d8ae58-d050-4b33-8127-035f5a27b212": {
+  "airline_code": "RX",
+  "airline_name": "FlyMox RED",
+  "carrier_code": "RX"
+ },
+ "d4455e08-88d6-402d-a34f-bb971b8110c1": {
+  "airline_code": "NH",
+  "airline_name": "All Nippon Airways",
+  "carrier_code": "NHEY"
+ },
+ "d45021fe-2a4d-4eac-8262-aa4c853c477d": {
+  "airline_code": "UA",
+  "airline_name": "United Airlines",
+  "carrier_code": "UAVH"
+ },
+ "d457ef6a-2787-4980-ae9b-eaf449023a47": {
+  "airline_code": "CG",
+  "airline_name": "Caledonian Global",
+  "carrier_code": "CGVH2"
+ },
+ "d478024d-9da7-4bb2-a98e-c4d42b87f6e2": {
+  "airline_code": "VT",
+  "airline_name": "Vaultera",
+  "carrier_code": "VTPX"
+ },
+ "d4b7537f-91b7-4254-b153-60329a7b4718": {
+  "airline_code": "AR",
+  "airline_name": "Air Arirang",
+  "carrier_code": "AREY"
+ },
+ "d4bec8ac-00fe-4492-9aa0-461b72a8142d": {
+  "airline_code": "GM",
+  "airline_name": "Chair",
+  "carrier_code": "GMPX"
+ },
+ "d4d3c9b5-58dd-4858-8180-a4cd349c0173": {
+  "airline_code": "SL",
+  "airline_name": "StarLiner",
+  "carrier_code": "SLVH"
+ },
+ "d58952cd-3af0-4fe7-a9db-934beac0bb95": {
+  "airline_code": "BC",
+  "airline_name": "Beirut Connect",
+  "carrier_code": "BCVH"
+ },
+ "d62806d8-4668-4101-8c2e-cbccdaee1c76": {
+  "airline_code": "AC",
+  "airline_name": "Air Canada",
+  "carrier_code": "ACVH"
+ },
+ "d642f9d6-35e3-499e-a11b-ed3911da096c": {
+  "airline_code": "AX",
+  "airline_name": "AirAsia X",
+  "carrier_code": "AXPX"
+ },
+ "d6609744-76ba-4c59-910c-f330d309f433": {
+  "airline_code": "MS",
+  "airline_name": "Mars",
+  "carrier_code": "MSVH"
+ },
+ "d673f17d-0b62-46f7-9828-cb6112245cda": {
+  "airline_code": "CC",
+  "airline_name": "CONCORDIA CN",
+  "carrier_code": "CC"
+ },
+ "d6cb1a92-ca9f-4f1c-9415-fc198d2ba699": {
+  "airline_code": "A1",
+  "airline_name": "ASEAN Airways",
+  "carrier_code": "A1"
+ },
+ "d760f6d9-1717-4a77-abbf-d0693f20c595": {
+  "airline_code": "IP",
+  "airline_name": "Pelita Air Int’l",
+  "carrier_code": "IP"
+ },
+ "d7f4905d-acce-40f7-8f44-acc3260b1850": {
+  "airline_code": "PR",
+  "airline_name": "PREMAIR",
+  "carrier_code": "PRVH"
+ },
+ "d89be622-8abd-428d-9501-c53890d4e198": {
+  "airline_code": "CR",
+  "airline_name": "LACSA",
+  "carrier_code": "CRAG"
+ },
+ "d8bbbbe4-2c16-4dbd-85c6-7ef7b11c01fd": {
+  "airline_code": "RA",
+  "airline_name": "RIO AIR",
+  "carrier_code": "RAVS"
+ },
+ "da80769d-b8d6-4ddd-90c1-b38e8df14554": {
+  "airline_code": "F9",
+  "airline_name": "Frontier Airlines",
+  "carrier_code": "F9VH"
+ },
+ "dd0d79ff-e45e-41c9-9eb0-a8c348734514": {
+  "airline_code": "KR",
+  "airline_name": "Karona Air",
+  "carrier_code": "KR"
+ },
+ "dd225dc8-891d-4cb2-813d-7c8b5a33ec1a": {
+  "airline_code": "AI",
+  "airline_name": "AIR INDIA AIRWAYS",
+  "carrier_code": "AIAU"
+ },
+ "dd249574-d7ac-4a1a-aebe-5ff7fd82c5ea": {
+  "airline_code": "BT",
+  "airline_name": "Thai Balikpapan",
+  "carrier_code": "BTVS"
+ },
+ "dd9ce5af-616e-4537-89cc-7f1b8c7279dc": {
+  "airline_code": "6L",
+  "airline_name": "SEOULA",
+  "carrier_code": "6L"
+ },
+ "defbd734-e17f-4c5d-b4b4-342550c355b7": {
+  "airline_code": "JX",
+  "airline_name": "Starlux Airlines",
+  "carrier_code": "JXEY"
+ },
+ "df34f763-370e-4d1e-8389-ad2e4995d94f": {
+  "airline_code": "NL",
+  "airline_name": "NunbitLink",
+  "carrier_code": "NLAG"
+ },
+ "e0178d94-beba-430d-8323-01941c95056c": {
+  "airline_code": "NS",
+  "airline_name": "Nusantara Airlines",
+  "carrier_code": "NSAU"
+ },
+ "e15b4774-8726-4225-8672-76e4754d8082": {
+  "airline_code": "WN",
+  "airline_name": "Southwest",
+  "carrier_code": "WNAG"
+ },
+ "e1e9318c-e577-46a6-953e-d0f0b8733f5d": {
+  "airline_code": "KA",
+  "airline_name": "Karuppu Air",
+  "carrier_code": "KAAG"
+ },
+ "e201fa7d-a14f-4963-a69e-ea778a479d20": {
+  "airline_code": "MF",
+  "airline_name": "Xiamen Airlines",
+  "carrier_code": "MF"
+ },
+ "e20b0b56-965f-4d29-9d29-18c00b5b50c6": {
+  "airline_code": "SM",
+  "airline_name": "Merlion Airways",
+  "carrier_code": "SMPX"
+ },
+ "e282adb6-41ec-434c-b317-78c8584b7c91": {
+  "airline_code": "LX",
+  "airline_name": "Crossair ",
+  "carrier_code": "LXAG"
+ },
+ "e31b0129-68a7-4255-91a1-e73491c09b0e": {
+  "airline_code": "EA",
+  "airline_name": "Eastern Airlines ",
+  "carrier_code": "EAVH"
+ },
+ "e3d0dd76-2e0f-4e15-9ea1-7e19fdb51210": {
+  "airline_code": "NW",
+  "airline_name": "Northwest Pacific",
+  "carrier_code": "NWVH"
+ },
+ "e3f48e70-92a1-40c3-9767-22a0b96d5c66": {
+  "airline_code": "Z4",
+  "airline_name": "FORZA",
+  "carrier_code": "Z4"
+ },
+ "e41f8dd9-21e1-4cea-bd7a-38a883968ca7": {
+  "airline_code": "VA",
+  "airline_name": "VIRELUXE AIRWAYS",
+  "carrier_code": "VAVS"
+ },
+ "e4463cbb-bd83-483c-9ed7-2e1d80c159d8": {
+  "airline_code": "SO",
+  "airline_name": "Soleado",
+  "carrier_code": "SO"
+ },
+ "e44a571a-32fd-487f-bc4a-b150c8e41948": {
+  "airline_code": "AB",
+  "airline_name": "Air Brazil",
+  "carrier_code": "ABAU1"
+ },
+ "e4b6c2b9-1645-44c6-8e14-6af4521d31a2": {
+  "airline_code": "UK",
+  "airline_name": "Buckingham Airways",
+  "carrier_code": "UKVS"
+ },
+ "e4c78fb7-e3fc-48db-97ae-45a510102e67": {
+  "airline_code": "DT",
+  "airline_name": "TMG Int Airlines",
+  "carrier_code": "DTVH"
+ },
+ "e51b424e-0a46-4223-a806-8bded40d73c4": {
+  "airline_code": "FF",
+  "airline_name": "Fengfang Airways",
+  "carrier_code": "FF"
+ },
+ "e57bf43b-52fe-44be-84be-e9c696bf7cc6": {
+  "airline_code": "CX",
+  "airline_name": "Cathay Pacific",
+  "carrier_code": "CXKY"
+ },
+ "e5df219b-fed9-40ef-9cf5-9b0a74b8c77b": {
+  "airline_code": "CH",
+  "airline_name": "GOCHINA",
+  "carrier_code": "CHEN1"
+ },
+ "e64bf111-bb99-486c-b088-c97c3368bff2": {
+  "airline_code": "NK",
+  "airline_name": "NorthSky",
+  "carrier_code": "NK"
+ },
+ "e69ed187-67b3-47d3-96f9-7cc7f50e25c1": {
+  "airline_code": "NL",
+  "airline_name": "NXLINK UK Service",
+  "carrier_code": "NLEN"
+ },
+ "e75464d6-bed0-4a2c-9519-91704e7b054d": {
+  "airline_code": "GT",
+  "airline_name": "TagAirlines",
+  "carrier_code": "GTPX"
+ },
+ "e7822377-6e58-43c7-a544-b3462e0ef8d1": {
+  "airline_code": "EU",
+  "airline_name": "Flyeurope.com",
+  "carrier_code": "EUVH"
+ },
+ "e85ab468-61a3-49fb-b8e4-a88c895508d3": {
+  "airline_code": "GH",
+  "airline_name": "GO Holidays",
+  "carrier_code": "GHKY"
+ },
+ "e895f064-bade-482e-933f-32e33a07764e": {
+  "airline_code": "WC",
+  "airline_name": "World Connection",
+  "carrier_code": "WC"
+ },
+ "e8c2f89d-4f62-4c78-83d3-8633ac4d91cc": {
+  "airline_code": "LR",
+  "airline_name": "LINKSTAR RUSSIA",
+  "carrier_code": "LRPX"
+ },
+ "e8ca36b1-c688-477e-aa80-0142233069fe": {
+  "airline_code": "ZA",
+  "airline_name": "Zephyr Airlines",
+  "carrier_code": "ZAVS"
+ },
+ "e8e0adae-ec2f-47ee-ac82-11e85e198adf": {
+  "airline_code": "AT",
+  "airline_name": "Alitalia",
+  "carrier_code": "ATVS"
+ },
+ "e90d6ceb-d800-4da7-8fa2-045136b9b733": {
+  "airline_code": "TA",
+  "airline_name": "Torrairlines",
+  "carrier_code": "TAAG"
+ },
+ "e91e3000-7c8a-4ec0-b7b9-571e8c81bd07": {
+  "airline_code": "VJ",
+  "airline_name": "Vietjet Air",
+  "carrier_code": "VJEY"
+ },
+ "e99513f1-d950-491d-bb43-dcf43d229ff9": {
+  "airline_code": "DF",
+  "airline_name": "DragonFly",
+  "carrier_code": "DF"
+ },
+ "ea5807ec-3426-4f08-a6ae-743bff309417": {
+  "airline_code": "EJ",
+  "airline_name": "Fly East Java",
+  "carrier_code": "EJAU2"
+ },
+ "ea94ffbc-8b6c-42da-aad6-82baf4c184f3": {
+  "airline_code": "NH",
+  "airline_name": "ANA",
+  "carrier_code": "NHVS"
+ },
+ "eaeac4d8-2d27-406e-afce-12e816d3f699": {
+  "airline_code": "CN",
+  "airline_name": "CONCORDIA JET",
+  "carrier_code": "CNEN"
+ },
+ "eb06c982-fdea-4f2f-81d8-5e69e15080a4": {
+  "airline_code": "HT",
+  "airline_name": "Heston Airlines",
+  "carrier_code": "HT"
+ },
+ "ebd247fb-bdb9-4c8f-8209-2af646e92d28": {
+  "airline_code": "WA",
+  "airline_name": "WWW",
+  "carrier_code": "WAKY"
+ },
+ "ebdaaf5d-a660-43d1-9169-126400faea31": {
+  "airline_code": "GA",
+  "airline_name": "Globair",
+  "carrier_code": "GAVH3"
+ },
+ "ec001769-fd18-4263-bce9-ac6e44dd0439": {
+  "airline_code": "SF",
+  "airline_name": "Smart Fly",
+  "carrier_code": "SFPX2"
+ },
+ "ec184431-01ab-4ffd-a22a-3f40fbb87254": {
+  "airline_code": "AW",
+  "airline_name": "Air West",
+  "carrier_code": "AWKY"
+ },
+ "ec70c72c-0370-4bcc-a4a1-bfbc737a1e59": {
+  "airline_code": "MR",
+  "airline_name": "Mekong Regional",
+  "carrier_code": "MR"
+ },
+ "ec77a74b-1b55-46ad-afc1-542ccf298a08": {
+  "airline_code": "NS",
+  "airline_name": "NorthStar",
+  "carrier_code": "NSKY"
+ },
+ "ecb851ea-5b84-4844-b2a7-45dfaec12e81": {
+  "airline_code": "AP",
+  "airline_name": "Echo Pacific",
+  "carrier_code": "APAG"
+ },
+ "eda91b19-4f6f-451b-b944-cef670d889d5": {
+  "airline_code": "MC",
+  "airline_name": "Vice Airways",
+  "carrier_code": "MC"
+ },
+ "ee0f972e-d98d-4d75-8911-f073be1a9c1a": {
+  "airline_code": "AR",
+  "airline_name": "FlyAviro by Jade",
+  "carrier_code": "ARKY"
+ },
+ "ee18ec57-3507-4bc9-874b-bb927fcfa5b7": {
+  "airline_code": "FR",
+  "airline_name": "Ryanair",
+  "carrier_code": "FR"
+ },
+ "ee6f2fa3-f973-40ad-a9ec-e33bef57751c": {
+  "airline_code": "AN",
+  "airline_name": "ANA",
+  "carrier_code": "ANEN"
+ },
+ "eec8f7bc-4a24-4a90-8618-3ea944b7db8c": {
+  "airline_code": "LM",
+  "airline_name": "Lemonde Airlines",
+  "carrier_code": "LM"
+ },
+ "ef2d1c66-9107-4bf8-8db5-a38026ff846e": {
+  "airline_code": "AS",
+  "airline_name": "Infinity Airlines",
+  "carrier_code": "ASVS"
+ },
+ "ef73152f-c48f-4913-8587-c598b7280d73": {
+  "airline_code": "SS",
+  "airline_name": "SouthernSky",
+  "carrier_code": "SSAU2"
+ },
+ "efb1feb3-d9dc-4d14-aa1d-24b525898081": {
+  "airline_code": "QX",
+  "airline_name": "Airartic",
+  "carrier_code": "QX"
+ },
+ "eff924d7-b44e-4a7d-8d3b-7c5e68314de5": {
+  "airline_code": "CH",
+  "airline_name": "Cheet!",
+  "carrier_code": "CHEN2"
+ },
+ "f096554d-3244-4a8f-859a-c0fa30bf1fda": {
+  "airline_code": "RN",
+  "airline_name": "Royal Caledonian",
+  "carrier_code": "RN"
+ },
+ "f16e77f1-0921-40c6-94b0-fc351162353a": {
+  "airline_code": "LT",
+  "airline_name": "FlyLuhuitou TG",
+  "carrier_code": "LT"
+ },
+ "f19b8c11-89bf-4141-9672-bef9f8c3711b": {
+  "airline_code": "MB",
+  "airline_name": "Mikeria Budget",
+  "carrier_code": "MBEY"
+ },
+ "f1c866ba-ad47-4ccb-8cca-46ddc16ca26d": {
+  "airline_code": "SX",
+  "airline_name": "FlyMox SARA",
+  "carrier_code": "SXEN2"
+ },
+ "f20f238d-6982-49d4-b59b-c880960435f8": {
+  "airline_code": "GE",
+  "airline_name": "Hyperion",
+  "carrier_code": "GEKY"
+ },
+ "f2929bb3-0656-4d09-9a18-6c3cfd5c9e72": {
+  "airline_code": "LA",
+  "airline_name": "Lhasa Airways",
+  "carrier_code": "LAEN2"
+ },
+ "f3942172-7b0e-4038-884b-a3860d698525": {
+  "airline_code": "NX",
+  "airline_name": "Nusantara Airways",
+  "carrier_code": "NXAG"
+ },
+ "f3e4157c-25d7-4bc9-adbe-74aa31b51a6e": {
+  "airline_code": "SP",
+  "airline_name": "South Pacific",
+  "carrier_code": "SPAU"
+ },
+ "f4266f2d-6849-4f53-a09c-08b0bbebf35d": {
+  "airline_code": "A7",
+  "airline_name": "A&A Jets Ltd",
+  "carrier_code": "A7"
+ },
+ "f44c2c67-1519-4a8b-bf20-a69498dfc879": {
+  "airline_code": "AB",
+  "airline_name": "AeroBritish",
+  "carrier_code": "ABAU2"
+ },
+ "f56ea223-5b3b-466b-ad1e-a6f05ff13c37": {
+  "airline_code": "DT",
+  "airline_name": "AmeriGo!",
+  "carrier_code": "DTVH1"
+ },
+ "f6638a21-4606-4721-9387-368e6b47f7e5": {
+  "airline_code": "12",
+  "airline_name": "Ghost Air",
+  "carrier_code": "12"
+ },
+ "f6ee81a1-3cb2-413c-8693-f1d00eacb465": {
+  "airline_code": "SB",
+  "airline_name": "Sky bound",
+  "carrier_code": "SBVH2"
+ },
+ "f7002c71-0ce0-42fb-93e5-8ec8943adf68": {
+  "airline_code": "BL",
+  "airline_name": "Blütenluft",
+  "carrier_code": "BLPX2"
+ },
+ "f70fc650-2adc-420e-97c1-f050e3bed54f": {
+  "airline_code": "DX",
+  "airline_name": "Air Deutsch",
+  "carrier_code": "DXAG"
+ },
+ "f74d56e4-d97c-4fc3-91e3-257f74ece002": {
+  "airline_code": "LU",
+  "airline_name": "Lusitânia Aéreos",
+  "carrier_code": "LUEY2"
+ },
+ "f77f2ed7-8719-4571-886e-b3acda45ed30": {
+  "airline_code": "QR",
+  "airline_name": "Qatar Airways",
+  "carrier_code": "QRAU"
+ },
+ "f7d5c553-3f17-4e37-b950-151db925a26a": {
+  "airline_code": "GB",
+  "airline_name": "flyGuyana",
+  "carrier_code": "GB"
+ },
+ "f7fafe4f-68ab-418b-a776-5a930c80c959": {
+  "airline_code": "AN",
+  "airline_name": "Air Neo",
+  "carrier_code": "ANVS"
+ },
+ "f83e168b-fa39-48af-b581-7f2d551ebfd8": {
+  "airline_code": "JL",
+  "airline_name": "Japan Airlines",
+  "carrier_code": "JLEY"
+ },
+ "f8e58644-af41-4ed0-90e9-99297feac351": {
+  "airline_code": "MI",
+  "airline_name": "Air Ándalus",
+  "carrier_code": "MIEN"
+ },
+ "f9a55575-4102-49ba-81a3-9fbdda440b5a": {
+  "airline_code": "KE",
+  "airline_name": "Korean Air",
+  "carrier_code": "KE"
+ },
+ "f9a7f989-3838-45d3-b2fa-f8faf5571b6c": {
+  "airline_code": "GX",
+  "airline_name": "Galaxy Air",
+  "carrier_code": "GX"
+ },
+ "fa8b08fa-f41a-44f2-9ae7-c5d92659aa1f": {
+  "airline_code": "EC",
+  "airline_name": "Air Global",
+  "carrier_code": "ECAG2"
+ },
+ "fab504da-15b7-471b-8427-bee438886c0d": {
+  "airline_code": "ND",
+  "airline_name": "Nomad Air",
+  "carrier_code": "ND"
+ },
+ "fbe44e48-bd7b-46f7-99d7-82430d5640e2": {
+  "airline_code": "SA",
+  "airline_name": "Saturn",
+  "carrier_code": "SAVH"
+ },
+ "fc9bb2e9-7a68-4c8d-a400-e500a755610b": {
+  "airline_code": "MA",
+  "airline_name": "FlyWest",
+  "carrier_code": "MAVS"
+ },
+ "fd015792-bc57-4775-8a6c-cd7f71c1fa5d": {
+  "airline_code": "MJ",
+  "airline_name": "LAPA",
+  "carrier_code": "MJVS"
+ },
+ "fd32be4a-b0e1-4d4b-b2ec-57740874b626": {
+  "airline_code": "IL",
+  "airline_name": "ICE LINK AIR",
+  "carrier_code": "IL"
+ },
+ "fd481cac-dd3e-4708-89c7-15a3176265e1": {
+  "airline_code": "DX",
+  "airline_name": "Daexpress 宇龍",
+  "carrier_code": "DXVS"
+ },
+ "fd73c9b3-a8da-4cc0-9cff-f69ccc25ab78": {
+  "airline_code": "GM",
+  "airline_name": "Gampritmur",
+  "carrier_code": "GMAU"
+ },
+ "fe642efb-5cad-4eea-9cd1-3b2ddc641d06": {
+  "airline_code": "EK",
+  "airline_name": "Emirates",
+  "carrier_code": "EKVH3"
+ },
+ "fe7e779a-dbe7-4437-9fe9-a209405a12d9": {
+  "airline_code": "RH",
+  "airline_name": "Red Hero Air",
+  "carrier_code": "RH"
+ },
+ "feab26f4-3070-41b7-9ed1-7a41f453216a": {
+  "airline_code": "AS",
+  "airline_name": "Alaska Airlines",
+  "carrier_code": "ASVH"
+ },
+ "febf9862-d905-46e8-a485-06e98ad6c0e7": {
+  "airline_code": "CJ",
+  "airline_name": "Continental JP",
+  "carrier_code": "CJ"
+ },
+ "fec195be-3bd7-44f1-8519-e47a45d2936a": {
+  "airline_code": "LH",
+  "airline_name": "Lufthansa",
+  "carrier_code": "LHEN"
+ },
+ "fed315ec-90de-4652-bb35-a8672110f567": {
+  "airline_code": "RM",
+  "airline_name": "Aer RB Middle East",
+  "carrier_code": "RM"
+ },
+ "fef39133-2f6e-49b7-bb45-4746f4a68b29": {
+  "airline_code": "UN",
+  "airline_name": "Uni Air",
+  "carrier_code": "UNVH"
+ },
+ "ff7ea639-12e4-4d6d-94d6-a5d899d493ec": {
+  "airline_code": "AK",
+  "airline_name": "AIRASIA",
+  "carrier_code": "AKAG1"
+ },
+ "ff98c210-5327-4be7-b0e7-8e0f92e101c2": {
+  "airline_code": "OJ",
+  "airline_name": "OrionJet",
+  "carrier_code": "OJ"
+ },
+ "ffc6c811-2454-41e7-957e-25fbb82b4b7a": {
+  "airline_code": "SS",
+  "airline_name": "Swirl Airlines",
+  "carrier_code": "SSKY"
+ }
+}

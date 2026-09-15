@@ -246,8 +246,11 @@ def load_airlines(rosters):
     return airlines
 
 
+CARRIER_LEDGER = os.path.join(ROOT, "database", "reference", "carrier_codes.json")
+
+
 def assign_carrier_codes(airlines):
-    """A globally unique code for flight designators.
+    """A globally unique code for flight designators -- and a stable one.
 
     The game's own airlineCode is not unique - 136 codes are shared, and three
     airlines called Emirates sit in Elysium alone, so the division tag is not
@@ -255,25 +258,55 @@ def assign_carrier_codes(airlines):
         EK  -> unique already
         EKEY -> code shared across divisions
         EKEY2 -> code shared inside one division
-    """
-    by_code = defaultdict(list)
-    for a in airlines:
-        by_code[a["code"] or "ZZ"].append(a)
 
-    for code, group in by_code.items():
-        if len(group) == 1:
-            group[0]["carrier_code"] = code
+    This used to be worked out from scratch on every build, numbering each
+    collision group by uid. That made an airline's code a function of who ELSE
+    was in the group that week: on 16 September 80 carriers would have changed
+    code, and 59 of them had done nothing at all -- Scotland Air would have lost
+    bare SC because a newcomer also chose SC, Vaultera would have gone from VTPX
+    to VT because the other VT left. A code is what sits on the departure board
+    and on a booked ticket, so that churn is not cosmetic.
+
+    So codes are sticky, remembered in database/reference/carrier_codes.json:
+
+      1. an airline keeps the code it had, provided the player has not changed
+         their own in-game code -- if they rebranded, the code follows them;
+      2. everyone else is assigned by the rule above, around the codes held.
+
+    The incumbent keeps a bare code when a newcomer arrives sharing it; the
+    newcomer is the one who gets qualified. Departed airlines stay in the
+    ledger but reserve nothing, so a returning airline gets its old code back
+    only if it is still free.
+    """
+    ledger = {}
+    if os.path.exists(CARRIER_LEDGER):
+        ledger = json.load(open(CARRIER_LEDGER, encoding="utf-8"))
+
+    base_of = lambda a: a["code"] or "ZZ"
+    shared = Counter(base_of(a) for a in airlines)
+    taken = {}
+    kept = 0
+    for a in sorted(airlines, key=lambda x: x["uid"]):
+        prev = ledger.get(a["uid"])
+        # E00001/F00001 are the placeholder codes the weekly merge gives a
+        # retired airline (database/weekly/2_merge.sql); an airline coming back
+        # must get a real code, never inherit one of those.
+        if (prev and prev.get("carrier_code") and prev.get("airline_code") == base_of(a)
+                and not re.fullmatch(r"[EF][0-9]{5}", prev["carrier_code"])
+                and prev["carrier_code"] not in taken):
+            a["carrier_code"] = prev["carrier_code"]
+            taken[a["carrier_code"]] = a["uid"]
+            kept += 1
+
+    fresh = 0
+    for a in sorted(airlines, key=lambda x: x["uid"]):
+        if a.get("carrier_code"):
             continue
-        by_div = defaultdict(list)
-        for a in group:
-            by_div[a["division"]].append(a)
-        for div, members in by_div.items():
-            tag = DIV_TAG[div]
-            if len(members) == 1:
-                members[0]["carrier_code"] = f"{code}{tag}"
-            else:
-                for n, a in enumerate(sorted(members, key=lambda x: x["uid"]), start=1):
-                    a["carrier_code"] = f"{code}{tag}{n}"
+        base, tag = base_of(a), DIV_TAG[a["division"]]
+        candidates = ([base] if shared[base] == 1 else []) + [f"{base}{tag}"] +                      [f"{base}{tag}{n}" for n in range(1, 1000)]
+        a["carrier_code"] = next(c for c in candidates if c not in taken)
+        taken[a["carrier_code"]] = a["uid"]
+        fresh += 1
 
     seen = {}
     for a in airlines:
@@ -281,9 +314,20 @@ def assign_carrier_codes(airlines):
         if cc in seen:
             raise SystemExit(f"carrier_code collision: {cc} on {a['uid']} and {seen[cc]}")
         seen[cc] = a["uid"]
-    escalated = sum(1 for a in airlines if a["carrier_code"] != (a["code"] or "ZZ"))
-    note("identity", f"{escalated} of {len(airlines)} airlines needed a division-qualified "
-                     "carrier_code because the game code is shared")
+
+    # Current airlines overwrite their entries; departed ones are left as they
+    # were, so their code can be handed back if they return.
+    for a in airlines:
+        ledger[a["uid"]] = {"carrier_code": a["carrier_code"], "airline_code": base_of(a),
+                            "airline_name": a["name"] or None}
+    os.makedirs(os.path.dirname(CARRIER_LEDGER), exist_ok=True)
+    json.dump(dict(sorted(ledger.items())), open(CARRIER_LEDGER, "w", encoding="utf-8"),
+              ensure_ascii=False, indent=1, sort_keys=True)
+
+    escalated = sum(1 for a in airlines if a["carrier_code"] != base_of(a))
+    note("identity", f"{kept} airlines kept their carrier_code, {fresh} were assigned one; "
+                     f"{escalated} of {len(airlines)} carry a division-qualified code because "
+                     "the game code is shared or was once")
 
 
 # -------------------------------------------------------------------- main

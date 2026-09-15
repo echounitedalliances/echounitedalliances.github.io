@@ -6,6 +6,7 @@ import { isConfigured, supabase } from '../lib/supabase'
 import { CABINS } from '../lib/types'
 import { dateInDays, num, usd } from '../lib/format'
 import { encodeJourney, MAX_LEGS } from '../lib/journey'
+import { useCarrierCount } from '../lib/carriers'
 
 type Hop = {
   seq: number
@@ -52,6 +53,7 @@ type Quote = {
  */
 export default function RoundTheWorld() {
   const nav = useNavigate()
+  const carrierCount = useCarrierCount()
   const [stops, setStops] = useState<string[]>(['LHR', 'DXB', 'SIN', 'SYD', 'LAX'])
   const [cabin, setCabin] = useState('ECONOMY')
   const [quote, setQuote] = useState<Quote | null>(null)
@@ -122,8 +124,8 @@ export default function RoundTheWorld() {
       <p className="eyebrow text-cyan">Round the world</p>
       <h1 className="display mt-3 text-[clamp(34px,5vw,58px)]">One fare, one direction</h1>
       <p className="mt-5 max-w-[64ch] text-lg text-ink-dim">
-        Keep going the same way until you are home again, on any of the alliance's
-        602 carriers. The fare is set by how far round you go — not by how many
+        Keep going the same way until you are home again, on any of the alliance's{' '}
+        {num(carrierCount)} carriers. The fare is set by how far round you go — not by how many
         times you stop.
       </p>
 

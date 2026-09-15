@@ -8,7 +8,18 @@
     database/csv/*.csv by relative path.
 
     The data load is ~4.4 million rows and takes a few minutes over the
-    network. Everything is re-runnable: 02 truncates before it loads.
+    network.
+
+    THE DATA LOAD IS FOR AN EMPTY DATABASE ONLY. 02_load_from_csv.sql
+    truncates the game tables with CASCADE, and on a database people use the
+    cascade reaches every account, booking, passenger and member-site row --
+    measured on 16 September 2026. This script now refuses to run it against a
+    database that has any accounts or bookings. The weekly scrape goes through
+    database/scripts/weekly.ps1 instead, which merges in place and deletes
+    nothing anyone holds.
+
+    Against a live database, use -SkipData: that rebuilds schema, views and
+    logic, and leaves the data alone.
 
 .EXAMPLE
     # after filling in database/connection.txt and running save_password.ps1
@@ -91,7 +102,37 @@ $files += @('04_views.sql', '05_reservations.sql', '06_inventory.sql',
             '20_division_network.sql', '21_timetable_pair.sql',
             '22_airline_countries.sql', '23_livery_accents.sql',
             '24_member_sites.sql',
-            '25_journeys.sql', '26_airline_overrides.sql', '27_place_names.sql')
+            '25_journeys.sql', '26_airline_overrides.sql', '27_place_names.sql',
+            # These three were written after the list and never added to it, so
+            # a full deploy silently skipped them -- and re-running 26 without 29
+            # would put back the read layer that ignores division moves.
+            '28_admin_applications.sql', '29_airline_division_moves.sql',
+            '30_search_ranking.sql')
+
+# Refuse the truncating reload against a database people are using.
+#
+# This fails CLOSED. Anything that stops the check from answering -- a network
+# blip, a bad password -- stops the deploy, because the alternative is to carry
+# on into a TRUNCATE ... CASCADE without knowing what it will reach. Only a
+# database where the account tables do not exist yet (to_regclass says so,
+# and it never errors) is allowed through to the reload.
+if (-not $SkipData) {
+    $present = & $psql $ConnectionString -t -A -q -c "select (to_regclass('public.resonants') is not null)::int + (to_regclass('public.bookings') is not null)::int"
+    if ($LASTEXITCODE -ne 0 -or "$present".Trim() -notmatch '^\d+$') {
+        throw "Could not check whether this database holds accounts before the truncating reload. Refusing rather than guessing."
+    }
+    if ([int]"$present".Trim() -gt 0) {
+        $held = & $psql $ConnectionString -t -A -q -c "select (select count(*) from public.resonants) + (select count(*) from public.bookings)"
+        if ($LASTEXITCODE -ne 0 -or "$held".Trim() -notmatch '^\d+$') {
+            throw "Could not count the accounts and bookings this reload would truncate. Refusing rather than guessing."
+        }
+        if ([int64]"$held".Trim() -gt 0) {
+            throw ("This database holds $("$held".Trim()) accounts and bookings. 02_load_from_csv.sql would " +
+                   "TRUNCATE ... CASCADE through all of them. Refusing. For the weekly scrape run " +
+                   ".\database\scripts\weekly.ps1; to rebuild schema and views only, pass -SkipData.")
+        }
+    }
+}
 
 # 09_site_api indexes the directory and typeahead with trigram GIN indexes.
 Write-Host ""

@@ -16,6 +16,7 @@ import { SITE, discordConfigured } from './lib/site'
 import { useOnlineCount } from './lib/discordWidget'
 import { useSiteVisitorCount } from './lib/presence'
 import { num } from './lib/format'
+import { useAirportCount, useCarrierCount } from './lib/carriers'
 import Resonance from './pages/Resonance'
 import { Conduct, Privacy, Terms } from './pages/Policy'
 import News from './pages/News'
@@ -118,6 +119,8 @@ function MenuButton({ open, onToggle }: { open: boolean; onToggle: () => void })
 
 function Shell({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false)
+  const carrierCount = useCarrierCount()
+  const airportCount = useAirportCount()
   const { pathname } = useLocation()
   // Following a link should close the menu, or the next page opens behind it.
   useEffect(() => setOpen(false), [pathname])
@@ -216,10 +219,13 @@ function Shell({ children }: { children: React.ReactNode }) {
             <span className="text-ink-dim">The Airline Simulator</span>
           </span>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-            {/* Hand-counted against the database on 8 September 2026. It says
-                590 the moment someone forgets, so re-check it when the roster
-                is rebuilt. */}
-            <span className="mono">602 carriers · 8 divisions · 2,186 airports</span>
+            {/* This was hand-counted, with a note to re-check it on every
+                rebuild. Nobody did: the 16 September 2026 scrape left it
+                claiming 602 carriers and 2,186 airports against 583 and 2,180.
+                It reads the same shared counts as the rest of the site now. */}
+            <span className="mono">
+              {num(carrierCount)} carriers · 8 divisions · {num(airportCount)} airports
+            </span>
             <Link to="/terms" className="hover:text-ink-dim">
               Terms
             </Link>
