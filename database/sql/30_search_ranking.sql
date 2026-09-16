@@ -46,10 +46,14 @@ language sql stable parallel safe as $$
        and (p_country  is null or p_country  = '' or d.airline_country = upper(p_country))
      order by case
                 when q.t is null                          then 0
-                when lower(d.airline_name) = q.t
+                -- btrim: 55 scraped names carry a stray space (" COAST",
+                -- "Lufthansa "), and a name with a leading one used to miss
+                -- both of these and sink to rank 2 -- the same failure this
+                -- file exists to fix.
+                when lower(btrim(d.airline_name)) = q.t
                   or lower(d.carrier_code) = q.t
-                  or lower(d.airline_code) = q.t          then 0
-                when lower(d.airline_name) like q.t || '%' then 1
+                  or lower(d.airline_code) = q.t                 then 0
+                when lower(btrim(d.airline_name)) like q.t || '%' then 1
                 else 2
               end,
               d.prominence desc,

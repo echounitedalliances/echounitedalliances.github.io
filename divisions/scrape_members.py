@@ -147,9 +147,31 @@ def make_headers(apikey, jwt, post=False):
 
 # --------------------------------------------------------------------------- files
 
+# How each file is laid out on disk, matching the 7 September 2026 scrape byte
+# for byte -- checked against all 602 of its airlines on 16 September.
+#
+# flights.json and aircrafts.json are over 99% of a scrape, and they were kept
+# compact: one line, no indentation. This function used to write every file
+# indented four spaces with CRLF line endings, "to match the sample files" --
+# the first hand-made examples, not how the real scrape was ever stored -- and
+# that alone took the 16 September scrape from 382 MB to 614 MB for the same
+# rows. The small files keep the readable layouts they always had, and the
+# rosters keep theirs so a committed members.json only diffs on content.
+JSON_LAYOUT = {
+    "flights.json":   {"indent": None, "crlf": False},
+    "aircrafts.json": {"indent": None, "crlf": False},
+    "info.json":      {"indent": 4,    "crlf": True},
+    "livery.json":    {"indent": 2,    "crlf": True},
+    "members.json":   {"indent": 2,    "crlf": False},
+}
+
+
 def write_json(path, obj):
-    """Match the existing sample files: 4-space indent, CRLF, no trailing newline."""
-    text = json.dumps(obj, indent=4, ensure_ascii=False).replace("\n", "\r\n")
+    """Write one scrape file in the layout its kind has always had; no trailing newline."""
+    layout = JSON_LAYOUT.get(os.path.basename(path), {"indent": None, "crlf": False})
+    text = json.dumps(obj, indent=layout["indent"], ensure_ascii=False)
+    if layout["crlf"]:
+        text = text.replace("\n", "\r\n")
     with open(path, "wb") as f:
         f.write(text.encode("utf-8"))
 

@@ -137,6 +137,17 @@ and commit and push what it lists. It scrapes all eight divisions from their
 live rosters, proves the scrape complete, merges it into the live database in
 one transaction, rebuilds what the site reads and verifies it.
 
+Two things it deliberately does, both decided 16 September 2026:
+
+- **Liveries are held back.** They are still scraped to disk, but the merge
+  leaves `airline_liveries` as it is. Nothing on the site reads them yet.
+- **A carrier moving division gets a new code**, because the division tag is
+  part of the code. Otherwise codes are sticky: an airline keeps its code
+  unless the player changes their own in-game one.
+
+Flights and fleets are stored compact, one line per file, as they always were.
+Written indented, the same rows take 60% more disk.
+
 **Never refresh the data with `02_load_from_csv.sql`.** It truncates with
 CASCADE, and on the live database that reaches every account, booking,
 passenger and member-site row. `deploy.ps1` refuses to run it against a
@@ -152,7 +163,7 @@ traveller holds is retired rather than deleted if the player removes it.
 divisions/          the alliance rosters, and the scraper that fetches them
   <division>/
     members.json    who is in the division  (committed)
-    members/        per-airline flights, fleet and info  (NOT committed - 372MB)
+    members/        per-airline flights, fleet and info  (NOT committed - ~390MB)
   scrape_members.py
   check_scrape.py   proves a scrape complete before anything loads it
 

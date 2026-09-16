@@ -282,13 +282,23 @@ select airline_uid, num_aircraft, num_routes, num_flights,
        flagship_aircraft_model, major_hub_iata, last_online_time
   from echo_stage.airline_stats;
 
-delete from public.airline_liveries;
-insert into public.airline_liveries (airline_uid, livery_type, brand_color, tail_color,
-                                     fuselage_color, winglet_color, engine_color,
-                                     tail_logo_type, tail_logo_color)
-select airline_uid, livery_type, brand_color, tail_color, fuselage_color, winglet_color,
-       engine_color, tail_logo_type, tail_logo_color
-  from echo_stage.airline_liveries;
+-- Liveries are HELD BACK, on the owner's instruction of 16 September 2026, and
+-- this merge deliberately leaves public.airline_liveries as it finds it. The
+-- scraper still fetches livery.json and build_database.py still stages it, so
+-- nothing is lost and turning them back on is only restoring the four lines
+-- below. A departing airline's livery row still goes with it, by cascade.
+--
+-- For whoever turns them back on: they were suspected of growing the
+-- database, and did not -- all 583 are 176 kB in Postgres and 2 MB on disk.
+-- The growth that week was the scraper writing indented JSON. Nothing on the
+-- site reads them either: only v_airline_accent does, and nothing reads that.
+--
+--   delete from public.airline_liveries;
+--   insert into public.airline_liveries (airline_uid, livery_type, brand_color, tail_color,
+--       fuselage_color, winglet_color, engine_color, tail_logo_type, tail_logo_color)
+--   select airline_uid, livery_type, brand_color, tail_color, fuselage_color,
+--          winglet_color, engine_color, tail_logo_type, tail_logo_color
+--     from echo_stage.airline_liveries;
 
 -- ---------------------------------------------------------------------
 --  5. Aircraft, flights, and which aircraft flies what

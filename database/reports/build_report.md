@@ -1,6 +1,6 @@
 # Echo United Alliances -- build report
 
-Generated 2026-09-15 23:01 UTC by `database/scripts/build_database.py`.
+Generated 2026-09-16 10:29 UTC by `database/scripts/build_database.py`.
 
 ## Row counts
 
@@ -71,7 +71,7 @@ Generated 2026-09-15 23:01 UTC by `database/scripts/build_database.py`.
 
 ### identity
 
-- 583 airlines kept their carrier_code, 0 were assigned one; 401 of 583 carry a division-qualified code because the game code is shared or was once
+- 583 airlines kept their carrier_code, 0 were assigned one; 402 of 583 carry a division-qualified code because the game code is shared or was once
 - proxima/unknown_81846bbb: airline has no name in the export (uid 81846bbb-d6db-4c13-a507-7a1fd8df0cf8)
 
 ### livery

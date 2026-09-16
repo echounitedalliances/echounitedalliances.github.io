@@ -270,8 +270,14 @@ def assign_carrier_codes(airlines):
     So codes are sticky, remembered in database/reference/carrier_codes.json:
 
       1. an airline keeps the code it had, provided the player has not changed
-         their own in-game code -- if they rebranded, the code follows them;
+         their own in-game code -- if they rebranded, the code follows them --
+         and it is still in the division the code was assigned in;
       2. everyone else is assigned by the rule above, around the codes held.
+
+    A move between divisions gives the airline a new code, by the owner's
+    decision of 16 September 2026. The division tag is part of the code, and
+    keeping it through a move left Starliner flying in Kyra as SRVH -- VH being
+    Rhea's tag -- alongside three others wearing a division they had left.
 
     The incumbent keeps a bare code when a newcomer arrives sharing it; the
     newcomer is the one who gets qualified. Departed airlines stay in the
@@ -292,6 +298,7 @@ def assign_carrier_codes(airlines):
         # retired airline (database/weekly/2_merge.sql); an airline coming back
         # must get a real code, never inherit one of those.
         if (prev and prev.get("carrier_code") and prev.get("airline_code") == base_of(a)
+                and prev.get("division") == a["division"]
                 and not re.fullmatch(r"[EF][0-9]{5}", prev["carrier_code"])
                 and prev["carrier_code"] not in taken):
             a["carrier_code"] = prev["carrier_code"]
@@ -319,7 +326,7 @@ def assign_carrier_codes(airlines):
     # were, so their code can be handed back if they return.
     for a in airlines:
         ledger[a["uid"]] = {"carrier_code": a["carrier_code"], "airline_code": base_of(a),
-                            "airline_name": a["name"] or None}
+                            "division": a["division"], "airline_name": a["name"] or None}
     os.makedirs(os.path.dirname(CARRIER_LEDGER), exist_ok=True)
     json.dump(dict(sorted(ledger.items())), open(CARRIER_LEDGER, "w", encoding="utf-8"),
               ensure_ascii=False, indent=1, sort_keys=True)
