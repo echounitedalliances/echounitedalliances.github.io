@@ -40,11 +40,21 @@ set statement_timeout = 0;
 
 drop schema if exists echo_stage cascade;
 
--- Not in a transaction block, so each runs on its own. Reclaims the rows the
--- merge replaced before the heavy rebuild wants the space.
-vacuum public.flights;
-vacuum public.flight_assignments;
-vacuum public.aircraft;
+-- Rewrite the three tables the merge churns, packed.
+--
+-- A week's merge deletes and inserts about 9% of each. A plain VACUUM only
+-- marks that space reusable -- the files never shrink -- and Supabase bills the
+-- file size against the free plan's 500 MB. On 16 September 2026 that slack
+-- was 46 MB of rows and about as much again in their indexes, and the database
+-- stood at 557 MB. VACUUM FULL writes each table out fresh and rebuilds its
+-- indexes: measured then at 14, 9 and 11 seconds, taking the database to 422 MB.
+--
+-- It locks each table while it runs, so it goes HERE, in the window where the
+-- site is already reading last week's views, rather than after the refresh has
+-- put things right. And it goes before the leg refresh, which needs the disk.
+vacuum (full, analyze) public.flights;
+vacuum (full, analyze) public.aircraft;
+vacuum (full, analyze) public.flight_assignments;
 
 -- New airports arrive from the merge as bare IATA codes. 03 gives them names,
 -- countries, timezones and coordinates, and is safe to re-run: it only
@@ -53,8 +63,12 @@ vacuum public.aircraft;
 \i database/sql/03_airports_backfill.sql
 
 refresh materialized view              public.mv_leg_departures;
-refresh materialized view concurrently public.mv_route_adjacency;
-refresh materialized view concurrently public.mv_division_arcs;
+-- Plain, not concurrent. Concurrent builds a diff and leaves the replaced rows
+-- behind as dead space -- 7 MB of it on 16 September -- on a disk that has
+-- already run out once. A plain rebuild is packed and takes a few seconds.
+refresh materialized view              public.mv_route_adjacency;
+-- Plain, not concurrent: see 20_division_network.sql for why it has no unique index.
+refresh materialized view              public.mv_division_arcs;
 refresh materialized view concurrently public.mv_airport_connectivity;
 refresh materialized view              public.mv_network_arcs;
 refresh materialized view concurrently public.mv_airline_directory;

@@ -234,7 +234,11 @@ comment on column public.aircraft.registration is
 -- the fleet listing.
 create index if not exists aircraft_airline_idx on public.aircraft (airline_uid);
 create index if not exists aircraft_model_idx   on public.aircraft (aircraft_model);
-create index if not exists aircraft_hub_idx     on public.aircraft (hub_airport_iata);
+-- No index on hub_airport_iata. It was here, and in three weeks of statistics
+-- it was scanned zero times: nothing queries aircraft by base, and the only
+-- other thing it served -- checking the foreign key when an airport is deleted
+-- -- never happens, because airports are only ever added. Dropped 16 September
+-- 2026 to bring the database under the free plan's 500 MB.
 
 -- ---------------------------------------------------------------------
 -- Schedule

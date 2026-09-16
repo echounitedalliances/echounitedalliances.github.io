@@ -51,8 +51,13 @@ comment on materialized view public.mv_division_arcs is
     'Every city pair each division serves, with the whole division''s weekly traffic on it. Carries no colours and no coordinates on purpose -- both are joined on at read time so a palette change or an airport backfill does not strand this holding stale values.';
 
 -- The read is always "this division, busiest first".
-create unique index if not exists mv_division_arcs_key
-    on public.mv_division_arcs (division_code, airport_a, airport_b);
+--
+-- There used to be a unique index on (division_code, airport_a, airport_b)
+-- here too. In three weeks of statistics it was scanned zero times: it existed
+-- only so this view could be refreshed CONCURRENTLY. It was dropped on
+-- 16 September 2026, 5 MB of a database over the free plan's 500 MB, and the
+-- two refreshes that relied on it (echo_refresh_division_network in 29, and
+-- database/weekly/3_refresh.sql) now refresh it plainly -- about two seconds.
 create index if not exists mv_division_arcs_traffic
     on public.mv_division_arcs (division_code, weekly_departures desc);
 

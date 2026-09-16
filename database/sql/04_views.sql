@@ -306,16 +306,24 @@ comment on materialized view public.mv_leg_departures is
 
 -- Only the indexes that earn their space -- but note how that was decided.
 -- Reading pg_stat_user_indexes on a freshly built database says everything is
--- unused, because nothing has run yet. This key looked idle for exactly that
--- reason and dropping it cost 7 seconds a search: search_itineraries joins
--- back on it to turn the chosen itineraries into JSON, and without it every
--- result row sequentially scanned all 820k legs.
-create unique index if not exists mv_leg_departures_key
-    on public.mv_leg_departures (flight_id, aircraft_id, direction);
+-- unused, because nothing has run yet. The lookup below looked idle for exactly
+-- that reason and dropping it cost 7 seconds a search: search_itineraries
+-- joins back on (flight_id, aircraft_id, direction) to turn the chosen
+-- itineraries into JSON, and without an index every result row sequentially
+-- scanned all 820k legs.
+--
+-- It used to be a UNIQUE index on all three columns, 53 MB -- the largest
+-- index in the database. Uniqueness was only ever needed to refresh this view
+-- CONCURRENTLY, and nothing has done that since the refresh ran out of disk.
+-- A plain index on flight_id serves the same join at 17 MB: each flight has
+-- two to four leg rows, and the other two columns filter those. Replaced on
+-- 16 September 2026, with search timed before and after and unchanged.
+create index if not exists mv_leg_departures_flight_idx
+    on public.mv_leg_departures (flight_id);
 create index if not exists mv_leg_departures_pair_idx
     on public.mv_leg_departures (origin_iata, destination_iata);
-create index if not exists mv_leg_departures_origin_idx
-    on public.mv_leg_departures (origin_iata);
+-- No index on origin_iata alone: pair_idx and origin_time_idx both lead with
+-- it, so it was 6 MB spent on an access path two other indexes already give.
 create index if not exists mv_leg_departures_airline_idx
     on public.mv_leg_departures (airline_uid);
 -- board_departures reads each airport's next few departures in time order

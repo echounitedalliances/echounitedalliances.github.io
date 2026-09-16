@@ -224,14 +224,23 @@ about — airline codes are not unique, seven different carriers are called
 "Emirates", flight numbers run past 99999, and tail numbers repeat even inside
 one fleet. Every one of those is handled; `database/README.md` lists them.
 
-**The database is Postgres, sized to fit — just.** 346,200 flights and 163,206
-aircraft, in about **530 MB** as of the 16 September 2026 scrape. That is over the
-500 MB a Supabase free project allows, and the disk is small enough that
-refreshing the leg table *concurrently* runs out of space; the weekly refresh
-rebuilds it non-concurrently for that reason. Getting
-there meant storing operating days as a 7-bit mask rather than a row per day,
-folding the four fixed cabins into columns, and keeping only the indexes that
-are actually scanned.
+**The database is Postgres, sized to fit.** 346,200 flights and 163,206
+aircraft in about **422 MB**, under the 500 MB a Supabase free project allows —
+after it went over, at 573 MB, in September 2026. What that took, and what
+keeps it there:
+
+- The merge each week leaves about 9% of the three big tables as dead space,
+  and Postgres never shrinks a file on its own. The weekly refresh rewrites
+  them packed (`VACUUM FULL`) — that alone was about 85 MB.
+- A 53 MB unique index on the search table existed only to allow a concurrent
+  refresh nobody ran any more; a 17 MB index on `flight_id` serves the same
+  lookup. Three more indexes were redundant or never scanned.
+- Materialised views are rebuilt plainly, not concurrently: concurrent builds a
+  diff alongside the old copy, and on this disk that has run out of space.
+
+The schema was built lean from the start, too: operating days are a 7-bit mask
+rather than a row per day, the four fixed cabins are columns rather than rows,
+and an index stays only if something actually scans it.
 
 ---
 

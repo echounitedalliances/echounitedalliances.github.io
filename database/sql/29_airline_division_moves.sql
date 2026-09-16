@@ -360,7 +360,11 @@ create or replace function public.echo_refresh_division_network()
 returns void language plpgsql volatile security definer set search_path = public as $$
 begin
     refresh materialized view public.mv_network_arcs;
-    refresh materialized view concurrently public.mv_division_arcs;
+    -- Not concurrently: that needs a unique index, and mv_division_arcs_key
+    -- (5 MB, never once scanned) existed for nothing else. It was dropped on
+    -- 16 September 2026 to bring the database under the free plan's 500 MB.
+    -- A plain refresh locks the division maps for about two seconds.
+    refresh materialized view public.mv_division_arcs;
     refresh materialized view concurrently public.mv_route_adjacency;
 end;
 $$;

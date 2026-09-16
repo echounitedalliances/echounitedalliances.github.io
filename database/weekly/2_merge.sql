@@ -283,7 +283,9 @@ select airline_uid, num_aircraft, num_routes, num_flights,
   from echo_stage.airline_stats;
 
 -- Liveries are HELD BACK, on the owner's instruction of 16 September 2026, and
--- this merge deliberately leaves public.airline_liveries as it finds it. The
+-- this merge deliberately leaves public.airline_liveries as it finds it -- which
+-- since that afternoon is empty: every livery was removed from the live
+-- database "for now", while it was slimmed under the free plan's 500 MB. The
 -- scraper still fetches livery.json and build_database.py still stages it, so
 -- nothing is lost and turning them back on is only restoring the four lines
 -- below. A departing airline's livery row still goes with it, by cascade.
