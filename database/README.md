@@ -101,7 +101,7 @@ python database/scripts/build_database.py    # JSON -> csv/  (only after a re-sc
 ```
 
 No arguments: it builds the connection string from `connection.txt` and takes
-the password from pgpass.conf.
+the password from Echo's own credential file (step 2 above).
 
 Run the files **in order**, and if you re-run one by hand, re-run everything
 after it too. `07_connections.sql` drops `mv_route_adjacency` with `cascade`,
@@ -251,10 +251,13 @@ provably exhaustive enumeration — the same trade every real engine makes.
 ## Refreshing after a new scrape
 
 ```powershell
-python divisions/scrape_members.py --division proxima --force   # per division
-python database/scripts/build_database.py
-.\database\scripts\deploy.ps1 -ConnectionString $env:ECHO_DB_URL
+.\database\scripts\weekly.ps1
 ```
+
+Put a fresh token from the app into `divisions/.token` first. It scrapes all
+eight divisions and merges them into the live tables in place. It never runs
+`02_load_from_csv.sql`, whose `TRUNCATE ... CASCADE` would empty every account
+and booking, and `deploy.ps1` refuses that reload on a database holding either.
 
 Bookings survive: `booking_segments` denormalises the designator, times and
 price at the moment of sale, so a reservation still reads correctly after the
