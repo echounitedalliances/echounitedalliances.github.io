@@ -85,6 +85,13 @@ if (-not $python) { throw "python not found." }
 $env:PGCLIENTENCODING = 'UTF8'
 $env:PYTHONIOENCODING = 'utf-8'
 
+# Echo's password is in its own credential file, not psql's shared one, which
+# another project's tool can overwrite -- see echo_credentials.ps1. Checked
+# before the scrape, so a missing password stops the run before an hour-long
+# token is spent on a scrape that could never be loaded.
+. (Join-Path $PSScriptRoot 'echo_credentials.ps1')
+Use-EchoCredentials
+
 $divisions = @('aegis', 'aura', 'elion', 'elysium', 'kyra', 'proxima', 'rhea', 'vilis')
 
 # Windows PowerShell turns anything a native program writes to stderr into a

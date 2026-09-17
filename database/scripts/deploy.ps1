@@ -86,6 +86,11 @@ if (-not $psql) {
     throw "psql not found. Install it with: winget install PostgreSQL.PostgreSQL.17 (tick only Command Line Tools)."
 }
 
+# Echo's password is in its own credential file, not psql's shared one, which
+# another project's tool can overwrite -- see echo_credentials.ps1.
+. (Join-Path $PSScriptRoot 'echo_credentials.ps1')
+Use-EchoCredentials
+
 if (-not (Test-Path 'database/sql/01_schema.sql')) {
     throw "Run this from the repository root: the CSV paths in 02_load_from_csv.sql are relative."
 }

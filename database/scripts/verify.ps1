@@ -48,6 +48,11 @@ if (-not $psql) {
 }
 if (-not $psql) { throw "psql not found." }
 
+# Echo's password is in its own credential file, not psql's shared one, which
+# another project's tool can overwrite -- see echo_credentials.ps1.
+. (Join-Path $PSScriptRoot 'echo_credentials.ps1')
+Use-EchoCredentials
+
 # Relations the site reads, with the smallest row count that means "populated".
 # A matview that exists but holds nothing is the same outage as a missing one.
 $relations = @(

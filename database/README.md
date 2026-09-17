@@ -39,7 +39,9 @@ database/
                              backfill is reproducible without network access
   sql/                       01 .. 10, run in numeric order
   scripts/
-    save_password.ps1        once: password -> psql's credential store
+    save_password.ps1        once: password -> Echo's own credential file, then
+                             connects to prove it works
+    echo_credentials.ps1     where that file is; every Echo script uses it
     write_web_env.py         connection.txt -> web/.env.local
     build_database.py        divisions/*.json -> csv/          (re-run any time)
     backfill_airports.py     open datasets    -> sql/03_...    (--refresh to re-fetch)
@@ -67,10 +69,20 @@ values you paste.
 .\database\scripts\save_password.ps1
 ```
 
-Masked prompt. The password goes into `%APPDATA%\postgresql\pgpass.conf`,
-psql's own credential store, locked to your Windows account — never into this
+Masked prompt. The password goes into
+`%APPDATA%\postgresql\echo-united-alliances.pgpass`, a credential file only
+Echo's scripts write, locked to your Windows account — never into this
 repository, never onto a command line, never into shell history. The script
-also sets `ECHO_DB_URL` for your account, without the password in it.
+then connects once with it, so a wrong password fails there and not halfway
+through a deploy. It also sets `ECHO_DB_URL` for your account, without the
+password in it.
+
+Not psql's shared `pgpass.conf`, which is where it used to go: every project on
+the machine writes that file, and on 16 September 2026 another project's tool
+rewrote it and broke Echo's password without this repository touching it. Every
+Echo script (`deploy.ps1`, `verify.ps1`, `weekly.ps1`) now points psql at the
+separate file for its own process only, through `echo_credentials.ps1`, and
+stops with an instruction if the password has not been saved.
 
 **3. Point the website at the same project.**
 
