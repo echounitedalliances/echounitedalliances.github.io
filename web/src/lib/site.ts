@@ -4,6 +4,17 @@
  * Edit this file to change the join links. Everything here is public.
  */
 
+/**
+ * Pre-launch lock.
+ *
+ * Set to true, App.tsx renders MaintenanceLock and nothing else -- no
+ * routes, no data fetching, no sign-in. This is a front-end gate only: it
+ * touches no data, and nobody's account, booking, or admin application is
+ * affected while it is on. To reopen the site, set this back to false,
+ * rebuild (npm --prefix web run build), and publish.
+ */
+export const MAINTENANCE_LOCK = true
+
 export const SITE = {
   /**
    * The Discord invite. This is the whole point of the join panel: the

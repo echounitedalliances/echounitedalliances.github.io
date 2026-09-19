@@ -12,7 +12,7 @@ import SearchResults from './pages/SearchResults'
 import Book from './pages/Book'
 import Trips from './pages/Trips'
 import NetworkPage from './pages/Network'
-import { SITE, discordConfigured } from './lib/site'
+import { MAINTENANCE_LOCK, SITE, discordConfigured } from './lib/site'
 import { useOnlineCount } from './lib/discordWidget'
 import { useSiteVisitorCount } from './lib/presence'
 import { num } from './lib/format'
@@ -28,6 +28,7 @@ import { NAV } from './lib/nav'
 import MobileMenu from './components/MobileMenu'
 import EchoMark from './components/EchoMark'
 import Welcome from './components/Welcome'
+import MaintenanceLock from './components/MaintenanceLock'
 
 /**
  * HashRouter, not BrowserRouter. GitHub Pages has no server to rewrite unknown
@@ -253,6 +254,10 @@ function Shell({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  // Nothing past this point runs while the lock is on: no auth, no router,
+  // no data fetch. See lib/site.ts for how to turn it back off.
+  if (MAINTENANCE_LOCK) return <MaintenanceLock />
+
   return (
     <AuthProvider>
       <Welcome />
