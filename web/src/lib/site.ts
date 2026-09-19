@@ -7,13 +7,23 @@
 /**
  * Pre-launch lock.
  *
- * Set to true, App.tsx renders MaintenanceLock and nothing else -- no
- * routes, no data fetching, no sign-in. This is a front-end gate only: it
- * touches no data, and nobody's account, booking, or admin application is
- * affected while it is on. To reopen the site, set this back to false,
- * rebuild (npm --prefix web run build), and publish.
+ * Set to an ISO timestamp, App.tsx renders MaintenanceLock and nothing else
+ * -- no routes, no data fetching, no sign-in -- with a live countdown to
+ * that moment, and switches over to the real site on its own the instant it
+ * passes, in every tab already open as well as any new visit. Set to null,
+ * the site is open as normal.
+ *
+ * Because the switch has to happen live, without a rebuild, the real app
+ * has to ship in the bundle the whole time the lock is up rather than being
+ * tree-shaken out of it the way a static true/false could manage -- there
+ * is no way to make code appear in an already-downloaded bundle later.
+ *
+ * This is a front-end gate only: it touches no data, and nobody's account,
+ * booking, or admin application is affected while it is on. To end the lock
+ * early, set this to null, rebuild (npm --prefix web run build), and
+ * publish; left alone, it lifts itself at the timestamp below.
  */
-export const MAINTENANCE_LOCK = true
+export const MAINTENANCE_LOCK_UNTIL: string | null = '2026-09-19T23:00:00+07:00'
 
 export const SITE = {
   /**

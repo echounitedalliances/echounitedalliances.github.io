@@ -12,7 +12,7 @@ import SearchResults from './pages/SearchResults'
 import Book from './pages/Book'
 import Trips from './pages/Trips'
 import NetworkPage from './pages/Network'
-import { MAINTENANCE_LOCK, SITE, discordConfigured } from './lib/site'
+import { MAINTENANCE_LOCK_UNTIL, SITE, discordConfigured } from './lib/site'
 import { useOnlineCount } from './lib/discordWidget'
 import { useSiteVisitorCount } from './lib/presence'
 import { num } from './lib/format'
@@ -253,10 +253,15 @@ function Shell({ children }: { children: React.ReactNode }) {
   )
 }
 
+const lockUntil = MAINTENANCE_LOCK_UNTIL ? new Date(MAINTENANCE_LOCK_UNTIL) : null
+
 export default function App() {
-  // Nothing past this point runs while the lock is on: no auth, no router,
-  // no data fetch. See lib/site.ts for how to turn it back off.
-  if (MAINTENANCE_LOCK) return <MaintenanceLock />
+  // Nothing past this point runs while the lock is up: no auth, no router,
+  // no data fetch. See lib/site.ts for how to end it early or move it.
+  const [locked, setLocked] = useState(() => !!lockUntil && lockUntil.getTime() > Date.now())
+  if (locked && lockUntil) {
+    return <MaintenanceLock until={lockUntil} onPass={() => setLocked(false)} />
+  }
 
   return (
     <AuthProvider>
