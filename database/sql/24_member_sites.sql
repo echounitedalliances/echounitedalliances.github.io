@@ -35,7 +35,12 @@
 --
 --  airlines.website_url is kept in step at the bottom, because it is the
 --  field the admin form already edits and mv_airline_directory already
---  carries. This file is the source of truth; that column is a mirror.
+--  carries. That column is a mirror.
+--
+--  Since 22 September 2026 admins edit the websites, the links and each
+--  notice from the site itself (32_member_site_admin.sql), so the lists below
+--  only SEED a database that has never had a member website. Re-running this
+--  file on the live database changes nothing an admin has set.
 -- =====================================================================
 
 begin;
@@ -82,11 +87,18 @@ grant select on public.member_sites, public.member_site_airlines to anon, authen
 
 -- ---------------------------------------------------------------------
 --  The sites, as checked on 2026-09-08.
+--
+--  Seeded into a new database only. This used to upsert on every run, and
+--  once admins could edit these rows that would have quietly put the file's
+--  wording back over theirs the next time anybody deployed.
 -- ---------------------------------------------------------------------
+
+create temp table member_sites_seed on commit drop as
+    select not exists (select 1 from public.member_sites) as seeding;
 
 insert into public.member_sites
     (site_slug, site_name, url, alt_url, alt_label, kind, data_grade, data_note, checked_on)
-values
+select v.* from (values
     ('karination', 'Karination', 'https://flykarination.github.io/sales',
      null, null, 'booking', 'live',
      'It sells both Karination and FORZA, and its fares match ours on each — 766 routes to 481 destinations, at the real lowest one-way economy price. The branding is Karination throughout, so search a FORZA route and you will be quoted Z4 flights.',
@@ -148,15 +160,8 @@ values
      null, null, 'booking', 'sample',
      'Every destination it sells is one American Express Air really serves, but it publishes 47 of the 87 it reaches from JFK, and its journey times are its own estimates — it quotes 7h00 to London where the filed block time is 6h10.',
      date '2026-09-08')
-on conflict (site_slug) do update set
-    site_name  = excluded.site_name,
-    url        = excluded.url,
-    alt_url    = excluded.alt_url,
-    alt_label  = excluded.alt_label,
-    kind       = excluded.kind,
-    data_grade = excluded.data_grade,
-    data_note  = excluded.data_note,
-    checked_on = excluded.checked_on;
+) as v(site_slug, site_name, url, alt_url, alt_label, kind, data_grade, data_note, checked_on)
+where (select seeding from member_sites_seed);
 
 -- ---------------------------------------------------------------------
 --  Who each site covers.
@@ -209,16 +214,18 @@ select c.site_slug, a.uid
   join public.airlines a
     on a.division_code = c.division_code
    and a.airline_slug  = c.airline_slug
+ where (select seeding from member_sites_seed)
 on conflict (site_slug, airline_uid) do nothing;
 
 -- Every claim above must have matched an airline. A silent miss here would
--- surface months later as a carrier that never grew its button.
+-- surface months later as a carrier that never grew its button. Only when
+-- seeding: after that the count is whatever the admins have made it.
 do $guard$
 declare
     n integer;
 begin
     select count(*) into n from public.member_site_airlines;
-    if n <> 18 then
+    if (select seeding from member_sites_seed) and n <> 18 then
         raise exception
             'member_site_airlines has % rows, expected 18 -- an airline_slug in this file no longer matches a carrier', n;
     end if;

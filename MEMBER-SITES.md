@@ -210,21 +210,41 @@ up and is offered as a secondary link in the notice.
 
 - **`database/sql/24_member_sites.sql`** — `member_sites` (one row per site)
   and `member_site_airlines` (which carriers it covers). A group site is one
-  row joined to several airlines, so a URL is never stored twice. A guard
-  raises if any `airline_slug` in the file stops matching a real carrier.
+  row joined to several airlines, so a URL is never stored twice. Since
+  22 September 2026 it only **seeds a new database**: on a database that
+  already has sites it changes nothing, so a redeploy can never put the
+  file's wording back over an admin's.
+- **`database/sql/32_member_site_admin.sql`** — what admins edit through:
+  `admin_set_airline_site` (which site a carrier offers), `admin_save_member_site`
+  (a site's details and its notice), `admin_delete_member_site`, and
+  `admin_member_sites` (the list). Each checks for an admin on the server.
 - **`airline_site(uid)`** — what the airline page calls. Also returns the
   other carriers on the same site, which is where "The same site also sells
-  Starliner and Velora by STRLINR" comes from.
+  Starliner and Velora by STRLINR" comes from. It runs with the visitor's own
+  privileges, so both tables carry an explicit public read policy: with row
+  level security switched on and no policy, every button disappears silently
+  — which is what happened on the live site until 22 September 2026.
+  `verify.ps1` now fails if a visitor sees fewer links than exist.
 - **`airlines.website_url`** is mirrored from the same source so the directory
   stays consistent. The bare "Website ↗" link is hidden whenever the notice
   button is showing, so nothing routes around the notice.
 
-### To add a site
+### To add or change a site
 
-Add a row and a claim in `24_member_sites.sql`, bump the count in the guard,
-and re-run the file — it is idempotent. Then redeploy the web build.
+As an admin, signed in:
+
+- **On a carrier's page**, *Change website* (or *Add a website*) picks which
+  site that carrier offers — an existing one, a new one, or none — and edits
+  it, with a preview of exactly the notice a traveller will read.
+- **On your account page**, *Member websites* lists every site with the
+  carriers it covers. Edit a site's details and its embedding text there,
+  link or unlink carriers, add a site, or remove one.
+
+A site's details belong to the site, so editing a group site changes the
+notice on every carrier it covers; the editor says which.
 
 ### To re-check a grade
 
 Grades are dated on purpose: they record a comparison someone made on a day,
-not a live check. Re-compare, then update `data_note` and `checked_on`.
+not a live check. Re-compare, then update the embedding text and the
+*Checked against our data on* date together.

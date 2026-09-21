@@ -274,3 +274,19 @@ export type MemberSiteRow = {
   /** Other carriers the same site sells, so a group site can say so. */
   also_serves: string[] | null
 }
+
+/** A carrier linked to a member website, as the admin editor lists it. */
+export type MemberSiteCarrier = {
+  uid: string
+  airline_name: string | null
+  carrier_code: string
+  division_code: string
+  airline_slug: string
+}
+
+/** A member website with every carrier it covers -- admin_member_sites(). */
+export type AdminMemberSite = Omit<MemberSiteRow, 'also_serves'> & {
+  /** When an admin last saved it; null if nobody has since it was seeded. */
+  updated_at: string | null
+  carriers: MemberSiteCarrier[]
+}

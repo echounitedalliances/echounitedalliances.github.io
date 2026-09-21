@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import Modal from './Modal'
 import type { MemberSiteRow } from '../lib/types'
 
@@ -23,7 +23,7 @@ import type { MemberSiteRow } from '../lib/types'
  */
 
 /** What each grade means to somebody about to click through. */
-const GRADE: Record<string, { label: string; tone: string; dot: string }> = {
+export const GRADE: Record<string, { label: string; tone: string; dot: string }> = {
   live: {
     label: 'Matches our data',
     tone: 'text-good',
@@ -60,11 +60,80 @@ function list(xs: string[]): string {
   return `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`
 }
 
-const KIND: Record<string, string> = {
+export const KIND: Record<string, string> = {
   booking: 'has its own booking search',
   brochure: 'is an information site',
   aggregator: 'searches several airlines at once',
   account: 'asks you to sign in first',
+}
+
+/**
+ * Everything inside the notice except its title: the one sentence written for
+ * this site, what its grade means, and where else it leads.
+ *
+ * Shared with the admin editor, whose preview is this same component fed the
+ * draft -- so what an admin approves is exactly what a traveller will read,
+ * not a lookalike that can drift from it. The editor passes inert stand-ins
+ * for the two buttons.
+ */
+export function NoticeBody({
+  site,
+  actions,
+}: {
+  site: Pick<
+    MemberSiteRow,
+    'site_name' | 'data_grade' | 'data_note' | 'kind' | 'checked_on' | 'alt_url' | 'alt_label'
+  > & { also_serves: string[] | null }
+  actions: ReactNode
+}) {
+  const grade = GRADE[site.data_grade] ?? GRADE.unverified
+  const kind = KIND[site.kind] ?? ''
+  const also = site.also_serves ?? []
+
+  return (
+    <>
+      <p className="mb-4 text-sm leading-relaxed text-ink-dim">
+        Not all member websites may be complete, and the most accurate schedule and
+        fare information remains the alliance webpage.
+      </p>
+
+      <div className="border-l-2 pl-4" style={{ borderColor: grade.dot }}>
+        <p className={`eyebrow mb-1.5 ${grade.tone}`}>{grade.label}</p>
+        <p className="whitespace-pre-line text-sm leading-relaxed text-ink">{site.data_note}</p>
+        <p className="mt-2 text-[12px] text-ink-faint">
+          {site.site_name} {kind}. Checked against our data on{' '}
+          {new Date(site.checked_on).toLocaleDateString(undefined, {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          })}
+          .
+        </p>
+      </div>
+
+      {also.length > 0 && (
+        <p className="mt-4 text-[12px] text-ink-faint">
+          The same site also sells {list(also)}.
+        </p>
+      )}
+
+      <div className="mt-6 flex flex-wrap items-center gap-3">{actions}</div>
+
+      {site.alt_url && site.alt_label && (
+        <p className="mt-4 text-[12px] text-ink-faint">
+          {site.alt_label}:{' '}
+          <a
+            href={site.alt_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-cyan underline underline-offset-2"
+          >
+            {site.alt_url.replace(/^https:\/\//, '').replace(/\/$/, '')}
+          </a>
+        </p>
+      )}
+    </>
+  )
 }
 
 export default function MemberSite({
@@ -75,9 +144,6 @@ export default function MemberSite({
   accent: string
 }) {
   const [asking, setAsking] = useState(false)
-  const grade = GRADE[site.data_grade] ?? GRADE.unverified
-  const kind = KIND[site.kind] ?? ''
-  const also = site.also_serves ?? []
 
   return (
     <>
@@ -92,64 +158,30 @@ export default function MemberSite({
 
       {asking && (
         <Modal title={`Before you go to ${site.site_name}`} onClose={() => setAsking(false)}>
-          <p className="mb-4 text-sm leading-relaxed text-ink-dim">
-            Not all member websites may be complete, and the most accurate schedule and
-            fare information remains the alliance webpage.
-          </p>
-
-          <div className="border-l-2 pl-4" style={{ borderColor: grade.dot }}>
-            <p className={`eyebrow mb-1.5 ${grade.tone}`}>{grade.label}</p>
-            <p className="text-sm leading-relaxed text-ink">{site.data_note}</p>
-            <p className="mt-2 text-[12px] text-ink-faint">
-              {site.site_name} {kind}. Checked against our data on{' '}
-              {new Date(site.checked_on).toLocaleDateString(undefined, {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-              })}
-              .
-            </p>
-          </div>
-
-          {also.length > 0 && (
-            <p className="mt-4 text-[12px] text-ink-faint">
-              The same site also sells {list(also)}.
-            </p>
-          )}
-
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            <a
-              href={site.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setAsking(false)}
-              className="mono px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#0B0713]"
-              style={{ background: accent }}
-            >
-              Continue to {site.site_name} ↗
-            </a>
-            <button
-              type="button"
-              onClick={() => setAsking(false)}
-              className="mono border border-edge px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-ink-dim transition-colors hover:text-ink"
-            >
-              Stay here
-            </button>
-          </div>
-
-          {site.alt_url && site.alt_label && (
-            <p className="mt-4 text-[12px] text-ink-faint">
-              {site.alt_label}:{' '}
-              <a
-                href={site.alt_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-cyan underline underline-offset-2"
-              >
-                {site.alt_url.replace(/^https:\/\//, '').replace(/\/$/, '')}
-              </a>
-            </p>
-          )}
+          <NoticeBody
+            site={site}
+            actions={
+              <>
+                <a
+                  href={site.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setAsking(false)}
+                  className="mono px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#0B0713]"
+                  style={{ background: accent }}
+                >
+                  Continue to {site.site_name} ↗
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setAsking(false)}
+                  className="mono border border-edge px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-ink-dim transition-colors hover:text-ink"
+                >
+                  Stay here
+                </button>
+              </>
+            }
+          />
         </Modal>
       )}
     </>

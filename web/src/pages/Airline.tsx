@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import AdminAirlineEdit from '../components/AdminAirlineEdit'
+import AdminMemberSiteEdit from '../components/AdminMemberSiteEdit'
 import MemberSite from '../components/MemberSite'
 import RouteMap from '../components/RouteMap'
 import { Loading, Mark, NotConfigured } from '../components/ui'
@@ -374,6 +375,25 @@ export default function AirlinePage() {
                   Website ↗
                 </a>
               )}
+              {/* Renders nothing unless the signed-in account is an admin. */}
+              <AdminMemberSiteEdit
+                airline={a}
+                site={site}
+                accent={accent}
+                onSaved={(s) => {
+                  setSite(s)
+                  // website_url follows the website, so read the carrier back
+                  // too: a removed website must not linger as a bare link.
+                  void (async () => {
+                    const { data } = await supabase
+                      .from('v_airline_profile')
+                      .select('*')
+                      .eq('uid', a.uid)
+                      .maybeSingle()
+                    if (data) setA(data as Airline)
+                  })()
+                }}
+              />
             </div>
           </div>
 

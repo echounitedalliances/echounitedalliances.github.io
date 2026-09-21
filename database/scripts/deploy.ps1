@@ -115,7 +115,8 @@ $files += @('04_views.sql', '05_reservations.sql', '06_inventory.sql',
             '30_search_ranking.sql',
             # Replaces the return-leg turnaround in 04_views.sql, so it has to
             # come after it.
-            '31_turnaround_by_distance.sql')
+            '31_turnaround_by_distance.sql',
+            '32_member_site_admin.sql')
 
 # Refuse the truncating reload against a database people are using.
 #

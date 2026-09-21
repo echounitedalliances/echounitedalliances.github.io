@@ -6,6 +6,7 @@ import { useAuth } from '../lib/auth'
 import { PasswordCard, SignIn } from '../components/ResonanceAuth'
 import AdminApplyModal from '../components/AdminApplyModal'
 import AdminApplications from '../components/AdminApplications'
+import AdminMemberSites from '../components/AdminMemberSites'
 import type { AirportRow, BookingDetails, Division } from '../lib/types'
 import { num, shortDate, usd } from '../lib/format'
 import { useCarrierCount } from '../lib/carriers'
@@ -229,8 +230,9 @@ export default function Resonance() {
             )}
           </section>
 
-          {/* Renders nothing at all unless this account is an admin. */}
+          {/* Both render nothing at all unless this account is an admin. */}
           <AdminApplications />
+          <AdminMemberSites />
 
           {/* Not shown twice: while recovering it is already at the top. */}
           {!recovering && <PasswordCard />}

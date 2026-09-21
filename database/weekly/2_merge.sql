@@ -10,7 +10,7 @@
 --      resonants            every account, both admins included   (via divisions)
 --      bookings, booking_segments, passengers, tickets             (via cabin_classes)
 --      departure_inventory  every seat already sold                (via cabin_classes)
---      member_site_airlines the 18 member-site buttons             (via airlines)
+--      member_site_airlines every member-site button               (via airlines)
 --
 --  02 is still right for building an empty database. It must never be run
 --  against the live one again, and deploy.ps1 now refuses to.
@@ -443,6 +443,8 @@ union all select 'aircraft now',                   count(*) from public.aircraft
 union all select 'resonants (must be unchanged)',  count(*) from public.resonants
 union all select 'bookings (must be unchanged)',   count(*) from public.bookings
 union all select 'booking_segments (must be unchanged)', count(*) from public.booking_segments
-union all select 'member_site_airlines (must be 18)', count(*) from public.member_site_airlines;
+-- Admins set these links now, so there is no fixed number to expect. It may
+-- drop only by carriers that left above: deleting one takes its link with it.
+union all select 'member-site links (drop only if a linked carrier left)', count(*) from public.member_site_airlines;
 
 commit;

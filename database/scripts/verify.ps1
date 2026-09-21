@@ -181,6 +181,30 @@ foreach ($v in @(
     }
 }
 
+# The member-site buttons. airline_site() reads its two tables with the
+# visitor's own privileges, so if row level security hides them from anon,
+# every "Visit ..." button on every carrier page disappears and nothing
+# errors. That is how the live site was found on 22 September 2026: all 18
+# carriers still carried their website's address, and not one had its button.
+# Visitors must see every link the owner can, and no carrier may hold a member
+# website's address without the link that gives it the button and the notice.
+$ownerLinks = Invoke-Scalar "select count(*) from public.member_site_airlines"
+$anonLinks  = Invoke-Scalar "set role anon; select count(*) from public.member_site_airlines"
+$orphaned   = Invoke-Scalar @"
+select count(*) from public.airlines a
+  join public.member_sites s on s.url = a.website_url
+ where not exists (select 1 from public.member_site_airlines m where m.airline_uid = a.uid)
+"@
+if ($null -eq $ownerLinks -or $null -eq $anonLinks -or $anonLinks -ne $ownerLinks) {
+    Write-Output ("  HIDDEN   member-site links: a visitor sees {0} of {1}" -f $anonLinks, $ownerLinks)
+    $failures.Add("a visitor sees $anonLinks of $ownerLinks member-site links -- check RLS on member_site_airlines")
+} elseif ($null -eq $orphaned -or [int64]$orphaned -gt 0) {
+    Write-Output ("  LOST     {0} carriers point at a member website but have no button for it" -f $orphaned)
+    $failures.Add("$orphaned carriers carry a member website's address without its link")
+} else {
+    Write-Output ("  ok       member-site buttons  {0}, every one visible" -f $anonLinks)
+}
+
 # Locked down -- the opposite assertion to the one above. These must NOT
 # answer, and a green tick here means somebody was correctly turned away.
 #
@@ -195,7 +219,9 @@ foreach ($d in @(
     @{ name = 'the queue, as a visitor';          sql = "set role anon; select count(*) from public.admin_applications_list('all')" },
     @{ name = 'the queue, signed in but not admin'; sql = "set role authenticated; select count(*) from public.admin_applications_list('all')" },
     @{ name = 'moving a carrier, signed in but not admin'; sql = "set role authenticated; select count(*) from public.admin_move_airline('00000000-0000-0000-0000-000000000000'::uuid, 'kyra')" },
-    @{ name = 'the network rebuild, signed in';           sql = "set role authenticated; select public.echo_refresh_division_network()" }
+    @{ name = 'the network rebuild, signed in';           sql = "set role authenticated; select public.echo_refresh_division_network()" },
+    @{ name = 'the member-site editor, signed in but not admin'; sql = "set role authenticated; select count(*) from public.admin_member_sites()" },
+    @{ name = 'relinking a carrier''s website, signed in but not admin'; sql = "set role authenticated; select count(*) from public.admin_set_airline_site('00000000-0000-0000-0000-000000000000'::uuid, null)" }
 )) {
     $n = Invoke-Scalar $d.sql
     if ($null -ne $n) {
@@ -213,7 +239,9 @@ select count(*) from pg_proc p join pg_namespace n on n.oid = p.pronamespace
  where n.nspname = 'public'
    and p.proname in ('apply_for_admin','my_admin_application','record_admin_application',
                      'admin_applications_list','decide_admin_application',
-                     'admin_move_airline','admin_update_airline','echo_refresh_division_network')
+                     'admin_move_airline','admin_update_airline','echo_refresh_division_network',
+                     'admin_member_sites','admin_save_member_site','admin_set_airline_site',
+                     'admin_delete_member_site')
    and has_function_privilege('anon', p.oid, 'execute')
 "@
 if ($null -eq $anonExec -or [int64]$anonExec -ne 0) {
