@@ -47,6 +47,11 @@ $$;
 -- 60 + 29*15 = 495 minutes later.
 --
 -- Change the 60 or the 15 here and every timetable in the database follows.
+--
+-- SUPERSEDED by 31_turnaround_by_distance.sql. The 60 holds only up to
+-- 1,500 km; the game's base grows to 90, 120 and 150 minutes with the route's
+-- length, and 31 replaces this function and the view below with that rule.
+-- Re-run 31 after this file.
 create or replace function public.echo_ground_minutes(turnaround_offset numeric)
 returns numeric language sql immutable parallel safe as $$
     select 60::numeric + coalesce(turnaround_offset, 0) * 15::numeric;
@@ -129,7 +134,8 @@ with legs as (
 
     -- inbound: departs the far end once the outbound has landed and turned
     -- around. That sum lands on the OUTBOUND origin's clock, so it is shifted
-    -- onto the far end's own clock here.
+    -- onto the far end's own clock here. (31_turnaround_by_distance.sql
+    -- replaces this view with the turnaround sized by the route's length.)
     select
         f.flight_id,
         'INBOUND'::text,

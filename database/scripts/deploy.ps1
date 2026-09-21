@@ -112,7 +112,10 @@ $files += @('04_views.sql', '05_reservations.sql', '06_inventory.sql',
             # a full deploy silently skipped them -- and re-running 26 without 29
             # would put back the read layer that ignores division moves.
             '28_admin_applications.sql', '29_airline_division_moves.sql',
-            '30_search_ranking.sql')
+            '30_search_ranking.sql',
+            # Replaces the return-leg turnaround in 04_views.sql, so it has to
+            # come after it.
+            '31_turnaround_by_distance.sql')
 
 # Refuse the truncating reload against a database people are using.
 #

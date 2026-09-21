@@ -135,6 +135,27 @@ foreach ($c in $calls) {
     }
 }
 
+# The return-leg rule in force. 04_views.sql still carries the flat 60-minute
+# turnaround, and re-running it on its own puts that back without an error:
+# every return leg over 1,500 km goes back to being published 30 to 90 minutes
+# early. 31_turnaround_by_distance.sql is what puts it right.
+Write-Output "timetable rule"
+$ground = Invoke-Scalar "select public.echo_ground_minutes(22, 12043.0)::int"
+$uses = Invoke-Scalar @"
+select count(*) from pg_depend d
+  join pg_rewrite r on r.oid = d.objid
+  join pg_proc p    on p.oid = d.refobjid
+ where r.ev_class = 'public.v_flight_legs'::regclass
+   and p.proname = 'echo_ground_minutes' and p.pronargs = 2
+"@
+# 480: LR107's return from Sydney, 150 for a 12,043 km route plus 22 quarter hours.
+if ($ground -ne '480' -or $null -eq $uses -or [int64]$uses -lt 1) {
+    Write-Output "  STALE    return legs use the flat 60-minute turnaround"
+    $failures.Add("v_flight_legs does not size turnarounds by route length -- run 31_turnaround_by_distance.sql")
+} else {
+    Write-Output "  ok       return legs turn around for as long as the route needs"
+}
+
 # As the ANON role, which is what a visitor actually is.
 #
 # Everything above runs as the owner, who can read anything -- so a missing
