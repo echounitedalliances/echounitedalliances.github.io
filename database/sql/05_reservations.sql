@@ -225,6 +225,8 @@ begin
         new.destination_iata       := coalesce(new.destination_iata, v_leg.destination_iata);
         new.departure_time         := coalesce(new.departure_time, v_leg.departure_time);
         new.arrival_time           := coalesce(new.arrival_time, v_leg.arrival_time);
+        -- Never fills: the column defaults to 0, so it is never null here.
+        -- 33_segment_arrival_day.sql replaces this function with one that does.
         new.arrival_days_after     := coalesce(new.arrival_days_after,
                                                v_leg.arrival_days_after_departure);
         if new.price_usd = 0 then
