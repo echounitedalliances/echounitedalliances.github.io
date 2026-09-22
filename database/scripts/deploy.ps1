@@ -117,8 +117,8 @@ $files += @('04_views.sql', '05_reservations.sql', '06_inventory.sql',
             # come after it.
             '31_turnaround_by_distance.sql',
             '32_member_site_admin.sql',
-            # Replaces one function from 05_reservations.sql.
-            '33_segment_arrival_day.sql')
+            # Each replaces one function from an earlier file (05 and 21).
+            '33_segment_arrival_day.sql', '34_timetable_grouped.sql')
 
 # Refuse the truncating reload against a database people are using.
 #

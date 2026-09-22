@@ -28,6 +28,9 @@ const H = 500
 /** How far in a picked airport pulls the map. */
 const ZOOM = 4.5
 
+/** Screen pixels a press has to travel before it is a drag rather than a click. */
+const DRAG_SLOP = 4
+
 type View = { scale: number; tx: number; ty: number; zoomed: boolean }
 
 /**
@@ -150,7 +153,17 @@ export default function RouteMap({
    */
   const [manual, setManual] = useState<View | null>(null)
   const [dragging, setDragging] = useState(false)
-  const drag = useRef<{ x: number; y: number; tx: number; ty: number } | null>(null)
+  /** The press in progress. It becomes a drag only once it has moved. */
+  const drag = useRef<{
+    x: number
+    y: number
+    tx: number
+    ty: number
+    id: number
+    moved: boolean
+  } | null>(null)
+  /** Set when a drag ends, so the click it ends with does not pick an airport. */
+  const swallowClick = useRef(false)
 
   // A new focus wins: choosing an airport should always frame that airport.
   useEffect(() => {
@@ -296,17 +309,34 @@ export default function RouteMap({
         }}
         role="img"
         aria-label={`Alliance route map, ${arcs.length} city pairs. Drag to pan; use the zoom buttons, or hold ctrl while scrolling.`}
+        // Why nothing is captured on press. This used to capture the pointer
+        // the moment any press began, markers included -- and a captured
+        // pointer's click is delivered to the capturing element, so the click
+        // meant for an airport went to the map and nothing was ever picked.
+        // Now a press only turns into a drag, and only then captures, once it
+        // has actually moved; a press that stays put is an ordinary click on
+        // whatever is under it.
         onPointerDown={(e) => {
-          // Only the primary button, and never on a marker: clicking an
-          // airport should still pick it rather than start a drag.
           if (e.button !== 0) return
-          ;(e.currentTarget as SVGSVGElement).setPointerCapture(e.pointerId)
-          drag.current = { x: e.clientX, y: e.clientY, tx: view.tx, ty: view.ty }
-          setDragging(true)
+          swallowClick.current = false
+          drag.current = {
+            x: e.clientX,
+            y: e.clientY,
+            tx: view.tx,
+            ty: view.ty,
+            id: e.pointerId,
+            moved: false,
+          }
         }}
         onPointerMove={(e) => {
           const d = drag.current
-          if (!d) return
+          if (!d || e.pointerId !== d.id) return
+          if (!d.moved) {
+            if (Math.hypot(e.clientX - d.x, e.clientY - d.y) < DRAG_SLOP) return
+            d.moved = true
+            e.currentTarget.setPointerCapture(e.pointerId)
+            setDragging(true)
+          }
           // Screen pixels to map units: the viewBox is W wide however many
           // pixels the box happens to be.
           const perPx = W / Math.max(boxW, 1)
@@ -320,13 +350,24 @@ export default function RouteMap({
           })
         }}
         onPointerUp={(e) => {
-          ;(e.currentTarget as SVGSVGElement).releasePointerCapture(e.pointerId)
+          const d = drag.current
           drag.current = null
+          if (!d?.moved) return
+          if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+            e.currentTarget.releasePointerCapture(e.pointerId)
+          }
           setDragging(false)
+          // Letting go of a drag over an airport is not picking it.
+          swallowClick.current = true
         }}
         onPointerCancel={() => {
           drag.current = null
           setDragging(false)
+        }}
+        onClickCapture={(e) => {
+          if (!swallowClick.current) return
+          swallowClick.current = false
+          e.stopPropagation()
         }}
       >
         <g
@@ -437,24 +478,12 @@ export default function RouteMap({
 
       {/* Zoom without a gesture at all. A trackpad pinch is prevented from
           zooming the page, and a plain scroll is deliberately left to the
-          page, so these are the way in for anyone who wants neither. */}
-      <div className="absolute bottom-2 left-2 flex flex-col gap-1">
-        <button
-          type="button"
-          aria-label="Zoom in"
-          onClick={() => zoomAbout(1.35, W / 2, H / 2)}
-          className="mono h-8 w-8 border border-edge bg-[color:var(--color-ground)]/85 text-[15px] leading-none text-ink-dim transition-colors hover:border-accent hover:text-ink"
-        >
-          +
-        </button>
-        <button
-          type="button"
-          aria-label="Zoom out"
-          onClick={() => zoomAbout(1 / 1.35, W / 2, H / 2)}
-          className="mono h-8 w-8 border border-edge bg-[color:var(--color-ground)]/85 text-[15px] leading-none text-ink-dim transition-colors hover:border-accent hover:text-ink"
-        >
-          −
-        </button>
+          page, so these are the way in for anyone who wants neither.
+
+          Bottom right, in a row: stacked at the bottom left they sat on top
+          of the airport card that hovering a dot opens there. Reset comes
+          first so that + and - stay put when it appears. */}
+      <div className="absolute bottom-2 right-2 flex flex-row gap-1">
         {manual && (
           <button
             type="button"
@@ -466,6 +495,22 @@ export default function RouteMap({
             ⤢
           </button>
         )}
+        <button
+          type="button"
+          aria-label="Zoom out"
+          onClick={() => zoomAbout(1 / 1.35, W / 2, H / 2)}
+          className="mono h-8 w-8 border border-edge bg-[color:var(--color-ground)]/85 text-[15px] leading-none text-ink-dim transition-colors hover:border-accent hover:text-ink"
+        >
+          −
+        </button>
+        <button
+          type="button"
+          aria-label="Zoom in"
+          onClick={() => zoomAbout(1.35, W / 2, H / 2)}
+          className="mono h-8 w-8 border border-edge bg-[color:var(--color-ground)]/85 text-[15px] leading-none text-ink-dim transition-colors hover:border-accent hover:text-ink"
+        >
+          +
+        </button>
       </div>
 
       {focusedAirport && (
