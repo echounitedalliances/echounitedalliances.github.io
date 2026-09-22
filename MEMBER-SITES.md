@@ -5,9 +5,10 @@ carrier's page here, behind a notice that says what the traveller is walking
 into.
 
 This file records **what each site does** and **whether its schedules and fares
-are real**, checked by hand against our own database on **8 September 2026**.
-The grades below are what the site shows travellers; the evidence is what I
-actually compared.
+are real**, checked by hand against our own database on **8 September 2026**
+(TerraLink Group, which replaced the Starliner Group site, on **22 September
+2026**). The grades below are what the site shows travellers; the evidence is
+what I actually compared.
 
 ---
 
@@ -16,7 +17,7 @@ actually compared.
 | Site | Airline(s) | What it does | Data |
 |---|---|---|---|
 | [Karination](https://flykarination.github.io/sales) | Karination | Full booking search | ✅ **Live** |
-| [Starliner Group](https://chai-debug-create.github.io/Tas) | Starliner, ASTRA by Starliner, Velora by STRLINR, Meridian by STRLNR | Group booking search | ✅ **Live** |
+| [TerraLink Group](https://flyterralink.netlify.app/) | Starliner, ASTRA by Starliner, Velora by STRLINR, Meridian by STRLNR, Essequibo Air, AmeriGo | Group booking search | ✅ **Live** |
 | [Explora Journeys](https://explorajourneysva.softr.app/) | Explora Journeys | Route table, no booking | ✅ **Live** |
 | [Sovietskyie](https://sites.google.com/view/sovietskyie) | Советские | Brochure + loyalty tiers, booking by form | ✅ **Live** |
 | [Bula Air](https://kariy4.github.io/Bula-Air/pages/index.html) | Bula Air | Full 5-step booking with seat maps | ⚠️ **Sample only** |
@@ -59,30 +60,73 @@ Velaris KX is not sold there and did not get the button: despite the shared
 "KX", the two are **separate groups under different owners** who happened to
 pick the same code for their group.
 
-### Starliner Group
+### TerraLink Group
 
-One search box selling three carriers — the airline picker offers exactly
-**Starliner, ASTRA and Velora**. Round trip / one way, four cabins, direct
-routes listed with daily frequencies.
+*Checked 22 September 2026.* The Starliner Group site
+(`chai-debug-create.github.io/Tas`) became TerraLink Group, and the same four
+carriers now link here instead. One search sells **six** carriers, all of them
+ours: **Starliner** (Kyra), **ASTRA by Starliner** and **Velora by STRLINR**
+(Rhea), and **Meridian by STRLNR**, **Essequibo Air** and **AmeriGo** (Elysium).
+Round trip / one way, four cabins, connections, a route map, fleet pages, flight
+status and a TerraClub loyalty scheme; bookings are demos that hold no seat.
+Meridian is now actually sellable there, which it was not on the old site.
+Essequibo Air and AmeriGo got the button too on 22 September 2026, by the
+owner's decision. That AmeriGo is Elysium's (AG, out of ORD and JFK), not
+Rhea's "AmeriGo!".
 
-Its **1,024 routes** against our **1,039** for the three combined. Spot checks
-matched exactly:
+Not to be confused with **TerraLink Airways** (Kyra, TL), a separate carrier
+the site does not sell.
 
-| Route | Site | Ours |
+The whole timetable ships inside the page, keyed on the game's own aircraft
+ids, so this check compared all of it rather than spot checks:
+
+| | Site | Ours (16 September scrape) |
 |---|---|---|
-| Starliner DOH→KWI | 1 daily, $165 | 1 service, $165 economy |
-| Velora HYD→BLR | 2 daily, $221 | 2 services, $136 econ / $304 business |
-| Velora HYD→CDG | 1 daily, $1,889 | 1 service, $628 econ / $3,345 business |
+| Services on file | 2,079 | 1,969 |
+| Matched to ours by aircraft, route and flight number | 1,845 | |
+| Fares on those, all four cabins | identical | |
+| Departure time and block time on those | identical | |
+| Home-page fares, 8 popular routes and 8 deals | all equal our cheapest economy | |
 
-Frequencies are exact. Starliner's fare is exact. Velora's quoted fare sits
-consistently *between* our economy and business prices — HYD→BLR's midpoint is
-$220 against its $221 — so it is quoting a mid-cabin fare, not inventing one.
+Every difference in the data runs the same way — **its copy is newer than
+ours**:
 
-> **Note:** *Meridian by STRLNR* (Elysium) carries the button too, by the
-> alliance's decision — it is the same member's airline. It is **not** in the
-> site's airline picker, so a Meridian passenger cannot actually book there;
-> the notice names the three that are sellable, which is what keeps that
-> honest.
+- **Starliner:** 497 aircraft to our 405, every one of ours plus 92 more, and
+  101 services we do not have yet.
+- **AmeriGo** swapped 31 aircraft since our scrape; 122 of the 123 flights that
+  moved keep our exact times and fares.
+- **Essequibo Air:** six aircraft newer than ours.
+- **ASTRA** (58), **Meridian** (189) and **Velora** (38): fleets identical,
+  registration for registration.
+
+Velora's entry fare there is its premium economy fare, which is right: Velora
+has no economy seats on any aircraft. That also explains the old site's
+"mid-cabin" fares — HYD→BLR at $221 and HYD→CDG at $1,889 are exactly Velora's
+premium economy prices.
+
+What it gets wrong is in how it presents the data, not the data itself:
+
+- **Return flights are its own estimate.** The data holds one leg per route,
+  the filed one, which leaves a hub on 98% of routes. The site builds the way
+  back itself: flight number +1 (right on all of them), the outbound block time
+  (wrong on 81%), and a departure 90 minutes after landing on the *origin's*
+  clock. Only 5% of return departures match ours; 31% are more than two hours
+  out.
+- **Arrival times stay on the departure airport's clock**, so they are out by
+  the time difference on the 69% of routes that cross one. Houston → Salt Lake
+  City lands at 15:00 there and 14:00 here.
+- **Weekdays run one day early** on every flight that does not operate daily
+  — 616 of the 1,845. It reads the game's day 0 as Sunday; our loader reads it
+  as Monday, and the game agrees with us. SR 1203 Houston → Salt Lake City is
+  filed as day 4 with no midnight rollover: a Thursday there, a Friday here,
+  and a Friday in the game itself (checked by the owner, 22 September 2026).
+- **A flight shared by two or three aircraft shows one aircraft's days.** 41
+  services (28 Meridian, 13 Starliner): Meridian's daily IAH→MUC appears once a
+  week.
+
+The grade stays **live**: every fare and every filed time is the game's own, in
+a fresher copy than ours. The notice tells travellers to check times and days
+here before booking.
 
 ### Explora Journeys
 

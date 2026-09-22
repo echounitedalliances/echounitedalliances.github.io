@@ -8,12 +8,11 @@
 --
 --  Two things make this a pair of tables rather than a column:
 --
---    one site, many airlines   the Starliner Group site sells Starliner,
---                              ASTRA and Velora from one search box, and
---                              SwissLux's app covers both SwissLux and
---                              SwissLux Private. A column on airlines would
---                              store that URL three times and let the three
---                              copies drift.
+--    one site, many airlines   the TerraLink Group site sells six carriers
+--                              from one search box, and SwissLux's app
+--                              covers both SwissLux and SwissLux Private. A
+--                              column on airlines would store that URL six
+--                              times and let the six copies drift.
 --    the site is the subject   its name, what it can do, and how far its
 --                              data can be trusted are facts about the SITE.
 --                              They belong next to the URL.
@@ -86,7 +85,7 @@ create unique index if not exists member_site_airlines_one_site
 grant select on public.member_sites, public.member_site_airlines to anon, authenticated;
 
 -- ---------------------------------------------------------------------
---  The sites, as checked on 2026-09-08.
+--  The sites, as checked on 2026-09-08 -- TerraLink Group on 2026-09-22.
 --
 --  Seeded into a new database only. This used to upsert on every run, and
 --  once admins could edit these rows that would have quietly put the file's
@@ -104,10 +103,12 @@ select v.* from (values
      'It sells both Karination and FORZA, and its fares match ours on each — 766 routes to 481 destinations, at the real lowest one-way economy price. The branding is Karination throughout, so search a FORZA route and you will be quoted Z4 flights.',
      date '2026-09-08'),
 
-    ('starliner', 'Starliner Group', 'https://chai-debug-create.github.io/Tas',
+    -- The Starliner Group site until 22 September 2026, when it became
+    -- TerraLink Group at a new address. The slug nobody sees stayed.
+    ('starliner', 'TerraLink Group', 'https://flyterralink.netlify.app/',
      null, null, 'booking', 'live',
-     'One search box for Starliner, ASTRA and Velora, and its 1,024 routes and daily frequencies match ours exactly. Its headline fare sits between our economy and business prices rather than equalling either.',
-     date '2026-09-08'),
+     'It sells six of our carriers from one search: Starliner, ASTRA, Meridian, Velora, Essequibo Air and AmeriGo. It reads the same game schedule we do, in a newer copy: about 100 Starliner flights there are not in our timetable yet. Its fares match ours flight for flight in every cabin. Check times and days here before you book, though: it works out return flights'' times itself, which can put them hours out, shows arrivals on the departure airport''s clock, and lists flights that don''t run daily a weekday earlier than we do.',
+     date '2026-09-22'),
 
     ('explora', 'Explora Journeys', 'https://explorajourneysva.softr.app/',
      null, null, 'brochure', 'live',
@@ -180,16 +181,19 @@ with claim(site_slug, division_code, airline_slug) as (values
     -- FORZA hubs, not Karination's five.
     ('karination',   'aegis',   'karination'),
     ('karination',   'proxima', 'forza'),
-    -- The site's own airline picker offers the first three. Meridian by
-    -- STRLNR is not in it, but it is the same member's airline and carries
-    -- the button by their decision -- which is why the note below names the
-    -- three that are actually sellable there.
+    -- The old Starliner Group site sold only the first three; Meridian by
+    -- STRLNR carried the button by the member's decision. TerraLink Group
+    -- sells all four, and Essequibo Air and AmeriGo besides, which got the
+    -- button on 22 September 2026. That AmeriGo is Elysium's (AG, out of
+    -- ORD and JFK), not Rhea's "AmeriGo!", which shares its slug.
     -- Starliner itself moved from Rhea to Kyra in the 16 September 2026
     -- scrape. Alone in Kyra, it no longer needs the uid suffix it wore in Rhea.
     ('starliner',    'kyra',    'starliner'),
     ('starliner',    'rhea',    'astra_by_starliner'),
     ('starliner',    'rhea',    'velora_by_strlinr'),
     ('starliner',    'elysium', 'meridian_by_strlnr'),
+    ('starliner',    'elysium', 'essequibo_air'),
+    ('starliner',    'elysium', 'amerigo'),
     ('explora',      'kyra',    'explora_journeys'),
     ('sovietskyie',  'proxima', 'советские'),
     ('bula-air',     'proxima', 'bula_air'),
@@ -225,9 +229,9 @@ declare
     n integer;
 begin
     select count(*) into n from public.member_site_airlines;
-    if (select seeding from member_sites_seed) and n <> 18 then
+    if (select seeding from member_sites_seed) and n <> 20 then
         raise exception
-            'member_site_airlines has % rows, expected 18 -- an airline_slug in this file no longer matches a carrier', n;
+            'member_site_airlines has % rows, expected 20 -- an airline_slug in this file no longer matches a carrier', n;
     end if;
 end
 $guard$;

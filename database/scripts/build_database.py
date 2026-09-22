@@ -666,6 +666,9 @@ def write_assignment(w_as, row):
     fid, aid, ndays, profit, dows, asg, _owner = row
     # The operating weekdays as a 7-bit mask, bit 0 = Monday. One smallint
     # replaces a row per day: 1.8M rows and 235MB of index become one column.
+    # dowList 0 is Monday, checked in the game on 22 September 2026: SR 1203
+    # IAH-SLC, filed [4] with no rollover, flies Fridays. A member's site that
+    # reads 0 as Sunday shows every non-daily flight a day early.
     mask = 0
     for d in dows:
         mask |= 1 << d
