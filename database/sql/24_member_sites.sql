@@ -85,7 +85,9 @@ create unique index if not exists member_site_airlines_one_site
 grant select on public.member_sites, public.member_site_airlines to anon, authenticated;
 
 -- ---------------------------------------------------------------------
---  The sites, as checked on 2026-09-08 -- TerraLink Group on 2026-09-22.
+--  The sites as last checked, on 2026-09-24, against that day's scrape.
+--  MEMBER-SITES.md records what each check compared. American Express
+--  Air's site was dropped that day: flyamex.base44.app no longer exists.
 --
 --  Seeded into a new database only. This used to upsert on every run, and
 --  once admins could edit these rows that would have quietly put the file's
@@ -98,69 +100,62 @@ create temp table member_sites_seed on commit drop as
 insert into public.member_sites
     (site_slug, site_name, url, alt_url, alt_label, kind, data_grade, data_note, checked_on)
 select v.* from (values
-    ('karination', 'Karination', 'https://flykarination.github.io/sales',
+    ('karination', 'KarinationGroup', 'https://flykarination.github.io/sales',
      null, null, 'booking', 'live',
-     'It sells both Karination and FORZA, and its fares match ours on each — 766 routes to 481 destinations, at the real lowest one-way economy price. The branding is Karination throughout, so search a FORZA route and you will be quoted Z4 flights.',
-     date '2026-09-08'),
+     'It sells Karination and FORZA, and marks which one operates each flight. It reads the same game schedule we do: all 1,508 of Karination''s routes match ours at the same lowest economy fare, fastest time and days of the week, and FORZA''s match too, though 28 of FORZA''s newest routes are not on it yet.',
+     date '2026-09-24'),
 
     -- The Starliner Group site until 22 September 2026, when it became
     -- TerraLink Group at a new address. The slug nobody sees stayed.
     ('starliner', 'TerraLink Group', 'https://flyterralink.netlify.app/',
      null, null, 'booking', 'live',
-     'It sells six of our carriers from one search: Starliner, ASTRA, Meridian, Velora, Essequibo Air and AmeriGo. It reads the same game schedule we do, in a newer copy: about 100 Starliner flights there are not in our timetable yet. Its fares match ours flight for flight in every cabin. Check times and days here before you book, though: it works out return flights'' times itself, which can put them hours out, shows arrivals on the departure airport''s clock, and lists flights that don''t run daily a weekday earlier than we do.',
-     date '2026-09-22'),
+     'It sells six of our carriers from one search: Starliner, ASTRA, Meridian, Velora, Essequibo Air and AmeriGo. It reads the same game schedule we do, and its fares, departure times and days match ours flight for flight, though its copy is a little older: about 150 Essequibo Air and AmeriGo flights are not on it yet. Check two things here before you book: a flight flown by more than one aircraft can show only some of its days, so a daily flight may look weekly, and return times on routes with a stop can be hours out.',
+     date '2026-09-24'),
 
     ('explora', 'Explora Journeys', 'https://explorajourneysva.softr.app/',
      null, null, 'brochure', 'live',
-     'Its published route table matches ours. There is no booking engine on it, so come back here to actually book.',
-     date '2026-09-08'),
+     'Its route table matches ours: the same 246 routes, at the same weekly frequencies. There is no booking engine on it, so come back here to actually book.',
+     date '2026-09-24'),
 
     ('sovietskyie', 'Sovietskyie', 'https://sites.google.com/view/sovietskyie',
-     null, null, 'brochure', 'live',
-     'Fleet and network pages that match ours closely — it lists the same 71 Sukhoi Superjets we hold. Booking there is a request form answered by hand, not an instant confirmation.',
-     date '2026-09-08'),
+     null, null, 'booking', 'sample',
+     'Its new flight booker is a beta and covers just one of Sovietskyie''s 302 routes, Vladivostok–Yakutsk. There it matches ours — the same three flights, times, days and aircraft, with fares in roubles near our economy prices — but the site itself warns not to enter personal details yet. Its fleet page names the same aircraft types we hold, at an older count of 235 to our 270.',
+     date '2026-09-24'),
 
     ('bula-air', 'Bula Air', 'https://kariy4.github.io/Bula-Air/pages/index.html',
      null, null, 'booking', 'sample',
-     'A full booking flow with real seat maps, but only four sample routes from Nadi are loaded into it. Bula Air actually serves 81 destinations from Nadi — the rest are only here.',
-     date '2026-09-08'),
+     'Its booking flow now carries about 190 Bula Air flights copied from this site''s timetable, mostly out of Auckland, but from an older copy: about half have since been dropped, many departure times are 30 to 90 minutes early, and every flight is shown as daily when most are not. Check the flight and its days here before you book.',
+     date '2026-09-24'),
 
     ('swisslux', 'SwissLux Group', 'https://lacnka.github.io/swisslux',
      null, null, 'account', 'unverified',
-     'Covers SwissLux and SwissLux Private, and asks you to sign in before it shows anything, so we have not been able to check its schedules against ours.',
-     date '2026-09-08'),
+     'It asks you to sign in before it shows anything, so we have not been able to check its schedules against ours.',
+     date '2026-09-24'),
 
     ('dream-island', 'Dream Island Air', 'https://dream-island-air.base44.app/',
-     'https://temp-wahoumdaqshifhimthou.webadorside.com/', 'Older site',
-     'account', 'unverified',
-     'The current site asks you to sign in before it shows anything, so we have not been able to check its schedules against ours.',
-     date '2026-09-08'),
+     null, null, 'account', 'unverified',
+     'It asks you to sign in before it shows anything, so we have not been able to check its schedules against ours.',
+     date '2026-09-24'),
 
     ('britannia', 'Britannia Group', 'https://flybritanniagroup.base44.app/',
      null, null, 'booking', 'illustrative',
-     'It sells two of ours, Fly Empire and Soleado, depending on the route you search. Its results carry real Fly Empire flight numbers attached to the wrong routes, with invented durations. Read it as a showcase and book here.',
-     date '2026-09-08'),
+     'It sells Fly Empire and Soleado, but every search result is generated on the spot: departure times, journey times, flight numbers and fares are all worked out from the distance flown, not read from any schedule, and which airline you are shown depends only on the region. Read it as a showcase and book here.',
+     date '2026-09-24'),
 
     ('bookgo', 'Book & Go', 'https://bookgo-chi.vercel.app/',
-     'https://vafeed.vercel.app/', 'VAFeed newsfeed',
-     'aggregator', 'illustrative',
-     'A polished multi-airline search whose results are generated fresh on each query rather than read from any schedule. Treat its times and fares as decoration.',
-     date '2026-09-08'),
+     'https://vafeed.vercel.app/', 'VAFeed newsfeed', 'aggregator', 'illustrative',
+     'A polished multi-airline search whose results are generated fresh on each query rather than read from any schedule; even journey times are picked at random, whatever the route. Treat its times and fares as decoration.',
+     date '2026-09-24'),
 
     ('airfluff', 'AirFluff Airlines', 'https://airfluff-airlines-copy-54d2ba54.base44.app/',
      null, null, 'booking', 'illustrative',
-     'It flies our real routes with our real block times, but invents the flight numbers, departure times and fares around them — and says so itself in its own footer.',
-     date '2026-09-08'),
+     'It offers 17 routes from Frankfurt, 16 of them real AirFluff routes out of the 185 we hold, but every result is generated: flight numbers, departure times, journey times and fares are made up, and some flights are shown as cancelled or sold out at random. Its own footer calls it a fictional company for demonstration.',
+     date '2026-09-24'),
 
     ('vaultera', 'Vaultera', 'https://dome-record-86929245.figma.site/',
-     null, null, 'brochure', 'showcase',
-     'A single designed page rather than a working booking site: the search box does not return flights and the footer links do not lead anywhere. What it does publish is right — its airport picker marks all fourteen of the hubs we hold as hubs, and marks JFK and EWR as not — though the page says fifteen.',
-     date '2026-09-10'),
-
-    ('amex', 'American Express Air', 'https://flyamex.base44.app/',
-     null, null, 'booking', 'sample',
-     'Every destination it sells is one American Express Air really serves, but it publishes 47 of the 87 it reaches from JFK, and its journey times are its own estimates — it quotes 7h00 to London where the filed block time is 6h10.',
-     date '2026-09-08')
+     null, null, 'booking', 'illustrative',
+     'Its search now returns flights, but each one is generated from the distance between the two airports: times, flight numbers and fares are invented. Its popular routes quote fares well below ours, Las Vegas–Tokyo from $699 against our $994, and two of them, to Paris and Singapore, are not flown at all. Its hub list is right: all 15 it marks are Vaultera hubs.',
+     date '2026-09-24')
 ) as v(site_slug, site_name, url, alt_url, alt_label, kind, data_grade, data_note, checked_on)
 where (select seeding from member_sites_seed);
 
@@ -206,7 +201,6 @@ with claim(site_slug, division_code, airline_slug) as (values
     -- Soleado. Both are ours, so both carry the button.
     ('britannia',    'kyra',    'fly_empire'),
     ('britannia',    'elion',   'soleado'),
-    ('amex',         'aura',    'american_express'),
     -- "CAS - flyhop": Book & Go is the group's booking product. flyhop
     -- renamed itself Fun Airways in the 16 September 2026 scrape, and Fun
     -- Airways became FUN! Canada in the 24 September one; same uid.
@@ -231,9 +225,9 @@ declare
     n integer;
 begin
     select count(*) into n from public.member_site_airlines;
-    if (select seeding from member_sites_seed) and n <> 19 then
+    if (select seeding from member_sites_seed) and n <> 18 then
         raise exception
-            'member_site_airlines has % rows, expected 19 -- an airline_slug in this file no longer matches a carrier', n;
+            'member_site_airlines has % rows, expected 18 -- an airline_slug in this file no longer matches a carrier', n;
     end if;
 end
 $guard$;

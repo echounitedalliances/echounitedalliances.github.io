@@ -1,14 +1,12 @@
 # Member websites
 
-Eleven members have built their own sites. Each one is now reachable from its
-carrier's page here, behind a notice that says what the traveller is walking
-into.
+Eleven member websites are reachable from their carriers' pages here, each
+behind a notice that says what the traveller is walking into.
 
 This file records **what each site does** and **whether its schedules and fares
-are real**, checked by hand against our own database on **8 September 2026**
-(TerraLink Group, which replaced the Starliner Group site, on **22 September
-2026**). The grades below are what the site shows travellers; the evidence is
-what I actually compared.
+are real**, compared by hand against our own database. The latest check was on
+**24 September 2026**, against that day's scrape. The grades below are what the
+site shows travellers; the evidence is what was actually compared.
 
 ---
 
@@ -16,176 +14,165 @@ what I actually compared.
 
 | Site | Airline(s) | What it does | Data |
 |---|---|---|---|
-| [Karination](https://flykarination.github.io/sales) | Karination | Full booking search | ✅ **Live** |
+| [KarinationGroup](https://flykarination.github.io/sales) | Karination, FORZA | Full booking search | ✅ **Live** |
 | [TerraLink Group](https://flyterralink.netlify.app/) | Starliner, ASTRA by Starliner, Velora by STRLINR, Meridian by STRLNR, Essequibo Air, AmeriGo | Group booking search | ✅ **Live** |
 | [Explora Journeys](https://explorajourneysva.softr.app/) | Explora Journeys | Route table, no booking | ✅ **Live** |
-| [Sovietskyie](https://sites.google.com/view/sovietskyie) | Советские | Brochure + loyalty tiers, booking by form | ✅ **Live** |
-| [Bula Air](https://kariy4.github.io/Bula-Air/pages/index.html) | Bula Air | Full 5-step booking with seat maps | ⚠️ **Sample only** |
+| [Sovietskyie](https://sites.google.com/view/sovietskyie) | Советские | Brochure and loyalty tiers; a beta booker for one route | ⚠️ **Sample only** |
+| [Bula Air](https://kariy4.github.io/Bula-Air/pages/index.html) | Bula Air | Booking flow on an old copy of our timetable | ⚠️ **Sample only** |
 | [SwissLux Group](https://lacnka.github.io/swisslux) | SwissLux | Account-gated app | ❔ **Unverified** |
 | [Dream Island Air](https://dream-island-air.base44.app/) | Dream Island Air | Account-gated app | ❔ **Unverified** |
-| [Britannia Group](https://flybritanniagroup.base44.app/) | Fly Empire, Soleado | Booking search | ❌ **Illustrative** |
+| [Britannia Group](https://flybritanniagroup.base44.app/) | Fly Empire, Soleado | Booking search, generated results | ❌ **Illustrative** |
 | [Book & Go](https://bookgo-chi.vercel.app/) | FUN! Canada, once flyhop ("CAS") | Multi-airline search + newsfeed | ❌ **Illustrative** |
-| [AirFluff](https://airfluff-airlines-copy-54d2ba54.base44.app/) | AirFluff Airlines | Booking search | ❌ **Illustrative** |
-| [American Express Air](https://flyamex.base44.app/) | American express | Booking search | ⚠️ **Sample only** |
+| [AirFluff](https://airfluff-airlines-copy-54d2ba54.base44.app/) | AirFluff Airlines | Booking search, generated results | ❌ **Illustrative** |
+| [Vaultera](https://dome-record-86929245.figma.site/) | Vaultera | Designed site, generated search | ❌ **Illustrative** |
 
-**Four sites can be trusted for schedules and fares. Three cannot, and say so
-to varying degrees. Two publish only part of the network, and two would not
-let us look.**
+**Three sites can be trusted for schedules and fares. Two publish real data for
+only part of the network, four generate their results, and two would not let us
+look.**
+
+American Express Air's site is gone: on 24 September 2026
+`flyamex.base44.app` answered "App not found" on every path, so its button and
+notice were removed and the carrier's page says "Contact airline for booking"
+again. If the member publishes a new address, add it back from the admin editor.
 
 ---
 
 ## Live — matches our data
 
-### Karination
+### KarinationGroup
 
-Vietnamese full-service carrier, and the most complete member site of the ten.
-A real booking widget (return / one-way / multi-city, four cabins), a
-destinations map, check-in, Manage Booking, and its own RainbowOne loyalty
-programme.
+The site reads its own copy of the game schedule from its own database, through
+a public `v_routes` view that its pages query with the key they ship. The check
+read the same view and compared it route by route, in both directions:
 
-Its own headline figures are **766 routes · 481 destinations · 717 aircraft ·
-5 hubs**. We hold **755 routes · 480 destinations · 712 aircraft**, out of
-CXR, DAD, HAN, PQC and SGN — the same five. The gap is a few days of fleet
-growth, not a different dataset. Fares are described on the site as "lowest
-one-way Economy fare on each route", which is what they are.
+| | Site | Ours |
+|---|---|---|
+| Karination routes | 1,508 | 1,508, the same ones |
+| — fastest time, lowest economy fare, days served | identical on all 1,508 | |
+| FORZA routes | 1,008 | 1,036: all of the site's, plus 28 newer |
+| — fastest time, lowest economy fare | identical on all 1,008 | |
 
-*It covers Karination only,* and this was re-checked specifically. Its
-timetable returns nothing but KX flights; asking for a route it does not serve
-answers **"Karination does not fly LHR to JFK. Try one of our hubs"** rather
-than offering a sibling carrier; RainbowOne earns miles "on every Karination
-flight"; and the footer reads "KX · A member of Echo Aegis". There is no
-second brand on the site to attach.
+On 88 routes the site shows no business fare where our route summary lists
+one: those cabins carry a price but no seats, and the site is right not to
+quote them.
 
-Velaris KX is not sold there and did not get the button: despite the shared
-"KX", the two are **separate groups under different owners** who happened to
-pick the same code for their group.
+It now sells FORZA openly: a FORZA flight is marked *"operated by FORZA, a
+KarinationGroup member of Echo Proxima"*, so the 8 September warning that FORZA
+searches came back as Z4 flights under Karination branding is obsolete. It also
+sells **Sonder** (SD), a group airline outside the alliance. The "766 routes ·
+481 destinations" on its home page is hand-written copy. Its footer: *"A
+fictional airline in a fictional world."*
 
 ### TerraLink Group
 
-*Checked 22 September 2026.* The Starliner Group site
-(`chai-debug-create.github.io/Tas`) became TerraLink Group, and the same four
-carriers now link here instead. One search sells **six** carriers, all of them
-ours: **Starliner** (Kyra), **ASTRA by Starliner** and **Velora by STRLINR**
-(Rhea), and **Meridian by STRLNR**, **Essequibo Air** and **AmeriGo** (Elysium).
-Round trip / one way, four cabins, connections, a route map, fleet pages, flight
-status and a TerraClub loyalty scheme; bookings are demos that hold no seat.
-Meridian is now actually sellable there, which it was not on the old site.
-Essequibo Air and AmeriGo got the button too on 22 September 2026, by the
-owner's decision. That AmeriGo is Elysium's (AG, out of ORD and JFK), not
-Rhea's "AmeriGo!".
+*Checked 22 and 24 September 2026.* The Starliner Group site
+(`chai-debug-create.github.io/Tas`) became TerraLink Group. One search sells
+**six** carriers, all of them ours: **Starliner** (Kyra), **ASTRA by Starliner**
+and **Velora by STRLINR** (Rhea), and **Meridian by STRLNR**, **Essequibo Air**
+and **AmeriGo** (Elysium). Essequibo Air and AmeriGo got the button on
+22 September 2026, by the owner's decision; that AmeriGo is Elysium's (AG, out
+of ORD and JFK), not Rhea's "AmeriGo!". Not to be confused with **TerraLink
+Airways** (Kyra, TL), a separate carrier the site does not sell.
 
-Not to be confused with **TerraLink Airways** (Kyra, TL), a separate carrier
-the site does not sell.
+Its accounts and bookings now run on TerraLink's own Supabase project, with
+TerraClub points and confirmation emails: a booking there is TerraLink's, and
+holds no seat here.
 
-The whole timetable ships inside the page, keyed on the game's own aircraft
-ids, so this check compared all of it rather than spot checks:
+The whole timetable ships inside the page (`DATA.flights`, keyed on the game's
+own aircraft ids), so each check compared all of it:
 
-| | Site | Ours (16 September scrape) |
+| | Site | Ours (24 September scrape) |
 |---|---|---|
-| Services on file | 2,079 | 1,969 |
-| Matched to ours by aircraft, route and flight number | 1,845 | |
-| Fares on those, all four cabins | identical | |
-| Departure time and block time on those | identical | |
-| Home-page fares, 8 popular routes and 8 deals | all equal our cheapest economy | |
+| Services on file | 2,078 | 2,261 aircraft assignments |
+| Matched by aircraft, route and flight number | 2,047 | |
+| Departure, block times, return flight number, turnaround, weekdays, fares in all four cabins | identical on all 2,047 | |
+| Ours that the site lacks | | 159 flights: Essequibo Air 103, AmeriGo 50, Starliner 6 |
 
-Every difference in the data runs the same way — **its copy is newer than
-ours**:
+On 22 September its copy was the newer one; now ours is.
 
-- **Starliner:** 497 aircraft to our 405, every one of ours plus 92 more, and
-  101 services we do not have yet.
-- **AmeriGo** swapped 31 aircraft since our scrape; 122 of the 123 flights that
-  moved keep our exact times and fares.
-- **Essequibo Air:** six aircraft newer than ours.
-- **ASTRA** (58), **Meridian** (189) and **Velora** (38): fleets identical,
-  registration for registration.
+Between the two checks it rewrote how it works times out, and two of the three
+faults flagged on 22 September are fixed:
+
+- **Weekdays**: it now reads the game's day 0 as Monday, as we do.
+- **Arrivals**: legs are now worked in UTC and shown on each airport's own
+  clock. It applies summer time, which our clocks leave out, so some times
+  differ from ours by an hour; which the game uses is an open question, not a
+  TerraLink fault.
+- **Return flights**: now the game's rule — the distance-based ground time plus
+  the airline's own turnaround, then the inbound block time. On every route
+  without a stop the result is ours exactly.
+
+Still wrong:
+
+- **A flight flown by several aircraft shows only one aircraft's days.** 49
+  services (21 Starliner, 28 Meridian): SR 999 San Francisco → Helsinki flies
+  daily on two aircraft and shows once a week.
+- **Routes with a stop** (75 of them): the way back uses a fixed 60 minutes at
+  the stop, and adds the turnaround in minutes where the game counts quarter
+  hours. None of those return legs match ours, and 43 are out by an hour or
+  more.
 
 Velora's entry fare there is its premium economy fare, which is right: Velora
-has no economy seats on any aircraft. That also explains the old site's
-"mid-cabin" fares — HYD→BLR at $221 and HYD→CDG at $1,889 are exactly Velora's
-premium economy prices.
+has no economy seats on any aircraft.
 
-What it gets wrong is in how it presents the data, not the data itself:
-
-- **Return flights are its own estimate.** The data holds one leg per route,
-  the filed one, which leaves a hub on 98% of routes. The site builds the way
-  back itself: flight number +1 (right on all of them), the outbound block time
-  (wrong on 81%), and a departure 90 minutes after landing on the *origin's*
-  clock. Only 5% of return departures match ours; 31% are more than two hours
-  out.
-- **Arrival times stay on the departure airport's clock**, so they are out by
-  the time difference on the 69% of routes that cross one. Houston → Salt Lake
-  City lands at 15:00 there and 14:00 here.
-- **Weekdays run one day early** on every flight that does not operate daily
-  — 616 of the 1,845. It reads the game's day 0 as Sunday; our loader reads it
-  as Monday, and the game agrees with us. SR 1203 Houston → Salt Lake City is
-  filed as day 4 with no midnight rollover: a Thursday there, a Friday here,
-  and a Friday in the game itself (checked by the owner, 22 September 2026).
-- **A flight shared by two or three aircraft shows one aircraft's days.** 41
-  services (28 Meridian, 13 Starliner): Meridian's daily IAH→MUC appears once a
-  week.
-
-The grade stays **live**: every fare and every filed time is the game's own, in
-a fresher copy than ours. The notice tells travellers to check times and days
-here before booking.
+The grade stays **live**: every fare and filed time is the game's own. The
+notice points travellers at the two faults.
 
 ### Explora Journeys
 
-A Softr-built site: brand pages plus a real route table that matches ours.
-There is no booking engine, so the button leads to information, and the notice
-says to come back here to book.
+A Softr site — Home, Aircraft, Routes — with no booking engine. Its route
+table has **246** records and we hold exactly **246** Explora routes. The
+site's data service returns at most 100 records a request, so 100 were
+compared in detail: every one is a route Explora flies, with the **same weekly
+frequency on all 100** and the same aircraft types on 99 (ZRH–LAX leaves out
+its Boeing 787-10).
+
+---
+
+## Sample only — real, but only part of the network
 
 ### Sovietskyie
 
 A Google Site — Home, Fleet, Flights, Hotels, and a **Red Star** loyalty
-programme with Silver, Gold and Premier tiers. Tagline "The people's airline",
-and its footer names Echo United Alliances.
+programme with Silver, Gold and Premier tiers. Tagline "The people's airline";
+its footer names Echo United Alliances.
 
-Its Fleet page claims 222 aircraft: 151 Airbus and 71 Sukhoi. We hold 207:
-136 Airbus and **exactly 71 Sukhoi Superjet 100-95LRs**. Same fleet, ours a
-little older.
+Its Fleet page now claims **235** aircraft — 149 Airbus, 19 Boeing, 67 Sukhoi —
+and names exactly the types we hold: A320-200, A320neo, A321-100, A321neo,
+A321LR, A350-900, A350-1000, Boeing 777-300 and the Superjet 100-95LR. We hold
+**270** (166, 25 and 79). Same fleet, an older count.
 
-"Book Flights Now" opens a **Google Form** — a request answered by hand, not
-an instant confirmation. Worth knowing before clicking, so the notice says it.
-
----
-
-## Sample only
+"Book Flights Now" no longer opens a Google Form. It leads to a flight booker
+embedded in the page, headed *"THIS FLIGHT BOOKER IS IN BETA, AND ISSUES WILL
+OCCUR. DO NOT ENTER YOUR PERSONAL DATA!"* It covers **one route of 302**,
+Vladivostok–Yakutsk, and on it is exact: flights 5313/5314, 5315/5316 and
+5317/5318, with our departure and arrival times both ways, our weekdays (daily;
+Mondays only; Friday to Sunday) and our aircraft (RA-32116, RA-32124). Fares are
+in roubles and roughly track ours: outbound economy at about 91 ₽ to the dollar
+(32,500 ₽ against our $357), return and business lower. It asks for a name and
+passport number, makes up an "SU-" reference, and sends nothing anywhere.
+Hotels are still booked by Google Form.
 
 ### Bula Air
 
-The best-engineered small site of the ten, and the one whose grade is most
-likely to be misread. A five-step flow — Search → Flights → Passengers →
-Seats → Review — with genuine per-aircraft seat maps (A350-900 in 3-3-3
-economy, 2-3-2 premium, 1-2-1 business, "Apartment Suites" in first).
+A five-step flow — Search → Flights → Passengers → Seats → Review — with genuine
+per-aircraft seat maps, reading `data/routes.json`, `fleet.json` and
+`bookings.json`.
 
-It is honest code: it reads `routes.json`, `fleet.json` and `bookings.json`,
-and its only four uses of `Math.random` are the 12% of seats drawn as occupied
-and the booking reference. **Nothing about the flights is fabricated.**
+`routes.json` no longer holds four sample routes. It holds **193 flights copied
+from this site's own timetable** — they carry our generated designators
+(`BLPX1 …`) — 116 of them out of Auckland. Against the 24 September timetable:
 
-The catch is inventory. `routes.json` holds **four routes**, all from Nadi —
-AKL, SYD, LAX, HNL — each with a field named `sampleFare`. All four are real
-and the near fares are close (AKL $420 vs our $409, SYD $510 vs $498; LAX and
-HNL drift further). But Bula Air actually serves **81 destinations from Nadi**
-and 135 routes overall. A traveller who searched there and found nothing would
-wrongly conclude the route does not exist.
+- **112 rows no longer appear in it**, and 96 of their flight numbers are no
+  longer flown at all (Adelaide–Hamilton Island, for one).
+- **47 of the 81 that remain depart exactly 30, 60 or 90 minutes early**: our
+  return times from before the turnaround correction of 22 September. The copy
+  predates it.
+- **Every row's days read `MTWTFSS`**: the day letters were copied without
+  which of them are lit, so every flight shows as daily. 63 of the 81 are not.
+- Aircraft and fares match on the rows that remain.
 
-### American Express Air
-
-A JFK-based luxury carrier with a Leaflet route map, lounges, a fleet page and
-a five-cabin booking flow. The home page teases six destinations; the booking
-page carries **47**, each with a block time.
-
-Every one of those 47 is a route American Express Air genuinely serves. Two
-things stop it being a *live* grade:
-
-- it reaches **87 destinations from JFK**, so roughly half the network is
-  missing from the picker;
-- the block times are its own estimates, consistently a little longer than the
-  filed ones — LHR 7h00 against our 6h10, ZRH 8h15 against 7h00, CDG 7h10
-  against 6h30. LAX is exact at 5h10, so it is an approximation that sometimes
-  lands rather than a copy.
-
-Its stated fleet of 60 also sits well under the 192 aircraft we hold.
+We hold 1,168 timetable lines for Bula Air.
 
 ---
 
@@ -193,21 +180,19 @@ Its stated fleet of 60 also sits well under the 192 aircraft we hold.
 
 ### Britannia Group → Fly Empire and Soleado
 
-**Two brands, and only a search reveals it.** Nothing on the home page, the
-Deals page or the nav names a second airline — LHR–JFK returns Fly Empire
-(FEM) on every row, which is why the first pass recorded one carrier. LHR–EDI
-returns four **Soleado** (SOL) services and one Fly Empire. Soleado is ours too
-(SO, Elion, 430 routes), so both carriers now carry the button.
+Search results are now generated outright. A seeded random generator, keyed on
+origin, destination and date, makes five options per search: a departure
+between 06:00 and 19:15, a block time from the distance with random spread, a
+stop on some long routes, a price in pounds from the distance, and a flight
+number of the brand's code plus a random number. The brand is picked by
+region — **Soleado** (SOL) for short European hops, **Fly Empire** (FEM) for
+anything from the UK, **Dragonair** (DGN) for China and **Senegalair** (SEN)
+for Senegal and the Canaries. Nothing is read from any schedule; even the real
+Fly Empire flight numbers seen on 8 September are gone. A booking is saved to
+the site's own backend with the name and email typed in.
 
-The lesson for the next group site: read the *results*, on more than one kind
-of route, not the marketing.
-
-Search results are branded Fly Empire on the long-haul routes. The flight numbers are real
-Fly Empire numbers — 360, 517, 667, 903, 955 — but they are **attached to the
-wrong routes**: 360 is really LHR–SIN, 517 LHR–ORD, 667 LHR–LAX, 903 LHR–JFK,
-955 LHR–DXB. Durations are invented too, where ours are a constant 450 minutes.
-
-Recognisable parts, reassembled. A showcase, not a timetable.
+Its Dragonair looks like ours: **港龍航空 BG DRAGONAIR** (DR, Aura), which has
+no button. Whether to link it is the owner's decision.
 
 ### Book & Go ("CAS" — flyhop)
 
@@ -220,19 +205,47 @@ duration or departure, filter by full-service vs low-cost. The member also runs
 **[VAFeed](https://vafeed.vercel.app/)**, a community newsfeed, which is linked
 from the same notice.
 
-Its results come from a global `generateFictionalFlights()` that calls
-`randomInt(5, 8)` for how many to show and generates times and prices to match.
-Nothing is read from any schedule. The interface is real; the flights are not.
+Unchanged on 24 September: results come from a global
+`generateFictionalFlights()` that calls `randomInt(5, 8)` for how many to show,
+picks airlines at random, and gives each a random departure and a random 2 to 6
+hour journey, whatever the route. The interface is real; the flights are not.
 
 ### AirFluff Airlines
 
-Frankfurt-based, and the most interesting near-miss. Searching FRA→ZRH returns
-a real AirFluff route with our exact 50-minute block time and the right
-aircraft family — but at 06:40 for €72 as "AFL 660", where we hold 06:30 for
-€110 and **no flight numbered 660 anywhere in AirFluff's timetable**.
+Frankfurt-based. Its results come from a function that takes the two airports
+and the date: journey time is distance ÷ 850 km/h + 30 minutes, the flight
+number is `AFL` plus a hash of the two codes, departure times come from a fixed
+list (06:40, 08:50, 11:25…), fares from the distance with random jitter; and
+at random some results are marked cancelled (8%, with a reason) or sold out.
+The 8 September check's "exact 50-minute block time" on FRA–ZRH was that
+formula landing on the real figure.
 
-Real skeleton, invented flesh. Its own footer settles it: it calls itself
-*"a fictional airline"* and *"a fictional company for demonstration"*.
+Routes are Frankfurt to 17 airports, plus SFO–IST and HNL–SFO. 16 of the 17 are
+real AirFluff routes from Frankfurt (Leipzig is not), of the 185 we hold. Its
+own footer: *"a fictional company for demonstration"*.
+
+### Vaultera
+
+A Figma-built site. Since 10 September its search returns flights, all
+generated from the distance between the two airports: 3 to 9 departures at
+fixed clock times, a journey time of distance ÷ 480 km/h + 30 minutes, `VT`
+flight numbers from a hash, and three fare tiers from the distance.
+
+Its six "popular routes" are the same kind of figure:
+
+| From Las Vegas | Site | Ours |
+|---|---|---|
+| Tokyo HND | 11h 20m, from $699 | 11h 10m, from $994 |
+| Honolulu | 5h 40m, from $199 | 5h 50m, from $629 |
+| London LHR | 10h 10m, from $619 | 9h 20m, from $846 |
+| Miami | 4h 20m, from $149 | 4h 10m, from $434 |
+| Paris CDG, Singapore | from $649 and $799 | not flown |
+
+What it does publish about the network is right. Its hub count now comes from
+its own list — "15 hubs" — and all 15 are Vaultera hubs in our data; we now
+hold a 16th, Hong Kong. "250+ destinations" (we hold 481). Graded
+**illustrative** on 24 September, from *showcase*: there is now a search, and
+it invents what it returns.
 
 ---
 
@@ -240,20 +253,20 @@ Real skeleton, invented flesh. Its own footer settles it: it calls itself
 
 ### SwissLux Group
 
-"One App. Every Journey." — a Supabase-backed app that shows a Log In / Create
-Account wall and nothing else until you have an account. I don't create
-accounts on members' sites, so this is genuinely unchecked rather than judged.
+Unchanged since 8 September: "One App. Every Journey." — a Supabase-backed app
+that shows a Log In / Create Account wall and nothing else until you have an
+account. I don't create accounts on members' sites, so this is genuinely
+unchecked rather than judged.
 
-Covers **SwissLux** (Kyra since the 24 September 2026 scrape). It also covered
-**SwissLux Private** (Vilis) until that airline left the alliance the same
-week; the notice on the live site still names both, and is the admins' to
-reword.
+Covers **SwissLux** (Kyra since the 24 September 2026 scrape). Its code still
+names **SwissLux Private**, which left the alliance that week; the notice no
+longer does.
 
 ### Dream Island Air
 
-Same situation: the current base44 app is account-gated. The member's
-**[older site](https://temp-wahoumdaqshifhimthou.webadorside.com/)** is still
-up and is offered as a secondary link in the notice.
+Unchanged: the base44 app is account-gated. The member's older Webador site,
+offered as a second link since 8 September, is gone — its domain no longer
+exists — so the link was removed on 24 September.
 
 ---
 
