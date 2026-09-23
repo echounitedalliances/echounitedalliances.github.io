@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { NotConfigured } from '../components/ui'
 import { isConfigured, supabase } from '../lib/supabase'
+import { useAuth } from '../lib/auth'
 import type { BookingDetails } from '../lib/types'
 import { shortDate, usd } from '../lib/format'
 
@@ -13,6 +14,9 @@ import { shortDate, usd } from '../lib/format'
  * Cancelling asks twice. It cannot be undone -- cancel_booking() deletes the
  * segments, which is what fires the trigger that returns the seats to
  * inventory -- and the reference is not reusable afterwards.
+ *
+ * Signed in, a booking found here can be kept on the Resonance account with
+ * the same reference and surname that found it (add_booking_to_account).
  */
 export default function Trips() {
   const [params] = useSearchParams()
@@ -23,6 +27,9 @@ export default function Trips() {
   const [msg, setMsg] = useState<string | null>(null)
   const [confirming, setConfirming] = useState(false)
   const [cancelled, setCancelled] = useState(false)
+  const { user, resonant } = useAuth()
+  const [keeping, setKeeping] = useState(false)
+  const [keepError, setKeepError] = useState<string | null>(null)
 
   useEffect(() => {
     const p = params.get('pnr')
@@ -74,7 +81,25 @@ export default function Trips() {
     setCancelled(true)
   }
 
+  const keep = async () => {
+    if (!booking) return
+    setKeeping(true)
+    setKeepError(null)
+    const { data, error } = await supabase.rpc('add_booking_to_account', {
+      p_pnr: booking.pnr,
+      p_family_name: surname.trim(),
+    })
+    setKeeping(false)
+    if (error) {
+      setKeepError(error.message)
+      return
+    }
+    const rows = (data as BookingDetails[]) ?? []
+    if (rows.length > 0) setBooking(rows[0])
+  }
+
   const isCancelled = cancelled || booking?.status?.toUpperCase() === 'CANCELLED'
+  const onMyAccount = Boolean(resonant && booking?.resonant_id === resonant.resonant_id)
 
   if (!isConfigured) return <NotConfigured />
 
@@ -192,6 +217,46 @@ export default function Trips() {
               This itinerary crosses {booking.divisions.length} divisions:{' '}
               {booking.divisions.join(', ')}
             </p>
+          )}
+
+          {/* Nothing to say about a booking kept on somebody else's account. */}
+          {(onMyAccount || (resonant && !booking.resonant_id) || !user) && (
+          <div className="mt-6 border-t border-edge-soft pt-5 text-sm">
+            {onMyAccount ? (
+              <p className="text-ink-dim">
+                Kept on your Resonance account, under{' '}
+                <Link to="/resonance" className="text-cyan underline underline-offset-2">
+                  Your trips
+                </Link>
+                .
+              </p>
+            ) : resonant && !booking.resonant_id ? (
+              <div className="flex flex-wrap items-center gap-3">
+                <p className="text-ink-dim">Keep this booking with your other trips?</p>
+                <button
+                  type="button"
+                  onClick={() => void keep()}
+                  disabled={keeping}
+                  className="btn btn-ghost"
+                >
+                  {keeping ? 'Saving…' : 'Keep it on my account'}
+                </button>
+              </div>
+            ) : !user ? (
+              <p className="text-ink-faint">
+                Have a Resonance account?{' '}
+                <Link to="/resonance" className="text-cyan underline underline-offset-2">
+                  Sign in
+                </Link>{' '}
+                and add this booking under Your trips to keep it with your others.
+              </p>
+            ) : null}
+            {keepError && (
+              <p className="mt-2 border-l-2 border-l-[color:var(--color-danger)] pl-3 text-danger">
+                {keepError}
+              </p>
+            )}
+          </div>
           )}
 
           <div className="mt-6 border-t border-edge-soft pt-5">

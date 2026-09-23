@@ -75,7 +75,7 @@ export const TERMS: Policy = {
     {
       heading: 'What an account is for',
       body: [
-        'Signed in, you can save a display name, a home division, and a home airport to your profile — all optional, and all editable any time — and book fictional flights that collect under "My trips" instead of scattering across a browser\'s history. You can also cancel a booking you made.',
+        'Signed in, you can save a display name, a home division, and a home airport to your profile — all optional, and all editable any time — and book fictional flights that collect under "Your trips" instead of scattering across a browser\'s history. You choose, when you book, whether a trip is kept on your account; you can add one you booked as a guest with its reference and a traveller’s surname, see each in full, cancel it, or take it off your account again.',
         'None of this is required to use the site. A guest can search the network and book a flight without ever signing in — an account only adds a place for that booking to be remembered.',
       ],
     },
@@ -195,7 +195,7 @@ export const PRIVACY: Policy = {
       heading: 'When you make a Resonance account',
       body: [
         'A Resonance account is optional. Everything on this site except saving your own trips works without one.',
-        'If you create one, we hold your email address and the bookings you make. Your password is never seen by this site: it goes to Supabase, our database host, which stores it hashed and handles signing you in.',
+        'If you create one, we hold your email address and the bookings you keep on it: the ones you choose to keep when you book signed in, and any you add later with a booking reference and a traveller’s surname. Taking a booking off your account does not cancel it. Your password is never seen by this site: it goes to Supabase, our database host, which stores it hashed and handles signing you in.',
         'We do not send marketing email. The only mail an account can generate is a password reset you asked for.',
       ],
     },

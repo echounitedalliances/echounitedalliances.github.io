@@ -221,7 +221,11 @@ foreach ($d in @(
     @{ name = 'moving a carrier, signed in but not admin'; sql = "set role authenticated; select count(*) from public.admin_move_airline('00000000-0000-0000-0000-000000000000'::uuid, 'kyra')" },
     @{ name = 'the network rebuild, signed in';           sql = "set role authenticated; select public.echo_refresh_division_network()" },
     @{ name = 'the member-site editor, signed in but not admin'; sql = "set role authenticated; select count(*) from public.admin_member_sites()" },
-    @{ name = 'relinking a carrier''s website, signed in but not admin'; sql = "set role authenticated; select count(*) from public.admin_set_airline_site('00000000-0000-0000-0000-000000000000'::uuid, null)" }
+    @{ name = 'relinking a carrier''s website, signed in but not admin'; sql = "set role authenticated; select count(*) from public.admin_set_airline_site('00000000-0000-0000-0000-000000000000'::uuid, null)" },
+    # The account functions act on the caller's own account and nothing else.
+    # With no account behind the session they must refuse outright.
+    @{ name = 'cancelling a booking with no account'; sql = "set role authenticated; select count(*) from public.cancel_my_booking('00000000-0000-0000-0000-000000000000'::uuid)" },
+    @{ name = 'claiming a booking with no account'; sql = "set role authenticated; select count(*) from public.add_booking_to_account('AAAAAA', 'x')" }
 )) {
     $n = Invoke-Scalar $d.sql
     if ($null -ne $n) {
@@ -241,14 +245,15 @@ select count(*) from pg_proc p join pg_namespace n on n.oid = p.pronamespace
                      'admin_applications_list','decide_admin_application',
                      'admin_move_airline','admin_update_airline','echo_refresh_division_network',
                      'admin_member_sites','admin_save_member_site','admin_set_airline_site',
-                     'admin_delete_member_site')
+                     'admin_delete_member_site',
+                     'add_booking_to_account','remove_booking_from_account','cancel_my_booking')
    and has_function_privilege('anon', p.oid, 'execute')
 "@
 if ($null -eq $anonExec -or [int64]$anonExec -ne 0) {
-    Write-Output ("  OPEN     anon may execute {0} of the admin functions" -f $anonExec)
-    $failures.Add("anon holds EXECUTE on $anonExec admin functions; expected 0")
+    Write-Output ("  OPEN     anon may execute {0} of the admin and account functions" -f $anonExec)
+    $failures.Add("anon holds EXECUTE on $anonExec admin and account functions; expected 0")
 } else {
-    Write-Output "  ok       anon may execute none of the admin functions"
+    Write-Output "  ok       anon may execute none of the admin and account functions"
 }
 
 # Every published carrier must resolve on its own page. This is the check that

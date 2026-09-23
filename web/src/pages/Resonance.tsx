@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Loading, NotConfigured } from '../components/ui'
 import { isConfigured, supabase } from '../lib/supabase'
@@ -7,11 +7,10 @@ import { PasswordCard, SignIn } from '../components/ResonanceAuth'
 import AdminApplyModal from '../components/AdminApplyModal'
 import AdminApplications from '../components/AdminApplications'
 import AdminMemberSites from '../components/AdminMemberSites'
-import type { AirportRow, BookingDetails, Division } from '../lib/types'
-import { num, shortDate, usd } from '../lib/format'
+import AccountTrips from '../components/AccountTrips'
+import type { AirportRow, Division } from '../lib/types'
+import { num } from '../lib/format'
 import { useCarrierCount } from '../lib/carriers'
-import { TRIP_SORTS, bookedAt, tripArrival, tripDeparture } from '../lib/trips'
-import type { TripSort } from '../lib/trips'
 
 /**
  * Resonance: sign in, keep a profile, and see every trip on the account.
@@ -25,10 +24,6 @@ export default function Resonance() {
   const carrierCount = useCarrierCount()
   const { ready, user, resonant, recovering, endRecovery, signOut, refreshResonant } = useAuth()
   const [error, setError] = useState<string | null>(null)
-  const [sort, setSort] = useState<TripSort>('departure')
-  const [newestFirst, setNewestFirst] = useState(false)
-
-  const [trips, setTrips] = useState<BookingDetails[] | null>(null)
   const [divisions, setDivisions] = useState<Division[]>([])
   const [airportQuery, setAirportQuery] = useState('')
   const [airportHits, setAirportHits] = useState<AirportRow[]>([])
@@ -38,14 +33,7 @@ export default function Resonance() {
   useEffect(() => {
     if (!isConfigured || !resonant) return
     void (async () => {
-      const [t, d] = await Promise.all([
-        supabase
-          .from('v_booking_details')
-          .select('*')
-          .order('created_at', { ascending: false }),
-        supabase.from('v_division_summary').select('*').order('sort_order'),
-      ])
-      setTrips((t.data as BookingDetails[]) ?? [])
+      const d = await supabase.from('v_division_summary').select('*').order('sort_order')
       setDivisions((d.data as Division[]) ?? [])
     })()
   }, [resonant])
@@ -84,15 +72,6 @@ export default function Resonance() {
       setError(error.message)
     }
   }
-
-  // Derived, not stored: re-sorting a list you already have should not mean
-  // asking the server for it again.
-  const ordered = useMemo(() => {
-    if (!trips) return null
-    const key =
-      sort === 'departure' ? tripDeparture : sort === 'arrival' ? tripArrival : bookedAt
-    return [...trips].sort((a, b) => (newestFirst ? key(b) - key(a) : key(a) - key(b)))
-  }, [trips, sort, newestFirst])
 
   if (!isConfigured) return <NotConfigured />
   if (!ready) return <Loading label="Checking your session" />
@@ -258,75 +237,8 @@ export default function Resonance() {
             </section>
           )}
 
-          <section className="mt-10">
-            <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
-              <h2 className="display text-2xl">Your trips</h2>
-              {trips && trips.length > 1 && (
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="mono mr-1 text-[10px] uppercase tracking-[0.16em] text-ink-faint">
-                    Sort by
-                  </span>
-                  {TRIP_SORTS.map((o) => (
-                    <button
-                      key={o.key}
-                      type="button"
-                      onClick={() => setSort(o.key)}
-                      aria-pressed={sort === o.key}
-                      className={`chip ${sort === o.key ? 'chip-on' : ''}`}
-                    >
-                      {o.label}
-                    </button>
-                  ))}
-                  <button
-                    type="button"
-                    onClick={() => setNewestFirst((v) => !v)}
-                    aria-label={newestFirst ? 'Showing latest first' : 'Showing earliest first'}
-                    className="chip"
-                    title={newestFirst ? 'Latest first' : 'Earliest first'}
-                  >
-                    {newestFirst ? 'Latest ↓' : 'Earliest ↑'}
-                  </button>
-                </div>
-              )}
-            </div>
-            {trips === null ? (
-              <Loading />
-            ) : trips.length === 0 ? (
-              <div className="panel mt-4 p-8 text-center">
-                <p className="text-ink-dim">
-                  Nothing booked on this account yet.
-                </p>
-                <Link to="/" className="mono mt-4 inline-block text-cyan">
-                  Search the alliance →
-                </Link>
-              </div>
-            ) : (
-              <div className="mt-4 flex flex-col gap-3">
-                {(ordered ?? []).map((t) => (
-                  <article key={t.booking_id} className="panel p-5">
-                    <div className="flex flex-wrap items-baseline justify-between gap-3">
-                      <div className="mono text-2xl tracking-[0.2em] text-cyan">{t.pnr}</div>
-                      <div className="mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">
-                        {t.status.toLowerCase()} · {usd(Number(t.total_amount_usd))}
-                      </div>
-                    </div>
-                    <div className="mt-3 flex flex-col gap-1">
-                      {(t.segments ?? []).map((s) => (
-                        <div key={s.seq} className="mono text-sm text-ink-dim">
-                          <span className="text-cyan">{s.designator}</span>{' '}
-                          {s.departure_time} {s.origin} &rarr; {s.arrival_time}{' '}
-                          {s.destination}
-                          <span className="ml-3 text-ink-faint">
-                            {shortDate(s.travel_date)}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </article>
-                ))}
-              </div>
-            )}
-          </section>
+          {/* Every booking kept on this account, and managing them. */}
+          <AccountTrips />
         </>
       )}
 

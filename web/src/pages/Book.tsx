@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { NotConfigured } from '../components/ui'
+import Modal from '../components/Modal'
+import { SignIn } from '../components/ResonanceAuth'
 import { isConfigured, supabase } from '../lib/supabase'
-import type { Itinerary } from '../lib/types'
+import { useAuth } from '../lib/auth'
+import type { BookingDetails, Itinerary } from '../lib/types'
 import { duration, shortDate, usd } from '../lib/format'
 
 /**
@@ -28,6 +31,12 @@ type Passenger = { given_name: string; family_name: string; passenger_type: stri
  * The whole reservation goes through create_booking(), one security definer
  * RPC. A guest has no privileges on the booking tables and should not get any,
  * and the three writes it makes have to succeed together in order anyway.
+ *
+ * Signed in, the traveller chooses whether the trip is kept on their Resonance
+ * account, where "Your trips" lists and manages it. The account is always the
+ * one signed in: create_booking reads it from the session and only takes a
+ * yes or no from here. Signed out, they can sign in without leaving the page
+ * -- nothing typed is lost -- or add the booking to an account afterwards.
  */
 export default function Book() {
   const nav = useNavigate()
@@ -38,6 +47,24 @@ export default function Book() {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [pnr, setPnr] = useState<string | null>(null)
+  const { user, resonant } = useAuth()
+  const [saveToAccount, setSaveToAccount] = useState(true)
+  const [signingIn, setSigningIn] = useState(false)
+  /** Whether the finished booking is kept on the account. */
+  const [onAccount, setOnAccount] = useState(false)
+  const [savingAfter, setSavingAfter] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
+
+  // Signing in from the dialog is what closes it: the session arriving is the
+  // only signal that it worked.
+  useEffect(() => {
+    if (resonant) setSigningIn(false)
+  }, [resonant])
+
+  // The account's address is the likeliest contact; typing over it still wins.
+  useEffect(() => {
+    if (user?.email) setEmail((e) => e || user.email || '')
+  }, [user])
 
   useEffect(() => {
     const raw = sessionStorage.getItem('echo.itinerary')
@@ -116,11 +143,13 @@ export default function Book() {
           direction: leg.direction,
           travel_date: leg.departure_date,
         })),
+        p_save_to_account: Boolean(resonant) && saveToAccount,
       })
       if (error) throw new Error(error.message)
-      const rows = (data as { pnr: string }[]) ?? []
+      const rows = (data as BookingDetails[]) ?? []
       if (rows.length === 0) throw new Error('The booking was not created.')
       sessionStorage.removeItem('echo.itinerary')
+      setOnAccount(Boolean(rows[0].resonant_id))
       setPnr(rows[0].pnr)
     } catch (e) {
       setError(e instanceof Error ? e.message : 'The booking could not be completed.')
@@ -128,6 +157,31 @@ export default function Book() {
       setBusy(false)
     }
   }
+
+  /** Keep the finished booking on the account, if it was booked without. */
+  const saveAfter = async () => {
+    if (!pnr) return
+    setSavingAfter(true)
+    setSaveError(null)
+    const { error } = await supabase.rpc('add_booking_to_account', {
+      p_pnr: pnr,
+      p_family_name: pax[0]?.family_name.trim() ?? '',
+    })
+    setSavingAfter(false)
+    if (error) setSaveError(error.message)
+    else setOnAccount(true)
+  }
+
+  const signInDialog = signingIn && (
+    <Modal title="Sign in to Resonance" onClose={() => setSigningIn(false)}>
+      <p className="mb-2 text-sm text-ink-dim">
+        {pnr
+          ? 'Once you are signed in, you can keep this booking on your account.'
+          : 'Everything you have typed stays as it is. Once you are signed in, you can keep this trip on your account.'}
+      </p>
+      <SignIn />
+    </Modal>
+  )
 
   if (pnr) {
     return (
@@ -143,6 +197,41 @@ export default function Book() {
         >
           {pnr}
         </div>
+        <div className="mx-auto mt-8 max-w-[480px] text-sm text-ink-dim">
+          {onAccount ? (
+            <p>
+              Kept on your Resonance account: it is under{' '}
+              <Link to="/resonance" className="text-cyan underline underline-offset-2">
+                Your trips
+              </Link>
+              , where you can see it in full or cancel it.
+            </p>
+          ) : resonant ? (
+            <div className="flex flex-col items-center gap-2">
+              <p>Not kept on your Resonance account.</p>
+              <button
+                type="button"
+                onClick={() => void saveAfter()}
+                disabled={savingAfter}
+                className="btn btn-ghost"
+              >
+                {savingAfter ? 'Saving…' : 'Keep it on my account'}
+              </button>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center gap-2">
+              <p>Have a Resonance account? Keep this booking with your other trips.</p>
+              <button type="button" onClick={() => setSigningIn(true)} className="btn btn-ghost">
+                Sign in
+              </button>
+            </div>
+          )}
+          {saveError && (
+            <p className="mt-2 border-l-2 border-l-[color:var(--color-danger)] pl-3 text-left text-danger">
+              {saveError}
+            </p>
+          )}
+        </div>
         <div className="mt-10 flex justify-center gap-3">
           <button
             onClick={() => nav(`/trips?pnr=${pnr}`)}
@@ -157,6 +246,7 @@ export default function Book() {
             Back to Echo
           </Link>
         </div>
+        {signInDialog}
       </div>
     )
   }
@@ -238,6 +328,40 @@ export default function Book() {
               </label>
             </div>
           </div>
+
+          <div className="panel p-4">
+            <div className="mono mb-3 text-[11px] uppercase tracking-[0.12em] text-ink-faint">
+              Resonance
+            </div>
+            {resonant ? (
+              <label className="flex cursor-pointer items-start gap-3">
+                <input
+                  type="checkbox"
+                  checked={saveToAccount}
+                  onChange={(e) => setSaveToAccount(e.target.checked)}
+                  className="mt-1 h-4 w-4 accent-[color:var(--color-accent)]"
+                />
+                <span>
+                  <span className="block text-sm text-ink">Keep this trip on my Resonance account</span>
+                  <span className="mt-0.5 block text-[12px] text-ink-faint">
+                    Signed in as {user?.email}. It will be under Your trips, where you can see
+                    it in full, cancel it, or take it off the account later.
+                  </span>
+                </span>
+              </label>
+            ) : (
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <p className="max-w-[46ch] text-sm text-ink-dim">
+                  Have a Resonance account? Sign in to keep this trip with your others.
+                  Nothing you have typed is lost, and you can also add it later with its
+                  reference.
+                </p>
+                <button type="button" onClick={() => setSigningIn(true)} className="btn btn-ghost">
+                  Sign in
+                </button>
+              </div>
+            )}
+          </div>
         </div>
 
         {error && (
@@ -261,6 +385,7 @@ export default function Book() {
         >
           {busy ? 'Confirming…' : `Confirm booking · ${usd(total)}`}
         </button>
+        {signInDialog}
       </div>
 
       {/* itinerary summary */}

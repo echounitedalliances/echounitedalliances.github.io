@@ -176,6 +176,8 @@ export type BookingDetails = {
   contact_email: string
   contact_name: string | null
   created_at: string
+  /** The Resonance account the booking is kept on, if any. */
+  resonant_id: string | null
   passenger_count: number
   passengers: { seq: number; type: string; given_name: string; family_name: string }[] | null
   segments:

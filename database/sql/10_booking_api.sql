@@ -25,15 +25,26 @@ returns integer language sql immutable parallel safe as $$ select 9; $$;
  * p_passengers: [{"given_name":"Hai Dang","family_name":"Dang","passenger_type":"ADULT"}, ...]
  * p_segments:   [{"flight_id":"...","aircraft_id":"...","travel_date":"2026-09-10",
  *                 "direction":"OUTBOUND"}, ...]  -- in travel order
+ * p_save_to_account: keep the booking on the caller's Resonance account. The
+ *                 account is always the caller's own, read from the session --
+ *                 never an id passed in -- so this can only ever say yes or no.
+ *                 Ignored for a guest, who has no account to keep it on.
  *
  * Returns the finished booking in the same shape the manage-booking page reads.
  */
+
+-- The five-argument version, from before a booking could be kept off the
+-- account. Dropped rather than left beside the new one: with both present, a
+-- call naming five arguments matches both, and PostgREST refuses to guess.
+drop function if exists public.create_booking(text, text, text, jsonb, jsonb);
+
 create or replace function public.create_booking(
     p_contact_email text,
     p_contact_name  text,
     p_cabin         text,
     p_passengers    jsonb,
-    p_segments      jsonb
+    p_segments      jsonb,
+    p_save_to_account boolean default true
 )
 returns setof public.v_booking_details
 language plpgsql volatile security definer set search_path = public as $$
@@ -45,7 +56,8 @@ declare
     v_seg     jsonb;
     v_seq     integer := 0;
     v_free    integer;
-    v_resonant uuid := public.echo_current_resonant();
+    v_resonant uuid := case when coalesce(p_save_to_account, true)
+                            then public.echo_current_resonant() end;
 begin
     -- ---- validate before writing anything -------------------------------
     if p_contact_email is null
@@ -136,10 +148,10 @@ begin
 end;
 $$;
 
-comment on function public.create_booking(text, text, text, jsonb, jsonb) is
-    'Write a whole reservation in one transaction. Security definer so a guest can book without any table privileges; every field is validated here.';
+comment on function public.create_booking(text, text, text, jsonb, jsonb, boolean) is
+    'Write a whole reservation in one transaction. Security definer so a guest can book without any table privileges; every field is validated here. Signed in, the booking is kept on the caller''s own Resonance account unless p_save_to_account is false.';
 
-grant execute on function public.create_booking(text, text, text, jsonb, jsonb)
+grant execute on function public.create_booking(text, text, text, jsonb, jsonb, boolean)
     to anon, authenticated;
 
 -- Cancelling: the PNR and a surname are the credential, same as retrieval.
