@@ -94,6 +94,11 @@ COUNTRY_ALIASES = {"kosovo": {"XK", "KS"}}
 # Codes that appear in no open dataset. Filled by hand rather than left blank.
 MANUAL = {
     "FRU": ("Manas International Airport", "Bishkek", "KG", "Asia/Bishkek", 43.0613, 74.4776),
+    # Opened to civil flights on 15 September 2025, newer than both datasets.
+    # Without coordinates its routes also lose their distance, and BOM-PXN
+    # (about 1,660 km) is long enough for the 90-minute turnaround baseline.
+    # Coordinates from the airport's Wikipedia entry, 24 September 2026.
+    "PXN": ("Purnea Airport", "Purnia", "IN", "Asia/Kolkata", 25.75972, 87.41000),
 }
 
 
@@ -183,6 +188,17 @@ def build_reference(cache_dir, refresh):
     for code, oname, oc, mname, mc, mtz in mismatched:
         print(f"  {code}: OurAirports says {oname} ({oc}); mwgg's {mname} ({mc}) is a "
               f"different airport, so its timezone {mtz} was not used", file=sys.stderr)
+
+    # Named, because a count is easy to scroll past. An airport with no
+    # coordinates is missing from the maps, and its routes lose the distance
+    # that sets their turnaround baseline. PXN went unnoticed for a week as
+    # "no_tz 1" before it was added to MANUAL.
+    for code, a in sorted(out.items()):
+        missing = [what for what, v in (("coordinates", a["lat"]), ("timezone", a["tz"]),
+                                        ("name", a["name"])) if v is None]
+        if missing:
+            print(f"  {code}: in neither open dataset, so no {', '.join(missing)}. Find the "
+                  f"airport and add it to MANUAL in this file.", file=sys.stderr)
 
     os.makedirs(os.path.dirname(REFERENCE), exist_ok=True)
     json.dump(out, open(REFERENCE, "w", encoding="utf-8"),

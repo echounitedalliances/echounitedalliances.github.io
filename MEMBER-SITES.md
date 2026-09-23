@@ -21,10 +21,10 @@ what I actually compared.
 | [Explora Journeys](https://explorajourneysva.softr.app/) | Explora Journeys | Route table, no booking | ✅ **Live** |
 | [Sovietskyie](https://sites.google.com/view/sovietskyie) | Советские | Brochure + loyalty tiers, booking by form | ✅ **Live** |
 | [Bula Air](https://kariy4.github.io/Bula-Air/pages/index.html) | Bula Air | Full 5-step booking with seat maps | ⚠️ **Sample only** |
-| [SwissLux Group](https://lacnka.github.io/swisslux) | SwissLux, SwissLux Private | Account-gated app | ❔ **Unverified** |
+| [SwissLux Group](https://lacnka.github.io/swisslux) | SwissLux | Account-gated app | ❔ **Unverified** |
 | [Dream Island Air](https://dream-island-air.base44.app/) | Dream Island Air | Account-gated app | ❔ **Unverified** |
 | [Britannia Group](https://flybritanniagroup.base44.app/) | Fly Empire, Soleado | Booking search | ❌ **Illustrative** |
-| [Book & Go](https://bookgo-chi.vercel.app/) | flyhop ("CAS") | Multi-airline search + newsfeed | ❌ **Illustrative** |
+| [Book & Go](https://bookgo-chi.vercel.app/) | FUN! Canada, once flyhop ("CAS") | Multi-airline search + newsfeed | ❌ **Illustrative** |
 | [AirFluff](https://airfluff-airlines-copy-54d2ba54.base44.app/) | AirFluff Airlines | Booking search | ❌ **Illustrative** |
 | [American Express Air](https://flyamex.base44.app/) | American express | Booking search | ⚠️ **Sample only** |
 
@@ -211,6 +211,10 @@ Recognisable parts, reassembled. A showcase, not a timetable.
 
 ### Book & Go ("CAS" — flyhop)
 
+The carrier is the same airline under a third name: flyhop became Fun
+Airways on 16 September 2026 and FUN! Canada on 24 September. Its button
+follows the airline, not the name.
+
 A genuinely polished OTA-style search: one-way/round-trip, sort by price,
 duration or departure, filter by full-service vs low-cost. The member also runs
 **[VAFeed](https://vafeed.vercel.app/)**, a community newsfeed, which is linked
@@ -240,7 +244,10 @@ Real skeleton, invented flesh. Its own footer settles it: it calls itself
 Account wall and nothing else until you have an account. I don't create
 accounts on members' sites, so this is genuinely unchecked rather than judged.
 
-Covers **SwissLux** (Aegis) and **SwissLux Private** (Vilis).
+Covers **SwissLux** (Kyra since the 24 September 2026 scrape). It also covered
+**SwissLux Private** (Vilis) until that airline left the alliance the same
+week; the notice on the live site still names both, and is the admins' to
+reword.
 
 ### Dream Island Air
 

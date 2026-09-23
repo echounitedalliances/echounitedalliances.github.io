@@ -889,16 +889,6 @@
   "tz": "America/Lima",
   "tz_source": "dataset"
  },
- "ARK": {
-  "city": "Arusha",
-  "country": "TZ",
-  "iata": "ARK",
-  "lat": -3.3677899837493896,
-  "lon": 36.63330078125,
-  "name": "Arusha Airport",
-  "tz": "Africa/Dar_es_Salaam",
-  "tz_source": "dataset"
- },
  "ARM": {
   "city": "Armidale",
   "country": "AU",
@@ -997,16 +987,6 @@
   "lon": -57.519227,
   "name": "Silvio Pettirossi International Airport",
   "tz": "America/Asuncion",
-  "tz_source": "dataset"
- },
- "ASV": {
-  "city": "Ol Tukai",
-  "country": "KE",
-  "iata": "ASV",
-  "lat": -2.644786,
-  "lon": 37.252922,
-  "name": "Amboseli Airport",
-  "tz": "Africa/Nairobi",
   "tz_source": "dataset"
  },
  "ASW": {
@@ -1207,6 +1187,16 @@
   "lon": -75.7664,
   "name": "El Eden Airport",
   "tz": "America/Bogota",
+  "tz_source": "dataset"
+ },
+ "AXR": {
+  "city": "Arutua",
+  "country": "PF",
+  "iata": "AXR",
+  "lat": -15.248299598693848,
+  "lon": -146.61700439453125,
+  "name": "Arutua Airport",
+  "tz": "Pacific/Tahiti",
   "tz_source": "dataset"
  },
  "AXT": {
@@ -3469,16 +3459,6 @@
   "tz": "Europe/Rome",
   "tz_source": "dataset"
  },
- "CJA": {
-  "city": "Cajamarca",
-  "country": "PE",
-  "iata": "CJA",
-  "lat": -7.13918,
-  "lon": -78.489403,
-  "name": "Mayor General FAP Armando Revoredo Iglesias Airport",
-  "tz": "America/Lima",
-  "tz_source": "dataset"
- },
  "CJB": {
   "city": "Coimbatore",
   "country": "IN",
@@ -4909,16 +4889,6 @@
   "tz": "Europe/Berlin",
   "tz_source": "dataset"
  },
- "DRV": {
-  "city": "Baa Atoll",
-  "country": "MV",
-  "iata": "DRV",
-  "lat": 5.1561,
-  "lon": 73.1302,
-  "name": "Dharavandhoo Airport",
-  "tz": "Indian/Maldives",
-  "tz_source": "country_default"
- },
  "DRW": {
   "city": "Darwin",
   "country": "AU",
@@ -5217,16 +5187,6 @@
   "lon": -3.372288,
   "name": "Edinburgh Airport",
   "tz": "Europe/London",
-  "tz_source": "dataset"
- },
- "EDL": {
-  "city": "Eldoret",
-  "country": "KE",
-  "iata": "EDL",
-  "lat": 0.404458,
-  "lon": 35.238899,
-  "name": "Eldoret International Airport",
-  "tz": "Africa/Nairobi",
   "tz_source": "dataset"
  },
  "EDO": {
@@ -5647,6 +5607,16 @@
   "lon": -119.718018,
   "name": "Fresno Yosemite International Airport",
   "tz": "America/Los_Angeles",
+  "tz_source": "dataset"
+ },
+ "FAV": {
+  "city": null,
+  "country": "PF",
+  "iata": "FAV",
+  "lat": -16.054100036621094,
+  "lon": -145.65699768066406,
+  "name": "Fakarava Airport",
+  "tz": "Pacific/Tahiti",
   "tz_source": "dataset"
  },
  "FAY": {
@@ -6099,16 +6069,6 @@
   "tz": "Asia/Shanghai",
   "tz_source": "dataset"
  },
- "FVM": {
-  "city": "Fuvahmulah Island",
-  "country": "MV",
-  "iata": "FVM",
-  "lat": -0.309722,
-  "lon": 73.435,
-  "name": "Fuvahmulah Airport",
-  "tz": "Indian/Maldives",
-  "tz_source": "dataset"
- },
  "FWA": {
   "city": "Fort Wayne",
   "country": "US",
@@ -6409,16 +6369,6 @@
   "tz": "America/Denver",
   "tz_source": "dataset"
  },
- "GKK": {
-  "city": "Huvadhu Atoll",
-  "country": "MV",
-  "iata": "GKK",
-  "lat": 0.7324,
-  "lon": 73.4336,
-  "name": "Kooddoo Airport",
-  "tz": "Indian/Maldives",
-  "tz_source": "dataset"
- },
  "GLA": {
   "city": "Glasgow",
   "country": "GB",
@@ -6458,6 +6408,16 @@
   "name": "Golog Maqên Airport",
   "tz": "Asia/Shanghai",
   "tz_source": "country_default"
+ },
+ "GMR": {
+  "city": null,
+  "country": "PF",
+  "iata": "GMR",
+  "lat": -23.07990074157715,
+  "lon": -134.88999938964844,
+  "name": "Totegegie Airport",
+  "tz": "Pacific/Gambier",
+  "tz_source": "dataset"
  },
  "GMZ": {
   "city": "Alajero, La Gomera Island",
@@ -7789,6 +7749,16 @@
   "tz": "Europe/Istanbul",
   "tz_source": "dataset"
  },
+ "HUH": {
+  "city": "Fare",
+  "country": "PF",
+  "iata": "HUH",
+  "lat": -16.687084,
+  "lon": -151.021593,
+  "name": "Huahine-Fare Airport",
+  "tz": "Pacific/Tahiti",
+  "tz_source": "dataset"
+ },
  "HUI": {
   "city": "Huế",
   "country": "VN",
@@ -8609,16 +8579,6 @@
   "tz": "America/Denver",
   "tz_source": "dataset"
  },
- "JAE": {
-  "city": "Jaén",
-  "country": "PE",
-  "iata": "JAE",
-  "lat": -5.59248,
-  "lon": -78.774002,
-  "name": "Shumba Airport",
-  "tz": "America/Lima",
-  "tz_source": "dataset"
- },
  "JAF": {
   "city": "Jaffna",
   "country": "LK",
@@ -9219,6 +9179,16 @@
   "tz": "Asia/Shanghai",
   "tz_source": "dataset"
  },
+ "JYV": {
+  "city": "Jyväskylän Maalaiskunta",
+  "country": "FI",
+  "iata": "JYV",
+  "lat": 62.399502,
+  "lon": 25.678301,
+  "name": "Jyväskylä Airport",
+  "tz": "Europe/Helsinki",
+  "tz_source": "dataset"
+ },
  "JZH": {
   "city": "Ngawa (Songpan)",
   "country": "CN",
@@ -9337,16 +9307,6 @@
   "lon": 122.417999,
   "name": "Haluoleo Airport",
   "tz": "Asia/Makassar",
-  "tz_source": "dataset"
- },
- "KDM": {
-  "city": "Huvadhu Atoll",
-  "country": "MV",
-  "iata": "KDM",
-  "lat": 0.488131,
-  "lon": 72.996902,
-  "name": "Kaadedhdhoo Airport",
-  "tz": "Indian/Maldives",
   "tz_source": "dataset"
  },
  "KDU": {
@@ -10189,16 +10149,6 @@
   "tz": "Europe/Athens",
   "tz_source": "dataset"
  },
- "KVG": {
-  "city": "Kavieng",
-  "country": "PG",
-  "iata": "KVG",
-  "lat": -2.57940006256,
-  "lon": 150.807998657,
-  "name": "Kavieng Airport",
-  "tz": "Pacific/Port_Moresby",
-  "tz_source": "dataset"
- },
  "KVX": {
   "city": "Kirov",
   "country": "RU",
@@ -10969,16 +10919,6 @@
   "tz": "Europe/Rome",
   "tz_source": "dataset"
  },
- "LMV": {
-  "city": "Naifaru",
-  "country": "MV",
-  "iata": "LMV",
-  "lat": 5.457545,
-  "lon": 73.370261,
-  "name": "Madivaru Airport",
-  "tz": "Indian/Maldives",
-  "tz_source": "dataset"
- },
  "LNJ": {
   "city": "Lincang",
   "country": "CN",
@@ -11537,16 +11477,6 @@
   "lon": -71.729307,
   "name": "La Chinita International Airport",
   "tz": "America/Caracas",
-  "tz_source": "dataset"
- },
- "MAS": {
-  "city": "Manus Island",
-  "country": "PG",
-  "iata": "MAS",
-  "lat": -2.06189,
-  "lon": 147.423996,
-  "name": "Momote Airport",
-  "tz": "Pacific/Port_Moresby",
   "tz_source": "dataset"
  },
  "MAU": {
@@ -12737,16 +12667,6 @@
   "lon": 116.097857,
   "name": "Meizhou Meixian Changgangji International Airport",
   "tz": "Asia/Shanghai",
-  "tz_source": "dataset"
- },
- "MYD": {
-  "city": "Malindi",
-  "country": "KE",
-  "iata": "MYD",
-  "lat": -3.22931,
-  "lon": 40.1017,
-  "name": "Malindi International Airport",
-  "tz": "Africa/Nairobi",
   "tz_source": "dataset"
  },
  "MYJ": {
@@ -15430,14 +15350,14 @@
   "tz_source": "dataset"
  },
  "PXN": {
-  "city": null,
-  "country": null,
+  "city": "Purnia",
+  "country": "IN",
   "iata": "PXN",
-  "lat": null,
-  "lon": null,
-  "name": null,
-  "tz": null,
-  "tz_source": null
+  "lat": 25.75972,
+  "lon": 87.41,
+  "name": "Purnea Airport",
+  "tz": "Asia/Kolkata",
+  "tz_source": "dataset"
  },
  "PXO": {
   "city": "Vila Baleira",
@@ -15787,6 +15707,16 @@
   "lon": -67.7494,
   "name": "Gobernador Ramón Trejo Noel International Airport",
   "tz": "America/Argentina/Ushuaia",
+  "tz_source": "dataset"
+ },
+ "RGI": {
+  "city": "Rangiroa",
+  "country": "PF",
+  "iata": "RGI",
+  "lat": -14.954299926757812,
+  "lon": -147.66099548339844,
+  "name": "Rangiroa Airport",
+  "tz": "Pacific/Tahiti",
   "tz_source": "dataset"
  },
  "RGK": {
@@ -17289,6 +17219,16 @@
   "tz": "America/Bogota",
   "tz_source": "dataset"
  },
+ "SMW": {
+  "city": "Smara",
+  "country": "EH",
+  "iata": "SMW",
+  "lat": 26.731987,
+  "lon": -11.683655,
+  "name": "Smara Airport",
+  "tz": "Africa/El_Aaiun",
+  "tz_source": "dataset"
+ },
  "SNA": {
   "city": "Santa Ana",
   "country": "US",
@@ -18089,16 +18029,6 @@
   "tz": "Asia/Ho_Chi_Minh",
   "tz_source": "dataset"
  },
- "TBP": {
-  "city": "Tumbes",
-  "country": "PE",
-  "iata": "TBP",
-  "lat": -3.552074,
-  "lon": -80.381086,
-  "name": "Captain Pedro Canga Rodríguez International Airport",
-  "tz": "America/Lima",
-  "tz_source": "dataset"
- },
  "TBS": {
   "city": "Tbilisi",
   "country": "GE",
@@ -18137,16 +18067,6 @@
   "lon": 83.340797,
   "name": "Tacheng Qianquan Airport",
   "tz": "Asia/Shanghai",
-  "tz_source": "dataset"
- },
- "TCQ": {
-  "city": "Tacna",
-  "country": "PE",
-  "iata": "TCQ",
-  "lat": -18.053300857500002,
-  "lon": -70.2758026123,
-  "name": "Coronel FAP Carlos Ciriani Santa Rosa International Airport",
-  "tz": "America/Lima",
   "tz_source": "dataset"
  },
  "TCR": {
@@ -18347,6 +18267,16 @@
   "lon": 40.544074,
   "name": "Taif International Airport",
   "tz": "Asia/Riyadh",
+  "tz_source": "dataset"
+ },
+ "TIH": {
+  "city": "Tuherahera",
+  "country": "PF",
+  "iata": "TIH",
+  "lat": -15.1196,
+  "lon": -148.231003,
+  "name": "Tikehau Airport",
+  "tz": "Pacific/Tahiti",
   "tz_source": "dataset"
  },
  "TIJ": {
@@ -19137,16 +19067,6 @@
   "lon": 118.255997,
   "name": "Huangshan Tunxi International Airport",
   "tz": "Asia/Shanghai",
-  "tz_source": "dataset"
- },
- "TYL": {
-  "city": "Talara",
-  "country": "PE",
-  "iata": "TYL",
-  "lat": -4.57664,
-  "lon": -81.254097,
-  "name": "Captain Victor Montes Arias International Airport",
-  "tz": "America/Lima",
   "tz_source": "dataset"
  },
  "TYN": {
@@ -20128,16 +20048,6 @@
   "name": "Eliwana",
   "tz": "Australia/Perth",
   "tz_source": "airport_override"
- },
- "WIL": {
-  "city": "Nairobi",
-  "country": "KE",
-  "iata": "WIL",
-  "lat": -1.32172,
-  "lon": 36.8148,
-  "name": "Nairobi Wilson Airport",
-  "tz": "Africa/Nairobi",
-  "tz_source": "dataset"
  },
  "WJU": {
   "city": "Wonju",

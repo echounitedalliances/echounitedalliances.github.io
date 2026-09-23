@@ -17,7 +17,7 @@ import { isConfigured, supabase } from './supabase'
  * The fallback is what renders before the count lands, and if it never does.
  * It will drift, and that is fine: it is a placeholder for the first paint,
  * not the answer. Anything reading these gets the real figure a moment later.
- * Last set from the 16 September 2026 scrape.
+ * Last set from the 24 September 2026 scrape.
  */
 type CountQuery = PromiseLike<{ count: number | null; error: unknown }>
 
@@ -55,7 +55,7 @@ function sharedCount(fallback: number, query: () => CountQuery) {
 }
 
 /** Carriers the alliance publishes. */
-export const useCarrierCount = sharedCount(583, () =>
+export const useCarrierCount = sharedCount(608, () =>
   supabase.from('mv_airline_directory').select('uid', { count: 'exact', head: true }),
 )
 
@@ -65,7 +65,7 @@ export const useCarrierCount = sharedCount(583, () =>
  * an account's home airport or an old booking may still name it -- so the
  * figure counts the ones with a flight in or out, not the rows.
  */
-export const useAirportCount = sharedCount(2180, () =>
+export const useAirportCount = sharedCount(2173, () =>
   supabase
     .from('mv_airport_directory')
     .select('iata_code', { count: 'exact', head: true })

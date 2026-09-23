@@ -197,8 +197,9 @@ with claim(site_slug, division_code, airline_slug) as (values
     ('explora',      'kyra',    'explora_journeys'),
     ('sovietskyie',  'proxima', 'советские'),
     ('bula-air',     'proxima', 'bula_air'),
-    ('swisslux',     'aegis',   'swisslux'),
-    ('swisslux',     'vilis',   'swisslux_private'),
+    -- SwissLux moved from Aegis to Kyra in the 24 September 2026 scrape, and
+    -- SwissLux Private left the alliance, taking its button with it.
+    ('swisslux',     'kyra',    'swisslux'),
     ('dream-island', 'vilis',   'dream_island_air'),
     -- Britannia Group sells two brands, which is only visible by searching a
     -- route each one serves: LHR-JFK returns Fly Empire, LHR-EDI returns
@@ -207,8 +208,9 @@ with claim(site_slug, division_code, airline_slug) as (values
     ('britannia',    'elion',   'soleado'),
     ('amex',         'aura',    'american_express'),
     -- "CAS - flyhop": Book & Go is the group's booking product. flyhop
-    -- renamed itself Fun Airways in the 16 September 2026 scrape; same uid.
-    ('bookgo',       'proxima', 'fun_airways'),
+    -- renamed itself Fun Airways in the 16 September 2026 scrape, and Fun
+    -- Airways became FUN! Canada in the 24 September one; same uid.
+    ('bookgo',       'proxima', 'fun_canada'),
     ('airfluff',     'aura',    'airfluff_airlines'),
     ('vaultera',     'proxima', 'vaultera')
 )
@@ -229,9 +231,9 @@ declare
     n integer;
 begin
     select count(*) into n from public.member_site_airlines;
-    if (select seeding from member_sites_seed) and n <> 20 then
+    if (select seeding from member_sites_seed) and n <> 19 then
         raise exception
-            'member_site_airlines has % rows, expected 20 -- an airline_slug in this file no longer matches a carrier', n;
+            'member_site_airlines has % rows, expected 19 -- an airline_slug in this file no longer matches a carrier', n;
     end if;
 end
 $guard$;
