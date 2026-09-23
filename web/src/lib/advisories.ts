@@ -27,23 +27,7 @@ export type Advisory = {
   footnote?: string
 }
 
-export const ADVISORIES: Advisory[] = [
-  {
-    // New id, not the closure-era one: flights resuming is news that people
-    // who read the original notice need to see.
-    id: 'krakatoa-2026-09-08-resuming',
-    title: 'Travel advisory: Indonesia',
-    headline:
-      'Indonesia: limited flights resuming since 05:00 on 8 September, with delays still spreading.',
-    body: [
-      'Limited flights began resuming at 05:00 local time on 8 September, following the airport closures caused by the eruption of Anak Krakatoa.',
-      'Delays will continue to propagate over the coming days as aircraft and crews work back to their scheduled positions. A flight departing on time today may still be affected by disruption several rotations earlier.',
-      'Schedules and fares shown on this site are the filed timetable, and will not reflect cancellations or retimings made in response to the ash cloud.',
-      'Travellers should contact their respective airlines directly for the latest information on their flights.',
-    ],
-    footnote: 'Every member carrier is run by a person, and they answer their own disruptions.',
-  },
-]
+export const ADVISORIES: Advisory[] = []
 
 /** The advisory currently running, if any. */
 export function currentAdvisory(): Advisory | undefined {
