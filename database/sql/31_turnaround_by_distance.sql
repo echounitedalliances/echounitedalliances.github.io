@@ -58,11 +58,17 @@ begin;
 
 -- Great-circle distance in kilometres (haversine, mean Earth radius). least()
 -- keeps floating-point error from pushing asin past 1 on antipodal pairs.
+--
+-- STRICT, and it has to be. least() IGNORES a null argument, so without it an
+-- airport with no coordinates made least(1.0, null) = 1.0 and the distance
+-- half the planet, 20,015 km: its routes took the 150-minute baseline instead
+-- of the 60-minute fallback below. Found 24 September 2026 on Purnea (PXN),
+-- whose three return legs were published up to 90 minutes late.
 create or replace function public.echo_route_km(
     lat1 double precision, lon1 double precision,
     lat2 double precision, lon2 double precision
 )
-returns double precision language sql immutable parallel safe as $$
+returns double precision language sql immutable strict parallel safe as $$
     select 2 * 6371.0 * asin(least(1.0, sqrt(
                power(sin(radians(lat2 - lat1) / 2), 2)
              + cos(radians(lat1)) * cos(radians(lat2))
