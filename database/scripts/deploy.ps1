@@ -121,7 +121,11 @@ $files += @('04_views.sql', '05_reservations.sql', '06_inventory.sql',
             '33_segment_arrival_day.sql', '34_timetable_grouped.sql',
             '35_account_bookings.sql',
             # Eos, the ninth division: its row, order and colour.
-            '36_division_eos.sql')
+            '36_division_eos.sql',
+            # Storage slimmed under the free plan: unread columns gone, idle
+            # airframes as counts, the legs stored as minutes. Always last but
+            # one: it rebuilds what 04-36 built on mv_leg_departures.
+            '37_slim_storage.sql')
 
 # Refuse the truncating reload against a database people are using.
 #

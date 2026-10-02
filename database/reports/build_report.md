@@ -1,6 +1,6 @@
 # Echo United Alliances -- build report
 
-Generated 2026-10-02 19:44 UTC by `database/scripts/build_database.py`.
+Generated 2026-10-02 20:24 UTC by `database/scripts/build_database.py`.
 
 ## Row counts
 
@@ -17,7 +17,7 @@ Generated 2026-10-02 19:44 UTC by `database/scripts/build_database.py`.
 
 ## Data conditions handled
 
-- 7,398 flights depart outside the 0-86399s day and were split into a time of day plus a signed day offset; the raw value is kept in `departure_daily_seconds_raw`.
+- 7,398 flights depart outside the 0-86399s day and were split into a time of day plus a signed day offset (the raw value is `departure_day_offset * 86400 + departure_daily_seconds`).
 - 36 aircraft have cabin ratios that do not sum to 1.0; they are loaded as exported and flagged by `v_aircraft_ratio_anomalies`.
 - 4 individual cabin ratios carried float noise just outside [0,1] (worst: -1.37e-17) and were snapped to the boundary.
 
@@ -63,7 +63,7 @@ Generated 2026-10-02 19:44 UTC by `database/scripts/build_database.py`.
 - aegis/fly_moon: duplicate registration D-NZWT inside one fleet
 - aegis/fly_moon: duplicate registration D-NZWU inside one fleet
 - aegis/fly_moon: duplicate registration D-NZWV inside one fleet
-- ... and 395 more
+- ... and 396 more
 
 ### hubs
 

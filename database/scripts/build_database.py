@@ -431,14 +431,21 @@ def main():
                    "colour; the rest fly white and fall back to the division accent")
 
     # ---- fleet ----
+    # Slimmed 2 October 2026. Cabin products, pitches, engine/winglet/eyemask
+    # options, background image and weekly flight time are no longer loaded:
+    # nothing in the database or the site read them, and they were a third of
+    # every aircraft row. They are still in the scrape on disk.
+    #
+    # And only airframes that fly are written as rows. An idle one -- 29% of
+    # the fleet, 27,398 of them one airline's -- is only ever counted, so it
+    # goes into aircraft_idle as a count per airline and type. Rows are held
+    # until the schedule has been read, since that is what says which fly.
     fh_ac, w_ac = writer("aircraft.csv", [
         "aircraft_id", "airline_uid", "aircraft_model", "registration", "delivery_date",
         "hub_airport_iata", "eco_ratio", "prem_eco_ratio", "biz_ratio", "first_ratio",
-        "eco_product", "prem_eco_product", "biz_product", "first_product",
-        "eco_config_type", "eco_pitch", "prem_eco_pitch", "biz_pitch", "first_pitch",
-        "engine_option", "winglet_option", "eyemask_option",
-        "background_image_index", "weekly_flight_time", "is_placeholder",
+        "is_placeholder",
     ])
+    fleet_rows = []
     for a in airlines:
         for ac in json.load(open(os.path.join(a["path"], "aircrafts.json"), encoding="utf-8")):
             aid = ac["aircraftId"]
@@ -460,35 +467,22 @@ def main():
                       ("ecoRatio", "premEcoRatio", "bizRatio", "firstRatio")]
             if not (0.999 <= sum(ratios) <= 1.001):
                 counts["ratio_off"] += 1
-            w_ac.writerow([
+            fleet_rows.append([
                 aid, a["uid"], model or "", reg, iso(ac.get("deliveryDate")), iso(hub),
-                ratios[0], ratios[1], ratios[2], ratios[3],
-                iso(ac.get("ecoProduct")), iso(ac.get("premEcoProduct")),
-                iso(ac.get("bizProduct")), iso(ac.get("firstProduct")),
-                iso(ac.get("ecoConfigType")),
-                ac.get("ecoPitch") if ac.get("ecoPitch") is not None else "",
-                ac.get("premEcoPitch") if ac.get("premEcoPitch") is not None else "",
-                ac.get("bizPitch") if ac.get("bizPitch") is not None else "",
-                ac.get("firstPitch") if ac.get("firstPitch") is not None else "",
-                iso(ac.get("engineOption")), iso(ac.get("wingletOption")),
-                iso(ac.get("eyemaskOption")),
-                ac.get("backgroundImageIndex") if ac.get("backgroundImageIndex") is not None else "",
-                ac.get("weeklyFlightTime") if ac.get("weeklyFlightTime") is not None else "",
-                "false",
+                ratios[0], ratios[1], ratios[2], ratios[3], "false",
             ])
             counts["aircraft"] += 1
 
     # ---- schedule ----
     fh_f, w_f = writer("flights.csv", [
         "flight_id", "airline_uid", "outbound_flight_number", "inbound_flight_number",
-        "flight_string", "origin_iata", "destination_iata", "departure_daily_seconds",
-        "departure_day_offset", "departure_daily_seconds_raw", "outbound_duration_minutes",
+        "origin_iata", "destination_iata", "departure_daily_seconds",
+        "departure_day_offset", "outbound_duration_minutes",
         "inbound_duration_minutes", "turnaround_offset_slots", "is_stopover",
         "child_stopover_flight_id",
     ])
     fh_as, w_as = writer("flight_assignments.csv", [
         "flight_id", "aircraft_id", "operating_days_per_week", "operating_days_mask",
-        "flight_profit",
         # The game has exactly four cabins, always. As a child table that was
         # 1.64M rows and 266MB; as columns it is 411k rows and a few more ints.
         "eco_price", "prem_eco_price", "biz_price", "first_price",
@@ -498,6 +492,7 @@ def main():
     ])
 
     flight_ids = set()
+    flying_ids = set()                # airframes on at least one assignment
     child_refs = set()
     route_key = Counter()
     pending_assignments = []          # rows whose aircraft is not in any fleet
@@ -519,8 +514,7 @@ def main():
             route_key[(a["uid"], f["outboundFlightNumber"], o, dst)] += 1
             w_f.writerow([
                 fid, a["uid"], f["outboundFlightNumber"], f["inboundFlightNumber"],
-                iso(f.get("flightString")), o, dst, secs, day_off,
-                f.get("departureDailyTimestamp"),
+                o, dst, secs, day_off,
                 f.get("outboundFlightDuration"), f.get("inboundFlightDuration"),
                 f.get("turnaroundOffset") or 0,
                 "true" if str(f.get("isStopover")).upper() == "TRUE" else "false",
@@ -536,6 +530,7 @@ def main():
                     pending_assignments.append(row)
                     continue
                 write_assignment(w_as, row)
+                flying_ids.add(aid)
                 counts["assignments"] += 1
                 counts["assignment_days"] += ndays
                 counts["fares"] += len(CABINS)
@@ -549,8 +544,7 @@ def main():
             placeholder_aircraft[aid] = owner
             w_ac.writerow([
                 aid, owner, "Unknown", f"PLACEHOLDER-{aid[:8]}", "", "",
-                1, 0, 0, 0, "", "", "", "", "", "", "", "", "",
-                "", "", "", "", "", "true",
+                1, 0, 0, 0, "true",
             ])
             counts["aircraft"] += 1
             models.add("Unknown")
@@ -562,6 +556,22 @@ def main():
         note("fleet", f"{len(placeholder_aircraft)} aircraft are rostered onto flights but "
                       f"absent from every fleet export ({len(pending_assignments)} assignments); "
                       "placeholder airframes were created so the seats stay sellable")
+
+    # The fleet: a row for every airframe that flies, a count for the rest. A
+    # model-less airframe keeps its row, since a count needs a type to hang on.
+    idle = Counter()
+    for row in fleet_rows:
+        if row[0] in flying_ids or not row[2]:
+            w_ac.writerow(row)
+        else:
+            idle[(row[1], row[2])] += 1
+    fh_idle, w_idle = writer("aircraft_idle.csv", ["airline_uid", "aircraft_model", "idle_count"])
+    for (uid, model), n in sorted(idle.items()):
+        w_idle.writerow([uid, model, n])
+    fh_idle.close()
+    counts["aircraft_idle"] = sum(idle.values())
+    note("fleet", f"{counts['aircraft_idle']:,} of {counts['aircraft']:,} airframes fly nothing "
+                  f"and are loaded as {len(idle):,} per-type counts (aircraft_idle), not rows")
 
     fh_ac.close(); fh_f.close(); fh_as.close()
 
@@ -689,8 +699,7 @@ def write_assignment(w_as, row):
         per_dep.append(half_up(w / (ndays * 2)) if ndays else 0)
         prices.append(p)
 
-    w_as.writerow([fid, aid, ndays, mask, profit if profit is not None else ""]
-                  + prices + per_dep + weekly)
+    w_as.writerow([fid, aid, ndays, mask] + prices + per_dep + weekly)
 
 
 def write_report():
@@ -717,8 +726,8 @@ def write_report():
         "## Data conditions handled",
         "",
         f"- {counts['departure_rolled']:,} flights depart outside the 0-86399s day and were "
-        "split into a time of day plus a signed day offset; the raw value is kept in "
-        "`departure_daily_seconds_raw`.",
+        "split into a time of day plus a signed day offset (the raw value is "
+        "`departure_day_offset * 86400 + departure_daily_seconds`).",
         f"- {counts['ratio_off']:,} aircraft have cabin ratios that do not sum to 1.0; "
         "they are loaded as exported and flagged by `v_aircraft_ratio_anomalies`.",
         f"- {counts['ratio_clamped']:,} individual cabin ratios carried float noise just "

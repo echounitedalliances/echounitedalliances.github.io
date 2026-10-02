@@ -56,7 +56,9 @@ Use-EchoCredentials
 # Relations the site reads, with the smallest row count that means "populated".
 # A matview that exists but holds nothing is the same outage as a missing one.
 $relations = @(
-    @{ name = 'mv_leg_departures';       min = 100000 },
+    @{ name = 'mv_leg_departures';       min = 100000 },  # a view over mv_legs since 2 Oct 2026
+    @{ name = 'mv_legs';                 min = 100000 },
+    @{ name = 'aircraft_idle';           min = 100    },  # idle airframes, counted per airline and type
     @{ name = 'mv_route_adjacency';      min = 10000  },
     @{ name = 'mv_airport_connectivity'; min = 1000   },
     @{ name = 'mv_airport_directory';    min = 1000   },  # departure board, airports

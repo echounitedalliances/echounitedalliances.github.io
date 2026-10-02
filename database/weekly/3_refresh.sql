@@ -62,7 +62,8 @@ vacuum (full, analyze) public.flight_assignments;
 -- name 27 has already cleaned.
 \i database/sql/03_airports_backfill.sql
 
-refresh materialized view              public.mv_leg_departures;
+-- The legs' rows: mv_leg_departures is a view over them (37_slim_storage.sql).
+refresh materialized view              public.mv_legs;
 -- Plain, not concurrent. Concurrent builds a diff and leaves the replaced rows
 -- behind as dead space -- 7 MB of it on 16 September -- on a disk that has
 -- already run out once. A plain rebuild is packed and takes a few seconds.
@@ -79,7 +80,7 @@ refresh materialized view concurrently public.mv_airline_directory;
 -- and ends by rebuilding mv_airport_directory and mv_network_nodes itself.
 \i database/sql/27_place_names.sql
 
-vacuum analyze public.mv_leg_departures;
+vacuum analyze public.mv_legs;
 vacuum analyze public.mv_division_arcs;
 analyze public.airlines;
 analyze public.airports;

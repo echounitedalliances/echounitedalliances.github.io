@@ -204,21 +204,9 @@ create table if not exists public.aircraft (
     biz_ratio              double precision check (biz_ratio      between 0 and 1),
     first_ratio            double precision check (first_ratio    between 0 and 1),
 
-    eco_product            text,
-    prem_eco_product       text,
-    biz_product            text,
-    first_product          text,
-    eco_config_type        text,
-    eco_pitch              smallint check (eco_pitch      >= 0),
-    prem_eco_pitch         smallint check (prem_eco_pitch >= 0),
-    biz_pitch              smallint check (biz_pitch      >= 0),
-    first_pitch            smallint check (first_pitch    >= 0),
-
-    engine_option          text,
-    winglet_option         text,
-    eyemask_option         text,
-    background_image_index integer,
-    weekly_flight_time     integer,
+    -- Cabin products, seat pitches, engine/winglet/eyemask options, background
+    -- image and weekly flight time were columns here until 2 October 2026.
+    -- Nothing read them; see 37_slim_storage.sql.
 
     -- True for airframes that are rostered onto a flight but absent from every
     -- fleet export -- sold or retired after the schedule was filed. Their seats
@@ -247,6 +235,17 @@ create index if not exists aircraft_model_idx   on public.aircraft (aircraft_mod
 -- A row here is a *flight pair*: one outbound leg origin -> destination and one
 -- inbound leg destination -> origin, sold under two flight numbers. Directional
 -- legs for the booking engine live in v_flight_legs.
+-- Airframes that fly nothing, as counts. 29% of the fleet is idle and an idle
+-- airframe is only ever counted, so build_database.py writes it here per
+-- airline and type instead of as a row of public.aircraft. Fleet sizes are
+-- aircraft rows plus these (v_fleet, v_airline_metrics). Since 2 October 2026.
+create table if not exists public.aircraft_idle (
+    airline_uid    uuid    not null references public.airlines (uid) on delete cascade,
+    aircraft_model text    not null references public.aircraft_models (aircraft_model),
+    idle_count     integer not null check (idle_count > 0),
+    primary key (airline_uid, aircraft_model)
+);
+
 create table if not exists public.flights (
     flight_id                 uuid primary key,
     airline_uid               uuid not null references public.airlines (uid) on delete cascade,
@@ -255,7 +254,6 @@ create table if not exists public.flights (
     -- the highest is 100006, and two carriers filed a leg numbered 0.
     outbound_flight_number    integer not null check (outbound_flight_number between 0 and 999999),
     inbound_flight_number     integer not null check (inbound_flight_number  between 0 and 999999),
-    flight_string             text,
     origin_iata               text not null references public.airports (iata_code),
     destination_iata          text not null references public.airports (iata_code),
 
@@ -263,7 +261,8 @@ create table if not exists public.flights (
     -- of days the raw export placed it away from the reference day.
     departure_daily_seconds     integer not null check (departure_daily_seconds between 0 and 86399),
     departure_day_offset        smallint not null default 0 check (departure_day_offset between -2 and 3),
-    departure_daily_seconds_raw integer not null,
+    -- The exported value is departure_day_offset * 86400 + departure_daily_seconds
+    -- exactly; it was also stored verbatim until 2 October 2026.
 
     outbound_duration_minutes integer not null check (outbound_duration_minutes > 0),
     inbound_duration_minutes  integer not null check (inbound_duration_minutes  > 0),
@@ -289,10 +288,6 @@ comment on column public.flights.departure_daily_seconds is
     'Outbound departure, seconds after local midnight at origin_iata, always 0-86399.';
 comment on column public.flights.departure_day_offset is
     'Days the raw export placed this departure away from the reference day. 1,935 flights are non-zero -- stopover legs spilling onto the next or previous day.';
-comment on column public.flights.departure_daily_seconds_raw is
-    'The exported departureDailyTimestamp verbatim, range -47400 to 209700. Kept so the normalisation is always reversible.';
-comment on column public.flights.flight_string is
-    'Raw route label from the export. Its two ends are not consistently ordered -- use origin_iata / destination_iata.';
 
 -- Players can and do file the same number twice on the same city pair (33
 -- cases), so that tuple could never be unique. It is not indexed either: no
@@ -326,7 +321,6 @@ create table if not exists public.flight_assignments (
     -- row per day: as a table that was 1.8M rows and 235MB of index for what
     -- fits in one smallint.
     operating_days_mask     smallint not null default 0 check (operating_days_mask between 0 and 127),
-    flight_profit           integer,
 
     -- The four cabins, as columns. The game's cabin ladder is fixed and always
     -- four wide, so a child table bought nothing and cost 1.64M rows and

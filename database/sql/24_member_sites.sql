@@ -186,7 +186,10 @@ with claim(site_slug, division_code, airline_slug) as (values
     ('starliner',    'kyra',    'starliner'),
     ('starliner',    'rhea',    'astra_by_starliner'),
     ('starliner',    'rhea',    'velora_by_strlinr'),
-    ('starliner',    'elysium', 'meridian_by_strlnr'),
+    -- Meridian by STRLNR renamed itself United Airlines in the 2 October 2026
+    -- scrape; same uid, so the link followed. Its slug carries a uid suffix
+    -- because another United Airlines is also in Elysium.
+    ('starliner',    'elysium', 'united_airlines_7fd0f876'),
     ('starliner',    'elysium', 'essequibo_air'),
     ('starliner',    'elysium', 'amerigo'),
     ('explora',      'kyra',    'explora_journeys'),
@@ -203,8 +206,9 @@ with claim(site_slug, division_code, airline_slug) as (values
     ('britannia',    'elion',   'soleado'),
     -- "CAS - flyhop": Book & Go is the group's booking product. flyhop
     -- renamed itself Fun Airways in the 16 September 2026 scrape, and Fun
-    -- Airways became FUN! Canada in the 24 September one; same uid.
-    ('bookgo',       'proxima', 'fun_canada'),
+    -- Airways became FUN! Canada in the 24 September one, and FUN! Montreal
+    -- in the 2 October one; same uid.
+    ('bookgo',       'proxima', 'fun_montreal'),
     ('airfluff',     'aura',    'airfluff_airlines'),
     ('vaultera',     'proxima', 'vaultera')
 )

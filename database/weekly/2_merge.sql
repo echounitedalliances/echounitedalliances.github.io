@@ -319,17 +319,9 @@ select airline_uid, num_aircraft, num_routes, num_flights,
 -- ---------------------------------------------------------------------
 insert into public.aircraft
        (aircraft_id, airline_uid, aircraft_model, registration, delivery_date, hub_airport_iata,
-        eco_ratio, prem_eco_ratio, biz_ratio, first_ratio,
-        eco_product, prem_eco_product, biz_product, first_product,
-        eco_config_type, eco_pitch, prem_eco_pitch, biz_pitch, first_pitch,
-        engine_option, winglet_option, eyemask_option, background_image_index,
-        weekly_flight_time, is_placeholder)
+        eco_ratio, prem_eco_ratio, biz_ratio, first_ratio, is_placeholder)
 select aircraft_id, airline_uid, aircraft_model, registration, delivery_date, hub_airport_iata,
-       eco_ratio, prem_eco_ratio, biz_ratio, first_ratio,
-       eco_product, prem_eco_product, biz_product, first_product,
-       eco_config_type, eco_pitch, prem_eco_pitch, biz_pitch, first_pitch,
-       engine_option, winglet_option, eyemask_option, background_image_index,
-       weekly_flight_time, is_placeholder
+       eco_ratio, prem_eco_ratio, biz_ratio, first_ratio, is_placeholder
   from echo_stage.aircraft
 on conflict (aircraft_id) do update
    set airline_uid = excluded.airline_uid, aircraft_model = excluded.aircraft_model,
@@ -337,37 +329,28 @@ on conflict (aircraft_id) do update
        hub_airport_iata = excluded.hub_airport_iata,
        eco_ratio = excluded.eco_ratio, prem_eco_ratio = excluded.prem_eco_ratio,
        biz_ratio = excluded.biz_ratio, first_ratio = excluded.first_ratio,
-       eco_product = excluded.eco_product, prem_eco_product = excluded.prem_eco_product,
-       biz_product = excluded.biz_product, first_product = excluded.first_product,
-       eco_config_type = excluded.eco_config_type, eco_pitch = excluded.eco_pitch,
-       prem_eco_pitch = excluded.prem_eco_pitch, biz_pitch = excluded.biz_pitch,
-       first_pitch = excluded.first_pitch, engine_option = excluded.engine_option,
-       winglet_option = excluded.winglet_option, eyemask_option = excluded.eyemask_option,
-       background_image_index = excluded.background_image_index,
-       weekly_flight_time = excluded.weekly_flight_time, is_placeholder = excluded.is_placeholder
+       is_placeholder = excluded.is_placeholder
  -- Unchanged rows are left alone: no rewrite, no row lock held on a flight
  -- somebody is booking while this transaction runs.
  where (aircraft.*) is distinct from (excluded.*);
 
 insert into public.flights
-       (flight_id, airline_uid, outbound_flight_number, inbound_flight_number, flight_string,
+       (flight_id, airline_uid, outbound_flight_number, inbound_flight_number,
         origin_iata, destination_iata, departure_daily_seconds, departure_day_offset,
-        departure_daily_seconds_raw, outbound_duration_minutes, inbound_duration_minutes,
+        outbound_duration_minutes, inbound_duration_minutes,
         turnaround_offset_slots, is_stopover, child_stopover_flight_id)
-select flight_id, airline_uid, outbound_flight_number, inbound_flight_number, flight_string,
+select flight_id, airline_uid, outbound_flight_number, inbound_flight_number,
        origin_iata, destination_iata, departure_daily_seconds, departure_day_offset,
-       departure_daily_seconds_raw, outbound_duration_minutes, inbound_duration_minutes,
+       outbound_duration_minutes, inbound_duration_minutes,
        turnaround_offset_slots, is_stopover, child_stopover_flight_id
   from echo_stage.flights
 on conflict (flight_id) do update
    set airline_uid = excluded.airline_uid,
        outbound_flight_number = excluded.outbound_flight_number,
        inbound_flight_number = excluded.inbound_flight_number,
-       flight_string = excluded.flight_string,
        origin_iata = excluded.origin_iata, destination_iata = excluded.destination_iata,
        departure_daily_seconds = excluded.departure_daily_seconds,
        departure_day_offset = excluded.departure_day_offset,
-       departure_daily_seconds_raw = excluded.departure_daily_seconds_raw,
        outbound_duration_minutes = excluded.outbound_duration_minutes,
        inbound_duration_minutes = excluded.inbound_duration_minutes,
        turnaround_offset_slots = excluded.turnaround_offset_slots,
@@ -385,11 +368,11 @@ delete from public.flight_assignments p
                     where s.flight_id = p.flight_id and s.aircraft_id = p.aircraft_id);
 
 insert into public.flight_assignments
-       (flight_id, aircraft_id, operating_days_per_week, operating_days_mask, flight_profit,
+       (flight_id, aircraft_id, operating_days_per_week, operating_days_mask,
         eco_price, prem_eco_price, biz_price, first_price,
         eco_seats, prem_eco_seats, biz_seats, first_seats,
         eco_weekly_seats, prem_eco_weekly_seats, biz_weekly_seats, first_weekly_seats)
-select flight_id, aircraft_id, operating_days_per_week, operating_days_mask, flight_profit,
+select flight_id, aircraft_id, operating_days_per_week, operating_days_mask,
        eco_price, prem_eco_price, biz_price, first_price,
        eco_seats, prem_eco_seats, biz_seats, first_seats,
        eco_weekly_seats, prem_eco_weekly_seats, biz_weekly_seats, first_weekly_seats
@@ -397,7 +380,6 @@ select flight_id, aircraft_id, operating_days_per_week, operating_days_mask, fli
 on conflict (flight_id, aircraft_id) do update
    set operating_days_per_week = excluded.operating_days_per_week,
        operating_days_mask = excluded.operating_days_mask,
-       flight_profit = excluded.flight_profit,
        eco_price = excluded.eco_price, prem_eco_price = excluded.prem_eco_price,
        biz_price = excluded.biz_price, first_price = excluded.first_price,
        eco_seats = excluded.eco_seats, prem_eco_seats = excluded.prem_eco_seats,
@@ -434,6 +416,16 @@ delete from public.airlines a
  where a.uid in (select uid from departing_airlines)
    and a.uid not in (select uid from kept_airlines);
 
+-- Idle airframes are counts, not rows (37_slim_storage.sql), so this week's
+-- simply replace last week's. An airframe that stopped flying leaves the
+-- aircraft table above as a departure -- or, if a booking names it, stays
+-- as a placeholder, which no fleet size counts -- and is counted here.
+delete from public.aircraft_idle;
+insert into public.aircraft_idle (airline_uid, aircraft_model, idle_count)
+select s.airline_uid, s.aircraft_model, s.idle_count
+  from echo_stage.aircraft_idle s
+  join public.airlines a on a.uid = s.airline_uid;
+
 -- ---------------------------------------------------------------------
 --  7. Admin edits back on top: names, descriptions, division moves
 -- ---------------------------------------------------------------------
@@ -451,7 +443,8 @@ union all select 'aircraft retired, booking held', count(*) from kept_aircraft
 union all select 'airlines now published',         count(*) from public.airlines where is_published
 union all select 'flights now',                    count(*) from public.flights
 union all select 'assignments now',                count(*) from public.flight_assignments
-union all select 'aircraft now',                   count(*) from public.aircraft
+union all select 'aircraft now (rows that fly)',   count(*) from public.aircraft
+union all select 'idle aircraft now (counted)',    coalesce(sum(idle_count), 0) from public.aircraft_idle
 union all select 'resonants (must be unchanged)',  count(*) from public.resonants
 union all select 'bookings (must be unchanged)',   count(*) from public.bookings
 union all select 'booking_segments (must be unchanged)', count(*) from public.booking_segments

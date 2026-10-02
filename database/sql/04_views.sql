@@ -267,6 +267,10 @@ comment on view public.v_bookable_departures is
 -- columns. 341,710 flight pairs become roughly 3.6M rows here, small enough to
 -- index tightly and join three deep without touching the 14M-row cabin view.
 -- ---------------------------------------------------------------------
+-- After 37_slim_storage.sql mv_leg_departures is a view over mv_legs.
+-- Dropping mv_legs takes that view with it, so this file can still be
+-- re-run; 37, which always runs after it, converts it back.
+drop materialized view if exists public.mv_legs cascade;
 drop materialized view if exists public.mv_leg_departures cascade;
 create materialized view public.mv_leg_departures as
 select
