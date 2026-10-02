@@ -254,8 +254,8 @@ provably exhaustive enumeration — the same trade every real engine makes.
 .\database\scripts\weekly.ps1
 ```
 
-Put a fresh token from the app into `divisions/.token` first. It scrapes all
-eight divisions and merges them into the live tables in place. It never runs
+Put a fresh token from the app into `divisions/.token` first. It scrapes every
+division and merges them into the live tables in place. It never runs
 `02_load_from_csv.sql`, whose `TRUNCATE ... CASCADE` would empty every account
 and booking, and `deploy.ps1` refuses that reload on a database holding either.
 

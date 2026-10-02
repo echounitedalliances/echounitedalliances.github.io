@@ -24,7 +24,7 @@ import os
 import sys
 from collections import defaultdict
 
-DIVISIONS = ["aegis", "aura", "elion", "elysium", "kyra", "proxima", "rhea", "vilis"]
+DIVISIONS = ["aegis", "aura", "elion", "elysium", "eos", "kyra", "proxima", "rhea", "vilis"]
 HERE = os.path.dirname(os.path.abspath(__file__))
 REQUIRED = ("info.json", "flights.json", "aircrafts.json", "livery.json")
 

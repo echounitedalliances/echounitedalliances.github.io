@@ -15,7 +15,7 @@
          build_database.py loads EVERY folder it finds, so an airline that
          left or renamed itself would otherwise be loaded again as a member.
 
-      2. Scrapes all eight divisions from the live rosters, with --force so
+      2. Scrapes every division from the live rosters, with --force so
          existing airlines' new flights are fetched rather than kept.
 
       3. Retries, without --force, whatever the game's server refused. It
@@ -92,7 +92,9 @@ $env:PYTHONIOENCODING = 'utf-8'
 . (Join-Path $PSScriptRoot 'echo_credentials.ps1')
 Use-EchoCredentials
 
-$divisions = @('aegis', 'aura', 'elion', 'elysium', 'kyra', 'proxima', 'rhea', 'vilis')
+# Eos opened 2 October 2026. A new division also needs a migration of its own
+# (36_division_eos.sql was the first), or the merge refuses the scrape.
+$divisions = @('aegis', 'aura', 'elion', 'elysium', 'eos', 'kyra', 'proxima', 'rhea', 'vilis')
 
 # Windows PowerShell turns anything a native program writes to stderr into a
 # terminating error under ErrorActionPreference Stop -- and the scraper writes
@@ -174,10 +176,15 @@ Invoke-Sql 'rebuilding what the site reads'            'database/weekly/3_refres
 $previous = $ErrorActionPreference
 $ErrorActionPreference = 'Continue'
 $count = (& $psql $ConnectionString -X -t -A -q -c "select count(*) from public.mv_airline_directory" 2>$null | Select-Object -Last 1)
+$divs  = (& $psql $ConnectionString -X -t -A -q -c "select count(*) from public.divisions" 2>$null | Select-Object -Last 1)
 $ErrorActionPreference = $previous
-if ("$count".Trim() -match '^\d+$') {
+# The division count is spelled out, as the page's own headline is.
+$words = @('Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve')
+if ("$count".Trim() -match '^\d+$' -and "$divs".Trim() -match '^\d+$') {
+    $n = [int]"$divs".Trim()
+    $divWord = if ($n -lt $words.Count) { $words[$n] } else { "$n" }
     $html = [IO.File]::ReadAllText((Resolve-Path 'web/index.html'))
-    $updated = [regex]::Replace($html, 'Eight divisions\. \d+ airlines\. One network\.', "Eight divisions. $("$count".Trim()) airlines. One network.")
+    $updated = [regex]::Replace($html, '\w+ divisions\. \d+ airlines\. One network\.', "$divWord divisions. $("$count".Trim()) airlines. One network.")
     if ($updated -ne $html) {
         [IO.File]::WriteAllText((Resolve-Path 'web/index.html'), $updated, (New-Object System.Text.UTF8Encoding $false))
         Write-Host ""

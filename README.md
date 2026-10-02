@@ -1,7 +1,7 @@
 # Echo United Alliances
 
 The website for Echo United Alliances, a virtual airline group in
-**The Airline Simulator** — eight divisions, 583 member carriers, one network.
+**The Airline Simulator** — nine divisions, 639 member carriers, one network.
 
 Live at **https://echounitedalliances.github.io**
 Check out our 2nd testing site **https://lacnka.github.io/echotesting/**
@@ -12,7 +12,7 @@ Check out our 2nd testing site **https://lacnka.github.io/echotesting/**
 
 ### The alliance
 
-**About** (`/about`). The slogan, and the board — which is currently the eight
+**About** (`/about`). The slogan, and the board — which is currently the
 division leaders, listed by the name and Discord handle they go by rather than
 by airline, since several of them own more than one. The roster is in
 `web/src/lib/alliance.ts`; division names, order and colours come from the
@@ -22,11 +22,11 @@ database, so the page follows a rename without being edited.
 and the recurring events, each with the facts down the side. All of it happens
 on Discord — the page says so once rather than in every section.
 
-**Home.** The headline figures, then a live departure board, then the eight
+**Home.** The headline figures, then a live departure board, then the nine
 divisions, the network drawn flat, and a carrier spotlight.
 
-**Divisions** (`/divisions`). Eight cards, four across and two down, in group
-order: Kyra, Aegis, Elysium, Proxima, Rhea, Vilis, Elion, Aura. Kyra is badged
+**Divisions** (`/divisions`). Nine cards, three across, in group order: Kyra,
+Aegis, Elysium, Proxima, Rhea, Vilis, Elion, Aura, Eos. Kyra is badged
 *Main division* and Elysium *Realism alliance*. Each opens a division page with
 its roster — sortable by prominence, name or fleet size — and a map of what the
 division flies.
@@ -133,8 +133,8 @@ repository root:
 npm --prefix web run publish
 ```
 
-and commit and push what it lists. It scrapes all eight divisions from their
-live rosters, proves the scrape complete, merges it into the live database in
+and commit and push what it lists. It scrapes every division from its
+live roster, proves the scrape complete, merges it into the live database in
 one transaction, rebuilds what the site reads and verifies it.
 
 Two things it deliberately does, both decided 16 September 2026:
@@ -144,6 +144,14 @@ Two things it deliberately does, both decided 16 September 2026:
 - **A carrier moving division gets a new code**, because the division tag is
   part of the code. Otherwise codes are sticky: an airline keeps its code
   unless the player changes their own in-game one.
+
+**Opening a division.** Eos, the ninth, opened on 2 October 2026. A new
+division needs a migration of its own (`database/sql/36_division_eos.sql`
+was the first: its row, its place in the order, its colour) and its name in
+`build_database.py`, `check_scrape.py` and `weekly.ps1`. Until it has both,
+the merge refuses the scrape rather than loading a division the site does
+not know. Its carrier-code tag must hold a letter that is not a hex digit
+(Eos is `EO`); see `2_merge.sql`.
 
 Flights and fleets are stored compact, one line per file, as they always were.
 Written indented, the same rows take 60% more disk.

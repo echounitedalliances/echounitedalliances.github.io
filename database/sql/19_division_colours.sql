@@ -37,7 +37,9 @@ insert into echo_colour_change (code, old_accent, new_accent) values
     ('vilis',   '#F4622A', '#FF7E42'),
     ('rhea',    '#2FBF5B', '#5DFE95'),
     ('elion',   '#2E6FF2', '#7EA0F4'),
-    ('aura',    '#F0605F', '#EF9D9E');
+    ('aura',    '#F0605F', '#EF9D9E'),
+    -- Eos opened with this palette and has never worn another colour.
+    ('eos',     '#FDECD8', '#FDECD8');
 
 -- Every division must be named, or one silently keeps the old colour.
 do $$

@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import { isConfigured, supabase } from '../lib/supabase'
 import type { Division } from '../lib/types'
 import { LEADERS, SLOGAN, STORY } from '../lib/alliance'
-import { accentOf, num } from '../lib/format'
+import { accentOf, num, spell } from '../lib/format'
+import { useDivisionCount } from '../lib/carriers'
 import { Loading, NotConfigured } from '../components/ui'
 import EchoMark from '../components/EchoMark'
 
@@ -20,6 +21,7 @@ import EchoMark from '../components/EchoMark'
  */
 export default function About() {
   const [divisions, setDivisions] = useState<Division[] | null>(null)
+  const divisionCount = useDivisionCount()
 
   useEffect(() => {
     if (!isConfigured) return
@@ -27,7 +29,15 @@ export default function About() {
       .from('v_division_summary')
       .select('*')
       .order('sort_order')
-      .then(({ data }) => setDivisions((data as Division[]) ?? []))
+      // A failed read is not an empty group. Treated as one, it reported every
+      // leader as "not a division on record" while the weekly refresh held the
+      // tables (2 October 2026). On error, stay loading and try once more.
+      .then(async ({ data, error }) => {
+        if (!error && data) return setDivisions(data as Division[])
+        await new Promise((r) => setTimeout(r, 4000))
+        const retry = await supabase.from('v_division_summary').select('*').order('sort_order')
+        if (!retry.error && retry.data) setDivisions(retry.data as Division[])
+      })
   }, [])
 
   if (!isConfigured) return <NotConfigured />
@@ -60,14 +70,14 @@ export default function About() {
           middle of a sentence left it reading "...as one network. the
           excellence in the name" for as long as the query was in flight. */}
       <p className="mt-5 max-w-[64ch] text-lg text-ink-dim">
-        Echo United Alliances is a group of eight alliances in The Airline
+        Echo United Alliances is a group of {spell(divisionCount)} alliances in The Airline
         Simulator, each running its own roster and its own leadership, flying as
         one network. The excellence in the name is not one airline's — it is all
         of them, and the people who keep them flying together.
       </p>
       {divisions !== null && (
         <p className="mono mt-4 text-[12px] uppercase tracking-[0.14em] text-ink-faint">
-          {num(totals.carriers)} carriers · {num(totals.aircraft)} aircraft · 8 divisions
+          {num(totals.carriers)} carriers · {num(totals.aircraft)} aircraft · {divisions.length} divisions
         </p>
       )}
 
@@ -129,7 +139,7 @@ export default function About() {
         {divisions === null ? (
           <Loading />
         ) : (
-          <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {board.map(({ division, leaders }, i) => {
               const accent = accentOf(division)
               return (

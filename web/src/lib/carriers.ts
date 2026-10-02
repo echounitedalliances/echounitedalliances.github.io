@@ -17,7 +17,7 @@ import { isConfigured, supabase } from './supabase'
  * The fallback is what renders before the count lands, and if it never does.
  * It will drift, and that is fine: it is a placeholder for the first paint,
  * not the answer. Anything reading these gets the real figure a moment later.
- * Last set from the 24 September 2026 scrape.
+ * Last set from the 2 October 2026 scrape.
  */
 type CountQuery = PromiseLike<{ count: number | null; error: unknown }>
 
@@ -55,7 +55,7 @@ function sharedCount(fallback: number, query: () => CountQuery) {
 }
 
 /** Carriers the alliance publishes. */
-export const useCarrierCount = sharedCount(608, () =>
+export const useCarrierCount = sharedCount(639, () =>
   supabase.from('mv_airline_directory').select('uid', { count: 'exact', head: true }),
 )
 
@@ -65,9 +65,18 @@ export const useCarrierCount = sharedCount(608, () =>
  * an account's home airport or an old booking may still name it -- so the
  * figure counts the ones with a flight in or out, not the rows.
  */
-export const useAirportCount = sharedCount(2173, () =>
+export const useAirportCount = sharedCount(2180, () =>
   supabase
     .from('mv_airport_directory')
     .select('iata_code', { count: 'exact', head: true })
     .or('out_degree.gt.0,in_degree.gt.0'),
+)
+
+/**
+ * Divisions in the group. It was eight for so long that "eight" was typed
+ * into the copy in seven places, and Eos -- the ninth, opened 2 October 2026
+ * -- meant finding every one of them by hand. Read like the figures above.
+ */
+export const useDivisionCount = sharedCount(9, () =>
+  supabase.from('divisions').select('division_code', { count: 'exact', head: true }),
 )

@@ -26,7 +26,8 @@ update public.divisions d
         ('rhea',    5),
         ('vilis',   6),
         ('elion',   7),
-        ('aura',    8)
+        ('aura',    8),
+        ('eos',     9)    -- opened 2 October 2026
        ) as v(code, rank)
  where d.division_code = v.code;
 
@@ -37,7 +38,7 @@ declare stray text;
 begin
     select string_agg(division_code, ', ' order by division_code)
       into stray
-      from public.divisions where sort_order > 8;
+      from public.divisions where sort_order >= 100;
     if stray is not null then
         raise exception 'division(s) missing from the policy order: %', stray;
     end if;

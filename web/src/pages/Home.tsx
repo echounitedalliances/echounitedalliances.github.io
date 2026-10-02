@@ -9,8 +9,8 @@ import { AirlineCard, NotConfigured } from '../components/ui'
 import EchoMark from '../components/EchoMark'
 import { isConfigured, supabase } from '../lib/supabase'
 import type { Airline, Arc, Division, NetworkNode } from '../lib/types'
-import { accentOf, num } from '../lib/format'
-import { useAirportCount, useCarrierCount } from '../lib/carriers'
+import { accentOf, capitalise, num, spell } from '../lib/format'
+import { useAirportCount, useCarrierCount, useDivisionCount } from '../lib/carriers'
 
 /**
  * Identity, then the divisions, then the search — in that order, because this
@@ -23,6 +23,7 @@ export default function Home() {
   const [nodes, setNodes] = useState<NetworkNode[]>([])
   const [spotlight, setSpotlight] = useState<Airline[]>([])
   const carrierCount = useCarrierCount()
+  const divisionCount = useDivisionCount()
   const airportCount = useAirportCount()
 
   useEffect(() => {
@@ -76,7 +77,7 @@ export default function Home() {
           <div className="rise">
             <p className="eyebrow text-cyan">Echo United Alliances</p>
             <h1 className="display mt-3 text-[clamp(34px,8vw,96px)] sm:mt-4">
-              Eight divisions.{' '}
+              {capitalise(spell(divisionCount))} divisions.{' '}
               <span style={{ color: 'var(--color-accent)' }}>{num(carriers)} airlines.</span>{' '}
               One network.
             </h1>
@@ -135,14 +136,14 @@ export default function Home() {
         <div className="flex items-baseline justify-between gap-4">
           <h2 className="display text-3xl">The divisions</h2>
           <Link to="/divisions" className="mono text-[11px] uppercase tracking-[0.14em] text-cyan">
-            All eight →
+            All {spell(divisionCount)} →
           </Link>
         </div>
         <p className="mt-2 max-w-[62ch] text-ink-dim">
           Each division is an alliance in its own right. Together they form Echo.
         </p>
 
-        <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {divisions.map((d, i) => {
             const accent = accentOf(d)
             return (
@@ -200,7 +201,7 @@ export default function Home() {
         <div className="mx-auto max-w-[1180px] px-4 py-8 sm:px-5 sm:py-14">
           <h2 className="display text-3xl">Fly the whole alliance</h2>
           <p className="mt-2 max-w-[62ch] text-ink-dim">
-            {num(carriers)} airlines, eight divisions, one alliance — and one
+            {num(carriers)} airlines, {spell(divisionCount)} divisions, one alliance — and one
             search across all of it. Fly them in any combination on a single
             booking reference.
           </p>

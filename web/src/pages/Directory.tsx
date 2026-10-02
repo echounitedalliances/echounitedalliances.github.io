@@ -4,14 +4,15 @@ import { AirlineCard, Loading, NotConfigured } from '../components/ui'
 import CountryField from '../components/CountryField'
 import { isConfigured, supabase } from '../lib/supabase'
 import type { Airline, Division } from '../lib/types'
-import { accentOf, num } from '../lib/format'
-import { useCarrierCount } from '../lib/carriers'
+import { accentOf, num, spell } from '../lib/format'
+import { useCarrierCount, useDivisionCount } from '../lib/carriers'
 
 const PAGE = 60
 
 /** Every carrier, filterable. The heavy lifting is search_airlines(). */
 export default function Directory() {
   const carrierCount = useCarrierCount()
+  const divisionCount = useDivisionCount()
   const [params, setParams] = useSearchParams()
   const [divisions, setDivisions] = useState<Division[]>([])
   const [rows, setRows] = useState<Airline[] | null>(null)
@@ -146,7 +147,7 @@ export default function Directory() {
       <p className="eyebrow text-cyan">The carriers</p>
       <h1 className="display mt-3 text-[clamp(36px,5vw,58px)]">Every airline in Echo</h1>
       <p className="mt-4 max-w-[62ch] text-lg text-ink-dim">
-        {num(carrierCount)} member carriers across eight divisions. Filter by division or
+        {num(carrierCount)} member carriers across {spell(divisionCount)} divisions. Filter by division or
         country, or search by name or code.
       </p>
 

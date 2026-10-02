@@ -66,9 +66,21 @@ declare
     live_fl   bigint := (select count(*) from public.flights);
     stage_fl  bigint := (select count(*) from echo_stage.flights);
     stage_div bigint := (select count(*) from echo_stage.divisions);
+    live_div  bigint := (select count(*) from public.divisions);
+    unknown   text   := (select string_agg(s.division_code, ', ')
+                           from echo_stage.divisions s
+                          where not exists (select 1 from public.divisions d
+                                             where d.division_code = s.division_code));
 begin
-    if stage_div <> 8 then
-        raise exception 'echo_stage has % divisions, expected 8', stage_div;
+    -- Every division the site has, and none it does not. A new division is
+    -- opened by a migration of its own (36_division_eos.sql was the first),
+    -- because its place in the order and its colour are group policy, not
+    -- game data -- below, the merge only refreshes divisions that exist.
+    if unknown is not null then
+        raise exception 'echo_stage has division(s) the database does not: %. Open them with a migration first.', unknown;
+    end if;
+    if stage_div <> live_div then
+        raise exception 'echo_stage has % divisions against % in the database -- one is missing from the scrape.', stage_div, live_div;
     end if;
     if stage_air < live_air * 0.85 then
         raise exception 'echo_stage has % airlines against % live -- that is a partial scrape, not a week of departures. Nothing merged.', stage_air, live_air;
@@ -162,7 +174,7 @@ on conflict (aircraft_model) do update set manufacturer = excluded.manufacturer;
 -- ---------------------------------------------------------------------
 --  The value they move to has to satisfy carrier_code's own check,
 --  ^[A-Z0-9]{2,6}$, so it cannot simply be marked with a symbol. It does not
---  need to be: every division tag (PX AG AU EN EY KY VH VS) contains a letter
+--  need to be: every division tag (PX AG AU EN EY KY VH VS EO) contains a letter
 --  that is not a hex digit, and a real code of four or more characters always
 --  has its tag in positions 3-4. So a code with DIGITS there is one the
 --  assigner can never produce, and two series of them are free to use:

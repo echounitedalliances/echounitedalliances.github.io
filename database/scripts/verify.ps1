@@ -65,7 +65,7 @@ $relations = @(
     @{ name = 'mv_network_nodes';        min = 100    },  # network map
     @{ name = 'mv_division_arcs';        min = 1000   },
     @{ name = 'v_airline_profile';       min = 500    },
-    @{ name = 'v_division_summary';      min = 8      },
+    @{ name = 'v_division_summary';      min = 9      },  # Eos made nine, 2 October 2026
     @{ name = 'v_route_pairs';           min = 1000   },
     @{ name = 'v_airline_directory_live'; min = 500  }   # admin name/blurb overrides
 )

@@ -45,7 +45,7 @@ create table if not exists public.divisions (
 );
 
 comment on table public.divisions is
-    'The eight member divisions. division_code doubles as the first URL segment, e.g. /proxima.';
+    'The member divisions of Echo United Alliances. division_code doubles as the URL segment, e.g. /d/proxima.';
 
 -- Every airport that appears anywhere in the exports. The exports carry IATA
 -- codes only, so the descriptive columns start out NULL and 03_airports_backfill

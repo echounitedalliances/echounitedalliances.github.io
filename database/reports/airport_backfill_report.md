@@ -5,11 +5,11 @@ Sources: OurAirports (name, city, country, coordinates) and mwgg/Airports
 
 | metric | value |
 |---|---:|
-| airports in the network | 2174 |
-| resolved to a real airport | 2174 |
-| with coordinates | 2174 |
-| with an IANA timezone | 2174 |
-| timezone from a dataset | 2126 |
+| airports in the network | 2181 |
+| resolved to a real airport | 2181 |
+| with coordinates | 2181 |
+| with an IANA timezone | 2181 |
+| timezone from a dataset | 2133 |
 | timezone inferred from country | 43 |
 | still without a timezone | 0 |
 | still unnamed | 0 |

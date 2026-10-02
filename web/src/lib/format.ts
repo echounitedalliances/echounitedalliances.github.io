@@ -47,3 +47,11 @@ export const flag = (cc: string | null | undefined) => {
 
 export const accentOf = (a: { accent_color?: string | null }) =>
   a.accent_color || '#A855F7'
+
+const WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight',
+  'nine', 'ten', 'eleven', 'twelve']
+
+/** A small count in words, for copy that says "nine divisions". Past twelve, the figure. */
+export const spell = (n: number) => WORDS[n] ?? num(n)
+
+export const capitalise = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)

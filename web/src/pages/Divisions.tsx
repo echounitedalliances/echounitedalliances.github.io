@@ -2,13 +2,15 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { isConfigured, supabase } from '../lib/supabase'
 import type { Division } from '../lib/types'
-import { accentOf, num } from '../lib/format'
+import { accentOf, capitalise, num, spell } from '../lib/format'
+import { useDivisionCount } from '../lib/carriers'
 import { DIVISION_NOTES } from '../lib/site'
 import { Loading, NotConfigured } from '../components/ui'
 import EchoMark from '../components/EchoMark'
 
 /**
- * The eight divisions, four across and two down.
+ * Every division, three across: nine of them since Eos opened on 2 October
+ * 2026, which squares the grid that eight used to fill four across.
  *
  * They used to be full-width rows, which gave one of them room for a long
  * welcome message and the other seven a one-line summary — so the page read as
@@ -18,6 +20,7 @@ import EchoMark from '../components/EchoMark'
  */
 export default function Divisions() {
   const [rows, setRows] = useState<Division[] | null>(null)
+  const divisionCount = useDivisionCount()
 
   useEffect(() => {
     if (!isConfigured) return
@@ -33,7 +36,9 @@ export default function Divisions() {
   return (
     <div className="mx-auto max-w-[1180px] px-4 py-8 sm:px-5 sm:py-14">
       <p className="eyebrow text-cyan">The group</p>
-      <h1 className="display mt-3 text-[clamp(36px,5vw,58px)]">Eight divisions</h1>
+      <h1 className="display mt-3 text-[clamp(36px,5vw,58px)]">
+        {capitalise(spell(rows?.length || divisionCount))} divisions
+      </h1>
       <p className="mt-4 max-w-[64ch] text-lg text-ink-dim">
         Echo United Alliances is a multi-alliance group: each division runs its
         own roster and its own leadership, and members fly under one network.
@@ -42,7 +47,7 @@ export default function Divisions() {
       {rows === null ? (
         <Loading />
       ) : (
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {rows.map((d, i) => {
             const accent = accentOf(d)
             const note = DIVISION_NOTES[d.division_code]

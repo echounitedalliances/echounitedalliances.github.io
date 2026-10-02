@@ -1989,6 +1989,16 @@
   "tz": "Asia/Bangkok",
   "tz_source": "dataset"
  },
+ "BKN": {
+  "city": "Balkanabat",
+  "country": "TM",
+  "iata": "BKN",
+  "lat": 39.681052,
+  "lon": 54.206008,
+  "name": "Balkanabat International Airport",
+  "tz": "Asia/Ashgabat",
+  "tz_source": "dataset"
+ },
  "BKO": {
   "city": "Bamako",
   "country": "ML",
@@ -3907,6 +3917,16 @@
   "lon": -81.593201,
   "name": "Yeager Airport",
   "tz": "America/New_York",
+  "tz_source": "dataset"
+ },
+ "CRZ": {
+  "city": "Türkmenabat",
+  "country": "TM",
+  "iata": "CRZ",
+  "lat": 38.930662,
+  "lon": 63.563982,
+  "name": "Türkmenabat International Airport",
+  "tz": "Asia/Ashgabat",
   "tz_source": "dataset"
  },
  "CSL": {
@@ -8709,6 +8729,16 @@
   "tz": "America/New_York",
   "tz_source": "dataset"
  },
+ "JFR": {
+  "city": "Paamiut",
+  "country": "GL",
+  "iata": "JFR",
+  "lat": 62.014736,
+  "lon": -49.670937,
+  "name": "Paamiut Airport",
+  "tz": "America/Nuuk",
+  "tz_source": "dataset"
+ },
  "JGD": {
   "city": "Jiagedaqi",
   "country": "CN",
@@ -8757,6 +8787,16 @@
   "lon": 100.762224,
   "name": "Xishuangbanna Gasa International Airport",
   "tz": "Asia/Shanghai",
+  "tz_source": "dataset"
+ },
+ "JHS": {
+  "city": "Sisimiut",
+  "country": "GL",
+  "iata": "JHS",
+  "lat": 66.951302,
+  "lon": -53.729301,
+  "name": "Sisimiut Airport",
+  "tz": "America/Nuuk",
   "tz_source": "dataset"
  },
  "JIB": {
@@ -12679,6 +12719,16 @@
   "tz": "Asia/Tokyo",
   "tz_source": "dataset"
  },
+ "MYP": {
+  "city": "Mary",
+  "country": "TM",
+  "iata": "MYP",
+  "lat": 37.62353,
+  "lon": 61.895668,
+  "name": "Mary International Airport",
+  "tz": "Asia/Ashgabat",
+  "tz_source": "dataset"
+ },
  "MYR": {
   "city": "Myrtle Beach",
   "country": "US",
@@ -15579,6 +15629,16 @@
   "tz": "America/Rio_Branco",
   "tz_source": "dataset"
  },
+ "RCH": {
+  "city": "Riohacha",
+  "country": "CO",
+  "iata": "RCH",
+  "lat": 11.5262,
+  "lon": -72.926,
+  "name": "Almirante Padilla Airport",
+  "tz": "America/Bogota",
+  "tz_source": "dataset"
+ },
  "RDM": {
   "city": "Redmond",
   "country": "US",
@@ -17219,16 +17279,6 @@
   "tz": "America/Bogota",
   "tz_source": "dataset"
  },
- "SMW": {
-  "city": "Smara",
-  "country": "EH",
-  "iata": "SMW",
-  "lat": 26.731987,
-  "lon": -11.683655,
-  "name": "Smara Airport",
-  "tz": "Africa/El_Aaiun",
-  "tz_source": "dataset"
- },
  "SNA": {
   "city": "Santa Ana",
   "country": "US",
@@ -18017,6 +18067,16 @@
   "lon": 26.686473,
   "name": "Tartu Airport",
   "tz": "Europe/Tallinn",
+  "tz_source": "dataset"
+ },
+ "TAZ": {
+  "city": "Daşoguz",
+  "country": "TM",
+  "iata": "TAZ",
+  "lat": 41.759853,
+  "lon": 59.836149,
+  "name": "Dashoguz International Airport",
+  "tz": "Asia/Ashgabat",
   "tz_source": "dataset"
  },
  "TBB": {
@@ -19897,6 +19957,16 @@
   "lon": 83.503617,
   "name": "Alluri Sitarama Raju International Airport (Vizag)",
   "tz": "Asia/Kolkata",
+  "tz_source": "dataset"
+ },
+ "VUP": {
+  "city": "Valledupar",
+  "country": "CO",
+  "iata": "VUP",
+  "lat": 10.435,
+  "lon": -73.2495,
+  "name": "Alfonso López Pumarejo Airport",
+  "tz": "America/Bogota",
   "tz_source": "dataset"
  },
  "VVI": {

@@ -72,7 +72,8 @@ update public.divisions set accent_color = v.accent
     ('vilis',   '#FF7E42'),   -- orange
     ('rhea',    '#5DFE95'),   -- mint
     ('elion',   '#7EA0F4'),   -- periwinkle
-    ('aura',    '#EF9D9E')    -- rose
+    ('aura',    '#EF9D9E'),   -- rose
+    ('eos',     '#FDECD8')    -- dawn: the alliance's own colour in the game
   ) as v(code, accent)
  where divisions.division_code = v.code;
 

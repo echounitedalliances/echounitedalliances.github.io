@@ -247,6 +247,7 @@ body {
   --division-vilis:   #FF7E42;
   --division-elion:   #7EA0F4;
   --division-aura:    #EF9D9E;
+  --division-eos:     #FDECD8;
 }
 
 /* The Echo wing ------------------------------------------------------
@@ -264,7 +265,7 @@ body {
    division, then white, then the next, right to left, for as long as
    whatever we are waiting for takes.
 
-   It is one gradient nine times the width of the mark, slid leftwards
+   It is one gradient ten times the width of the mark, slid leftwards
    under it. background-position 0% -> 100% moves the image LEFT (its right
    edge ends up against the box's right edge), so the colours enter from the
    right, which is the way the wing points. No JavaScript, no frame loop:
@@ -285,10 +286,13 @@ body {
     #fff, var(--division-vilis),
     #fff, var(--division-elion),
     #fff, var(--division-aura),
+    #fff, var(--division-eos),
     #fff
   );
-  background-size: 900% 100%;
-  animation: echo-loader-sweep 3s linear infinite;
+  /* Ten widths and 3.4s since Eos made nine colours: the same band per
+     mark-width, passing at the same pace, as nine widths over 3s had. */
+  background-size: 1000% 100%;
+  animation: echo-loader-sweep 3.4s linear infinite;
 }
 
 /* The wing is a mask over the gradient; the text is the gradient clipped to
