@@ -44,7 +44,11 @@ export default function News() {
     [articles, category],
   )
 
-  const featured = shown.find((a) => a.featured)
+  // The big slot is the newest story. It used to be whichever one VAFeed
+  // flagged as featured, which kept one Californian piece from 8 September
+  // 2026 at the top for weeks while newer stories queued underneath it.
+  // The list is already newest first (lib/news.ts).
+  const featured = shown[0]
   const rest = shown.filter((a) => a !== featured)
 
   return (
@@ -142,7 +146,7 @@ export default function News() {
                   <span className="grid gap-6 p-6 sm:p-8 md:grid-cols-[1fr_auto] md:items-center">
                     <span className="block min-w-0">
                       <span className="mono flex flex-wrap items-center gap-2.5 text-[10px] uppercase tracking-[0.14em]">
-                        <span className="bg-accent px-2 py-0.5 text-[#0B0713]">Headline</span>
+                        <span className="bg-accent px-2 py-0.5 text-[#0B0713]">Newest</span>
                         {featured.category && (
                           <span className="text-ink-faint">{featured.category}</span>
                         )}
