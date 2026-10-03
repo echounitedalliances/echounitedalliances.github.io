@@ -48,8 +48,9 @@ export default function NetworkPage() {
         supabase
           .from('mv_network_arcs')
           .select('*')
+          .order('featured', { ascending: false })
           .order('weekly_departures', { ascending: false })
-          .limit(1200),
+          .limit(1300),
         supabase.from('mv_network_nodes').select('*').limit(900),
         supabase.from('v_division_summary').select('*').order('sort_order'),
         supabase

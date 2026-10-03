@@ -17,6 +17,26 @@ import { useAirportCount, useCarrierCount, useDivisionCount } from '../lib/carri
  * is a page about an alliance that happens to sell tickets, not a booking site
  * that happens to have members.
  */
+/**
+ * Six carriers from anywhere in the alliance, different on every visit. It
+ * used to be the six most prominent, which meant the same six for everyone,
+ * always. Six random places in the directory's own order, fetched one row
+ * each, so nothing larger than the cards crosses the wire.
+ */
+async function spotlightPicks(total: number): Promise<Airline[]> {
+  const n = Math.max(total, 1)
+  const offsets = new Set<number>()
+  while (offsets.size < Math.min(6, n)) offsets.add(Math.floor(Math.random() * n))
+  const rows = await Promise.all(
+    [...offsets].map((p_offset) =>
+      supabase.rpc('search_airlines', { p_limit: 1, p_offset }).then(({ data }) =>
+        ((data as Airline[]) ?? [])[0],
+      ),
+    ),
+  )
+  return rows.filter((a): a is Airline => Boolean(a))
+}
+
 export default function Home() {
   const [divisions, setDivisions] = useState<Division[]>([])
   const [arcs, setArcs] = useState<Arc[]>([])
@@ -31,14 +51,21 @@ export default function Home() {
     void (async () => {
       const [d, a, n, s] = await Promise.all([
         supabase.from('v_division_summary').select('*').order('sort_order'),
-        supabase.from('mv_network_arcs').select('*').order('weekly_departures', { ascending: false }).limit(900),
+        // Each division's busiest pairs first, so the map's cap never leaves a
+        // division out -- Eos was, while its routes were all below the top 320.
+        supabase
+          .from('mv_network_arcs')
+          .select('*')
+          .order('featured', { ascending: false })
+          .order('weekly_departures', { ascending: false })
+          .limit(900),
         supabase.from('mv_network_nodes').select('*').limit(700),
-        supabase.rpc('search_airlines', { p_limit: 6, p_offset: 0 }),
+        spotlightPicks(carrierCount),
       ])
       setDivisions((d.data as Division[]) ?? [])
       setArcs((a.data as Arc[]) ?? [])
       setNodes((n.data as NetworkNode[]) ?? [])
-      setSpotlight((s.data as Airline[]) ?? [])
+      setSpotlight(s)
     })()
   }, [])
 
@@ -214,7 +241,7 @@ export default function Home() {
       {/* ---------- spotlight ---------- */}
       <section className="mx-auto max-w-[1180px] px-4 py-9 sm:px-5 sm:py-16">
         <div className="flex items-baseline justify-between gap-4">
-          <h2 className="display text-3xl">Carriers in the group</h2>
+          <h2 className="display text-3xl">Carriers in the alliance</h2>
           <Link to="/airlines" className="mono text-[11px] uppercase tracking-[0.14em] text-cyan">
             Browse all →
           </Link>

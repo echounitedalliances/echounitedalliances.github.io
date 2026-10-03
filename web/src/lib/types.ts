@@ -98,6 +98,8 @@ export type Arc = {
   dest_lat: number
   dest_lon: number
   accent_color: string
+  /** One of its division's eight busiest pairs: always drawn (38_network_arcs_every_division.sql). */
+  featured?: boolean
 }
 
 export type NetworkNode = {
