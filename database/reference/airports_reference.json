@@ -989,6 +989,16 @@
   "tz": "America/Asuncion",
   "tz_source": "dataset"
  },
+ "ASV": {
+  "city": "Ol Tukai",
+  "country": "KE",
+  "iata": "ASV",
+  "lat": -2.644786,
+  "lon": 37.252922,
+  "name": "Amboseli Airport",
+  "tz": "Africa/Nairobi",
+  "tz_source": "dataset"
+ },
  "ASW": {
   "city": "Aswan",
   "country": "EG",
@@ -2727,6 +2737,16 @@
   "lon": 41.600315,
   "name": "Alexander Kartveli Batumi International Airport",
   "tz": "Asia/Tbilisi",
+  "tz_source": "dataset"
+ },
+ "BUT": {
+  "city": "Jakar",
+  "country": "BT",
+  "iata": "BUT",
+  "lat": 27.5622,
+  "lon": 90.7471,
+  "name": "Bathpalathang Airport",
+  "tz": "Asia/Thimphu",
   "tz_source": "dataset"
  },
  "BUZ": {
@@ -5209,6 +5229,16 @@
   "tz": "Europe/London",
   "tz_source": "dataset"
  },
+ "EDL": {
+  "city": "Eldoret",
+  "country": "KE",
+  "iata": "EDL",
+  "lat": 0.404458,
+  "lon": 35.238899,
+  "name": "Eldoret International Airport",
+  "tz": "Africa/Nairobi",
+  "tz_source": "dataset"
+ },
  "EDO": {
   "city": "Edremit",
   "country": "TR",
@@ -6087,6 +6117,16 @@
   "lon": 113.070833,
   "name": "Foshan Shadi Airport",
   "tz": "Asia/Shanghai",
+  "tz_source": "dataset"
+ },
+ "FVM": {
+  "city": "Fuvahmulah Island",
+  "country": "MV",
+  "iata": "FVM",
+  "lat": -0.309722,
+  "lon": 73.435,
+  "name": "Fuvahmulah Airport",
+  "tz": "Indian/Maldives",
   "tz_source": "dataset"
  },
  "FWA": {
@@ -7357,6 +7397,16 @@
   "lon": 170.98500061035156,
   "name": "Hokitika Airfield",
   "tz": "Pacific/Auckland",
+  "tz_source": "dataset"
+ },
+ "HKN": {
+  "city": "Kimbe",
+  "country": "PG",
+  "iata": "HKN",
+  "lat": -5.463846,
+  "lon": 150.407327,
+  "name": "Hoskins Airport",
+  "tz": "Pacific/Port_Moresby",
   "tz_source": "dataset"
  },
  "HKT": {
@@ -9367,6 +9417,16 @@
   "lon": -22.6056,
   "name": "Keflavik International Airport",
   "tz": "Atlantic/Reykjavik",
+  "tz_source": "dataset"
+ },
+ "KEM": {
+  "city": "Kemi / Tornio",
+  "country": "FI",
+  "iata": "KEM",
+  "lat": 65.778701782227,
+  "lon": 24.582099914551,
+  "name": "Kemi-Tornio Airport",
+  "tz": "Europe/Helsinki",
   "tz_source": "dataset"
  },
  "KEP": {
@@ -11449,6 +11509,16 @@
   "tz": "America/Chicago",
   "tz_source": "dataset"
  },
+ "MAG": {
+  "city": "Madang",
+  "country": "PG",
+  "iata": "MAG",
+  "lat": -5.20707988739,
+  "lon": 145.789001465,
+  "name": "Madang Airport",
+  "tz": "Pacific/Port_Moresby",
+  "tz_source": "dataset"
+ },
  "MAH": {
   "city": "Mahón (Maó)",
   "country": "ES",
@@ -11517,6 +11587,16 @@
   "lon": -71.729307,
   "name": "La Chinita International Airport",
   "tz": "America/Caracas",
+  "tz_source": "dataset"
+ },
+ "MAS": {
+  "city": "Manus Island",
+  "country": "PG",
+  "iata": "MAS",
+  "lat": -2.06189,
+  "lon": 147.423996,
+  "name": "Momote Airport",
+  "tz": "Pacific/Port_Moresby",
   "tz_source": "dataset"
  },
  "MAU": {
@@ -15529,6 +15609,16 @@
   "tz": "Africa/Lagos",
   "tz_source": "country_default"
  },
+ "RAB": {
+  "city": "Kokopo",
+  "country": "PG",
+  "iata": "RAB",
+  "lat": -4.34046,
+  "lon": 152.380005,
+  "name": "Tokua Airport",
+  "tz": "Pacific/Port_Moresby",
+  "tz_source": "dataset"
+ },
  "RAE": {
   "city": "Arar",
   "country": "SA",
@@ -15536,16 +15626,6 @@
   "lat": 30.906600952148438,
   "lon": 41.13819885253906,
   "name": "Arar Domestic Airport",
-  "tz": "Asia/Riyadh",
-  "tz_source": "dataset"
- },
- "RAH": {
-  "city": "Rafha",
-  "country": "SA",
-  "iata": "RAH",
-  "lat": 29.626399993896484,
-  "lon": 43.4906005859375,
-  "name": "Rafha Domestic Airport",
   "tz": "Asia/Riyadh",
   "tz_source": "dataset"
  },
@@ -18089,6 +18169,16 @@
   "tz": "Asia/Ho_Chi_Minh",
   "tz_source": "dataset"
  },
+ "TBP": {
+  "city": "Tumbes",
+  "country": "PE",
+  "iata": "TBP",
+  "lat": -3.552074,
+  "lon": -80.381086,
+  "name": "Captain Pedro Canga Rodríguez International Airport",
+  "tz": "America/Lima",
+  "tz_source": "dataset"
+ },
  "TBS": {
   "city": "Tbilisi",
   "country": "GE",
@@ -19129,6 +19219,16 @@
   "tz": "Asia/Shanghai",
   "tz_source": "dataset"
  },
+ "TYL": {
+  "city": "Talara",
+  "country": "PE",
+  "iata": "TYL",
+  "lat": -4.57664,
+  "lon": -81.254097,
+  "name": "Captain Victor Montes Arias International Airport",
+  "tz": "America/Lima",
+  "tz_source": "dataset"
+ },
  "TYN": {
   "city": "Taiyuan",
   "country": "CN",
@@ -20118,6 +20218,16 @@
   "name": "Eliwana",
   "tz": "Australia/Perth",
   "tz_source": "airport_override"
+ },
+ "WIL": {
+  "city": "Nairobi",
+  "country": "KE",
+  "iata": "WIL",
+  "lat": -1.32172,
+  "lon": 36.8148,
+  "name": "Nairobi Wilson Airport",
+  "tz": "Africa/Nairobi",
+  "tz_source": "dataset"
  },
  "WJU": {
   "city": "Wonju",
@@ -21327,6 +21437,16 @@
   "lon": -66.8644027709961,
   "name": "Wabush Airport",
   "tz": "America/Goose_Bay",
+  "tz_source": "dataset"
+ },
+ "YXC": {
+  "city": "Cranbrook",
+  "country": "CA",
+  "iata": "YXC",
+  "lat": 49.610802,
+  "lon": -115.781998,
+  "name": "Cranbrook/Canadian Rockies International Airport",
+  "tz": "America/Edmonton",
   "tz_source": "dataset"
  },
  "YXE": {

@@ -426,6 +426,14 @@ select s.airline_uid, s.aircraft_model, s.idle_count
   from echo_stage.aircraft_idle s
   join public.airlines a on a.uid = s.airline_uid;
 
+-- Routes opened with no flight on them (39_opened_routes.sql): this week's
+-- replace last week's, the same way.
+delete from public.airline_unflown_routes;
+insert into public.airline_unflown_routes (airline_uid, origin_iata, destination_iata)
+select s.airline_uid, s.origin_iata, s.destination_iata
+  from echo_stage.airline_unflown_routes s
+  join public.airlines a on a.uid = s.airline_uid;
+
 -- ---------------------------------------------------------------------
 --  7. Admin edits back on top: names, descriptions, division moves
 -- ---------------------------------------------------------------------
@@ -445,6 +453,7 @@ union all select 'flights now',                    count(*) from public.flights
 union all select 'assignments now',                count(*) from public.flight_assignments
 union all select 'aircraft now (rows that fly)',   count(*) from public.aircraft
 union all select 'idle aircraft now (counted)',    coalesce(sum(idle_count), 0) from public.aircraft_idle
+union all select 'routes opened, no flights',      count(*) from public.airline_unflown_routes
 union all select 'resonants (must be unchanged)',  count(*) from public.resonants
 union all select 'bookings (must be unchanged)',   count(*) from public.bookings
 union all select 'booking_segments (must be unchanged)', count(*) from public.booking_segments

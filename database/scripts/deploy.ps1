@@ -127,7 +127,9 @@ $files += @('04_views.sql', '05_reservations.sql', '06_inventory.sql',
             # one: it rebuilds what 04-36 built on mv_leg_departures.
             '37_slim_storage.sql',
             # Every division's busiest pairs on the network map.
-            '38_network_arcs_every_division.sql')
+            '38_network_arcs_every_division.sql',
+            # Routes opened in the game with no flights; counted as routes.
+            '39_opened_routes.sql')
 
 # Refuse the truncating reload against a database people are using.
 #

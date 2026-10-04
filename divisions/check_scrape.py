@@ -7,7 +7,7 @@ halfway through a division, a stale folder left from last week. This checks
 what is actually on disk against what the live rosters say should be there:
 
   * every uid on every division's roster has a folder
-  * every folder has info.json, flights.json, aircrafts.json and livery.json
+  * every folder has info.json, flights.json, aircrafts.json, routes.json and livery.json
   * no folder belongs to an airline that is not on its roster (a departed or
     renamed airline's old folder would otherwise be loaded as a member)
   * no airline appears in two divisions
@@ -26,7 +26,7 @@ from collections import defaultdict
 
 DIVISIONS = ["aegis", "aura", "elion", "elysium", "eos", "kyra", "proxima", "rhea", "vilis"]
 HERE = os.path.dirname(os.path.abspath(__file__))
-REQUIRED = ("info.json", "flights.json", "aircrafts.json", "livery.json")
+REQUIRED = ("info.json", "flights.json", "aircrafts.json", "routes.json", "livery.json")
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(errors="replace")

@@ -25,6 +25,7 @@ create table echo_stage.aircraft_models      (like public.aircraft_models      i
 create table echo_stage.cabin_classes        (like public.cabin_classes        including defaults);
 create table echo_stage.aircraft             (like public.aircraft             including defaults);
 create table echo_stage.aircraft_idle        (like public.aircraft_idle        including defaults);
+create table echo_stage.airline_unflown_routes (like public.airline_unflown_routes including defaults);
 create table echo_stage.flights              (like public.flights              including defaults);
 create table echo_stage.flight_assignments   (like public.flight_assignments   including defaults);
 
@@ -38,6 +39,7 @@ create table echo_stage.flight_assignments   (like public.flight_assignments   i
 \copy echo_stage.cabin_classes (cabin_code, cabin_name, sort_order, source_key_prefix) from 'database/csv/cabin_classes.csv' with (format csv, header true)
 \copy echo_stage.aircraft (aircraft_id, airline_uid, aircraft_model, registration, delivery_date, hub_airport_iata, eco_ratio, prem_eco_ratio, biz_ratio, first_ratio, is_placeholder) from 'database/csv/aircraft.csv' with (format csv, header true, null '')
 \copy echo_stage.aircraft_idle (airline_uid, aircraft_model, idle_count) from 'database/csv/aircraft_idle.csv' with (format csv, header true)
+\copy echo_stage.airline_unflown_routes (airline_uid, origin_iata, destination_iata) from 'database/csv/airline_unflown_routes.csv' with (format csv, header true)
 \copy echo_stage.flights (flight_id, airline_uid, outbound_flight_number, inbound_flight_number, origin_iata, destination_iata, departure_daily_seconds, departure_day_offset, outbound_duration_minutes, inbound_duration_minutes, turnaround_offset_slots, is_stopover, child_stopover_flight_id) from 'database/csv/flights.csv' with (format csv, header true, null '')
 \copy echo_stage.flight_assignments (flight_id, aircraft_id, operating_days_per_week, operating_days_mask, eco_price, prem_eco_price, biz_price, first_price, eco_seats, prem_eco_seats, biz_seats, first_seats, eco_weekly_seats, prem_eco_weekly_seats, biz_weekly_seats, first_weekly_seats) from 'database/csv/flight_assignments.csv' with (format csv, header true, null '')
 
@@ -53,6 +55,7 @@ select 'airlines' t, count(*) from echo_stage.airlines
 union all select 'airports', count(*) from echo_stage.airports
 union all select 'aircraft', count(*) from echo_stage.aircraft
 union all select 'aircraft_idle (airframes)', coalesce(sum(idle_count), 0) from echo_stage.aircraft_idle
+union all select 'airline_unflown_routes', count(*) from echo_stage.airline_unflown_routes
 union all select 'flights', count(*) from echo_stage.flights
 union all select 'flight_assignments', count(*) from echo_stage.flight_assignments
 union all select 'airline_hubs', count(*) from echo_stage.airline_hubs

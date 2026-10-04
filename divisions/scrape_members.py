@@ -160,6 +160,7 @@ def make_headers(apikey, jwt, post=False):
 JSON_LAYOUT = {
     "flights.json":   {"indent": None, "crlf": False},
     "aircrafts.json": {"indent": None, "crlf": False},
+    "routes.json":    {"indent": None, "crlf": False},
     "info.json":      {"indent": 4,    "crlf": True},
     "livery.json":    {"indent": 2,    "crlf": True},
     "members.json":   {"indent": 2,    "crlf": False},
@@ -313,8 +314,13 @@ def fetch_airline(record, members_dir, apikey, jwt, force, taken, taken_lock):
     write_json(os.path.join(folder, "info.json"), info)
 
     counts = {}
+    # routes.json, query H (4 October 2026): the routes the airline has opened,
+    # which is what the game counts as its routes. A route can be opened with
+    # no flights on it -- Tsuki Airways had 92 routes in the game and flights
+    # on 81 -- so flights.json alone undercounts every such airline.
     for fname, table in (("flights.json", "new_player_flight_data"),
-                         ("aircrafts.json", "player_aircraft_data")):
+                         ("aircrafts.json", "player_aircraft_data"),
+                         ("routes.json", "player_route_data")):
         path = os.path.join(folder, fname)
         if not force and os.path.exists(path) and os.path.getsize(path) > 2:
             counts[fname] = "kept"

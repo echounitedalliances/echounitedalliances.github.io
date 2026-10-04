@@ -19,6 +19,7 @@ truncate table
     public.flight_assignments,
     public.flights,
     public.aircraft_idle,
+    public.airline_unflown_routes,
     public.aircraft,
     public.airline_stats,
     public.airline_liveries,
@@ -49,6 +50,7 @@ truncate table
 \copy public.aircraft (aircraft_id, airline_uid, aircraft_model, registration, delivery_date, hub_airport_iata, eco_ratio, prem_eco_ratio, biz_ratio, first_ratio, is_placeholder) from 'database/csv/aircraft.csv' with (format csv, header true, null '')
 
 \copy public.aircraft_idle (airline_uid, aircraft_model, idle_count) from 'database/csv/aircraft_idle.csv' with (format csv, header true)
+\copy public.airline_unflown_routes (airline_uid, origin_iata, destination_iata) from 'database/csv/airline_unflown_routes.csv' with (format csv, header true)
 
 \copy public.flights (flight_id, airline_uid, outbound_flight_number, inbound_flight_number, origin_iata, destination_iata, departure_daily_seconds, departure_day_offset, outbound_duration_minutes, inbound_duration_minutes, turnaround_offset_slots, is_stopover, child_stopover_flight_id) from 'database/csv/flights.csv' with (format csv, header true, null '')
 

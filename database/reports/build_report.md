@@ -1,24 +1,24 @@
 # Echo United Alliances -- build report
 
-Generated 2026-10-02 20:24 UTC by `database/scripts/build_database.py`.
+Generated 2026-10-04 16:14 UTC by `database/scripts/build_database.py`.
 
 ## Row counts
 
 | table | rows |
 |---|---:|
 | airlines | 639 |
-| airports | 2,181 |
+| airports | 2,193 |
 | aircraft_models | 79 |
-| aircraft | 209,791 |
-| flights | 384,845 |
-| flight_assignments | 489,354 |
-| airline_hubs | 3,643 |
-| airline_stats | 57 |
+| aircraft | 210,270 |
+| flights | 384,675 |
+| flight_assignments | 488,399 |
+| airline_hubs | 3,594 |
+| airline_stats | 53 |
 
 ## Data conditions handled
 
-- 7,398 flights depart outside the 0-86399s day and were split into a time of day plus a signed day offset (the raw value is `departure_day_offset * 86400 + departure_daily_seconds`).
-- 36 aircraft have cabin ratios that do not sum to 1.0; they are loaded as exported and flagged by `v_aircraft_ratio_anomalies`.
+- 7,510 flights depart outside the 0-86399s day and were split into a time of day plus a signed day offset (the raw value is `departure_day_offset * 86400 + departure_daily_seconds`).
+- 35 aircraft have cabin ratios that do not sum to 1.0; they are loaded as exported and flagged by `v_aircraft_ratio_anomalies`.
 - 4 individual cabin ratios carried float noise just outside [0,1] (worst: -1.37e-17) and were snapped to the boundary.
 
 ### fleet
@@ -30,53 +30,53 @@ Generated 2026-10-02 20:24 UTC by `database/scripts/build_database.py`.
 - proxima/forza: duplicate registration VN-A287 inside one fleet
 - proxima/skyline_west: duplicate registration N244SW inside one fleet
 - proxima/skyline_west: duplicate registration N279SW inside one fleet
-- aegis/aero_riwa: duplicate registration JA611A inside one fleet
-- aegis/aero_riwa: duplicate registration JA653A inside one fleet
 - aegis/airnara_tg: duplicate registration JA422N inside one fleet
 - aegis/baja_premium: duplicate registration N760DP inside one fleet
 - aegis/baja_premium: duplicate registration N440DP inside one fleet
 - aegis/era_airlines: duplicate registration N994ER inside one fleet
 - aegis/era_airlines: duplicate registration N135ER inside one fleet
 - aegis/era_airlines: duplicate registration N999ER inside one fleet
-- aegis/fly_moon: duplicate registration D-NZWQ inside one fleet
-- aegis/fly_moon: duplicate registration D-NZWR inside one fleet
-- aegis/fly_moon: duplicate registration D-NZWS inside one fleet
 - aegis/fly_moon: duplicate registration D-NZWT inside one fleet
-- aegis/fly_moon: duplicate registration D-NZWQ inside one fleet
-- aegis/fly_moon: duplicate registration D-NZWR inside one fleet
-- aegis/fly_moon: duplicate registration D-NZWS inside one fleet
 - aegis/fly_moon: duplicate registration D-NZWT inside one fleet
-- aegis/fly_moon: duplicate registration D-NZWQ inside one fleet
-- aegis/fly_moon: duplicate registration D-NZWR inside one fleet
-- aegis/fly_moon: duplicate registration D-NZWS inside one fleet
 - aegis/fly_moon: duplicate registration D-NZWT inside one fleet
 - aegis/fly_moon: duplicate registration D-NZWU inside one fleet
 - aegis/fly_moon: duplicate registration D-NZWV inside one fleet
 - aegis/fly_moon: duplicate registration D-NZWW inside one fleet
-- aegis/fly_moon: duplicate registration D-NZWQ inside one fleet
-- aegis/fly_moon: duplicate registration D-NZWR inside one fleet
-- aegis/fly_moon: duplicate registration D-NZWS inside one fleet
 - aegis/fly_moon: duplicate registration D-NZWT inside one fleet
-- aegis/fly_moon: duplicate registration D-NZWQ inside one fleet
-- aegis/fly_moon: duplicate registration D-NZWR inside one fleet
-- aegis/fly_moon: duplicate registration D-NZWS inside one fleet
 - aegis/fly_moon: duplicate registration D-NZWT inside one fleet
 - aegis/fly_moon: duplicate registration D-NZWU inside one fleet
 - aegis/fly_moon: duplicate registration D-NZWV inside one fleet
-- ... and 396 more
+- aegis/fly_moon: duplicate registration D-NZWW inside one fleet
+- aegis/fly_moon: duplicate registration D-NZWX inside one fleet
+- aegis/fly_moon: duplicate registration D-NZWY inside one fleet
+- aegis/fly_moon: duplicate registration D-NZWZ inside one fleet
+- aegis/fly_moon: duplicate registration D-NZXA inside one fleet
+- aegis/fly_moon: duplicate registration D-NZXB inside one fleet
+- aegis/fly_moon: duplicate registration D-NZXC inside one fleet
+- aegis/fly_moon: duplicate registration D-NZWT inside one fleet
+- aegis/fly_moon: duplicate registration D-NZWU inside one fleet
+- aegis/fly_moon: duplicate registration D-NZWV inside one fleet
+- aegis/fly_moon: duplicate registration D-NZWW inside one fleet
+- aegis/fly_moon: duplicate registration D-NZWX inside one fleet
+- aegis/fly_moon: duplicate registration D-NZWY inside one fleet
+- aegis/fly_moon: duplicate registration D-NZWZ inside one fleet
+- aegis/fly_moon: duplicate registration D-NZXA inside one fleet
+- aegis/fly_moon: duplicate registration D-NZXB inside one fleet
+- aegis/fly_moon: duplicate registration D-NZXC inside one fleet
+- ... and 371 more
 
 ### hubs
 
-- 622 airlines had no hubAirports in their roster; their hubs were derived from the base airports of their fleet
+- 620 airlines had no hubAirports in their roster; their hubs were derived from the base airports of their fleet
 
 ### identity
 
-- 639 airlines kept their carrier_code, 0 were assigned one; 429 of 639 carry a division-qualified code because the game code is shared or was once
+- 639 airlines kept their carrier_code, 0 were assigned one; 431 of 639 carry a division-qualified code because the game code is shared or was once
 - proxima/unknown_81846bbb: airline has no name in the export (uid 81846bbb-d6db-4c13-a507-7a1fd8df0cf8)
 
 ### livery
 
-- 578 of 639 liveries yield a brand colour; the rest fly white and fall back to the division accent
+- 577 of 639 liveries yield a brand colour; the rest fly white and fall back to the division accent
 
 ### roster
 
@@ -92,9 +92,10 @@ Generated 2026-10-02 20:24 UTC by `database/scripts/build_database.py`.
 
 ### schedule
 
-- 37 (airline, flight number, origin, destination) combinations appear on more than one flight_id - players may file the same number twice, so that tuple is indexed but not unique
-- all 12567 stopover children resolve to a known flight
+- 40 (airline, flight number, origin, destination) combinations appear on more than one flight_id - players may file the same number twice, so that tuple is indexed but not unique
+- all 12677 stopover children resolve to a known flight
+- 10,376 routes are opened in the game with no flight on them (airline_unflown_routes); they count as routes, nothing sells
 
 ### stats
 
-- member stats exist for 57 of 639 airlines (only Aegis exported members_stats.json)
+- member stats exist for 53 of 639 airlines (only Aegis exported members_stats.json)

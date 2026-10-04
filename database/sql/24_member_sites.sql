@@ -186,10 +186,8 @@ with claim(site_slug, division_code, airline_slug) as (values
     ('starliner',    'kyra',    'starliner'),
     ('starliner',    'rhea',    'astra_by_starliner'),
     ('starliner',    'rhea',    'velora_by_strlinr'),
-    -- Meridian by STRLNR renamed itself United Airlines in the 2 October 2026
-    -- scrape; same uid, so the link followed. Its slug carries a uid suffix
-    -- because another United Airlines is also in Elysium.
-    ('starliner',    'elysium', 'united_airlines_7fd0f876'),
+    -- Meridian by STRLNR (United Airlines from 2 October 2026) left the
+    -- alliance in the 4 October 2026 scrape, taking its button with it.
     ('starliner',    'elysium', 'essequibo_air'),
     ('starliner',    'elysium', 'amerigo'),
     ('explora',      'kyra',    'explora_journeys'),
@@ -229,9 +227,9 @@ declare
     n integer;
 begin
     select count(*) into n from public.member_site_airlines;
-    if (select seeding from member_sites_seed) and n <> 18 then
+    if (select seeding from member_sites_seed) and n <> 17 then
         raise exception
-            'member_site_airlines has % rows, expected 18 -- an airline_slug in this file no longer matches a carrier', n;
+            'member_site_airlines has % rows, expected 17 -- an airline_slug in this file no longer matches a carrier', n;
     end if;
 end
 $guard$;

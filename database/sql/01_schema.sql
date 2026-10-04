@@ -123,6 +123,15 @@ create index if not exists airlines_name_idx     on public.airlines (lower(airli
 -- Hubs. A flight may only start or end at a hub of its operator, unless it is
 -- the second leg of a stopover. Proxima's roster carried no hubAirports, so its
 -- hubs are derived from fleet bases -- hub_source records which.
+-- Routes an airline has opened in the game with no flight on them (the game's
+-- player_route_data). They count as its routes; nothing on them sells. 39.
+create table if not exists public.airline_unflown_routes (
+    airline_uid      uuid not null references public.airlines (uid) on delete cascade,
+    origin_iata      text not null references public.airports (iata_code),
+    destination_iata text not null references public.airports (iata_code),
+    primary key (airline_uid, origin_iata, destination_iata)
+);
+
 create table if not exists public.airline_hubs (
     airline_uid  uuid not null references public.airlines (uid) on delete cascade,
     airport_iata text not null references public.airports (iata_code),

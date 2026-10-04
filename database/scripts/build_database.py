@@ -493,6 +493,7 @@ def main():
 
     flight_ids = set()
     flying_ids = set()                # airframes on at least one assignment
+    flown_pairs = defaultdict(set)    # uid -> city pairs it has a flight on
     child_refs = set()
     route_key = Counter()
     pending_assignments = []          # rows whose aircraft is not in any fleet
@@ -512,6 +513,7 @@ def main():
             if child:
                 child_refs.add(child)
             route_key[(a["uid"], f["outboundFlightNumber"], o, dst)] += 1
+            flown_pairs[a["uid"]].add(frozenset((o, dst)))
             w_f.writerow([
                 fid, a["uid"], f["outboundFlightNumber"], f["inboundFlightNumber"],
                 o, dst, secs, day_off,
@@ -586,6 +588,33 @@ def main():
                          "flight that is not in the export")
     else:
         note("schedule", f"all {len(child_refs)} stopover children resolve to a known flight")
+
+    # ---- routes opened with no flight on them ----
+    # The game counts an airline's routes from player_route_data (routes.json),
+    # and a route can be opened there with no flight -- Tsuki Airways had 92
+    # routes and flights on 81. Only those are written: a flown pair is already
+    # in flights. Read since 4 October 2026; older scrapes have no routes.json.
+    fh_r, w_r = writer("airline_unflown_routes.csv", ["airline_uid", "origin_iata", "destination_iata"])
+    seen_r = set()
+    for a in airlines:
+        path = os.path.join(a["path"], "routes.json")
+        if not os.path.exists(path):
+            continue
+        for r in json.load(open(path, encoding="utf-8")):
+            o = (r.get("originAirport") or "").strip().upper()
+            dst = (r.get("destinationAirport") or "").strip().upper()
+            if not (len(o) == 3 and o.isalpha() and len(dst) == 3 and dst.isalpha()) or o == dst:
+                continue
+            pair = frozenset((o, dst))
+            if pair in flown_pairs[a["uid"]] or (a["uid"], pair) in seen_r:
+                continue
+            seen_r.add((a["uid"], pair))
+            airports.update((o, dst))
+            w_r.writerow([a["uid"], o, dst])
+            counts["unflown_routes"] += 1
+    fh_r.close()
+    note("schedule", f"{counts['unflown_routes']:,} routes are opened in the game with no flight "
+                     "on them (airline_unflown_routes); they count as routes, nothing sells")
 
     # ---- dimensions ----
     fh, w = writer("airports.csv", ["iata_code"])

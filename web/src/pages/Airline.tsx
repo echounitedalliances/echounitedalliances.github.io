@@ -25,6 +25,9 @@ export default function AirlinePage() {
   const [a, setA] = useState<Airline | null>(null)
   const [fleet, setFleet] = useState<FleetRow[]>([])
   const [routes, setRoutes] = useState<RoutePairRow[]>([])
+  // City pairs it holds with nothing to sell: opened in the game with no
+  // flights, or flights with no aircraft. The game counts them as routes.
+  const [idleRoutes, setIdleRoutes] = useState<{ airport_a: string; airport_b: string; reason: string }[]>([])
   const [arcs, setArcs] = useState<Arc[]>([])
   const [nodes, setNodes] = useState<NetworkNode[]>([])
   const [missing, setMissing] = useState(false)
@@ -83,7 +86,7 @@ export default function AirlinePage() {
       }
       setA(air)
 
-      const [f, r, w] = await Promise.all([
+      const [f, r, w, idle] = await Promise.all([
         supabase
           .from('v_fleet')
           .select('aircraft_model, manufacturer, aircraft_count')
@@ -101,11 +104,18 @@ export default function AirlinePage() {
         // Most carriers have no site of their own, so this returns no rows
         // far more often than it returns one.
         supabase.rpc('airline_site', { p_uid: air.uid }),
+        supabase
+          .from('v_airline_idle_routes')
+          .select('airport_a, airport_b, reason')
+          .eq('airline_uid', air.uid)
+          .order('airport_a')
+          .order('airport_b'),
       ])
       const routeRows = (r.data as RoutePairRow[]) ?? []
       setFleet((f.data as FleetRow[]) ?? [])
       setRoutes(routeRows)
       setSite(((w.data as MemberSiteRow[]) ?? [])[0] ?? null)
+      setIdleRoutes((idle.data as { airport_a: string; airport_b: string; reason: string }[]) ?? [])
 
       // Draw this carrier's own network: look up the coordinates for the
       // airports it actually touches, then build arcs from its routes.
@@ -578,6 +588,28 @@ export default function AirlinePage() {
             </table>
           </div>
           <Pager paged={routePage} label="routes" />
+          {idleRoutes.length > 0 && (
+            <div className="mt-5">
+              <h3 className="mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">
+                Not flying · {idleRoutes.length}
+              </h3>
+              <p className="mt-1 text-[13px] text-ink-faint">
+                Routes {a?.airline_name} holds in the game with nothing scheduled to sell:
+                opened with no flights yet, or flights with no aircraft assigned.
+              </p>
+              <div className="mono mt-3 flex flex-wrap gap-1.5 text-[11px]">
+                {idleRoutes.map((r) => (
+                  <span
+                    key={`${r.airport_a}-${r.airport_b}`}
+                    className="border border-edge px-2 py-0.5 text-ink-dim"
+                    title={r.reason === 'no_flights' ? 'Opened, no flights yet' : 'Flights with no aircraft assigned'}
+                  >
+                    {r.airport_a} ⇄ {r.airport_b}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
