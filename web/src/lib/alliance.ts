@@ -32,8 +32,8 @@ export type Leader = {
  *
  * One row per leader, not per division, because the two do not match one to
  * one in either direction: a division can be led by more than one person, and
- * one person can lead more than one division -- Ahnaf currently leads Aura,
- * Elion and Eos. That is why nothing here counts the leaders and calls it
+ * one person can lead more than one division -- Ahnaf currently leads both
+ * Aura and Elion. That is why nothing here counts the leaders and calls it
  * the number of divisions; the About page groups by division_code instead.
  */
 export const LEADERS: Leader[] = [
@@ -45,7 +45,7 @@ export const LEADERS: Leader[] = [
   { division_code: 'vilis', name: 'Yukai', discord: 'ykw_1009' },
   { division_code: 'elion', name: 'Ahnaf', discord: '_ahnafabrar_' },
   { division_code: 'aura', name: 'Ahnaf', discord: '_ahnafabrar_' },
-  { division_code: 'eos', name: 'Ahnaf', discord: '_ahnafabrar_' },
+  { division_code: 'eos', name: 'Falcco', discord: '.fyxd' },
 ]
 
 export const SLOGAN = 'Home of the Excellences'
