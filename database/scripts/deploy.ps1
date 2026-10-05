@@ -129,7 +129,9 @@ $files += @('04_views.sql', '05_reservations.sql', '06_inventory.sql',
             # Every division's busiest pairs on the network map.
             '38_network_arcs_every_division.sql',
             # Routes opened in the game with no flights; counted as routes.
-            '39_opened_routes.sql')
+            '39_opened_routes.sql',
+            # Nobody can make themselves an admin; bookings written only via RPCs.
+            '40_lock_admin_flag.sql')
 
 # Refuse the truncating reload against a database people are using.
 #

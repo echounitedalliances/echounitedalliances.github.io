@@ -1,8 +1,9 @@
 -- =====================================================================
 --  Echo United Alliances -- granting and revoking admin
 --
---  You are the first admin, set by hand below. After that you can promote and
---  demote trusted people yourself without touching SQL again.
+--  The first admin is set by hand, in SQL, by whoever runs the database: no
+--  address is kept in this public file. After that admins promote and demote
+--  trusted people themselves without touching SQL again.
 --
 --  The rules, enforced in the database rather than in the site:
 --    * only an admin may grant or revoke admin
@@ -14,52 +15,12 @@
 begin;
 
 -- ---------------------------------------------------------------------
--- Bootstrap: the first admin
+-- The first admin
 --
--- Matched on email, so it applies whenever that account first signs in as
--- well as retroactively if it already exists.
+-- Not in this file. Run once, by hand, after that account has signed in:
+--     update public.resonants set is_admin = true where lower(email) = lower('...');
+-- (An email-matched bootstrap table lived here until 40_lock_admin_flag.sql.)
 -- ---------------------------------------------------------------------
-
-create table if not exists public.admin_bootstrap (
-    email text primary key
-          check (email ~ '^[^@[:space:]]+@[^@[:space:]]+\.[^@[:space:]]+$'),
-    note  text
-);
-
-comment on table public.admin_bootstrap is
-    'Emails that become admin automatically on sign-up. The only way in before any admin exists; not readable or writable by the site.';
-
-insert into public.admin_bootstrap (email, note)
-values ('dangvuhaidang@gmail.com', 'site owner')
-on conflict (email) do nothing;
-
--- Apply it to any account that already exists.
-update public.resonants r
-   set is_admin = true
-  from public.admin_bootstrap b
- where lower(r.email) = lower(b.email)
-   and not r.is_admin;
-
--- And to accounts created later.
-create or replace function public.echo_apply_admin_bootstrap()
-returns trigger language plpgsql security definer set search_path = public as $$
-begin
-    if exists (select 1 from public.admin_bootstrap b
-                where lower(b.email) = lower(new.email)) then
-        new.is_admin := true;
-    end if;
-    return new;
-end;
-$$;
-
-drop trigger if exists resonants_admin_bootstrap on public.resonants;
-create trigger resonants_admin_bootstrap
-    before insert on public.resonants
-    for each row execute function public.echo_apply_admin_bootstrap();
-
--- The bootstrap list is nobody's business but the owner's.
-alter table public.admin_bootstrap enable row level security;
-revoke all on public.admin_bootstrap from anon, authenticated;
 
 -- ---------------------------------------------------------------------
 -- Audit
