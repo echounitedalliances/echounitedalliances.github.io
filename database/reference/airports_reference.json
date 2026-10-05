@@ -8869,16 +8869,6 @@
   "tz": "Asia/Shanghai",
   "tz_source": "dataset"
  },
- "JIJ": {
-  "city": "Jijiga",
-  "country": "ET",
-  "iata": "JIJ",
-  "lat": 9.331907,
-  "lon": 42.911811,
-  "name": "Gerad Wilwal International Airport",
-  "tz": "Africa/Addis_Ababa",
-  "tz_source": "dataset"
- },
  "JIK": {
   "city": "Ikaria Island",
   "country": "GR",
@@ -8887,16 +8877,6 @@
   "lon": 26.3470993042,
   "name": "Ikaria Airport",
   "tz": "Europe/Athens",
-  "tz_source": "dataset"
- },
- "JIM": {
-  "city": "Jimma",
-  "country": "ET",
-  "iata": "JIM",
-  "lat": 7.66609001159668,
-  "lon": 36.81660079956055,
-  "name": "Jimma Airport",
-  "tz": "Africa/Addis_Ababa",
   "tz_source": "dataset"
  },
  "JIQ": {
@@ -19517,6 +19497,16 @@
   "lon": 99.135597229,
   "name": "Surat Thani Airport",
   "tz": "Asia/Bangkok",
+  "tz_source": "dataset"
+ },
+ "URY": {
+  "city": "Gurayat",
+  "country": "SA",
+  "iata": "URY",
+  "lat": 31.412413,
+  "lon": 37.278898,
+  "name": "Gurayat Domestic Airport",
+  "tz": "Asia/Riyadh",
   "tz_source": "dataset"
  },
  "USA": {

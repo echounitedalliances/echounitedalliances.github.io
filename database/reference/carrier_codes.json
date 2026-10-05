@@ -209,6 +209,12 @@
   "carrier_code": "NU",
   "division": "elion"
  },
+ "0faff0b7-c8df-460d-980c-457a47fbf549": {
+  "airline_code": "CM",
+  "airline_name": "Cozmic",
+  "carrier_code": "CM",
+  "division": "proxima"
+ },
  "0fd3672e-b97c-4827-8f41-debb6b8fbbe8": {
   "airline_code": "UA",
   "airline_name": "United Airlines",
@@ -291,6 +297,12 @@
   "airline_code": "XQ",
   "airline_name": "Airartic FleX",
   "carrier_code": "XQ",
+  "division": "proxima"
+ },
+ "14acd4e5-6f14-40ed-99cf-8123f3e8026b": {
+  "airline_code": "MI",
+  "airline_name": "Mini Airways",
+  "carrier_code": "MIPX",
   "division": "proxima"
  },
  "14fc251f-472b-4a39-bc12-0fd2c9c3c683": {
@@ -448,6 +460,12 @@
   "airline_name": "ContiNex Cargo",
   "carrier_code": "CXAU",
   "division": "aura"
+ },
+ "1c606e8f-0d58-427d-b1f4-9fa370909fde": {
+  "airline_code": "GH",
+  "airline_name": "Romero",
+  "carrier_code": "GHEO",
+  "division": "eos"
  },
  "1c9b4cc7-dfc1-4bcf-8f22-dba6c7c59d84": {
   "airline_code": "MA",
@@ -804,9 +822,9 @@
   "division": "proxima"
  },
  "2ef3daad-2e7b-4d5f-b228-4cf17fc9e273": {
-  "airline_code": "PX",
-  "airline_name": "Polynesian Air",
-  "carrier_code": "PXEN",
+  "airline_code": "ZW",
+  "airline_name": "Azor Wings",
+  "carrier_code": "ZW",
   "division": "elion"
  },
  "2f8fe12f-3734-4c8a-b452-0511fcd8dae2": {
@@ -856,6 +874,12 @@
   "airline_name": "SAMAR AIRLINES",
   "carrier_code": "SBVH1",
   "division": "rhea"
+ },
+ "324c640a-f07c-41b2-8fb0-e9816082ff56": {
+  "airline_code": "GE",
+  "airline_name": "Golden Eagles",
+  "carrier_code": "GEAG",
+  "division": "aegis"
  },
  "326878ce-94ed-4e6d-a9b8-530d3b8a253e": {
   "airline_code": "MK",
@@ -1147,7 +1171,7 @@
  },
  "40859c62-11f0-4f85-add2-604d1a263169": {
   "airline_code": "E4",
-  "airline_name": "Flop air",
+  "airline_name": "ENTER AIR",
   "carrier_code": "E4",
   "division": "elysium"
  },
@@ -1441,7 +1465,7 @@
  },
  "4dbbc852-1987-44f6-891f-a55e38b22667": {
   "airline_code": "SL",
-  "airline_name": "SteppeLink",
+  "airline_name": "TuranLink",
   "carrier_code": "SLPX",
   "division": "proxima"
  },
@@ -1667,6 +1691,12 @@
   "carrier_code": "EUAG",
   "division": "aegis"
  },
+ "5b901f62-88b7-46e3-b1db-376a3ea51b8c": {
+  "airline_code": "MX",
+  "airline_name": "MAXX",
+  "carrier_code": "MXEN",
+  "division": "elion"
+ },
  "5c63dea2-e0f4-44b3-bde4-8ed6a2241f59": {
   "airline_code": "DR",
   "airline_name": "Air Dongson",
@@ -1834,6 +1864,12 @@
   "airline_name": "Crown",
   "carrier_code": "CRAU1",
   "division": "aura"
+ },
+ "66caba4f-2ee4-4e5a-a8e0-3b8daebc8907": {
+  "airline_code": "ND",
+  "airline_name": "NordAir",
+  "carrier_code": "NDVS",
+  "division": "vilis"
  },
  "67a93dee-857c-435f-b7d1-777547b6a479": {
   "airline_code": "MA",
@@ -2321,6 +2357,12 @@
   "carrier_code": "GHAU",
   "division": "aura"
  },
+ "813d1464-ef1a-440d-accd-30b27c08a1f0": {
+  "airline_code": "BG",
+  "airline_name": "Blauflug",
+  "carrier_code": "BGEO",
+  "division": "eos"
+ },
  "814a7361-4499-4c27-b6de-394eee5bdab4": {
   "airline_code": "PA",
   "airline_name": "Premium Airlines",
@@ -2464,6 +2506,12 @@
   "airline_name": "United",
   "carrier_code": "UN",
   "division": "rhea"
+ },
+ "88f6d7fb-cf49-4ebd-8075-d34cace5503a": {
+  "airline_code": "TY",
+  "airline_name": "Taiyo Air",
+  "carrier_code": "TY",
+  "division": "eos"
  },
  "8904902b-9b74-4c64-aa08-e21eb466d424": {
   "airline_code": "SG",
@@ -2833,7 +2881,7 @@
  },
  "9f115553-0797-4236-8b34-8aa226b44454": {
   "airline_code": "3F",
-  "airline_name": "FUN! Abu Dhabi",
+  "airline_name": "TerbangYuk!",
   "carrier_code": "3F",
   "division": "eos"
  },
@@ -3376,6 +3424,12 @@
   "airline_name": "Đà Nẵng airline",
   "carrier_code": "DNVH",
   "division": "rhea"
+ },
+ "bc52055f-8e13-4d53-add2-59f918ac0e77": {
+  "airline_code": "AB",
+  "airline_name": "Air Brazil",
+  "carrier_code": "ABEO",
+  "division": "eos"
  },
  "bc58b812-1214-4098-92be-0c220eed11a8": {
   "airline_code": "8T",
@@ -4314,9 +4368,9 @@
   "division": "kyra"
  },
  "ecb851ea-5b84-4844-b2a7-45dfaec12e81": {
-  "airline_code": "AP",
-  "airline_name": "Echo Pacific",
-  "carrier_code": "APAG",
+  "airline_code": "MY",
+  "airline_name": "MayAir",
+  "carrier_code": "MYAG",
   "division": "aegis"
  },
  "ed70ac4d-15c2-4caf-9099-0cb9110ee7df": {
