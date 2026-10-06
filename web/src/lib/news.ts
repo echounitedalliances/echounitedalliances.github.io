@@ -1,10 +1,11 @@
 /**
  * The alliance news feed.
  *
- * The stories come from VAFeed, the community newsfeed a member runs. VAFeed
- * has no API and no RSS — it is server-rendered HTML — but it does not hold
- * its own articles either: it reads them live from a public Google Sheet
- * through opensheet, and that endpoint sends permissive CORS headers.
+ * The stories come from VAFeed, the community newsfeed a member runs, at
+ * vafeed-news.vercel.app since its relaunch on 6 October 2026. VAFeed has no
+ * API and no RSS, but it does not hold its own articles either: it reads them
+ * live from a public Google Sheet through opensheet, and that endpoint sends
+ * permissive CORS headers.
  *
  * So this reads the SAME source VAFeed reads, rather than scraping VAFeed's
  * pages. Two things follow, and both are why it is worth doing this way:
@@ -23,20 +24,25 @@
  * near the DOM. Treat all of it as untrusted input, because it is.
  */
 
+// The sheet vafeed-news.vercel.app's own script.js reads. The relaunch moved
+// to a new sheet; the one before it (1PQUdcLn…) is no longer updated.
 const FEED_URL =
-  'https://opensheet.elk.sh/1PQUdcLnApn9QnB1uNLrgZvC-7pZRs3TP2YzFXTeAmO0/Sheet1'
+  'https://opensheet.elk.sh/1f1ggP7M0_CiM4xbDrgk5KogHHCXIskzJmO2OTxjFalA/Sheet1'
+
+// VAFeed shows only stories its editors have approved; so does this page.
+const VISIBLE_STATUS = 'approved'
 
 /** Where the stories come from, credited on the page. */
 export const NEWS_SOURCE = {
   name: 'VAFeed',
-  url: 'https://vafeed.vercel.app/',
+  url: 'https://vafeed-news.vercel.app/',
 }
 
 export type Article = {
   id: string
   title: string
   category: string
-  /** As printed on the source, e.g. "04 Sep 2026". */
+  /** "04 Sep 2026", whichever way the sheet wrote it; as written if it won't parse. */
   date: string
   /** Parsed from date for sorting; null when it will not parse. */
   time: number | null
@@ -130,12 +136,33 @@ function httpsOnly(url: unknown): string | null {
   return /^https:\/\//i.test(s) ? s : null
 }
 
+/**
+ * The sheet mixes "06 Sep 2026", "06 Sept 2026" and "2026-10-06". "Sept" is
+ * not a month every browser's Date.parse knows, so it is shortened first, and
+ * every form is read as a calendar day in UTC so they sort together.
+ */
 function parseDate(s: string): number | null {
-  const t = Date.parse(s)
+  const iso = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s)
+  if (iso) return Date.UTC(+iso[1], +iso[2] - 1, +iso[3])
+  const t = Date.parse(s.replace(/\bSept\b/i, 'Sep') + ' UTC')
   return Number.isNaN(t) ? null : t
 }
 
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+function printDate(t: number): string {
+  const d = new Date(t)
+  return `${String(d.getUTCDate()).padStart(2, '0')} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`
+}
+
 type Row = Record<string, unknown>
+
+/** Column names as lower case, as VAFeed reads them: imageUrl, imageurl, ImageURL… */
+function lowerKeys(r: Row): Row {
+  const out: Row = {}
+  for (const [k, v] of Object.entries(r)) out[k.trim().toLowerCase()] = v
+  return out
+}
 
 export async function loadNews(signal?: AbortSignal): Promise<Article[]> {
   const res = await fetch(FEED_URL, { signal })
@@ -144,19 +171,22 @@ export async function loadNews(signal?: AbortSignal): Promise<Article[]> {
   if (!Array.isArray(rows)) throw new Error('The news feed returned something unexpected.')
 
   return rows
+    .map(lowerKeys)
+    .filter((r) => String(r.status ?? '').trim().toLowerCase() === VISIBLE_STATUS)
     .map((r, i): Article => {
-      const date = String(r.date ?? '').trim()
+      const raw = String(r.date ?? '').trim()
+      const time = parseDate(raw)
       return {
         id: String(r.id ?? `row-${i}`),
         title: String(r.title ?? '').trim(),
         category: String(r.category ?? '').trim(),
-        date,
-        time: parseDate(date),
+        date: time === null ? raw : printDate(time),
+        time,
         summary: String(r.summary ?? '').trim(),
         html: sanitize(String(r.content ?? '')),
         emoji: String(r.image ?? '').trim() || '📰',
-        imageUrl: httpsOnly(r.imageUrl),
-        featured: truthy(r.isFeatured),
+        imageUrl: httpsOnly(r.imageurl ?? r.image_url),
+        featured: truthy(r.isfeatured),
       }
     })
     .filter((a) => a.title)
