@@ -7,7 +7,7 @@
  *   echoalliances.com          this site, public
  *   live.echoalliances.com     Echo Live, the flight tracker
  *   market.echoalliances.com   Echo Market, aircraft orders
- *   desk.market.echoalliances.com   the market's seller desk
+ *   desk.echoalliances.com     the market's seller desk
  *
  * Nothing here signs anyone in or reads their data. This site only links
  * out; each app does its own Discord login, so a member signs in there.
@@ -67,7 +67,7 @@ export const MEMBER_APPS: MemberApp[] = [
     live: false,
     secondary: {
       label: 'Seller desk (sellers & admins)',
-      // planned: https://desk.market.echoalliances.com
+      // planned: https://desk.echoalliances.com
       url: 'https://echomarket-seller.vercel.app',
     },
   },
