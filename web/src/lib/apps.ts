@@ -63,12 +63,13 @@ export const MEMBER_APPS: MemberApp[] = [
     ],
     route: '/market',
     plannedUrl: 'https://market.echoalliances.com',
-    url: 'https://echomarket-buyer.vercel.app',
+    // Moved 20 October 2026; echomarket-buyer.vercel.app now forwards here.
+    url: 'https://market.echoalliances.com',
     live: true,
     secondary: {
       label: 'Seller desk (sellers & admins)',
-      // planned: https://desk.echoalliances.com
-      url: 'https://echomarket-seller.vercel.app',
+      // echomarket-seller.vercel.app forwards here since 20 October 2026.
+      url: 'https://desk.echoalliances.com',
     },
   },
 ]
