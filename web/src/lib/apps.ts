@@ -50,7 +50,7 @@ export const MEMBER_APPS: MemberApp[] = [
     route: '/live',
     plannedUrl: 'https://live.echoalliances.com',
     url: 'https://echoflightslive.github.io/',
-    live: false,
+    live: true,
   },
   {
     key: 'market',
@@ -64,7 +64,7 @@ export const MEMBER_APPS: MemberApp[] = [
     route: '/market',
     plannedUrl: 'https://market.echoalliances.com',
     url: 'https://echomarket-buyer.vercel.app',
-    live: false,
+    live: true,
     secondary: {
       label: 'Seller desk (sellers & admins)',
       // planned: https://desk.echoalliances.com
