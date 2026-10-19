@@ -21,6 +21,9 @@ import Resonance from './pages/Resonance'
 import { Conduct, Privacy, Terms } from './pages/Policy'
 import News from './pages/News'
 import RoundTheWorld from './pages/RoundTheWorld'
+import Members from './pages/Members'
+import { LivePreview, MarketPreview } from './pages/AppPreview'
+import { AudienceSwitch } from './components/Audience'
 import { AuthProvider, useAuth } from './lib/auth'
 import AdvisoryBar from './components/AdvisoryBar'
 import NavGroup from './components/NavGroup'
@@ -135,6 +138,7 @@ function Shell({ children }: { children: React.ReactNode }) {
           simply overlap. */}
       <div className="sticky top-0 z-40">
         <AdvisoryBar onHome={pathname === '/'} />
+        <AudienceSwitch />
         <header className="border-b border-edge-soft bg-[color:var(--color-ground)]/88 backdrop-blur">
         <div className="mx-auto flex max-w-[1180px] items-center gap-x-3 px-4 py-2.5 sm:px-5 sm:py-3">
           <Link to="/" className="flex items-baseline gap-2.5">
@@ -285,6 +289,9 @@ export default function App() {
           <Route path="/resonance" element={<Resonance />} />
           <Route path="/news" element={<News />} />
           <Route path="/rtw" element={<RoundTheWorld />} />
+          <Route path="/members" element={<Members />} />
+          <Route path="/live" element={<LivePreview />} />
+          <Route path="/market" element={<MarketPreview />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/conduct" element={<Conduct />} />
           <Route path="/privacy" element={<Privacy />} />

@@ -7,6 +7,7 @@ import SearchPanel from '../components/SearchPanel'
 import Join from '../components/Join'
 import { AirlineCard, NotConfigured } from '../components/ui'
 import EchoMark from '../components/EchoMark'
+import { AudienceGate, useMemberLanding } from '../components/Audience'
 import { isConfigured, supabase } from '../lib/supabase'
 import type { Airline, Arc, Division, NetworkNode } from '../lib/types'
 import { accentOf, capitalise, num, spell } from '../lib/format'
@@ -45,6 +46,7 @@ export default function Home() {
   const carrierCount = useCarrierCount()
   const divisionCount = useDivisionCount()
   const airportCount = useAirportCount()
+  useMemberLanding()
 
   useEffect(() => {
     if (!isConfigured) return
@@ -93,6 +95,9 @@ export default function Home() {
     <>
       {/* Renders nothing unless something is actually disrupting travel. */}
       <Advisory />
+
+      {/* First visit only: travelling, or flying with Echo? */}
+      <AudienceGate />
 
       {/* ---------- identity ----------
            One column, full width. This was a two-column grid with the board
