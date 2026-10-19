@@ -17,6 +17,10 @@ import EchoMark from '../components/EchoMark'
  * a list with an odd first entry rather than as a group of equals. Every card
  * now carries the same summary of what its division actually flies, and the
  * order is group policy, held in sort_order by 16_division_policy.sql.
+ *
+ * Compact since 19 October 2026: the cards were square, which left most of
+ * each one empty, and a sentence above the figures repeated the figures. Now
+ * a card is its name, its label if it has one, and the four figures in a row.
  */
 export default function Divisions() {
   const [rows, setRows] = useState<Division[] | null>(null)
@@ -55,11 +59,11 @@ export default function Divisions() {
               <Link
                 key={d.division_code}
                 to={`/d/${d.division_code}`}
-                className="panel lift rise flex flex-col justify-between gap-4 p-5 sm:aspect-square"
+                className="panel lift rise flex flex-col gap-4 p-5"
                 style={{ animationDelay: `${i * 40}ms`, ['--card-accent' as string]: accent }}
               >
-                <div className="min-w-0">
-                  <div className="flex items-center gap-2.5">
+                <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-2">
+                  <div className="flex min-w-0 items-center gap-2.5">
                     <EchoMark height={17} color={accent} />
                     <h2 className="display truncate text-2xl" style={{ color: accent }}>
                       {d.division_name}
@@ -68,7 +72,7 @@ export default function Divisions() {
 
                   {note && (
                     <span
-                      className="mono mt-3 inline-block border px-2 py-0.5 text-[9px] uppercase tracking-[0.14em]"
+                      className="mono inline-block border px-2 py-0.5 text-[9px] uppercase tracking-[0.14em]"
                       style={{
                         color: accent,
                         borderColor: `color-mix(in srgb, ${accent} 45%, transparent)`,
@@ -77,19 +81,14 @@ export default function Divisions() {
                       {note}
                     </span>
                   )}
-
-                  <p className={`text-[12px] leading-relaxed text-ink-dim ${note ? 'mt-3' : 'mt-4'}`}>
-                    {num(d.carriers)} member carriers flying {num(d.routes)} routes
-                    to {num(d.destinations)} destinations.
-                  </p>
                 </div>
 
-                <dl className="grid grid-cols-2 gap-x-4 gap-y-3">
+                <dl className="grid grid-cols-2 gap-x-3 gap-y-3 min-[360px]:grid-cols-4">
                   {[
                     ['Carriers', d.carriers],
                     ['Aircraft', d.aircraft],
                     ['Routes', d.routes],
-                    ['Destinations', d.destinations],
+                    ['Airports', d.destinations],
                   ].map(([label, v]) => (
                     <div key={label as string}>
                       <dd className="mono text-[15px] leading-none text-ink">{num(Number(v))}</dd>
