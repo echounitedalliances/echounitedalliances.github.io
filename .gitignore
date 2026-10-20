@@ -3,11 +3,17 @@
 # so committing it would only add weight and merge conflicts.
 # ---------------------------------------------------------------------
 
-# 574MB of scraped per-airline JSON. Rebuild with:
-#   python divisions/scrape_members.py --division <name>
-# The rosters (divisions/*/members.json) ARE committed - they are small and
-# they are what the scraper needs to know who to fetch.
+# 574MB of per-airline JSON. The rosters (divisions/*/members.json) ARE
+# committed - they are small and say who is in each division.
 divisions/*/members/*/
+
+# How the data is collected is kept private (October 2026): the collector,
+# its checker and the notes on the game's API stay on the maintainer's
+# machine and are never committed.
+divisions/API.md
+divisions/*.py
+divisions/**/__pycache__/
+divisions/proxima/members/test_instructions.md
 
 # 132MB of CSV, rebuilt in ~40s by database/scripts/build_database.py
 database/csv/

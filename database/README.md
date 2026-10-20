@@ -96,7 +96,7 @@ two halves cannot drift apart.
 ### Deploying
 
 ```powershell
-python database/scripts/build_database.py    # JSON -> csv/  (only after a re-scrape)
+python database/scripts/build_database.py    # JSON -> csv/  (only after new data)
 .\database\scripts\deploy.ps1
 ```
 
@@ -248,14 +248,13 @@ provably exhaustive enumeration — the same trade every real engine makes.
 
 ---
 
-## Refreshing after a new scrape
+## The weekly refresh
 
 ```powershell
 .\database\scripts\weekly.ps1
 ```
 
-Put a fresh token from the app into `divisions/.token` first. It scrapes every
-division and merges them into the live tables in place. It never runs
+It merges the week's data into the live tables in place. It never runs
 `02_load_from_csv.sql`, whose `TRUNCATE ... CASCADE` would empty every account
 and booking, and `deploy.ps1` refuses that reload on a database holding either.
 

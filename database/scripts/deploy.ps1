@@ -131,7 +131,9 @@ $files += @('04_views.sql', '05_reservations.sql', '06_inventory.sql',
             # Routes opened in the game with no flights; counted as routes.
             '39_opened_routes.sql',
             # Nobody can make themselves an admin; bookings written only via RPCs.
-            '40_lock_admin_flag.sql')
+            '40_lock_admin_flag.sql',
+            # The board's Discord notice, sent by the database, not the site.
+            '41_admin_apply_notice.sql')
 
 # Refuse the truncating reload against a database people are using.
 #

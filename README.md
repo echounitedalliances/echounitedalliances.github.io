@@ -3,7 +3,7 @@
 The website for Echo United Alliances, a virtual airline group in
 **The Airline Simulator** — nine divisions, 639 member carriers, one network.
 
-Live at **https://echounitedalliances.github.io**
+Live at **https://echoalliances.com**
 Check out our 2nd testing site **https://lacnka.github.io/echotesting/**
 
 ---
@@ -118,28 +118,17 @@ A lot. In rough order of how much is already there to build on:
 - **Three carriers have no usable name** — two carry none at all and one is
   called `/`. They currently show as their uid stub and need labels chosen by
   hand.
-- **Nothing syncs with the game.** The data is a point-in-time export; refreshing
-  it means re-running the scraper with a fresh token and redeploying.
-- **Some folder names are not ASCII** (`divisions/vilis/龙凤航空/`). Fine in this
-  repository, awkward in some tooling.
+- **Nothing syncs with the game live.** The data is a weekly snapshot.
 
-### The weekly scrape
+### The weekly refresh
 
-Put a fresh token from the app into `divisions/.token`, then from the
-repository root:
+Once a week the alliance's data is brought up to date and merged into the live
+database in one transaction, then what the site reads is rebuilt and verified.
+How the data is collected is kept private and is not part of this repository.
 
-```
-.\database\scripts\weekly.ps1
-npm --prefix web run publish
-```
+Two things the merge deliberately does, both decided 16 September 2026:
 
-and commit and push what it lists. It scrapes every division from its
-live roster, proves the scrape complete, merges it into the live database in
-one transaction, rebuilds what the site reads and verifies it.
-
-Two things it deliberately does, both decided 16 September 2026:
-
-- **Liveries are held back.** They are still scraped to disk, but the merge
+- **Liveries are held back.** They are still collected, but the merge
   leaves `airline_liveries` as it is. Nothing on the site reads them yet.
 - **A carrier moving division gets a new code**, because the division tag is
   part of the code. Otherwise codes are sticky: an airline keeps its code
@@ -148,9 +137,8 @@ Two things it deliberately does, both decided 16 September 2026:
 **Opening a division.** Eos, the ninth, opened on 2 October 2026. A new
 division needs a migration of its own (`database/sql/36_division_eos.sql`
 was the first: its row, its place in the order, its colour) and its name in
-`build_database.py`, `check_scrape.py` and `weekly.ps1`. Until it has both,
-the merge refuses the scrape rather than loading a division the site does
-not know. Its carrier-code tag must hold a letter that is not a hex digit
+`build_database.py` and `weekly.ps1`. Until it has both, the merge refuses
+the data rather than loading a division the site does not know. Its carrier-code tag must hold a letter that is not a hex digit
 (Eos is `EO`); see `2_merge.sql`.
 
 Flights and fleets are stored compact, one line per file, as they always were.
@@ -168,12 +156,10 @@ traveller holds is retired rather than deleted if the player removes it.
 ## What this repository holds
 
 ```
-divisions/          the alliance rosters, and the scraper that fetches them
+divisions/          the alliance rosters
   <division>/
     members.json    who is in the division  (committed)
     members/        per-airline flights, fleet and info  (NOT committed - ~390MB)
-  scrape_members.py
-  check_scrape.py   proves a scrape complete before anything loads it
 
 database/           the JSON turned into a relational database
   sql/              01 .. 30, run in numeric order -- for building a database
@@ -186,8 +172,8 @@ web/                the site: Vite + React + Tailwind, static, no server
 socials/            logos, liveries and photography
 ```
 
-Two things are deliberately not committed: the **574MB of scraped per-airline
-JSON**, which regenerates from the game API in about 90 seconds, and
+Two things are deliberately not committed: the **574MB of per-airline
+JSON**, and
 **`database/connection.txt`**, which names your Supabase project. Neither
 contains anything the site needs at runtime.
 
@@ -196,24 +182,21 @@ contains anything the site needs at runtime.
 ## The short version
 
 ```bash
-# 1. fetch the alliance data from the game (needs a fresh API token)
-python divisions/scrape_members.py --division proxima
-
-# 2. turn it into CSV
+# 1. with the per-airline data in divisions/<division>/members/, turn it into CSV
 python database/scripts/build_database.py
 ```
 
 ```powershell
-# 3. one-time: tell it which Supabase project, and store the password
+# 2. one-time: tell it which Supabase project, and store the password
 #    (fill in database/connection.txt first)
 .\database\scripts\save_password.ps1
 
-# 4. deploy the database
+# 3. deploy the database
 .\database\scripts\deploy.ps1
 ```
 
 ```bash
-# 5. run the site
+# 4. run the site
 python database/scripts/write_web_env.py    # connection.txt -> web/.env.local
 npm --prefix web install
 npm --prefix web run dev
@@ -226,8 +209,8 @@ Full detail in [`database/README.md`](database/README.md) and
 
 ## How it is put together
 
-**The data is a game export.** Player-run airlines in The Airline Simulator,
-pulled from the game's own Supabase backend. It is messy in ways worth knowing
+**The data comes from the game.** Player-run airlines in The Airline
+Simulator, as the game itself records them. It is messy in ways worth knowing
 about — airline codes are not unique, seven different carriers are called
 "Emirates", flight numbers run past 99999, and tail numbers repeat even inside
 one fleet. Every one of those is handled; `database/README.md` lists them.

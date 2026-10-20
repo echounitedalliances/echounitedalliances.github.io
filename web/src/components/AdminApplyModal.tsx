@@ -56,10 +56,17 @@ export default function AdminApplyModal({
         return
       }
       setNeedsConfirmation(nc)
+      // An account waiting on its confirmation email has no session yet, and
+      // the application is filed under the signed-in account -- so it is
+      // sent from the Resonance page once they have confirmed and signed in.
+      if (nc) {
+        setStatus('sent')
+        return
+      }
     }
 
     try {
-      await submitAdminApplication({ email, discordUsername: discordUsername.trim() })
+      await submitAdminApplication({ discordUsername: discordUsername.trim() })
       setStatus('sent')
     } catch {
       setStatus('error')
@@ -73,14 +80,21 @@ export default function AdminApplyModal({
 
   if (status === 'sent') {
     return (
-      <Modal title="Application sent" onClose={onClose}>
+      <Modal title={createAccount && needsConfirmation ? 'Confirm your email' : 'Application sent'} onClose={onClose}>
         <p className="text-ink-dim">
           {createAccount && 'Account created. '}
-          {createAccount && needsConfirmation
-            ? `Confirm ${email} from the email we just sent, then sign in. `
-            : ''}
-          Your admin application is with the board — someone will follow up
-          with you on Discord.
+          {createAccount && needsConfirmation ? (
+            <>
+              Confirm {email} from the email we just sent, then sign in and
+              choose “Apply for admin” on your Resonance page to send the
+              application to the board.
+            </>
+          ) : (
+            <>
+              Your admin application is with the board — someone will follow
+              up with you on Discord.
+            </>
+          )}
         </p>
       </Modal>
     )
