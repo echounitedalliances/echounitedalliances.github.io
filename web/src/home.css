@@ -26,10 +26,12 @@
 /* --- opening screen -------------------------------------------------- */
 .home-hero {
   position: relative;
-  min-height: min(calc(100svh - 104px), 920px);
+  /* runs up under the floating bar, as in the proposal */
+  margin-top: calc(-1 * var(--bar-h, 64px));
+  min-height: min(calc(100svh - var(--chrome-top, 30px)), 960px);
   display: flex;
   align-items: flex-end;
-  padding-block: 96px 64px;
+  padding-block: calc(96px + var(--bar-h, 64px)) 64px;
   overflow: hidden;
   border-bottom: 1px solid var(--color-edge-soft);
 }
@@ -74,8 +76,8 @@
 .home-offer .eyebrow { color: #6B6964; }
 .home-offer-figure { margin-top: clamp(24px, 4vw, 48px); display: flex; flex-wrap: wrap; align-items: flex-end; gap: 18px 40px; }
 .home-offer-big { font: 400 clamp(108px, 22vw, 330px)/0.8 var(--font-display); letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
-.home-offer-copy { max-width: 34ch; display: grid; gap: 14px; padding-bottom: 0.6em; }
-.home-offer-copy p { margin: 0; font-size: 19px; color: #2B2A28; }
+.home-offer-copy { flex: 1 1 340px; display: grid; gap: 14px; padding-bottom: 0.6em; }
+.home-offer-copy p { margin: 0; font-size: clamp(19px, 1.6vw, 24px); color: #2B2A28; }
 .home-offer-copy b { color: #050505; }
 .home-offer-note { font-size: 15px !important; }
 .home-offer-note a { color: #050505; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }

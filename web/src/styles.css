@@ -685,4 +685,26 @@ body {
 .div-tile-detailed { min-height: 240px; }
 @media (max-width: 380px) { .div-figs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
-
+/* The floating top bar ------------------------------------------------
+   As in the approved proposal: no background of its own, and blended in
+   difference mode, so everything in it is drawn white and comes out white
+   over black, black over white, and in between over anything else. */
+.site-bar {
+  position: fixed;
+  top: var(--chrome-top, 0px);
+  left: 0;
+  right: 0;
+  z-index: 39;
+  mix-blend-mode: difference;
+  color: #fff;
+}
+.site-bar .text-ink,
+.site-bar .text-ink-dim,
+.site-bar .text-cyan { color: #fff !important; }
+.site-bar .text-ink-faint { color: rgba(255, 255, 255, .72) !important; }
+.site-bar .text-ink-faint:hover { color: #fff !important; }
+.site-bar .border-edge { border-color: rgba(255, 255, 255, .4) !important; }
+.site-bar .btn-primary { background: #fff; color: #000; }
+.site-bar .wordmark-sub { color: rgba(255, 255, 255, .72) !important; }
+/* Pages start below the bar; the home page's opening screen runs up under it. */
+.site-main { padding-top: var(--bar-h, 64px); }

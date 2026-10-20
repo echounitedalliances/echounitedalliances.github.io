@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { HashRouter, Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import About from './pages/About'
@@ -130,16 +130,38 @@ function Shell({ children }: { children: React.ReactNode }) {
   // Following a link should close the menu, or the next page opens behind it.
   useEffect(() => setOpen(false), [pathname])
 
+  // The strip (advisory + Travellers/Members) is solid and sticky; the bar
+  // floats under it and blends with the page. Their heights go into CSS so
+  // the bar knows where to sit and every page knows how far to start down.
+  const strip = useRef<HTMLDivElement>(null)
+  const bar = useRef<HTMLElement>(null)
+  useEffect(() => {
+    const root = document.documentElement
+    const measure = () => {
+      root.style.setProperty('--chrome-top', `${strip.current?.offsetHeight ?? 0}px`)
+      root.style.setProperty('--bar-h', `${bar.current?.offsetHeight ?? 0}px`)
+    }
+    measure()
+    if (typeof ResizeObserver === 'undefined') return
+    const ro = new ResizeObserver(measure)
+    if (strip.current) ro.observe(strip.current)
+    if (bar.current) ro.observe(bar.current)
+    return () => ro.disconnect()
+  }, [])
+
   return (
     <div className="min-h-screen">
       {/* The advisory outranks the alliance's own chrome while travel is
-          disrupted, so it sits above the bar rather than inside it. Both
-          share one sticky wrapper: two elements pinned to top-0 would
-          simply overlap. */}
-      <div className="sticky top-0 z-40">
+          disrupted, so it sits above everything. It shares the solid sticky
+          strip with the Travellers / Members tabs. */}
+      <div ref={strip} className="sticky top-0 z-40">
         <AdvisoryBar onHome={pathname === '/'} />
         <AudienceSwitch />
-        <header className="border-b border-edge-soft bg-[color:var(--color-ground)]/88 backdrop-blur">
+      </div>
+      {/* The bar itself has no background: it floats over the page and is
+          drawn in difference mode, so it reads white over black and black
+          over white, changing smoothly as the page scrolls beneath it. */}
+      <header ref={bar} className="site-bar">
         <div className="mx-auto flex max-w-[1180px] items-center gap-x-3 px-4 py-2.5 sm:px-5 sm:py-3">
           <Link to="/" className="flex items-baseline gap-2.5">
             {/* The wing, not a coloured square standing in for it. */}
@@ -200,8 +222,7 @@ function Shell({ children }: { children: React.ReactNode }) {
           </div>
         </div>
 
-        </header>
-      </div>
+      </header>
 
       <MobileMenu
         open={open}
@@ -216,7 +237,7 @@ function Shell({ children }: { children: React.ReactNode }) {
         account={<AccountLink block />}
       />
 
-      <main>{children}</main>
+      <main className="site-main">{children}</main>
 
       <footer className="mt-24 border-t border-edge-soft">
         <div className="mx-auto flex max-w-[1180px] flex-col gap-2 px-5 py-8 text-[12px] text-ink-faint sm:flex-row sm:justify-between">
