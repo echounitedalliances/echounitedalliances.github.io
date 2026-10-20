@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { isConfigured, supabase } from '../lib/supabase'
 import type { Division } from '../lib/types'
-import { accentOf, capitalise, num, spell } from '../lib/format'
+import { capitalise, spell } from '../lib/format'
 import { useDivisionCount } from '../lib/carriers'
-import { DIVISION_NOTES } from '../lib/site'
 import { Loading, NotConfigured } from '../components/ui'
-import EchoMark from '../components/EchoMark'
+import DivisionTile from '../components/DivisionTile'
 
 /**
  * Every division, three across: nine of them since Eos opened on 2 October
@@ -19,8 +18,10 @@ import EchoMark from '../components/EchoMark'
  * order is group policy, held in sort_order by 16_division_policy.sql.
  *
  * Compact since 19 October 2026: the cards were square, which left most of
- * each one empty, and a sentence above the figures repeated the figures. Now
- * a card is its name, its label if it has one, and the four figures in a row.
+ * each one empty, and a sentence above the figures repeated the figures. Since
+ * the facelift they are the home page's tiles -- black until pointed at, then
+ * flooded with the division's colour a pixel at a time -- with the four
+ * figures in a row.
  */
 export default function Divisions() {
   const [rows, setRows] = useState<Division[] | null>(null)
@@ -51,56 +52,10 @@ export default function Divisions() {
       {rows === null ? (
         <Loading />
       ) : (
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {rows.map((d, i) => {
-            const accent = accentOf(d)
-            const note = DIVISION_NOTES[d.division_code]
-            return (
-              <Link
-                key={d.division_code}
-                to={`/d/${d.division_code}`}
-                className="panel lift rise flex flex-col gap-4 p-5"
-                style={{ animationDelay: `${i * 40}ms`, ['--card-accent' as string]: accent }}
-              >
-                <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-2">
-                  <div className="flex min-w-0 items-center gap-2.5">
-                    <EchoMark height={17} color={accent} />
-                    <h2 className="display truncate text-2xl" style={{ color: accent }}>
-                      {d.division_name}
-                    </h2>
-                  </div>
-
-                  {note && (
-                    <span
-                      className="mono inline-block border px-2 py-0.5 text-[9px] uppercase tracking-[0.14em]"
-                      style={{
-                        color: accent,
-                        borderColor: `color-mix(in srgb, ${accent} 45%, transparent)`,
-                      }}
-                    >
-                      {note}
-                    </span>
-                  )}
-                </div>
-
-                <dl className="grid grid-cols-2 gap-x-3 gap-y-3 min-[360px]:grid-cols-4">
-                  {[
-                    ['Carriers', d.carriers],
-                    ['Aircraft', d.aircraft],
-                    ['Routes', d.routes],
-                    ['Airports', d.destinations],
-                  ].map(([label, v]) => (
-                    <div key={label as string}>
-                      <dd className="mono text-[15px] leading-none text-ink">{num(Number(v))}</dd>
-                      <dt className="mt-1.5 text-[9px] uppercase tracking-[0.1em] text-ink-faint">
-                        {label}
-                      </dt>
-                    </div>
-                  ))}
-                </dl>
-              </Link>
-            )
-          })}
+        <div className="div-grid">
+          {rows.map((d) => (
+            <DivisionTile key={d.division_code} d={d} detailed />
+          ))}
         </div>
       )}
     </div>

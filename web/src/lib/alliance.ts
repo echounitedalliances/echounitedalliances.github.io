@@ -107,11 +107,11 @@ export const ACTIVITIES: Activity[] = [
     name: 'Discount aircraft market',
     lede: 'Post what you want and what you will pay. A veteran fills it.',
     body: [
-      'The market runs the other way round from a shop. Instead of browsing what is for sale, a member opens a buy ticket naming the aircraft models they want and the price they are willing to pay — anywhere from 50% to 80% of the original price.',
+      'The market runs the other way round from a shop. Instead of browsing what is for sale, a member opens a buy ticket naming the aircraft models they want and the price they are willing to pay — anywhere from 50% to 90% of the original price.',
       'Veteran members who can fulfil an order pick it up and handle it. Nothing is scheduled: tickets are opened and filled while people happen to be online, which in a group spanning every timezone means most of the day.',
     ],
     facts: [
-      { label: 'Price range', value: '50% – 80% of original' },
+      { label: 'Price range', value: '50% – 90% of original' },
       { label: 'You post', value: 'Models wanted, and your price' },
       { label: 'Filled by', value: 'Veteran members, as they come online' },
       { label: 'Schedule', value: 'None — it runs continuously' },

@@ -45,7 +45,7 @@ function OnlineBadge() {
   const onlineCount = useOnlineCount()
   if (onlineCount == null) return null
   return (
-    <div className="mono flex items-center gap-1.5 border border-edge px-2.5 py-1.5 text-[11px] text-ink-faint">
+    <div className="mono flex items-center gap-1.5 whitespace-nowrap border border-edge px-2.5 py-1.5 text-[11px] text-ink-faint">
       <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
       {num(onlineCount)} online
     </div>
@@ -57,7 +57,7 @@ function SiteVisitorBadge() {
   const visitorCount = useSiteVisitorCount()
   if (visitorCount == null) return null
   return (
-    <div className="mono flex items-center gap-1.5 border border-edge px-2.5 py-1.5 text-[11px] text-ink-faint">
+    <div className="mono flex items-center gap-1.5 whitespace-nowrap border border-edge px-2.5 py-1.5 text-[11px] text-ink-faint">
       <span className="h-1.5 w-1.5 rounded-full bg-cyan" />
       {num(visitorCount)} on site
     </div>
@@ -158,7 +158,7 @@ function Shell({ children }: { children: React.ReactNode }) {
                   key={l.to}
                   to={l.to}
                   className={({ isActive }) =>
-                    `mono px-2.5 py-1.5 text-[11px] uppercase tracking-[0.12em] transition-colors ${
+                    `mono whitespace-nowrap px-2.5 py-1.5 text-[11px] uppercase tracking-[0.12em] transition-colors ${
                       isActive ? 'text-cyan' : 'text-ink-faint hover:text-ink-dim'
                     }`
                   }

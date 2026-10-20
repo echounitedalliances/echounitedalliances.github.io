@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { AIRLINE_OF_THE_WEEK } from '../../lib/alliance'
 import { isConfigured, supabase } from '../../lib/supabase'
 import { flag, num } from '../../lib/format'
-import { Marquee, Reveal, prefersReducedMotion, useScrollProgress } from '../../lib/motion'
+import { Marquee, prefersReducedMotion, useScrollProgress } from '../../lib/motion'
 
 /**
  * Airline of the Week: the chosen carrier's livery crossing the screen as the
@@ -67,10 +67,11 @@ export default function AirlineOfTheWeek() {
   const livery = pick.liveries[shown]
   const accent = row?.accent_color ?? 'var(--color-ink)'
   // Crosses from the right edge to past the left as the section scrolls by,
-  // climbing slightly, the way an aircraft leaves the runway.
+  // climbing slightly, nose up, the way an aircraft leaves the runway. The
+  // livery faces left, so a clockwise (positive) turn lifts the nose.
   const x = 55 - p * 110
   const y = 18 - p * 36
-  const tilt = -2 - p * 4
+  const tilt = 2 + p * 4
 
   return (
     <section ref={ref} className="aotw" aria-labelledby="aotw-h">
@@ -96,7 +97,7 @@ export default function AirlineOfTheWeek() {
       </div>
 
       <div className="home-wrap aotw-body">
-        <Reveal>
+        <div>
           <p className="eyebrow text-ink-faint">Airline of the Week</p>
           <h2 className="display aotw-name" id="aotw-h">
             {row?.airline_name ?? ' '}
@@ -115,8 +116,8 @@ export default function AirlineOfTheWeek() {
               )}
             </p>
           )}
-        </Reveal>
-        <Reveal delay={120} className="aotw-grid">
+        </div>
+        <div className="aotw-grid">
           <p className="aotw-blurb">{pick.blurb}</p>
           {row && (
             <dl className="aotw-figs">
@@ -133,7 +134,7 @@ export default function AirlineOfTheWeek() {
               Fly {row.airline_name} →
             </Link>
           )}
-        </Reveal>
+        </div>
       </div>
     </section>
   )

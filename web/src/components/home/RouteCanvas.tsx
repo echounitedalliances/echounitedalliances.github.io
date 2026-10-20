@@ -10,7 +10,7 @@ import { prefersReducedMotion } from '../../lib/motion'
  *            lights travelling along them. Like contour lines behind the
  *            headline; no land, no colour.
  *   network: the same routes in their division's colour over the coastline,
- *            drawn in the first time the map scrolls into view.
+ *            drawn once and held still, as in the approved proposal.
  *
  * Equirectangular, the same projection as RouteMap and worldOutline: x and
  * y are linear in longitude and latitude, so no projection library.
@@ -95,7 +95,8 @@ export default function RouteCanvas({
 
     const draw = (now: number) => {
       if (!start) start = now
-      const t = reduce ? 1 : Math.min(1, (now - start) / (mode === 'hero' ? 2800 : 2200))
+      const still = reduce || mode === 'network'
+      const t = still ? 1 : Math.min(1, (now - start) / 2600)
       ctx.clearRect(0, 0, W, H)
 
       if (land) {
@@ -134,14 +135,15 @@ export default function RouteCanvas({
       ctx.globalCompositeOperation = 'source-over'
 
       // the traffic: small lights along a share of the routes
-      if (!reduce && t >= 0.6) {
-        const fade = Math.min(1, (t - 0.6) / 0.4)
+      if (!still) {
+        // as in the proposal: lights from the start, brightening as the lines draw
+        const fade = t
         const clock = now / (mode === 'hero' ? 9000 : 7000)
         const step = mode === 'hero' ? 7 : 3
         for (let i = 0; i < pts.length; i += step) {
           const p = pts[i]
           const [x, y] = at(p, (clock + i * 0.137) % 1)
-          ctx.fillStyle = mode === 'hero' ? `rgba(255,255,255,${0.4 * fade})` : p.color
+          ctx.fillStyle = mode === 'hero' ? `rgba(255,255,255,${0.35 * fade})` : p.color
           ctx.globalAlpha = mode === 'hero' ? 1 : fade
           ctx.beginPath()
           ctx.arc(x, y, mode === 'hero' ? 1.2 : 1.5, 0, Math.PI * 2)
@@ -159,7 +161,7 @@ export default function RouteCanvas({
         ctx.fillRect(0, 0, W, H)
       }
 
-      if (!reduce && visible && !document.hidden) raf = requestAnimationFrame(draw)
+      if (!still && visible && !document.hidden) raf = requestAnimationFrame(draw)
     }
 
     const kick = () => {

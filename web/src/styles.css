@@ -8,9 +8,10 @@
    divisions. There is no light theme, so every colour here is painted
    explicitly rather than inherited from the host.
 
-   Type: Anton for headlines (condensed caps), Bodoni Moda italic for the one
-   accent word a headline may carry, Hanken Grotesk for everything else. The
-   serif-plus-monospace pairing it replaced read as a generated site.
+   Type, exactly as in the approved proposal: Anton for headlines and the
+   wordmark, Bodoni Moda italic for the one accent word a headline may carry,
+   Hanken Grotesk for everything else. The serif-plus-monospace pairing it
+   replaced read as a generated site.
 
    Division accents come from the database (divisions.accent_color) and are
    applied inline, not here -- the palette below is the ground they sit on.
@@ -70,6 +71,13 @@
   --font-mono: "Twemoji Country Flags", "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
 }
 
+:root {
+  /* Anton comes in one weight and one width. */
+  --display-stretch: normal;
+  --display-weight: 400;
+  --wide-stretch: normal;
+}
+
 html {
   background: var(--color-ground);
   /* One unbreakable token (an API key, a long aircraft name) is enough to make
@@ -109,6 +117,7 @@ body {
 .wordmark-sub {
   font-family: var(--font-sans);
   font-weight: 600;
+  font-stretch: var(--wide-stretch);
   text-transform: uppercase;
   letter-spacing: 0.22em;
   line-height: 1.15;
@@ -116,7 +125,8 @@ body {
 
 .display {
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: var(--display-weight);
+  font-stretch: var(--display-stretch);
   text-transform: uppercase;
   letter-spacing: 0.005em;
   line-height: 0.95;
@@ -138,6 +148,7 @@ body {
   font-family: var(--font-sans);
   font-size: 11.5px;
   font-weight: 600;
+  font-stretch: var(--wide-stretch);
   letter-spacing: 0.18em;
   text-transform: uppercase;
 }
@@ -351,160 +362,78 @@ body {
   }
 }
 
-/* The arrival sequence ----------------------------------------------
-   Runs once per browser. Transform and opacity only, so the compositor
-   owns every frame and nothing here touches layout. */
+/* The arrival sequence: radar contact (components/Welcome.tsx) ------
+   The canvas does the scope, the contacts and the wing; the DOM carries the
+   readout and the words. All of it is timed from one clock in the
+   component, so these rules only set the resting look. */
 .welcome {
   position: fixed;
   inset: 0;
   z-index: 90;
-  display: grid;
-  place-items: center;
   overflow: hidden;
-  background:
-    radial-gradient(60rem 40rem at 50% 45%, rgba(255,255,255,.06), transparent 70%),
-    var(--color-ground);
-  animation: welcome-out 700ms cubic-bezier(.6,0,.9,.3) 3800ms both;
+  background: #050505;
 }
-.welcome-inner {
+.welcome-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.welcome-hud {
+  position: absolute;
+  top: calc(18px + env(safe-area-inset-top, 0px));
+  left: max(18px, env(safe-area-inset-left, 0px));
+  right: max(18px, env(safe-area-inset-right, 0px));
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 24px;
+  justify-content: space-between;
+  font: 600 11px/1 var(--font-sans);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  font-variant-numeric: tabular-nums;
+  opacity: 0;
+}
+.welcome-hud b { color: var(--color-ink); font-weight: 700; }
+.welcome-copy {
+  position: absolute;
+  left: 0; right: 0;
+  top: calc(42% + min(15vh, 125px) + 34px);
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding: 0 20px;
   text-align: center;
 }
-
-.welcome-line {
-  font-family: var(--font-brand);
+.welcome-copy p { margin: 0; opacity: 0; }
+.welcome-echo {
+  font: 400 clamp(54px, 12vw, 128px)/0.85 var(--font-display);
+  letter-spacing: .04em;
   text-transform: uppercase;
   color: var(--color-ink);
-  opacity: 0;
-  animation: welcome-rise 620ms cubic-bezier(.2,.7,.3,1) both;
 }
-.welcome-kicker {
-  font-size: clamp(13px, 2.4vw, 20px);
-  letter-spacing: 0.42em;
-  text-indent: 0.42em;
+.welcome-name {
+  font: 600 clamp(11px, 1.8vw, 15px)/1 var(--font-sans);
+  letter-spacing: .42em;
+  text-indent: .42em;
+  text-transform: uppercase;
   color: var(--color-ink-dim);
-  animation-delay: 1100ms;
 }
-
-/* The wing owns the top of the frame; every word sits under it. */
-.welcome-stage {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: min(92vw, 720px);
-  height: clamp(150px, 26vw, 230px);
-  margin-bottom: clamp(28px, 6vh, 64px);
+.welcome-slogan {
+  font: italic 500 clamp(20px, 3vw, 30px)/1.1 var(--font-serif);
+  color: var(--color-ink);
 }
-.welcome-echo {
-  margin-top: 10px;
-  font-size: clamp(46px, 13vw, 132px);
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-indent: 0.06em;
-  line-height: 1;
-  animation-delay: 1300ms;
-}
-
-.welcome-mark {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  /* The exit lives here, on the pair, so both halves leave together however
-     staggered their arrivals were. */
-  animation: welcome-mark-out 900ms cubic-bezier(.5,0,.85,.2) 2600ms both;
-}
-/* The strike stretches BEHIND the direction of travel, so the anchor is the
-   leading edge. */
-.welcome-mark .echo-mark { transform-origin: left center; }
-.welcome-mark .echo-mark { grid-area: 1 / 1; }
-
-/* Opposite parabolas, from the two right-hand corners of the page.
-   x falls linearly toward nothing while y falls with the SQUARE of what is
-   left, so each half comes in steeply from its corner and flattens as it
-   arrives. scaleX carries the strike: stretched to nearly three times its
-   length at speed, back to true as it stops.
-
-   The stops are spaced by t, not evenly, and the easing between them is
-   LINEAR -- with a bezier on each segment the wing would ease in and out six
-   separate times and arrive in visible steps. Spacing carries the
-   deceleration; linear keeps it smooth. */
-.welcome-wing-top {
-  animation: welcome-arc-top 1500ms linear 250ms both;
-}
-.welcome-wing-bottom {
-  animation: welcome-arc-bottom 1500ms linear 500ms both;
-}
-
-@keyframes welcome-arc-top {
-  0%   { transform: translate(95vw, -70vh)   scaleX(2.8);  opacity: 0; }
-  12%  { opacity: 1; }
-  25%  { transform: translate(57vw, -25.2vh) scaleX(2.08); opacity: 1; }
-  45%  { transform: translate(34.2vw, -9.07vh) scaleX(1.65); }
-  62%  { transform: translate(19vw, -2.8vh)  scaleX(1.36); }
-  78%  { transform: translate(9.5vw, -0.7vh) scaleX(1.18); }
-  100% { transform: translate(0, 0)          scaleX(1);    opacity: 1; }
-}
-@keyframes welcome-arc-bottom {
-  0%   { transform: translate(95vw, 95vh)    scaleX(2.8);  opacity: 0; }
-  12%  { opacity: 1; }
-  25%  { transform: translate(57vw, 34.2vh)  scaleX(2.08); opacity: 1; }
-  45%  { transform: translate(34.2vw, 12.31vh) scaleX(1.65); }
-  62%  { transform: translate(19vw, 3.8vh)   scaleX(1.36); }
-  78%  { transform: translate(9.5vw, 0.95vh) scaleX(1.18); }
-  100% { transform: translate(0, 0)          scaleX(1);    opacity: 1; }
-}
-
-@keyframes welcome-mark-out {
-  0%   { transform: translateX(0) scaleX(1); opacity: 1; }
-  100% { transform: translateX(-130vw) scaleX(.16); opacity: 0; }
-}
-
-/* One line, two voices: the name, then the slogan in the alliance purple. */
-.welcome-strap {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: baseline;
-  gap: clamp(14px, 4vw, 42px);
-  margin-top: clamp(18px, 3vh, 30px);
-  font-size: clamp(11px, 1.9vw, 17px);
-  font-weight: 600;
-  letter-spacing: 0.3em;
-  text-indent: 0.3em;
-  animation-delay: 1650ms;
-}
-.welcome-strap-name { color: var(--color-ink-dim); }
-.welcome-strap-slogan { color: var(--color-ink); font-family: var(--font-serif); font-style: italic; text-transform: none; letter-spacing: 0.02em; font-size: 1.5em; font-weight: 500; }
-
-@keyframes welcome-rise {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: none; }
-}
-
-@keyframes welcome-out {
-  from { opacity: 1; }
-  to   { opacity: 0; visibility: hidden; }
-}
-
 .welcome-skip {
   position: absolute;
-  right: 16px;
-  bottom: 16px;
+  right: max(16px, env(safe-area-inset-right, 0px));
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
   font-family: var(--font-sans);
   font-size: 10px;
+  font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--color-ink-faint);
   background: none;
   border: 1px solid var(--color-edge);
-  padding: 7px 12px;
+  border-radius: 999px;
+  padding: 7px 14px;
   cursor: pointer;
 }
-.welcome-skip:hover { color: var(--color-ink); border-color: var(--color-accent); }
+.welcome-skip:hover { color: var(--color-ink); border-color: var(--color-ink); }
 
 /* Board hub chips ---------------------------------------------------
    Small enough not to compete with the board, and they carry the alliance
@@ -548,9 +477,11 @@ body {
   font-family: var(--font-sans);
   font-size: 12.5px;
   font-weight: 700;
+  font-stretch: var(--wide-stretch);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   cursor: pointer;
+  white-space: nowrap;
   isolation: isolate;
   overflow: hidden;
   transition: transform .18s cubic-bezier(.2,.7,.3,1),
@@ -723,3 +654,35 @@ body {
    with the page scroll locked. That is indistinguishable from the crash this
    drawer was written to fix. A transition's resting state is the layout's,
    so if it never runs the panel is simply already where it belongs. */
+
+/* Division tiles ----------------------------------------------------
+   Black until pointed at, then flooded with the division's own colour a
+   pixel at a time (components/DivisionTile.tsx). Home page and /divisions. */
+.div-grid { margin-top: clamp(32px, 5vw, 56px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--color-edge); border: 1px solid var(--color-edge); }
+.div-tile {
+  --tile-ink: var(--c);
+  position: relative; overflow: hidden; isolation: isolate;
+  background: var(--color-ground); padding: 26px 22px 24px; min-height: 200px;
+  display: flex; flex-direction: column; justify-content: space-between; gap: 22px;
+}
+.div-px { position: absolute; inset: 0; z-index: -1; display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(6, 1fr); pointer-events: none; }
+.div-px i { background: var(--c); opacity: 0; transition: opacity .12s linear; }
+.div-tile:hover .div-px i, .div-tile:focus-visible .div-px i { opacity: 1; }
+.div-tile:hover, .div-tile:focus-visible { --tile-ink: #050505; }
+.div-top { display: flex; align-items: center; gap: 12px; }
+.div-tag { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; border: 1px solid var(--tile-ink); color: var(--tile-ink); padding: 5px 8px; transition: color .3s .2s, border-color .3s .2s; }
+.div-name { display: block; font: var(--display-weight) clamp(40px, 4vw, 54px)/0.9 var(--font-display); font-stretch: var(--display-stretch); text-transform: uppercase; color: var(--tile-ink); transition: color .3s .2s; }
+.div-meta { margin-top: 10px; display: flex; justify-content: space-between; gap: 12px; font-size: 14px; color: var(--color-ink-faint); transition: color .3s .2s; }
+.div-tile:hover .div-meta, .div-tile:focus-visible .div-meta { color: #050505; }
+.div-tile .echo-mark { transition: background-color .3s .2s; }
+@media (max-width: 900px) { .div-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .div-grid { grid-template-columns: 1fr; } .div-tile { min-height: 150px; } }
+
+.div-figs { margin-top: 14px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; border-top: 1px solid color-mix(in srgb, var(--tile-ink) 30%, transparent); padding-top: 12px; transition: border-color .3s .2s; }
+.div-figs b { display: block; font: var(--display-weight) clamp(20px, 2vw, 26px)/1 var(--font-display); font-stretch: var(--display-stretch); font-variant-numeric: tabular-nums; color: var(--color-ink); transition: color .3s .2s; }
+.div-figs small { display: block; margin-top: 5px; font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--color-ink-faint); transition: color .3s .2s; }
+.div-tile:hover .div-figs b, .div-tile:focus-visible .div-figs b, .div-tile:hover .div-figs small, .div-tile:focus-visible .div-figs small { color: #050505; }
+.div-tile-detailed { min-height: 240px; }
+@media (max-width: 380px) { .div-figs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+
