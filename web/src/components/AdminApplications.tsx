@@ -213,7 +213,7 @@ export default function AdminApplications() {
               type="button"
               disabled={busy || !logEmail.trim()}
               onClick={() => void record()}
-              className="mono bg-accent px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#0B0713] transition-opacity hover:opacity-90 disabled:opacity-50"
+              className="mono bg-accent px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#050505] transition-opacity hover:opacity-90 disabled:opacity-50"
             >
               {busy ? 'Adding…' : 'Add to the queue'}
             </button>
@@ -300,7 +300,7 @@ export default function AdminApplications() {
                           setDeciding({ id: a.application_id, approve: true })
                           setNote('')
                         }}
-                        className="mono border border-[color:var(--color-good)] px-4 py-1.5 text-[10px] uppercase tracking-[0.14em] text-good transition-colors hover:bg-[color:var(--color-good)] hover:text-[#0B0713] disabled:cursor-default disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-good"
+                        className="mono border border-[color:var(--color-good)] px-4 py-1.5 text-[10px] uppercase tracking-[0.14em] text-good transition-colors hover:bg-[color:var(--color-good)] hover:text-[#050505] disabled:cursor-default disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-good"
                       >
                         Approve
                       </button>
@@ -347,7 +347,7 @@ export default function AdminApplications() {
                           type="button"
                           disabled={busy}
                           onClick={() => void decide(a.application_id, deciding.approve)}
-                          className="mono bg-accent px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#0B0713] transition-opacity hover:opacity-90 disabled:opacity-50"
+                          className="mono bg-accent px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#050505] transition-opacity hover:opacity-90 disabled:opacity-50"
                         >
                           {busy
                             ? 'Saving…'

@@ -192,7 +192,7 @@ export default function Book() {
           Keep this reference. It retrieves the booking with any passenger surname.
         </p>
         <div
-          className="mono mx-auto mt-8 inline-block px-8 py-5 text-4xl tracking-[0.3em] text-[#0B0713]"
+          className="mono mx-auto mt-8 inline-block px-8 py-5 text-4xl tracking-[0.3em] text-[#050505]"
           style={{ background: 'var(--color-cyan)' }}
         >
           {pnr}

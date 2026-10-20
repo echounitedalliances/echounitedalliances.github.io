@@ -300,7 +300,7 @@ export default function RouteMap({
         viewBox={`0 0 ${W} ${H}`}
         className="block h-auto w-full"
         style={{
-          background: '#0A0614',
+          background: '#050505',
           cursor: dragging ? 'grabbing' : 'grab',
           // pan-y, not none: 'none' meant a finger anywhere over the map
           // could not scroll the page past it. Vertical drags scroll, and
@@ -382,7 +382,7 @@ export default function RouteMap({
               there is no telling one ocean from another. */}
           <path
             d={WORLD_OUTLINE_PATH}
-            fill="#140C24"
+            fill="#161616"
             stroke="var(--color-edge)"
             strokeWidth={px(0.4)}
             strokeLinejoin="round"
@@ -434,7 +434,7 @@ export default function RouteMap({
                     cx={p.x}
                     cy={p.y}
                     r={r}
-                    fill={focused ? 'var(--color-cyan)' : '#9EE8F5'}
+                    fill={focused ? 'var(--color-cyan)' : '#D9D6D0'}
                     opacity={focused ? 1 : 0.75}
                     style={{ cursor: onPickAirport ? 'pointer' : 'default' }}
                     onMouseEnter={() => setHover(p.n)}
@@ -451,7 +451,7 @@ export default function RouteMap({
                     <text
                       x={p.x + r + px(3)}
                       y={p.y + px(3.4)}
-                      fill={focused ? 'var(--color-cyan)' : '#B6AAD6'}
+                      fill={focused ? 'var(--color-cyan)' : '#BEBAB3'}
                       fontSize={px(10)}
                       fontFamily="var(--font-mono)"
                       style={{ pointerEvents: 'none' }}

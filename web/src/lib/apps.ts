@@ -33,6 +33,8 @@ export type MemberApp = {
   url: string
   /** false: /members and `route` show "coming soon". true: both link to `url`. */
   live: boolean
+  /** Who can use it, as the tile says it: open to anyone, or members only. */
+  access: { membersOnly: boolean; badge: string; signIn: string }
   /** A second, smaller link on the tile. */
   secondary?: { label: string; url: string }
 }
@@ -51,6 +53,7 @@ export const MEMBER_APPS: MemberApp[] = [
     plannedUrl: 'https://live.echoalliances.com',
     url: 'https://echoflightslive.github.io/',
     live: true,
+    access: { membersOnly: false, badge: 'Open to all', signIn: 'Sign in for extras · Discord or Google' },
   },
   {
     key: 'market',
@@ -66,6 +69,7 @@ export const MEMBER_APPS: MemberApp[] = [
     // Moved 20 October 2026; echomarket-buyer.vercel.app now forwards here.
     url: 'https://market.echoalliances.com',
     live: true,
+    access: { membersOnly: true, badge: 'Members only', signIn: 'Discord sign-in · EUA members' },
     secondary: {
       label: 'Seller desk (sellers & admins)',
       // echomarket-seller.vercel.app forwards here since 20 October 2026.

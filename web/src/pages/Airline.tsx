@@ -360,7 +360,7 @@ export default function AirlinePage() {
                   href={a.booking_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mono px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#0B0713]"
+                  className="mono px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#050505]"
                   style={{ background: accent }}
                 >
                   Book with {named ?? a.carrier_code} ↗

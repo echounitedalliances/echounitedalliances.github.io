@@ -146,7 +146,7 @@ export default function AdminMemberSiteEdit({
       <button
         type="button"
         onClick={() => void start()}
-        className="mono border border-[color:var(--color-warn)] px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] text-warn transition-colors hover:bg-[color:var(--color-warn)] hover:text-[#0B0713]"
+        className="mono border border-[color:var(--color-warn)] px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] text-warn transition-colors hover:bg-[color:var(--color-warn)] hover:text-[#050505]"
       >
         {site ? 'Change website' : 'Add a website'}
       </button>
@@ -224,7 +224,7 @@ export default function AdminMemberSiteEdit({
               type="button"
               disabled={busy || sites === null}
               onClick={() => void save()}
-              className="mono bg-accent px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#0B0713] transition-opacity hover:opacity-90 disabled:opacity-50"
+              className="mono bg-accent px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#050505] transition-opacity hover:opacity-90 disabled:opacity-50"
             >
               {busy ? 'Saving…' : 'Save'}
             </button>

@@ -49,7 +49,34 @@ export const LEADERS: Leader[] = [
   { division_code: 'eos', name: 'Falcco', discord: '.fyxd' },
 ]
 
-export const SLOGAN = 'Home of the Excellences'
+export const SLOGAN = 'Home of the Excellence'
+
+/**
+ * Airline of the Week, on the home page.
+ *
+ * Chosen by the board each week; change `division_code` and `airline_slug`
+ * (the carrier's address on this site, /d/<division>/<slug>) and its figures
+ * follow from the database. Liveries are images the airline has given us,
+ * cut out on a transparent background and saved under
+ * web/public/brand/liveries/. With more than one, the page cycles them.
+ */
+export type Livery = { src: string; aircraft: string; registration?: string }
+
+export const AIRLINE_OF_THE_WEEK: {
+  division_code: string
+  airline_slug: string
+  /** One or two sentences, written for the week. */
+  blurb: string
+  liveries: Livery[]
+} = {
+  division_code: 'eos',
+  airline_slug: 'ostrander',
+  blurb:
+    'Flying the Austrian flag from Vienna and Innsbruck, with hubs as far as London, Madrid and St Petersburg, Ostrander is one of the carriers building Eos, EUA’s newest division.',
+  liveries: [
+    { src: 'brand/liveries/ostrander-a350.webp', aircraft: 'Airbus A350', registration: 'OE-AZY' },
+  ],
+}
 
 export type Activity = {
   id: string
@@ -81,11 +108,11 @@ export const ACTIVITIES: Activity[] = [
     name: 'Discount aircraft market',
     lede: 'Post what you want and what you will pay. A veteran fills it.',
     body: [
-      'The market runs the other way round from a shop. Instead of browsing what is for sale, a member opens a buy ticket naming the aircraft models they want and the price they are willing to pay — anywhere from 50% to 80% of the original price.',
+      'The market runs the other way round from a shop. Instead of browsing what is for sale, a member opens a buy ticket naming the aircraft models they want and the price they are willing to pay — anywhere from 50% to 90% of the original price.',
       'Veteran members who can fulfil an order pick it up and handle it. Nothing is scheduled: tickets are opened and filled while people happen to be online, which in a group spanning every timezone means most of the day.',
     ],
     facts: [
-      { label: 'Price range', value: '50% – 80% of original' },
+      { label: 'Price range', value: '50% – 90% of original' },
       { label: 'You post', value: 'Models wanted, and your price' },
       { label: 'Filled by', value: 'Veteran members, as they come online' },
       { label: 'Schedule', value: 'None — it runs continuously' },

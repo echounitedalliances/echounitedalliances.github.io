@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { HashRouter, Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import About from './pages/About'
@@ -45,7 +45,7 @@ function OnlineBadge() {
   const onlineCount = useOnlineCount()
   if (onlineCount == null) return null
   return (
-    <div className="mono flex items-center gap-1.5 border border-edge px-2.5 py-1.5 text-[11px] text-ink-faint">
+    <div className="mono flex items-center gap-1.5 whitespace-nowrap border border-edge px-2.5 py-1.5 text-[11px] text-ink-faint">
       <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
       {num(onlineCount)} online
     </div>
@@ -57,7 +57,7 @@ function SiteVisitorBadge() {
   const visitorCount = useSiteVisitorCount()
   if (visitorCount == null) return null
   return (
-    <div className="mono flex items-center gap-1.5 border border-edge px-2.5 py-1.5 text-[11px] text-ink-faint">
+    <div className="mono flex items-center gap-1.5 whitespace-nowrap border border-edge px-2.5 py-1.5 text-[11px] text-ink-faint">
       <span className="h-1.5 w-1.5 rounded-full bg-cyan" />
       {num(visitorCount)} on site
     </div>
@@ -130,16 +130,72 @@ function Shell({ children }: { children: React.ReactNode }) {
   // Following a link should close the menu, or the next page opens behind it.
   useEffect(() => setOpen(false), [pathname])
 
+  // The strip (advisory + Travellers/Members) is solid and sticky; the bar
+  // floats under it and blends with the page. Their heights go into CSS so
+  // the bar knows where to sit and every page knows how far to start down.
+  const strip = useRef<HTMLDivElement>(null)
+  const bar = useRef<HTMLElement>(null)
+  useEffect(() => {
+    const root = document.documentElement
+    const measure = () => {
+      root.style.setProperty('--chrome-top', `${strip.current?.offsetHeight ?? 0}px`)
+      root.style.setProperty('--bar-h', `${bar.current?.offsetHeight ?? 0}px`)
+    }
+    measure()
+    if (typeof ResizeObserver === 'undefined') return
+    const ro = new ResizeObserver(measure)
+    if (strip.current) ro.observe(strip.current)
+    if (bar.current) ro.observe(bar.current)
+    return () => ro.disconnect()
+  }, [])
+
+  // Scrolling down tucks the bar up under the strip; any scroll up brings it
+  // back. Near the top of the page it always shows. Past a screen's height
+  // the back-to-top button appears.
+  const [barHidden, setBarHidden] = useState(false)
+  const [showTop, setShowTop] = useState(false)
+  useEffect(() => {
+    let last = window.scrollY
+    let raf = 0
+    const update = () => {
+      raf = 0
+      const y = window.scrollY
+      const dy = y - last
+      if (y < 80) setBarHidden(false)
+      else if (dy > 6) setBarHidden(true)
+      else if (dy < -6) setBarHidden(false)
+      if (Math.abs(dy) > 6 || y < 80) last = y
+      setShowTop(y > window.innerHeight * 0.9)
+    }
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
+  // A new page, or the menu open, always shows the bar.
+  useEffect(() => setBarHidden(false), [pathname, open])
+
   return (
     <div className="min-h-screen">
       {/* The advisory outranks the alliance's own chrome while travel is
-          disrupted, so it sits above the bar rather than inside it. Both
-          share one sticky wrapper: two elements pinned to top-0 would
-          simply overlap. */}
-      <div className="sticky top-0 z-40">
+          disrupted, so it sits above everything. It shares the solid sticky
+          strip with the Travellers / Members tabs. */}
+      <div ref={strip} className="sticky top-0 z-40">
         <AdvisoryBar onHome={pathname === '/'} />
         <AudienceSwitch />
-        <header className="border-b border-edge-soft bg-[color:var(--color-ground)]/88 backdrop-blur">
+      </div>
+      {/* The bar itself has no background: it floats over the page and is
+          drawn in difference mode, so it reads white over black and black
+          over white, changing smoothly as the page scrolls beneath it. */}
+      <header
+        ref={bar}
+        className={`site-bar ${barHidden && !open ? 'site-bar-hidden' : ''}`}
+        onFocusCapture={() => setBarHidden(false)}
+      >
         <div className="mx-auto flex max-w-[1180px] items-center gap-x-3 px-4 py-2.5 sm:px-5 sm:py-3">
           <Link to="/" className="flex items-baseline gap-2.5">
             {/* The wing, not a coloured square standing in for it. */}
@@ -158,7 +214,7 @@ function Shell({ children }: { children: React.ReactNode }) {
                   key={l.to}
                   to={l.to}
                   className={({ isActive }) =>
-                    `mono px-2.5 py-1.5 text-[11px] uppercase tracking-[0.12em] transition-colors ${
+                    `mono whitespace-nowrap px-2.5 py-1.5 text-[11px] uppercase tracking-[0.12em] transition-colors ${
                       isActive ? 'text-cyan' : 'text-ink-faint hover:text-ink-dim'
                     }`
                   }
@@ -200,8 +256,7 @@ function Shell({ children }: { children: React.ReactNode }) {
           </div>
         </div>
 
-        </header>
-      </div>
+      </header>
 
       <MobileMenu
         open={open}
@@ -216,7 +271,7 @@ function Shell({ children }: { children: React.ReactNode }) {
         account={<AccountLink block />}
       />
 
-      <main>{children}</main>
+      <main className="site-main">{children}</main>
 
       <footer className="mt-24 border-t border-edge-soft">
         <div className="mx-auto flex max-w-[1180px] flex-col gap-2 px-5 py-8 text-[12px] text-ink-faint sm:flex-row sm:justify-between">
@@ -254,6 +309,23 @@ function Shell({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </footer>
+
+      <button
+        type="button"
+        className={`to-top ${showTop ? 'to-top-on' : ''}`}
+        onClick={() =>
+          window.scrollTo({
+            top: 0,
+            behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+          })
+        }
+        aria-label="Back to top"
+        tabIndex={showTop ? 0 : -1}
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M8 13V3M3.5 7.5 8 3l4.5 4.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
     </div>
   )
 }

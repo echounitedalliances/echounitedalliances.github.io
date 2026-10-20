@@ -90,7 +90,7 @@ export default function MobileMenu({
         aria-label="Close menu"
         tabIndex={-1}
         onClick={onClose}
-        className={`absolute inset-0 w-full cursor-default bg-[#0B0713]/70 backdrop-blur-sm transition-opacity duration-200 motion-reduce:transition-none ${
+        className={`absolute inset-0 w-full cursor-default bg-[#050505]/70 backdrop-blur-sm transition-opacity duration-200 motion-reduce:transition-none ${
           shown ? 'opacity-100' : 'opacity-0'
         }`}
       />
