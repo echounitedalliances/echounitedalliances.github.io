@@ -25,6 +25,7 @@ on:
       - '.nojekyll'
       - 'assets/**'
       - 'brand/**'
+      - 'preview/**'
       - '.github/workflows/deploy-web.yml'
   workflow_dispatch:
 
@@ -63,6 +64,9 @@ jobs:
             echo "::error::No brand/ at the repository root — run 'npm --prefix web run publish'."
             exit 1
           fi
+          # preview/ is a staged build of a branch, served at /preview/ for
+          # review before it replaces the site. Absent most of the time.
+          if [ -d preview ]; then cp -r preview _site/; fi
           touch _site/.nojekyll
           echo "publishing:"
           find _site -type f | sed 's/^/  /'
