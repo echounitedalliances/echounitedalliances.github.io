@@ -29,8 +29,15 @@
 const FEED_URL =
   'https://opensheet.elk.sh/1f1ggP7M0_CiM4xbDrgk5KogHHCXIskzJmO2OTxjFalA/Sheet1'
 
-// VAFeed shows only stories its editors have approved; so does this page.
+// A story with a status shows only once its editors have approved it. VAFeed
+// dropped the status column around 20 October 2026 and now shows every row,
+// which emptied this page while it still required "approved"; so a row with
+// no status at all is shown, as VAFeed shows it.
 const VISIBLE_STATUS = 'approved'
+const visible = (status: unknown) => {
+  const s = String(status ?? '').trim().toLowerCase()
+  return s === '' || s === VISIBLE_STATUS
+}
 
 /** Where the stories come from, credited on the page. */
 export const NEWS_SOURCE = {
@@ -172,7 +179,7 @@ export async function loadNews(signal?: AbortSignal): Promise<Article[]> {
 
   return rows
     .map(lowerKeys)
-    .filter((r) => String(r.status ?? '').trim().toLowerCase() === VISIBLE_STATUS)
+    .filter((r) => visible(r.status))
     .map((r, i): Article => {
       const raw = String(r.date ?? '').trim()
       const time = parseDate(raw)
