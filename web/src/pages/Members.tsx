@@ -11,8 +11,12 @@ import { num, spell } from '../lib/format'
  *
  * The public site is for travellers; this is for the people running Echo
  * airlines. The two apps on it are separate sites under the alliance domain,
- * each behind its own Discord sign-in (lib/apps.ts) -- until one is plugged
- * in, its tile leads to a "coming soon" preview here instead.
+ * each with its own sign-in and its own rules on who gets in (lib/apps.ts);
+ * until one is plugged in, its tile leads to a "coming soon" preview here.
+ *
+ * Nothing here is behind a login, so the public sees it too: the tools come
+ * first because members visit most, each app says who can use it, and a
+ * link under the heading takes newcomers straight to how to join.
  */
 
 function AppTile({ app }: { app: MemberApp }) {
@@ -22,12 +26,14 @@ function AppTile({ app }: { app: MemberApp }) {
         <span className="display text-[28px] leading-none">{app.name}</span>
         <span
           className={`mono shrink-0 border px-2 py-1 text-[10px] uppercase tracking-[0.12em] ${
-            app.live
-              ? 'border-[color:var(--color-good)] text-[color:var(--color-good)]'
-              : 'border-edge text-ink-faint'
+            !app.live
+              ? 'border-edge text-ink-faint'
+              : app.access.membersOnly
+                ? 'border-[color:var(--color-ink)] bg-[color:var(--color-ink)] text-[#050505]'
+                : 'border-[color:var(--color-good)] text-[color:var(--color-good)]'
           }`}
         >
-          {app.live ? 'Open' : 'Coming soon'}
+          {app.live ? app.access.badge : 'Coming soon'}
         </span>
       </div>
       <p className="mt-3 text-[15px] text-ink-dim">{app.tagline}</p>
@@ -35,7 +41,7 @@ function AppTile({ app }: { app: MemberApp }) {
         <span className="mono text-[11px] uppercase tracking-[0.12em] text-cyan">
           {app.live ? 'Open ↗' : 'Preview →'}
         </span>
-        <span className="mono text-[10.5px] text-ink-faint">Discord sign-in</span>
+        <span className="mono text-right text-[10.5px] text-ink-faint">{app.access.signIn}</span>
       </div>
     </>
   )
@@ -86,8 +92,16 @@ export default function Members() {
           </h1>
           <p className="mt-4 max-w-[62ch] text-ink-dim sm:text-lg">
             The tools for {num(carriers)} member airlines across {spell(divisions)} divisions.
-            Each app signs you in with the Discord account you use on the Echo server.
+            Echo Live is open to everyone; Echo Market is for members, signed in with the
+            Discord account you use on the EUA server.
           </p>
+          <button
+            type="button"
+            onClick={() => document.getElementById('join')?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
+            className="mt-5 inline-flex items-center gap-2 text-[15px] font-semibold text-ink underline decoration-[color:var(--color-ink-faint)] underline-offset-4 hover:decoration-[color:var(--color-ink)]"
+          >
+            Not in EUA yet? Here’s how to join ↓
+          </button>
         </div>
       </section>
 
@@ -123,7 +137,7 @@ export default function Members() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1180px] px-4 pt-12 sm:px-5">
+      <section id="join" className="mx-auto max-w-[1180px] scroll-mt-28 px-4 pt-12 sm:px-5">
         <div className="panel flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
           <div>
             <p className="display text-2xl">Not in a division yet?</p>
