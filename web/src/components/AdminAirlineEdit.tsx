@@ -128,7 +128,7 @@ export default function AdminAirlineEdit({
       <button
         type="button"
         onClick={start}
-        className="mono border border-[color:var(--color-warn)] px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] text-warn transition-colors hover:bg-[color:var(--color-warn)] hover:text-[#0B0713]"
+        className="mono border border-[color:var(--color-warn)] px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] text-warn transition-colors hover:bg-[color:var(--color-warn)] hover:text-[#050505]"
       >
         Edit as admin
       </button>
@@ -155,7 +155,7 @@ export default function AdminAirlineEdit({
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="mono mt-6 bg-accent px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#0B0713] transition-opacity hover:opacity-90"
+                className="mono mt-6 bg-accent px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#050505] transition-opacity hover:opacity-90"
               >
                 Done
               </button>
@@ -244,7 +244,7 @@ export default function AdminAirlineEdit({
                   type="button"
                   disabled={busy}
                   onClick={() => void save()}
-                  className="mono bg-accent px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#0B0713] transition-opacity hover:opacity-90 disabled:opacity-50"
+                  className="mono bg-accent px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#050505] transition-opacity hover:opacity-90 disabled:opacity-50"
                 >
                   {busy ? 'Updating…' : 'Update'}
                 </button>

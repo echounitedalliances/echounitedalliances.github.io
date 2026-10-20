@@ -67,7 +67,7 @@ function PolicyPage({ policy }: { policy: Policy }) {
               href={SITE.discordInvite}
               target="_blank"
               rel="noopener noreferrer"
-              className="mono bg-accent px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#0B0713] transition-opacity hover:opacity-90"
+              className="mono bg-accent px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#050505] transition-opacity hover:opacity-90"
             >
               Join on Discord ↗
             </a>

@@ -48,7 +48,34 @@ export const LEADERS: Leader[] = [
   { division_code: 'eos', name: 'Falcco', discord: '.fyxd' },
 ]
 
-export const SLOGAN = 'Home of the Excellences'
+export const SLOGAN = 'Home of the Excellence'
+
+/**
+ * Airline of the Week, on the home page.
+ *
+ * Chosen by the board each week; change `division_code` and `airline_slug`
+ * (the carrier's address on this site, /d/<division>/<slug>) and its figures
+ * follow from the database. Liveries are images the airline has given us,
+ * cut out on a transparent background and saved under
+ * web/public/brand/liveries/. With more than one, the page cycles them.
+ */
+export type Livery = { src: string; aircraft: string; registration?: string }
+
+export const AIRLINE_OF_THE_WEEK: {
+  division_code: string
+  airline_slug: string
+  /** One or two sentences, written for the week. */
+  blurb: string
+  liveries: Livery[]
+} = {
+  division_code: 'eos',
+  airline_slug: 'ostrander',
+  blurb:
+    'Flying the Austrian flag from Vienna and Innsbruck, with hubs as far as London, Madrid and St Petersburg, Ostrander is one of the carriers building Eos, EUA’s newest division.',
+  liveries: [
+    { src: 'brand/liveries/ostrander-a350.webp', aircraft: 'Airbus A350', registration: 'OE-AZY' },
+  ],
+}
 
 export type Activity = {
   id: string

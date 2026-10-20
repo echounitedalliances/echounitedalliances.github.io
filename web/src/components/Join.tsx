@@ -52,7 +52,7 @@ export default function Join({ compact = false }: { compact?: boolean }) {
           <aside className="panel flex flex-col justify-center p-6">
             <div className="flex items-center justify-between gap-3">
               <div className="mono text-[11px] uppercase tracking-[0.14em] text-ink-faint">
-                Echo Alliances
+                Echo United Alliances
               </div>
               {onlineCount != null && (
                 <div className="mono flex items-center gap-1.5 text-[11px] text-ink-faint">

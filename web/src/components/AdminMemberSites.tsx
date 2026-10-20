@@ -266,7 +266,7 @@ export default function AdminMemberSites() {
                         type="button"
                         disabled={busy}
                         onClick={() => void remove(s.site_slug)}
-                        className="mono border border-[color:var(--color-danger)] px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] text-danger transition-colors hover:bg-[color:var(--color-danger)] hover:text-[#0B0713] disabled:opacity-50"
+                        className="mono border border-[color:var(--color-danger)] px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] text-danger transition-colors hover:bg-[color:var(--color-danger)] hover:text-[#050505] disabled:opacity-50"
                       >
                         Remove
                       </button>
@@ -390,7 +390,7 @@ export default function AdminMemberSites() {
               type="button"
               disabled={busy}
               onClick={() => void save()}
-              className="mono bg-accent px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#0B0713] transition-opacity hover:opacity-90 disabled:opacity-50"
+              className="mono bg-accent px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#050505] transition-opacity hover:opacity-90 disabled:opacity-50"
             >
               {busy ? 'Saving…' : editing === NEW ? 'Create website' : 'Save'}
             </button>

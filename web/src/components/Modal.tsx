@@ -79,7 +79,7 @@ export default function Modal({
 
   return (
     <div
-      className="fixed inset-0 z-[95] grid place-items-center overflow-y-auto bg-[#0B0713]/80 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-[95] grid place-items-center overflow-y-auto bg-[#050505]/80 p-4 backdrop-blur-sm"
       onClick={onClose}
     >
       <div

@@ -150,7 +150,7 @@ export default function MemberSite({
       <button
         type="button"
         onClick={() => setAsking(true)}
-        className="mono px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#0B0713] transition-opacity hover:opacity-90"
+        className="mono px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#050505] transition-opacity hover:opacity-90"
         style={{ background: accent }}
       >
         Visit {site.site_name} ↗
@@ -167,7 +167,7 @@ export default function MemberSite({
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setAsking(false)}
-                  className="mono px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#0B0713]"
+                  className="mono px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#050505]"
                   style={{ background: accent }}
                 >
                   Continue to {site.site_name} ↗

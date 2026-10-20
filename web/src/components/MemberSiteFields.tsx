@@ -291,7 +291,7 @@ export default function MemberSiteFields({
             // Inert: this is a picture of the buttons, not the buttons.
             <>
               <span
-                className="mono px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#0B0713]"
+                className="mono px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#050505]"
                 style={{ background: accent }}
               >
                 Continue to {name} ↗

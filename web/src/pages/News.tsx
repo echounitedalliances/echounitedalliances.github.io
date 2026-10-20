@@ -146,7 +146,7 @@ export default function News() {
                   <span className="grid gap-6 p-6 sm:p-8 md:grid-cols-[1fr_auto] md:items-center">
                     <span className="block min-w-0">
                       <span className="mono flex flex-wrap items-center gap-2.5 text-[10px] uppercase tracking-[0.14em]">
-                        <span className="bg-accent px-2 py-0.5 text-[#0B0713]">Newest</span>
+                        <span className="bg-accent px-2 py-0.5 text-[#050505]">Newest</span>
                         {featured.category && (
                           <span className="text-ink-faint">{featured.category}</span>
                         )}
@@ -237,7 +237,7 @@ export default function News() {
             <button
               type="button"
               onClick={() => setOpen(null)}
-              className="mono bg-accent px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#0B0713] transition-opacity hover:opacity-90"
+              className="mono bg-accent px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#050505] transition-opacity hover:opacity-90"
             >
               Close
             </button>
