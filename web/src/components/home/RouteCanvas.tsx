@@ -10,7 +10,8 @@ import { prefersReducedMotion } from '../../lib/motion'
  *            lights travelling along them. Like contour lines behind the
  *            headline; no land, no colour.
  *   network: the same routes in their division's colour over the coastline,
- *            drawn once and held still, as in the approved proposal.
+ *            drawn in the first time the map scrolls into view, with
+ *            traffic moving along it once it is drawn.
  *
  * Equirectangular, the same projection as RouteMap and worldOutline: x and
  * y are linear in longitude and latitude, so no projection library.
@@ -95,8 +96,8 @@ export default function RouteCanvas({
 
     const draw = (now: number) => {
       if (!start) start = now
-      const still = reduce || mode === 'network'
-      const t = still ? 1 : Math.min(1, (now - start) / 2600)
+      const still = reduce
+      const t = still ? 1 : Math.min(1, (now - start) / (mode === 'hero' ? 2600 : 2200))
       ctx.clearRect(0, 0, W, H)
 
       if (land) {
@@ -135,9 +136,10 @@ export default function RouteCanvas({
       ctx.globalCompositeOperation = 'source-over'
 
       // the traffic: small lights along a share of the routes
-      if (!still) {
-        // as in the proposal: lights from the start, brightening as the lines draw
-        const fade = t
+      // the hero, as in the proposal, has lights from the start; the network
+      // map waits until most of its lines are down
+      if (!still && (mode === 'hero' || t >= 0.6)) {
+        const fade = mode === 'hero' ? t : Math.min(1, (t - 0.6) / 0.4)
         const clock = now / (mode === 'hero' ? 9000 : 7000)
         const step = mode === 'hero' ? 7 : 3
         for (let i = 0; i < pts.length; i += step) {

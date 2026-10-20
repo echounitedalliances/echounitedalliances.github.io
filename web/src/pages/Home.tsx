@@ -15,7 +15,7 @@ import { useAirportCount, useCarrierCount, useDivisionCount } from '../lib/carri
 import { useOnlineCount } from '../lib/discordWidget'
 import { SITE, discordConfigured } from '../lib/site'
 import { SLOGAN, STORY } from '../lib/alliance'
-import { Marquee } from '../lib/motion'
+import { CountUp, Marquee, Reveal } from '../lib/motion'
 import '../home.css'
 
 /**
@@ -140,14 +140,14 @@ export default function Home() {
       <section className="home-hero" aria-label="Echo United Alliances">
         <RouteCanvas arcs={arcs} mode="hero" className="home-hero-canvas" />
         <div className="home-wrap home-hero-inner">
-          <p className="eyebrow">
+          <p className="eyebrow hero-in" style={{ animationDelay: '150ms' }}>
             Echo United Alliances · The Airline Simulator
           </p>
           <h1 className="display home-hero-title">
-            <span className="line"><span>{sloganLead}</span></span>
-            <span className="line"><span className="serif">{sloganWord}</span></span>
+            <span className="line"><span className="hero-in" style={{ animationDelay: '250ms' }}>{sloganLead}</span></span>
+            <span className="line"><span className="serif hero-in" style={{ animationDelay: '420ms' }}>{sloganWord}</span></span>
           </h1>
-          <div className="home-hero-foot">
+          <div className="home-hero-foot hero-in" style={{ animationDelay: '650ms' }}>
             <p>
               <strong>The largest alliance group in The Airline Simulator.</strong>{' '}
               {num(carriers)} airlines in {spell(nDiv)} divisions, from first-week beginners
@@ -168,6 +168,9 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <button type="button" className="home-scroll" onClick={() => scrollToId('why')} aria-label="Scroll to why EUA">
+          <span />
+        </button>
       </section>
 
       {/* ---------- the sliding bands ---------- */}
@@ -189,17 +192,17 @@ export default function Home() {
       {/* ---------- the headline benefit ---------- */}
       <section className="home-offer" id="why">
         <div className="home-wrap">
-          <div>
+          <Reveal>
             <p className="eyebrow">The headline benefit</p>
             <h2 className="display home-h2">
               New aircraft, <span className="serif">well</span> below list
             </h2>
-          </div>
+          </Reveal>
           <div className="home-offer-figure">
-            <div className="home-offer-big">
-              50–90%
-            </div>
-            <div className="home-offer-copy">
+            <Reveal className="home-offer-big">
+              <CountUp to={50} duration={900} />–<CountUp to={90} duration={1300} />%
+            </Reveal>
+            <Reveal delay={150} className="home-offer-copy">
               <p>
                 <b>of the original price.</b> Name the models you want and what you’ll pay. A
                 veteran member fills the order, and the market is strictly watched, so your order
@@ -208,7 +211,7 @@ export default function Home() {
               <p className="home-offer-note">
                 Members order through <Link to="/members">Echo Market</Link>, signed in with Discord.
               </p>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -216,18 +219,18 @@ export default function Home() {
       {/* ---------- everything around it ---------- */}
       <section className="home-section" aria-labelledby="stay">
         <div className="home-wrap">
-          <div>
+          <Reveal>
             <p className="eyebrow text-ink-faint">And everything around it</p>
             <h2 className="display home-h2" id="stay">
               Why players <span className="serif">stay</span>
             </h2>
-          </div>
+          </Reveal>
           <div className="home-rows">
             {BENEFITS.map((b, i) => (
-              <div key={b.title} className="home-row">
+              <Reveal key={b.title} delay={i * 60} className="home-row">
                 <h3 className="display">{b.title}</h3>
                 <p>{b.body}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -239,12 +242,12 @@ export default function Home() {
       {/* ---------- the community in numbers ---------- */}
       <section className="home-section" aria-labelledby="growth">
         <div className="home-wrap">
-          <div>
+          <Reveal>
             <p className="eyebrow text-ink-faint">Since {STORY.founded}</p>
             <h2 className="display home-h2" id="growth">
               From {spell(STORY.foundingMembers)} founders <span className="serif">to</span> {num(carriers)}
             </h2>
-          </div>
+          </Reveal>
           <div className="home-figures">
             {[
               ['Member airlines', carriers],
@@ -252,14 +255,14 @@ export default function Home() {
               ['Routes', totals.routes],
               ['Airports', airportCount],
             ].map(([label, v], i) => (
-              <div key={label as string} className="home-fig">
-                <b>{(v as number) > 0 ? num(v as number) : '—'}</b>
+              <Reveal key={label as string} delay={i * 80} className="home-fig">
+                <b>{(v as number) > 0 ? <CountUp to={v as number} /> : '—'}</b>
                 <span className="eyebrow text-ink-faint">{label}</span>
-              </div>
+              </Reveal>
             ))}
           </div>
           <div className="home-story">
-            <div>
+            <Reveal>
               <p>
                 EUA began as {STORY.foundingMembers === 3 ? 'three founders' : 'a handful of founders'} under the name{' '}
                 {STORY.foundedAs}. It has grown into {spell(nDiv)} divisions, and every one of those
@@ -269,10 +272,10 @@ export default function Home() {
                 )}{' '}
                 Invite your friends, so they can make it home too.
               </p>
-            </div>
-            <div>
+            </Reveal>
+            <Reveal delay={120}>
               <blockquote className="serif">“{STORY.closing}”</blockquote>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -280,7 +283,7 @@ export default function Home() {
       {/* ---------- the divisions ---------- */}
       <section className="home-section pt-0" aria-labelledby="divs">
         <div className="home-wrap">
-          <div className="home-head-row">
+          <Reveal className="home-head-row">
             <div>
               <p className="eyebrow text-ink-faint">{capitalise(spell(nDiv))} divisions</p>
               <h2 className="display home-h2" id="divs">
@@ -288,7 +291,7 @@ export default function Home() {
               </h2>
             </div>
             <Link to="/divisions" className="btn btn-ghost">All divisions →</Link>
-          </div>
+          </Reveal>
           <div className="div-grid">
             {divisions.map((d) => (
               <DivisionTile key={d.division_code} d={d} />
@@ -300,7 +303,7 @@ export default function Home() {
       {/* ---------- the network ---------- */}
       <section className="home-section pt-0" aria-labelledby="net">
         <div className="home-wrap">
-          <div className="home-head-row">
+          <Reveal className="home-head-row">
             <div>
               <p className="eyebrow text-ink-faint">The network</p>
               <h2 className="display home-h2" id="net">
@@ -308,7 +311,7 @@ export default function Home() {
               </h2>
             </div>
             <Link to="/network" className="btn btn-ghost">Explore the network →</Link>
-          </div>
+          </Reveal>
           <Link to="/network" className="home-map" aria-label="Explore the network">
             <RouteCanvas
               arcs={arcs}
@@ -331,7 +334,7 @@ export default function Home() {
       {/* ---------- carriers ---------- */}
       <section className="home-section pt-0" aria-labelledby="carriers">
         <div className="home-wrap">
-          <div className="home-head-row">
+          <Reveal className="home-head-row">
             <div>
               <p className="eyebrow text-ink-faint">Different on every visit</p>
               <h2 className="display home-h2" id="carriers">
@@ -339,12 +342,12 @@ export default function Home() {
               </h2>
             </div>
             <Link to="/airlines" className="btn btn-ghost">All {num(carriers)} →</Link>
-          </div>
+          </Reveal>
           <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {spotlight.map((a, i) => (
-              <div key={a.uid}>
+              <Reveal key={a.uid} delay={i * 60}>
                 <AirlineCard a={a} />
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -353,20 +356,20 @@ export default function Home() {
       {/* ---------- join ---------- */}
       <section className="home-join" id="join">
         <div className="home-wrap">
-          <div>
+          <Reveal>
             <p className="eyebrow">Join Echo United Alliances</p>
             <h2 className="display home-h2">
               Two applications. <span className="serif">One</span> alliance.
             </h2>
             <p className="home-join-lede">{SITE.joinRequirement}</p>
-          </div>
+          </Reveal>
           <ol className="home-steps">
             {SITE.joinSteps.map((s, i) => (
-              <li key={s.title}>
+              <Reveal as="li" key={s.title} delay={i * 100}>
                 <b className="display">{i + 1}</b>
                 <h3>{s.title}</h3>
                 <p>{s.body}</p>
-              </li>
+              </Reveal>
             ))}
           </ol>
           <div className="home-join-cta">
@@ -390,7 +393,7 @@ export default function Home() {
       {/* ---------- travellers ---------- */}
       <section className="home-section" id="fly" aria-labelledby="fly-h">
         <div className="home-wrap">
-          <div>
+          <Reveal>
             <p className="eyebrow text-ink-faint">Just here to fly?</p>
             <h2 className="display home-h2" id="fly-h">
               Book a seat <span className="serif">on</span> any EUA airline
@@ -399,7 +402,7 @@ export default function Home() {
               One search across all {num(carriers)} member carriers. Connect between divisions on a
               single booking reference, and keep your trips in one place.
             </p>
-          </div>
+          </Reveal>
           <div className="mt-8">
             <SearchPanel />
           </div>

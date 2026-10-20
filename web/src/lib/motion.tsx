@@ -1,9 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 
 /**
- * The home page's motion, in one place: the sliding text bands of the
- * approved proposal, and the scroll position that flies the Airline of the
- * Week's livery across. Both stand still under prefers-reduced-motion.
+ * The home page's motion, in one place.
+ *
+ * Everything here gives way to prefers-reduced-motion: the content is simply
+ * shown, at rest, with nothing sliding, counting or drawing. And nothing is
+ * hidden until JavaScript says so -- an element is only put in its "before"
+ * state once it is known to be off screen, so a slow script never leaves a
+ * blank page behind it.
  */
 
 export const prefersReducedMotion = (): boolean => {
@@ -12,6 +16,100 @@ export const prefersReducedMotion = (): boolean => {
   } catch {
     return false
   }
+}
+
+/** True once the element has come within `margin` of the viewport. */
+export function useInView<T extends Element>(margin = '0px 0px -12% 0px') {
+  const ref = useRef<T>(null)
+  const [seen, setSeen] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el || seen) return
+    if (typeof IntersectionObserver === 'undefined') {
+      setSeen(true)
+      return
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setSeen(true)
+          io.disconnect()
+        }
+      },
+      { rootMargin: margin },
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [margin, seen])
+  return [ref, seen] as const
+}
+
+/**
+ * Slides and fades its children in as they scroll into view. Elements that
+ * are already on screen when the page opens are shown immediately.
+ */
+export function Reveal({
+  children,
+  delay = 0,
+  className = '',
+  as: Tag = 'div',
+}: {
+  children: React.ReactNode
+  delay?: number
+  className?: string
+  as?: 'div' | 'section' | 'li' | 'p' | 'span'
+}) {
+  const [ref, seen] = useInView<HTMLDivElement>()
+  const [armed, setArmed] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el || prefersReducedMotion()) return
+    // Only hide what is below the fold right now.
+    if (el.getBoundingClientRect().top > window.innerHeight) setArmed(true)
+  }, [ref])
+  const Comp = Tag as React.ElementType
+  return (
+    <Comp
+      ref={ref}
+      className={`${armed ? 'reveal' : ''} ${armed && seen ? 'reveal-in' : ''} ${className}`}
+      style={armed ? { transitionDelay: `${delay}ms` } : undefined}
+    >
+      {children}
+    </Comp>
+  )
+}
+
+/** A number that counts up to `to` the first time it scrolls into view. */
+export function CountUp({ to, duration = 1400, format }: { to: number; duration?: number; format?: (n: number) => string }) {
+  const [ref, seen] = useInView<HTMLSpanElement>('0px')
+  const [value, setValue] = useState(to)
+  const started = useRef(false)
+  const fmt = format ?? ((n: number) => Math.round(n).toLocaleString('en-US'))
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el || prefersReducedMotion()) return
+    if (!seen && el.getBoundingClientRect().top > window.innerHeight) setValue(0)
+  }, [ref, seen])
+
+  useEffect(() => {
+    if (!seen || started.current || !to || prefersReducedMotion()) {
+      setValue(to)
+      return
+    }
+    started.current = true
+    const t0 = performance.now()
+    let raf = 0
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - t0) / duration)
+      setValue(to * (1 - Math.pow(1 - p, 4)))
+      if (p < 1) raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [seen, to, duration])
+
+  return <span ref={ref}>{fmt(value)}</span>
 }
 
 /**

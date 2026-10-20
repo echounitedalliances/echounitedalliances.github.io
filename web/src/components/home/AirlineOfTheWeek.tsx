@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { AIRLINE_OF_THE_WEEK } from '../../lib/alliance'
 import { isConfigured, supabase } from '../../lib/supabase'
 import { flag, num } from '../../lib/format'
-import { Marquee, prefersReducedMotion, useScrollProgress } from '../../lib/motion'
+import { Marquee, Reveal, prefersReducedMotion, useScrollProgress } from '../../lib/motion'
 
 /**
  * Airline of the Week: the chosen carrier's livery crossing the screen as the
@@ -97,7 +97,7 @@ export default function AirlineOfTheWeek() {
       </div>
 
       <div className="home-wrap aotw-body">
-        <div>
+        <Reveal>
           <p className="eyebrow text-ink-faint">Airline of the Week</p>
           <h2 className="display aotw-name" id="aotw-h">
             {row?.airline_name ?? ' '}
@@ -116,8 +116,8 @@ export default function AirlineOfTheWeek() {
               )}
             </p>
           )}
-        </div>
-        <div className="aotw-grid">
+        </Reveal>
+        <Reveal delay={120} className="aotw-grid">
           <p className="aotw-blurb">{pick.blurb}</p>
           {row && (
             <dl className="aotw-figs">
@@ -134,7 +134,7 @@ export default function AirlineOfTheWeek() {
               Fly {row.airline_name} →
             </Link>
           )}
-        </div>
+        </Reveal>
       </div>
     </section>
   )
