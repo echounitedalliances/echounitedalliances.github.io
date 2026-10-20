@@ -4,11 +4,13 @@ import EchoMark from './EchoMark'
 import type { Division } from '../lib/types'
 import { accentOf, num } from '../lib/format'
 import { DIVISION_NOTES } from '../lib/site'
+import { LEADERS } from '../lib/alliance'
 
 /**
  * A division as a black tile that floods with its own colour, a pixel at a
  * time, when pointed at or focused. The same tile on the home page and on
- * /divisions; `detailed` adds the four headline figures.
+ * /divisions; `detailed` adds the four headline figures and who leads it
+ * (from LEADERS, the same list as the About page's board).
  *
  * The 60 cells light in a random order chosen once per tile, so each
  * division fills differently and keeps filling the same way.
@@ -26,6 +28,7 @@ export default function DivisionTile({
 }) {
   const accent = accentOf(d)
   const note = DIVISION_NOTES[d.division_code]
+  const leaders = LEADERS.filter((l) => l.division_code === d.division_code)
   const [delays] = useState(() => Array.from({ length: 60 }, () => Math.round(Math.random() * 260)))
 
   return (
@@ -46,6 +49,17 @@ export default function DivisionTile({
       {detailed ? (
         <span>
           <span className="div-name">{d.division_name}</span>
+          {leaders.length > 0 && (
+            <span className="div-lead">
+              <small>Led by</small>{' '}
+              {leaders.map((l, i) => (
+                <span key={l.discord}>
+                  {i > 0 && ' & '}
+                  <b>{l.name}</b> <span className="div-handle">@{l.discord}</span>
+                </span>
+              ))}
+            </span>
+          )}
           <span className="div-figs">
             {(
               [

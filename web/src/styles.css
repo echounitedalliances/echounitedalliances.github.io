@@ -683,6 +683,12 @@ body {
 .div-figs small { display: block; margin-top: 5px; font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--color-ink-faint); transition: color .3s .2s; }
 .div-tile:hover .div-figs b, .div-tile:focus-visible .div-figs b, .div-tile:hover .div-figs small, .div-tile:focus-visible .div-figs small { color: #050505; }
 .div-tile-detailed { min-height: 240px; }
+.div-lead { display: block; margin-top: 10px; font-size: 14px; color: var(--color-ink-dim); transition: color .3s .2s; }
+.div-lead small { font-size: 10.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--color-ink-faint); transition: color .3s .2s; }
+.div-lead b { font-weight: 700; color: var(--color-ink); transition: color .3s .2s; }
+.div-handle { color: var(--color-ink-faint); transition: color .3s .2s; }
+.div-tile:hover .div-lead, .div-tile:hover .div-lead small, .div-tile:hover .div-lead b, .div-tile:hover .div-handle,
+.div-tile:focus-visible .div-lead, .div-tile:focus-visible .div-lead small, .div-tile:focus-visible .div-lead b, .div-tile:focus-visible .div-handle { color: #050505; }
 @media (max-width: 380px) { .div-figs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 /* The floating top bar ------------------------------------------------
