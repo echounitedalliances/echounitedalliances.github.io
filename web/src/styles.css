@@ -708,3 +708,33 @@ body {
 .site-bar .wordmark-sub { color: rgba(255, 255, 255, .72) !important; }
 /* Pages start below the bar; the home page's opening screen runs up under it. */
 .site-main { padding-top: var(--bar-h, 64px); }
+
+/* Tucked away while reading down the page; back on the first scroll up. */
+.site-bar { transition: transform .35s cubic-bezier(.2,.7,.2,1); }
+.site-bar-hidden { transform: translateY(calc(-100% - var(--chrome-top, 0px))); }
+
+/* Back to top: a small round button, drawn in difference mode like the bar,
+   so it shows on black and white sections alike. */
+.to-top {
+  position: fixed;
+  right: max(18px, calc(env(safe-area-inset-right, 0px) + 12px));
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  z-index: 38;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .55);
+  background: transparent;
+  color: #fff;
+  mix-blend-mode: difference;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity .25s ease, transform .25s ease, background-color .2s ease, color .2s ease;
+}
+.to-top-on { opacity: 1; transform: none; pointer-events: auto; }
+.to-top:hover { background: #fff; color: #000; }
+@media (prefers-reduced-motion: reduce) { .site-bar, .to-top { transition: none; } }

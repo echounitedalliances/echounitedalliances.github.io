@@ -149,6 +149,36 @@ function Shell({ children }: { children: React.ReactNode }) {
     return () => ro.disconnect()
   }, [])
 
+  // Scrolling down tucks the bar up under the strip; any scroll up brings it
+  // back. Near the top of the page it always shows. Past a screen's height
+  // the back-to-top button appears.
+  const [barHidden, setBarHidden] = useState(false)
+  const [showTop, setShowTop] = useState(false)
+  useEffect(() => {
+    let last = window.scrollY
+    let raf = 0
+    const update = () => {
+      raf = 0
+      const y = window.scrollY
+      const dy = y - last
+      if (y < 80) setBarHidden(false)
+      else if (dy > 6) setBarHidden(true)
+      else if (dy < -6) setBarHidden(false)
+      if (Math.abs(dy) > 6 || y < 80) last = y
+      setShowTop(y > window.innerHeight * 0.9)
+    }
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
+  // A new page, or the menu open, always shows the bar.
+  useEffect(() => setBarHidden(false), [pathname, open])
+
   return (
     <div className="min-h-screen">
       {/* The advisory outranks the alliance's own chrome while travel is
@@ -161,7 +191,11 @@ function Shell({ children }: { children: React.ReactNode }) {
       {/* The bar itself has no background: it floats over the page and is
           drawn in difference mode, so it reads white over black and black
           over white, changing smoothly as the page scrolls beneath it. */}
-      <header ref={bar} className="site-bar">
+      <header
+        ref={bar}
+        className={`site-bar ${barHidden && !open ? 'site-bar-hidden' : ''}`}
+        onFocusCapture={() => setBarHidden(false)}
+      >
         <div className="mx-auto flex max-w-[1180px] items-center gap-x-3 px-4 py-2.5 sm:px-5 sm:py-3">
           <Link to="/" className="flex items-baseline gap-2.5">
             {/* The wing, not a coloured square standing in for it. */}
@@ -275,6 +309,23 @@ function Shell({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </footer>
+
+      <button
+        type="button"
+        className={`to-top ${showTop ? 'to-top-on' : ''}`}
+        onClick={() =>
+          window.scrollTo({
+            top: 0,
+            behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+          })
+        }
+        aria-label="Back to top"
+        tabIndex={showTop ? 0 : -1}
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M8 13V3M3.5 7.5 8 3l4.5 4.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
     </div>
   )
 }

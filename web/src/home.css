@@ -120,6 +120,24 @@
 .aotw-hubs dd { font: 600 16px/1.4 var(--font-sans); letter-spacing: .08em; }
 @media (max-width: 860px) { .aotw-grid { grid-template-columns: 1fr; } .aotw-figs { grid-row: auto; } }
 
+/* --- airline of the week, as a card (members' area) ------------------- */
+.aotw-card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 24px 40px; align-items: center; padding: clamp(22px, 3vw, 36px); overflow: hidden; }
+.aotw-card-text { display: grid; gap: 14px; justify-items: start; }
+.aotw-card-text .aotw-tags { margin: 0; }
+.aotw-card-name { margin: 0; font-size: clamp(48px, 6.4vw, 92px); line-height: 0.88; }
+.aotw-card-blurb { margin: 0; color: var(--color-ink-dim); max-width: 48ch; }
+.aotw-card-figs { margin: 0; display: grid; grid-template-columns: repeat(3, auto); gap: 6px 28px; }
+.aotw-card-figs dt { color: var(--color-ink-faint); }
+.aotw-card-figs dd { margin: 4px 0 0; font: 400 32px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.aotw-card-plane { margin: 0; display: grid; gap: 10px; justify-items: end; }
+.aotw-card-plane img { width: 118%; max-width: none; height: auto; transform: rotate(4deg) translateX(6%); filter: drop-shadow(0 24px 30px rgba(0,0,0,.55)); transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+.aotw-card:hover .aotw-card-plane img { transform: rotate(6deg) translate(2%, -4%); }
+@media (max-width: 820px) {
+  .aotw-card { grid-template-columns: 1fr; }
+  .aotw-card-plane { order: -1; justify-items: center; }
+  .aotw-card-plane img { width: 100%; max-width: 100%; transform: rotate(4deg); }
+}
+
 /* --- the community in numbers ---------------------------------------- */
 .home-figures { margin-top: clamp(36px, 5vw, 64px); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--color-edge); }
 .home-fig { padding: 26px 18px 0 0; border-right: 1px solid var(--color-edge); display: grid; gap: 10px; }

@@ -38,12 +38,10 @@ function countryName(cc: string): string {
   }
 }
 
-export default function AirlineOfTheWeek() {
+/** This week's airline, as configured, with its figures read live. */
+export function useAirlineOfTheWeek() {
   const pick = AIRLINE_OF_THE_WEEK
   const [row, setRow] = useState<Row | null>(null)
-  const [shown, setShown] = useState(0)
-  const [ref, p] = useScrollProgress<HTMLElement>()
-
   useEffect(() => {
     if (!isConfigured) return
     void supabase
@@ -56,6 +54,65 @@ export default function AirlineOfTheWeek() {
       .maybeSingle()
       .then(({ data }) => setRow((data as Row) ?? null))
   }, [pick.division_code, pick.airline_slug])
+  return { pick, row }
+}
+
+/**
+ * The same airline as a card, for the members' area: the livery, who it is,
+ * what it flies, and a link to its page.
+ */
+export function AirlineOfTheWeekCard() {
+  const { pick, row } = useAirlineOfTheWeek()
+  const livery = pick.liveries[0]
+  const accent = row?.accent_color ?? 'var(--color-ink)'
+  return (
+    <div className="aotw-card panel">
+      <div className="aotw-card-text">
+        <p className="eyebrow text-ink-faint">Airline of the Week</p>
+        <h2 className="display aotw-card-name">{row?.airline_name ?? '\u00a0'}</h2>
+        {row && (
+          <p className="aotw-tags">
+            <span className="aotw-div" style={{ ['--c' as string]: accent }}>
+              {row.division_name}
+            </span>
+            {row.airline_country && (
+              <span>
+                {flag(row.airline_country)} {countryName(row.airline_country)}
+              </span>
+            )}
+          </p>
+        )}
+        <p className="aotw-card-blurb">{pick.blurb}</p>
+        {row && (
+          <dl className="aotw-card-figs">
+            <div><dt className="eyebrow">Fleet</dt><dd>{num(row.fleet_size)}</dd></div>
+            <div><dt className="eyebrow">Routes</dt><dd>{num(row.routes)}</dd></div>
+            <div><dt className="eyebrow">Destinations</dt><dd>{num(row.destinations)}</dd></div>
+          </dl>
+        )}
+        {row && (
+          <Link to={`/d/${row.division_code}/${row.airline_slug}`} className="btn btn-ghost">
+            Visit {row.airline_name} →
+          </Link>
+        )}
+      </div>
+      {livery && (
+        <figure className="aotw-card-plane">
+          <img src={`${base}${livery.src}`} alt={`${row?.airline_name ?? 'This week’s airline'}’s ${livery.aircraft}`} decoding="async" />
+          <figcaption className="eyebrow text-ink-faint">
+            {livery.aircraft}
+            {livery.registration ? ` · ${livery.registration}` : ''}
+          </figcaption>
+        </figure>
+      )}
+    </div>
+  )
+}
+
+export default function AirlineOfTheWeek() {
+  const { pick, row } = useAirlineOfTheWeek()
+  const [shown, setShown] = useState(0)
+  const [ref, p] = useScrollProgress<HTMLElement>()
 
   // More than one livery: show each in turn.
   useEffect(() => {

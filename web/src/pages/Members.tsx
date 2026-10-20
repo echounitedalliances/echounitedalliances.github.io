@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import { MEMBER_APPS, type MemberApp } from '../lib/apps'
+import { AirlineOfTheWeekCard } from '../components/home/AirlineOfTheWeek'
+import '../home.css'
 import { SITE, discordConfigured } from '../lib/site'
 import { useCarrierCount, useDivisionCount } from '../lib/carriers'
 import { num, spell } from '../lib/format'
@@ -95,6 +97,13 @@ export default function Members() {
           {MEMBER_APPS.map((a) => (
             <AppTile key={a.key} app={a} />
           ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-[1180px] px-4 pt-12 sm:px-5" aria-label="Airline of the Week">
+        <p className="eyebrow text-ink-faint">This week in EUA</p>
+        <div className="mt-4">
+          <AirlineOfTheWeekCard />
         </div>
       </section>
 
