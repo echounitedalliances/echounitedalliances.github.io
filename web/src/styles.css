@@ -54,6 +54,10 @@
 
   /* White is the accent now. The names stay so every page that asked for
      "the accent" gets the new one without being touched. */
+  /* The old Echo purple (#A855F7), kept as a tint on headings only: page
+     titles and section headings carry it, the italic word a little more. */
+  --color-heading:       #ECE2FF;
+  --color-heading-serif: #C29BFF;
   --color-accent:     #F4F2EE;
   --color-accent-dim: #BEBAB3;
   --color-cyan:       #F4F2EE;
@@ -132,6 +136,9 @@ body {
   line-height: 0.95;
   text-wrap: balance;
 }
+h1.display, h2.display { color: var(--color-heading); }
+h1.display .serif, h2.display .serif { color: var(--color-heading-serif); }
+
 /* The one italic word a headline may carry. */
 .serif {
   font-family: var(--font-serif);

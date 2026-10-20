@@ -175,13 +175,13 @@ export default function Home() {
 
       {/* ---------- the sliding bands ---------- */}
       <div className="home-bands">
-        <Marquee speed={0.6}>
+        <Marquee speed={0.4}>
           <span>{num(carriers)} airlines</span><i>and</i>
           <span>{spell(nDiv)} divisions</span><i>and</i>
           <span>{num(totals.aircraft)} aircraft</span><i>and</i>
           <span>{num(totals.routes)} routes</span><i>and</i>
         </Marquee>
-        <Marquee speed={0.45} reverse className="outline">
+        <Marquee speed={0.3} reverse className="outline">
           <span>All levels welcome</span><i>·</i>
           <span>One network</span><i>·</i>
           <span>Every timezone</span><i>·</i>

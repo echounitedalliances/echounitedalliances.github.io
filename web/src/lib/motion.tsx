@@ -175,7 +175,9 @@ export function Marquee({
     io.observe(el)
     const frame = () => {
       const y = window.scrollY
-      boost = boost * 0.9 + Math.abs(y - lastY) * 0.1
+      // scrolling nudges the bands along, but only so far: a fast flick
+      // used to send them racing
+      boost = Math.min(1.5, boost * 0.9 + Math.abs(y - lastY) * 0.04)
       lastY = y
       if (visible) {
         const half = el.scrollWidth / 2

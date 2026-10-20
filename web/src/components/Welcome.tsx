@@ -118,6 +118,12 @@ export default function Welcome() {
     const k = Math.min(window.devicePixelRatio || 1, 2)
     const W = window.innerWidth
     const H = window.innerHeight
+    // A window with no size (a background or pre-rendering tab) has nothing
+    // to draw on, and sampling the wing from it would throw.
+    if (W < 40 || H < 40) {
+      setShow(false)
+      return
+    }
     c.width = Math.round(W * k)
     c.height = Math.round(H * k)
     ctx.setTransform(k, 0, 0, k, 0, 0)
