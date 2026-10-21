@@ -243,7 +243,11 @@ def load_airlines(rosters):
                 "brand_color": brand_color(livery),
                 "name": (info.get("name") or "").strip(),
                 "raw_name": info.get("name"),
-                "code": (info.get("code") or "").strip().upper() or None,
+                # The schema holds two-character IATA-style codes. The game
+                # lets a player set something else (Tez Air Express chose
+                # "L", October 2026); that is treated like no code at all.
+                "code": (lambda c: c if re.fullmatch(r"[A-Z0-9]{2}", c) else None)(
+                    (info.get("code") or "").strip().upper()),
                 "country": (info.get("country") or "").strip().upper() or None,
                 "path": p,
                 "roster": rosters[div]["_members"].get(info["uid"], {}),

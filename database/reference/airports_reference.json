@@ -829,6 +829,16 @@
   "tz": "Africa/Maputo",
   "tz_source": "dataset"
  },
+ "APO": {
+  "city": "Carepa",
+  "country": "CO",
+  "iata": "APO",
+  "lat": 7.81196,
+  "lon": -76.7164,
+  "name": "Antonio Roldán Betancur Airport",
+  "tz": "America/Bogota",
+  "tz_source": "dataset"
+ },
  "APW": {
   "city": "Apia",
   "country": "WS",
@@ -1067,6 +1077,16 @@
   "lon": -70.014281,
   "name": "Queen Beatrix International Airport",
   "tz": "America/Aruba",
+  "tz_source": "dataset"
+ },
+ "AUC": {
+  "city": "Arauca",
+  "country": "CO",
+  "iata": "AUC",
+  "lat": 7.06888,
+  "lon": -70.7369,
+  "name": "Santiago Perez Airport",
+  "tz": "America/Bogota",
   "tz_source": "dataset"
  },
  "AUH": {
@@ -5439,6 +5459,16 @@
   "tz": "Asia/Shanghai",
   "tz_source": "dataset"
  },
+ "EOH": {
+  "city": "Medellín",
+  "country": "CO",
+  "iata": "EOH",
+  "lat": 6.219686,
+  "lon": -75.590597,
+  "name": "Enrique Olaya Herrera Airport",
+  "tz": "America/Bogota",
+  "tz_source": "dataset"
+ },
  "ERC": {
   "city": "Erzincan",
   "country": "TR",
@@ -5577,6 +5607,16 @@
   "lon": -3.413984,
   "name": "Exeter International Airport",
   "tz": "Europe/London",
+  "tz_source": "dataset"
+ },
+ "EYP": {
+  "city": "Yopal",
+  "country": "CO",
+  "iata": "EYP",
+  "lat": 5.31911,
+  "lon": -72.384,
+  "name": "El Alcaravan - Yopal Airport",
+  "tz": "America/Bogota",
   "tz_source": "dataset"
  },
  "EYW": {
@@ -5817,6 +5857,16 @@
   "lon": 140.43099975585938,
   "name": "Fukushima Airport",
   "tz": "Asia/Tokyo",
+  "tz_source": "dataset"
+ },
+ "FLA": {
+  "city": "Florencia",
+  "country": "CO",
+  "iata": "FLA",
+  "lat": 1.58919,
+  "lon": -75.5644,
+  "name": "Gustavo Artunduaga Paredes Airport",
+  "tz": "America/Bogota",
   "tz_source": "dataset"
  },
  "FLG": {
@@ -7989,6 +8039,16 @@
   "tz": "Europe/Bucharest",
   "tz_source": "dataset"
  },
+ "IBE": {
+  "city": "Ibagué",
+  "country": "CO",
+  "iata": "IBE",
+  "lat": 4.42161,
+  "lon": -75.1333,
+  "name": "Perales Airport",
+  "tz": "America/Bogota",
+  "tz_source": "dataset"
+ },
  "IBR": {
   "city": "Omitama",
   "country": "JP",
@@ -8869,6 +8929,16 @@
   "tz": "Asia/Shanghai",
   "tz_source": "dataset"
  },
+ "JIJ": {
+  "city": "Jijiga",
+  "country": "ET",
+  "iata": "JIJ",
+  "lat": 9.331907,
+  "lon": 42.911811,
+  "name": "Gerad Wilwal International Airport",
+  "tz": "Africa/Addis_Ababa",
+  "tz_source": "dataset"
+ },
  "JIK": {
   "city": "Ikaria Island",
   "country": "GR",
@@ -8877,6 +8947,16 @@
   "lon": 26.3470993042,
   "name": "Ikaria Airport",
   "tz": "Europe/Athens",
+  "tz_source": "dataset"
+ },
+ "JIM": {
+  "city": "Jimma",
+  "country": "ET",
+  "iata": "JIM",
+  "lat": 7.66609001159668,
+  "lon": 36.81660079956055,
+  "name": "Jimma Airport",
+  "tz": "Africa/Addis_Ababa",
   "tz_source": "dataset"
  },
  "JIQ": {
@@ -10227,6 +10307,16 @@
   "lon": 24.6192,
   "name": "Kavala Alexander the Great International Airport",
   "tz": "Europe/Athens",
+  "tz_source": "dataset"
+ },
+ "KVG": {
+  "city": "Kavieng",
+  "country": "PG",
+  "iata": "KVG",
+  "lat": -2.57940006256,
+  "lon": 150.807998657,
+  "name": "Kavieng Airport",
+  "tz": "Pacific/Port_Moresby",
   "tz_source": "dataset"
  },
  "KVX": {
@@ -13389,6 +13479,16 @@
   "tz": "America/Argentina/Salta",
   "tz_source": "dataset"
  },
+ "NQU": {
+  "city": "Nuquí",
+  "country": "CO",
+  "iata": "NQU",
+  "lat": 5.710348,
+  "lon": -77.261868,
+  "name": "Reyes Murillo Airport",
+  "tz": "America/Bogota",
+  "tz_source": "dataset"
+ },
  "NQY": {
   "city": "Newquay",
   "country": "GB",
@@ -13537,6 +13637,16 @@
   "lon": 76.52030181884766,
   "name": "Novy Urengoy Airport",
   "tz": "Asia/Yekaterinburg",
+  "tz_source": "dataset"
+ },
+ "NVA": {
+  "city": "Neiva",
+  "country": "CO",
+  "iata": "NVA",
+  "lat": 2.95015,
+  "lon": -75.294,
+  "name": "Benito Salas Airport",
+  "tz": "America/Bogota",
   "tz_source": "dataset"
  },
  "NVI": {
@@ -15357,6 +15467,16 @@
   "lon": 128.938004,
   "name": "Gimhae International Airport",
   "tz": "Asia/Seoul",
+  "tz_source": "dataset"
+ },
+ "PUU": {
+  "city": "Puerto Asís",
+  "country": "CO",
+  "iata": "PUU",
+  "lat": 0.505228,
+  "lon": -76.5008,
+  "name": "Tres De Mayo Airport",
+  "tz": "America/Bogota",
   "tz_source": "dataset"
  },
  "PUW": {
@@ -18199,6 +18319,26 @@
   "tz": "Asia/Shanghai",
   "tz_source": "dataset"
  },
+ "TCO": {
+  "city": "Tumaco",
+  "country": "CO",
+  "iata": "TCO",
+  "lat": 1.81442,
+  "lon": -78.7492,
+  "name": "La Florida Airport",
+  "tz": "America/Bogota",
+  "tz_source": "dataset"
+ },
+ "TCQ": {
+  "city": "Tacna",
+  "country": "PE",
+  "iata": "TCQ",
+  "lat": -18.053300857500002,
+  "lon": -70.2758026123,
+  "name": "Coronel FAP Carlos Ciriani Santa Rosa International Airport",
+  "tz": "America/Lima",
+  "tz_source": "dataset"
+ },
  "TCR": {
   "city": "Vagaikulam",
   "country": "IN",
@@ -19349,6 +19489,16 @@
   "tz": "Asia/Samarkand",
   "tz_source": "dataset"
  },
+ "UIB": {
+  "city": "Quibdó",
+  "country": "CO",
+  "iata": "UIB",
+  "lat": 5.69076,
+  "lon": -76.6412,
+  "name": "El Caraño Airport",
+  "tz": "America/Bogota",
+  "tz_source": "dataset"
+ },
  "UIH": {
   "city": "Quy Nohn",
   "country": "VN",
@@ -20056,6 +20206,16 @@
   "lat": 10.435,
   "lon": -73.2495,
   "name": "Alfonso López Pumarejo Airport",
+  "tz": "America/Bogota",
+  "tz_source": "dataset"
+ },
+ "VVC": {
+  "city": "Villavicencio",
+  "country": "CO",
+  "iata": "VVC",
+  "lat": 4.16787,
+  "lon": -73.6138,
+  "name": "Vanguardia Airport",
   "tz": "America/Bogota",
   "tz_source": "dataset"
  },
