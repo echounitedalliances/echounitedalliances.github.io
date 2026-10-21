@@ -59,7 +59,7 @@ h1.home-hero-title .serif { color: #B98AFF; }
   width: 26px; height: 42px; border: 1.5px solid color-mix(in srgb, var(--color-ink) 50%, transparent);
   border-radius: 999px; background: none; cursor: pointer;
 }
-.home-scroll span { position: absolute; left: 50%; top: 8px; width: 3px; height: 8px; margin-left: -1.5px; border-radius: 2px; background: var(--color-ink); animation: scroll-dot 2.2s ease-in-out 1.6s 3 both; }
+.home-scroll span { position: absolute; left: 50%; top: 8px; width: 3px; height: 8px; margin-left: -1.5px; border-radius: 2px; background: var(--color-ink); animation: scroll-dot 1.8s ease-in-out infinite; }
 @keyframes scroll-dot { 0% { transform: translateY(0); opacity: 1; } 70% { transform: translateY(14px); opacity: 0; } 100% { opacity: 0; } }
 @media (max-width: 640px) { .home-scroll { display: none; } }
 
