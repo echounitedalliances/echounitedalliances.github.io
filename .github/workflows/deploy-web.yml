@@ -25,6 +25,7 @@ on:
       - '.nojekyll'
       - 'assets/**'
       - 'brand/**'
+      - 'favicon.ico'
       - 'preview/**'
       - '.github/workflows/deploy-web.yml'
   workflow_dispatch:
@@ -64,6 +65,8 @@ jobs:
             echo "::error::No brand/ at the repository root — run 'npm --prefix web run publish'."
             exit 1
           fi
+          # Search engines ask for /favicon.ico before reading any <link>.
+          cp -f favicon.ico _site/ 2>/dev/null || true
           # preview/ is a staged build of a branch, served at /preview/ for
           # review before it replaces the site. Absent most of the time.
           if [ -d preview ]; then cp -r preview _site/; fi
