@@ -133,7 +133,9 @@ $files += @('04_views.sql', '05_reservations.sql', '06_inventory.sql',
             # Nobody can make themselves an admin; bookings written only via RPCs.
             '40_lock_admin_flag.sql',
             # The board's Discord notice, sent by the database, not the site.
-            '41_admin_apply_notice.sql')
+            '41_admin_apply_notice.sql',
+            # The figures behind a carrier's description, for other languages.
+            '42_profile_facts.sql')
 
 # Refuse the truncating reload against a database people are using.
 #

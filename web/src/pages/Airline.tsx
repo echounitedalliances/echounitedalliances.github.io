@@ -17,11 +17,12 @@ import type {
   TimetableRow,
 } from '../lib/types'
 import { accentOf, duration, flag, num, usd, weekdayInitials } from '../lib/format'
-import { rich, useT } from '../lib/i18n'
+import { rich, useI18n } from '../lib/i18n'
+import { composeProfile, type ProfileFacts } from '../lib/profile'
 
 export default function AirlinePage() {
   const { code = '', slug = '' } = useParams()
-  const t = useT()
+  const { lang, t } = useI18n()
   const [a, setA] = useState<Airline | null>(null)
   const [fleet, setFleet] = useState<FleetRow[]>([])
   const [routes, setRoutes] = useState<RoutePairRow[]>([])
@@ -61,6 +62,22 @@ export default function AirlinePage() {
   const fleetPage = usePaged(fleet)
   const routePage = usePaged(routes)
   const timetablePage = usePaged(timetable ?? [])
+
+  // The generated description in another language is written here from its
+  // figures (lib/profile.ts); English, and anything an admin wrote, is shown
+  // as it comes.
+  const [facts, setFacts] = useState<ProfileFacts | null>(null)
+  useEffect(() => {
+    setFacts(null)
+    if (!isConfigured || !a || lang === 'en' || a.description_is_custom) return
+    let dead = false
+    void supabase.rpc('airline_profile_facts', { p_uid: a.uid }).then(({ data }) => {
+      if (!dead) setFacts((data as ProfileFacts | null) ?? null)
+    })
+    return () => {
+      dead = true
+    }
+  }, [a?.uid, a?.description_is_custom, lang]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!isConfigured) return
@@ -319,7 +336,9 @@ export default function AirlinePage() {
             </div>
 
             {a.description && (
-              <p className="mt-5 max-w-[62ch] text-lg text-ink-dim">{a.description}</p>
+              <p className="mt-5 max-w-[62ch] text-lg text-ink-dim">
+                {facts ? composeProfile(facts, t) : a.description}
+              </p>
             )}
 
             <div className="mt-8 grid grid-cols-2 gap-x-8 gap-y-4 sm:grid-cols-4">
