@@ -50,7 +50,7 @@ begin
                        'color', 4573424,   -- 0x45C8F0, as the site used
                        'fields', jsonb_build_array(
                            jsonb_build_object('name', 'Email', 'value', new.email, 'inline', true),
-                           jsonb_build_object('name', 'Discord', 'value', coalesce(nullif(new.discord, ''), '—'), 'inline', true)
+                           jsonb_build_object('name', 'Discord', 'value', coalesce(nullif(new.discord, ''), '–'), 'inline', true)
                        ),
                        'timestamp', to_char(new.submitted_at at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS"Z"')
                    ))),

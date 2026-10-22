@@ -122,7 +122,7 @@ export default function AirportField({
           out.push({
             kind: 'header',
             key: r.place_key,
-            label: `${r.place_name} — all airports`,
+            label: `${r.place_name}: all airports`,
             startsPlace: true,
           })
           out.push({ kind: 'airport', row: r, startsPlace: false })
@@ -300,7 +300,7 @@ export default function AirportField({
                   <span className="mono w-9 shrink-0 text-cyan">{o.row.iata_code}</span>
                   <span className="min-w-0 flex-1">
                     <span className="block truncate text-sm text-ink">
-                      {o.row.airport_name ?? o.row.city_name ?? '—'}
+                      {o.row.airport_name ?? o.row.city_name ?? '–'}
                     </span>
                     {o.row.city_name && o.row.city_name !== o.row.airport_name && (
                       <span className="block truncate text-[11px] text-ink-faint">

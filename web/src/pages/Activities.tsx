@@ -20,7 +20,7 @@ export default function Activities() {
       <p className="mt-5 max-w-[64ch] text-lg text-ink-dim">
         Echo members trade aircraft with each other, fill each other's orders,
         and compete for the odd prize. None of it is automated and none of it
-        is scheduled — it runs on people being online at the same time.
+        is scheduled. It runs on people being online at the same time.
       </p>
 
       <div className="mt-12 flex flex-col gap-12">
@@ -64,7 +64,7 @@ export default function Activities() {
         <h2 className="display text-2xl">All of it happens on Discord</h2>
         <p className="mt-2 max-w-[62ch] text-ink-dim">
           The sales channel, the buy tickets, the challenges and the results
-          are all there. You need to be a member of a division to take part —{' '}
+          are all there. You need to be a member of a division to take part, so{' '}
           <Link to="/divisions" className="text-cyan">
             pick one
           </Link>{' '}

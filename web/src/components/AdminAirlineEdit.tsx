@@ -149,7 +149,7 @@ export default function AdminAirlineEdit({
               <p className="mt-3 text-sm leading-relaxed text-ink-dim">
                 The route map still draws its routes in the old division's
                 colour. That colouring is worked out across the whole network at
-                once and is rebuilt on the next deploy — nothing is wrong with
+                once and is rebuilt on the next deploy. Nothing is wrong with
                 it in the meantime, it is just a rebuild behind.
               </p>
               <button
@@ -210,7 +210,7 @@ export default function AdminAirlineEdit({
                     <p className="mt-1.5 text-[12px] leading-relaxed text-warn">
                       This carrier is flagged as a division leader. That flag
                       comes from the game and is left alone here, so it will
-                      still read as a leader after the move — worth correcting
+                      still read as a leader after the move, so it is worth correcting
                       in-game if it should not.
                     </p>
                   )}

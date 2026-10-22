@@ -67,8 +67,8 @@ export default function MaintenanceLock({
       </h1>
       <p className="mt-4 max-w-[52ch] text-lg text-ink-dim">
         The site is temporarily locked while we finish getting things ready.
-        Nothing is lost — every account, booking, and application is still
-        here, exactly as it was — and it reopens on its own when the
+        Nothing is lost. Every account, booking, and application is still
+        here, exactly as it was, and it reopens on its own when the
         countdown below reaches zero.
       </p>
 

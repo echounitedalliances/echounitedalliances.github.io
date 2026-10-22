@@ -1,14 +1,14 @@
 /** Small formatters, in one place so the whole site reads the same way. */
 
 export const num = (n: number | null | undefined) =>
-  n == null ? '—' : n.toLocaleString('en-GB')
+  n == null ? '–' : n.toLocaleString('en-GB')
 
 export const usd = (n: number | null | undefined) =>
-  n == null ? '—' : '$' + Math.round(n).toLocaleString('en-GB')
+  n == null ? '–' : '$' + Math.round(n).toLocaleString('en-GB')
 
 /** 435 -> "7h 15m". Durations here are always minutes. */
 export const duration = (mins: number | null | undefined) => {
-  if (mins == null) return '—'
+  if (mins == null) return '–'
   const h = Math.floor(mins / 60)
   const m = mins % 60
   return h ? `${h}h ${m.toString().padStart(2, '0')}m` : `${m}m`

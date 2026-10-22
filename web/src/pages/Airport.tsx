@@ -52,7 +52,7 @@ export default function AirportPage() {
       <div className="mt-3 flex flex-wrap items-baseline gap-4">
         <h1 className="display text-[clamp(40px,6vw,72px)]">{airport.iata_code}</h1>
         <div>
-          <div className="text-xl text-ink">{airport.city_name ?? '—'}</div>
+          <div className="text-xl text-ink">{airport.city_name ?? '–'}</div>
           <div className="text-ink-faint">
             {airport.airport_name ?? ''}{' '}
             {airport.country_code && (

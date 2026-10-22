@@ -43,7 +43,7 @@ const TERMS_UPDATED = '9 September 2026'
 export const TERMS: Policy = {
   eyebrow: 'Terms of Service',
   title: 'Resonance accounts',
-  lede: 'This covers creating and using a Resonance account. If you only browse the site, none of it applies to you — an account is optional, and this page only matters once you make one. For how members are expected to treat each other, see the Code of Conduct instead.',
+  lede: 'This covers creating and using a Resonance account. If you only browse the site, none of it applies to you: an account is optional, and this page only matters once you make one. For how members are expected to treat each other, see the Code of Conduct instead.',
   updated: TERMS_UPDATED,
   sections: [
     {
@@ -57,26 +57,26 @@ export const TERMS: Policy = {
     {
       heading: 'Who can make an account',
       body: [
-        'You must be at least 13 years old, matching Discord\'s own minimum age — membership in the alliance itself happens through Discord, and a Resonance account is meant for people who are already, or intend to be, part of that.',
+        'You must be at least 13 years old, matching Discord\'s own minimum age, since membership in the alliance itself happens through Discord, and a Resonance account is meant for people who are already, or intend to be, part of that.',
       ],
     },
     {
       heading: 'Creating an account',
       body: [
         'A Resonance account needs an email address and a password. That is the whole signup: no real name, no address, no age, no payment details.',
-        'Your password is sent straight to Supabase, the service that hosts this site\'s database and handles sign-in — it never touches this site\'s own code, and is never visible to anyone running the site.',
+        'Your password is sent straight to Supabase, the service that hosts this site\'s database and handles sign-in. It never touches this site\'s own code, and is never visible to anyone running the site.',
       ],
       list: [
         'Keep your password to yourself, and use one you do not reuse somewhere that actually matters.',
-        'One account belongs to you — do not create one to impersonate someone else, or to act on behalf of an airline that is not yours.',
+        'One account belongs to you. Do not create one to impersonate someone else, or to act on behalf of an airline that is not yours.',
         'Anything entered under your account, including bookings and profile details, should be something you actually meant to submit.',
       ],
     },
     {
       heading: 'What an account is for',
       body: [
-        'Signed in, you can save a display name, a home division, and a home airport to your profile — all optional, and all editable any time — and book fictional flights that collect under "Your trips" instead of scattering across a browser\'s history. You choose, when you book, whether a trip is kept on your account; you can add one you booked as a guest with its reference and a traveller’s surname, see each in full, cancel it, or take it off your account again.',
-        'None of this is required to use the site. A guest can search the network and book a flight without ever signing in — an account only adds a place for that booking to be remembered.',
+        'Signed in, you can save a display name, a home division, and a home airport to your profile (all optional, and all editable any time) and book fictional flights that collect under "Your trips" instead of scattering across a browser\'s history. You choose, when you book, whether a trip is kept on your account; you can add one you booked as a guest with its reference and a traveller’s surname, see each in full, cancel it, or take it off your account again.',
+        'None of this is required to use the site. A guest can search the network and book a flight without ever signing in. An account only adds a place for that booking to be remembered.',
       ],
     },
     {
@@ -95,14 +95,14 @@ export const TERMS: Policy = {
       heading: 'Suspension and removal',
       body: [
         'Because a Resonance account exists to serve the alliance\'s own membership, a board member can suspend or remove an account that is being used to violate these terms or the Code of Conduct. The usual path is the same one the Code of Conduct describes for anything else: a warning first, and removal only if the problem continues or was serious on its own.',
-        'You can ask for your own account to be deleted at any time, for any reason or none — see the Privacy page for how.',
+        'You can ask for your own account to be deleted at any time, for any reason or none. See the Privacy page for how.',
       ],
     },
     {
       heading: 'No warranty',
       body: [
-        'This site is run by volunteers, for free, as a hobby project. It is provided as-is, with no guarantee it will be available, error-free, or that data in it — including your bookings — will never be lost. There is no service level to promise and no company standing behind one.',
-        'If something breaks, tell us on Discord and we will do what a hobby project can — but we cannot offer more than that.',
+        'This site is run by volunteers, for free, as a hobby project. It is provided as-is, with no guarantee it will be available, error-free, or that data in it, including your bookings, will never be lost. There is no service level to promise and no company standing behind one.',
+        'If something breaks, tell us on Discord and we will do what a hobby project can, but we cannot offer more than that.',
       ],
     },
     {
@@ -132,7 +132,7 @@ export const CONDUCT: Policy = {
       heading: 'Joining',
       body: [
         'You must be at least 13 years old to join, which is the minimum age for a Discord account and applications are made through Discord.',
-        'Applications are read by a person, every time. There is no automated screening, no ranking, and no scoring — a division leader reads what you wrote and answers you.',
+        'Applications are read by a person, every time. There is no automated screening, no ranking, and no scoring: a division leader reads what you wrote and answers you.',
         'Apply honestly. Claiming an airline that is not yours, or applying under someone else\'s name, is the fastest way to be turned down.',
       ],
     },
@@ -162,7 +162,7 @@ export const CONDUCT: Policy = {
       body: [
         'Report it to your division leader, or to any member of the board, through a Discord ticket or a direct message. Reports are handled by people, not a form.',
         'The usual path is a warning first. Your division leader will tell you what the problem is and give you the chance to put it right. If it continues, or if it was serious enough on its own, the division leader can remove you from the division.',
-        'Serious cases — harassment, repeated bad-faith trading, anything affecting several divisions — go to the board, whose decision is final.',
+        'Serious cases (harassment, repeated bad-faith trading, anything affecting several divisions) go to the board, whose decision is final.',
         'If you think a decision about you was wrong, say so to a board member. You will get an answer.',
       ],
     },
@@ -185,10 +185,10 @@ export const PRIVACY: Policy = {
     {
       heading: 'When you apply to join',
       body: [
-        'Applying to join happens on Discord. This site has no form for it and collects nothing from you when you set out to join — it links you to the server and stops there.',
+        'Applying to join happens on Discord. This site has no form for it and collects nothing from you when you set out to join. It links you to the server and stops there.',
         'Asking to help administer the site is a separate thing and does have a form, because only someone who already has an account can ask. It is described further down.',
         'What we see is therefore whatever Discord shows us: your handle, your display name, your avatar, and what you write in the application. We do not ask for your real name, your address, your age or your location, and you should not send them.',
-        'Applications stay in that Discord channel indefinitely, so leaders can look back at who joined when. If you want yours removed, ask — see below.',
+        'Applications stay in that Discord channel indefinitely, so leaders can look back at who joined when. If you want yours removed, ask; see below.',
       ],
     },
     {
@@ -204,7 +204,7 @@ export const PRIVACY: Policy = {
       body: [
         'Members with an account can ask to become a site admin, and the board can log a request that reached them through Discord instead. Either way the request is stored in our database rather than in a Discord channel, because it has to be actioned and then shown to have been actioned.',
         'What is stored is the email address already on your account, the Discord handle you type, what you write about why, and afterwards the decision, the date, and which admin made it. You are not asked for anything else.',
-        'A request stays on the record after it is decided, including one that was turned down — an alliance ought to be able to see who was given the run of the site and by whom. Ask and we will remove yours; see below.',
+        'A request stays on the record after it is decided, including one that was turned down, because an alliance ought to be able to see who was given the run of the site and by whom. Ask and we will remove yours; see below.',
       ],
     },
     {
@@ -246,7 +246,7 @@ export const PRIVACY: Policy = {
       list: [
         'Your application is visible to the division leaders and board members who read that Discord channel. That is the point of sending it, and it is not visible to the membership at large.',
         'Your email address and your bookings are visible to nobody but you. No member, leader or board member can see another Resonance account from this site, and the database will not return one.',
-        'The one exception, and it only applies if you make it apply: if you ask to help administer the site, the admins reading that queue see the address on your account, your display name and your Discord handle. That is unavoidable — the address is what the promotion is applied to — and it is why asking is a deliberate act rather than a setting.',
+        'The one exception, and it only applies if you make it apply: if you ask to help administer the site, the admins reading that queue see the address on your account, your display name and your Discord handle. That is unavoidable, since the address is what the promotion is applied to, and it is why asking is a deliberate act rather than a setting.',
         'Your name on a booking is visible to whoever holds the booking reference, because that is what retrieves it.',
       ],
     },
@@ -269,12 +269,12 @@ export const PRIVACY: Policy = {
         'The site is open source, so none of the above has to be taken on trust. These are the files that do each thing described on this page:',
       ],
       list: [
-        'web/src/components/Join.tsx — the join panel, which links to Discord and posts nothing.',
-        'web/src/lib/auth.tsx and web/src/components/ResonanceAuth.tsx — accounts and sign-in.',
-        'web/src/lib/presence.ts — the open-tabs counter, including the random per-tab identifier.',
-        'web/src/lib/advisories.ts — the one thing we put in your browser storage.',
-        'database/sql/08_rls_policies.sql — the row-level rules that decide what any account is allowed to read.',
-        'database/sql/28_admin_applications.sql — admin requests: what is stored, and the checks on who may read or decide one.',
+        'web/src/components/Join.tsx: the join panel, which links to Discord and posts nothing.',
+        'web/src/lib/auth.tsx and web/src/components/ResonanceAuth.tsx: accounts and sign-in.',
+        'web/src/lib/presence.ts: the open-tabs counter, including the random per-tab identifier.',
+        'web/src/lib/advisories.ts: the one thing we put in your browser storage.',
+        'database/sql/08_rls_policies.sql: the row-level rules that decide what any account is allowed to read.',
+        'database/sql/28_admin_applications.sql: admin requests: what is stored, and the checks on who may read or decide one.',
       ],
     },
     {

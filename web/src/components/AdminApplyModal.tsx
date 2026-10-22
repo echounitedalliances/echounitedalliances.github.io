@@ -72,8 +72,8 @@ export default function AdminApplyModal({
       setStatus('error')
       setError(
         createAccount
-          ? 'Your account was created, but the application could not be sent — message a board member directly.'
-          : 'Something went wrong — try again, or message a board member directly.',
+          ? 'Your account was created, but the application could not be sent. Message a board member directly.'
+          : 'Something went wrong. Try again, or message a board member directly.',
       )
     }
   }
@@ -91,7 +91,7 @@ export default function AdminApplyModal({
             </>
           ) : (
             <>
-              Your admin application is with the board — someone will follow
+              Your admin application is with the board, and someone will follow
               up with you on Discord.
             </>
           )}

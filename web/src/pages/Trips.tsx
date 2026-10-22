@@ -263,7 +263,7 @@ export default function Trips() {
             {isCancelled ? (
               <p className="text-sm text-ink-dim">
                 This booking is cancelled. The reference stays valid to look up,
-                but it cannot be reinstated — a new trip means a new booking.
+                but it cannot be reinstated: a new trip means a new booking.
               </p>
             ) : confirming ? (
               <div className="panel border-danger/45 p-4">

@@ -44,7 +44,7 @@ export const SITE = {
 
   /** Where applications actually happen, stated plainly. */
   joinRequirement:
-    'Every division of Echo requires an application in two places: in The Airline Simulator itself, and with Echo United Alliances on the Discord server. Both steps are needed — an in-game request alone will not be actioned, and neither will an alliance application without the in-game request.',
+    'Every division of Echo requires an application in two places: in The Airline Simulator itself, and with Echo United Alliances on the Discord server. Both steps are needed: an in-game request alone will not be actioned, and neither will an alliance application without the in-game request.',
 
   joinSteps: [
     {
@@ -53,7 +53,7 @@ export const SITE = {
     },
     {
       title: 'Apply with EUA on Discord',
-      body: 'Post your application on the Discord server, or use the form on this page instead — either way it reaches a division lead, who matches it to your in-game request.',
+      body: 'Post your application on the Discord server, or use the form on this page instead. Either way it reaches a division lead, who matches it to your in-game request.',
     },
     {
       title: 'Wait for a division lead',

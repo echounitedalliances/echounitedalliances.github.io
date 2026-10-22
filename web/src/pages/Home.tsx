@@ -256,7 +256,7 @@ export default function Home() {
               ['Airports', airportCount],
             ].map(([label, v], i) => (
               <Reveal key={label as string} delay={i * 80} className="home-fig">
-                <b>{(v as number) > 0 ? <CountUp to={v as number} /> : '—'}</b>
+                <b>{(v as number) > 0 ? <CountUp to={v as number} /> : '–'}</b>
                 <span className="eyebrow text-ink-faint">{label}</span>
               </Reveal>
             ))}

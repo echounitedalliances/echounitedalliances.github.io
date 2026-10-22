@@ -469,7 +469,7 @@ export default function RouteMap({
       {hover && (
         <div className="panel pointer-events-none absolute bottom-2 left-2 px-3 py-2">
           <div className="mono text-[11px] tracking-[0.14em] text-cyan">{hover.iata_code}</div>
-          <div className="text-sm text-ink">{hover.city_name ?? '—'}</div>
+          <div className="text-sm text-ink">{hover.city_name ?? '–'}</div>
           <div className="mono text-[11px] text-ink-faint">
             {hover.carriers} carriers · {hover.weekly_departures.toLocaleString('en-GB')} weekly
           </div>

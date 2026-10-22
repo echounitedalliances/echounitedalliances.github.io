@@ -72,7 +72,7 @@ export default function About() {
       <p className="mt-5 max-w-[64ch] text-lg text-ink-dim">
         Echo United Alliances is a group of {spell(divisionCount)} alliances in The Airline
         Simulator, each running its own roster and its own leadership, flying as
-        one network. The excellence in the name is not one airline's — it is all
+        one network. The excellence in the name is not one airline's. It is all
         of them, and the people who keep them flying together.
       </p>
       {divisions !== null && (
@@ -130,7 +130,7 @@ export default function About() {
       <section className="mt-14">
         <h2 className="display text-2xl">The board</h2>
         <p className="mt-1 max-w-[62ch] text-ink-faint">
-          Echo's board is its division leaders — the people who run each
+          Echo's board is its division leaders: the people who run each
           alliance also run the group. They are listed here by the name and
           handle they go by on Discord, which is where the group actually
           meets; several of them own more than one carrier.
@@ -194,8 +194,8 @@ export default function About() {
       <section className="mt-14">
         <h2 className="display text-2xl">Joining</h2>
         <p className="mt-2 max-w-[62ch] text-ink-dim">
-          Every division takes applications in two places — in the game, and on
-          the Echo Discord — and every one of them is read by hand.{' '}
+          Every division takes applications in two places, in the game and on
+          the Echo Discord, and every one of them is read by hand.{' '}
           <Link to="/divisions" className="text-cyan">
             Meet the divisions
           </Link>{' '}

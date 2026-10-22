@@ -38,7 +38,7 @@ export function explain(error: { message: string; code?: string; status?: number
   const code = error.code ?? ''
   const msg = error.message ?? ''
   if (code === 'over_email_send_rate_limit' || /rate limit/i.test(msg)) {
-    return 'Too many emails from this project in the last hour — that is a limit on the sending account, not on you. It clears by itself; try again a little later, or sign in with a password instead.'
+    return 'Too many emails from this project in the last hour. That is a limit on the sending account, not on you. It clears by itself; try again a little later, or sign in with a password instead.'
   }
   if (code === 'user_already_exists' || code === 'email_exists' || /already registered/i.test(msg)) {
     return 'That address already has an account. Sign in with your password, or use Forgot password if you have never set one.'
@@ -152,7 +152,7 @@ export function SignIn() {
       if (error) {
         setError(
           error.code === 'invalid_credentials'
-            ? 'That email and password do not match. If you joined before passwords existed you will not have one yet — use Forgot password to set your first.'
+            ? 'That email and password do not match. If you joined before passwords existed you will not have one yet, so use Forgot password to set your first.'
             : explain(error),
         )
       }

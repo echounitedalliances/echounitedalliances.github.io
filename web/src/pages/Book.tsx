@@ -373,7 +373,7 @@ export default function Book() {
         <div className="panel mt-4 border-l-2 border-l-[color:var(--color-accent)] p-4">
           <p className="text-sm text-ink-dim">
             <strong className="font-medium text-ink">This is a mock checkout.</strong> No
-            payment is taken and no card details are collected — the booking is written
+            payment is taken and no card details are collected. The booking is written
             straight to the alliance database and seats come out of inventory.
           </p>
         </div>

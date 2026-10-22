@@ -86,7 +86,7 @@ export default function Resonance() {
         </h1>
         <p className="mt-4 max-w-[58ch] text-lg text-ink-dim">
           A Resonance account keeps your trips together across all {num(carrierCount)} carriers,
-          and remembers where you fly from. It is optional — you can search and
+          and remembers where you fly from. It is optional: you can search and
           book without one.
         </p>
 
@@ -223,8 +223,8 @@ export default function Resonance() {
                   Board
                 </h2>
                 <p className="mt-2 max-w-[54ch] text-sm text-ink-dim">
-                  Interested in helping run the alliance? Apply for admin —
-                  it goes straight to the board on Discord.
+                  Interested in helping run the alliance? Apply for admin,
+                  and it goes straight to the board on Discord.
                 </p>
               </div>
               <button

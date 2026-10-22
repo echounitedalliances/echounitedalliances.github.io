@@ -94,7 +94,7 @@ export const ACTIVITIES: Activity[] = [
     name: 'FFA sales',
     lede: 'Free for all. Anyone sells, anyone buys.',
     body: [
-      'A member with an aircraft to sell posts it in the FFA channel on Discord, and any other member can come and buy it. There is no queue, no seniority and no allocation — the sale is open to the whole group the moment it is announced.',
+      'A member with an aircraft to sell posts it in the FFA channel on Discord, and any other member can come and buy it. There is no queue, no seniority and no allocation: the sale is open to the whole group the moment it is announced.',
       'Buyers are expected to ask with a reason. FFA is not a race to claim whatever appears; it works because people take the aircraft they can actually use, and say why.',
     ],
     facts: [
@@ -108,14 +108,14 @@ export const ACTIVITIES: Activity[] = [
     name: 'Discount aircraft market',
     lede: 'Post what you want and what you will pay. A veteran fills it.',
     body: [
-      'The market runs the other way round from a shop. Instead of browsing what is for sale, a member opens a buy ticket naming the aircraft models they want and the price they are willing to pay — anywhere from 50% to 90% of the original price.',
+      'The market runs the other way round from a shop. Instead of browsing what is for sale, a member opens a buy ticket naming the aircraft models they want and the price they are willing to pay, anywhere from 50% to 90% of the original price.',
       'Veteran members who can fulfil an order pick it up and handle it. Nothing is scheduled: tickets are opened and filled while people happen to be online, which in a group spanning every timezone means most of the day.',
     ],
     facts: [
       { label: 'Price range', value: '50% – 90% of original' },
       { label: 'You post', value: 'Models wanted, and your price' },
       { label: 'Filled by', value: 'Veteran members, as they come online' },
-      { label: 'Schedule', value: 'None — it runs continuously' },
+      { label: 'Schedule', value: 'None, it runs continuously' },
     ],
   },
   {
@@ -149,7 +149,7 @@ export const STORY = {
   paragraphs: [
     'Echo United Alliances started as Axian Alliance, with three founding members, on 24 March 2026. The growth of Echo since has been immense, and it is all thanks to the support of every single one of its members.',
     'If you are a beginner, and you need guidance and tips, Echo is the perfect alliance for you. Eighty per cent of our members joined us when they had just started playing The Airline Simulator, and by joining the alliance their growth quadrupled. We also monitor our market strictly, so that aircraft orders do not get stolen and you can actually get them. We are a hot spot for many well established airlines as well.',
-    'Echo can be home to anyone — it does not matter who. Invite your friends, so they can make this community their home too.',
+    'Echo can be home to anyone. It does not matter who. Invite your friends, so they can make this community their home too.',
   ],
   closing: 'We are a family. We trust and we respect everyone equally.',
 }

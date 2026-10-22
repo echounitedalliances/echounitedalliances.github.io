@@ -62,7 +62,7 @@ export default function Join({ compact = false }: { compact?: boolean }) {
               )}
             </div>
             <p className="mt-2 text-ink-dim">
-              Apply on Discord — a division lead picks it up from there.
+              Apply on Discord, and a division lead picks it up from there.
             </p>
 
             {discordConfigured ? (
@@ -81,7 +81,7 @@ export default function Join({ compact = false }: { compact?: boolean }) {
             )}
 
             <p className="mt-3 text-[12px] text-ink-faint">
-              Applying in the game alone is not enough — both steps are required.
+              Applying in the game alone is not enough: both steps are required.
             </p>
           </aside>
         </div>

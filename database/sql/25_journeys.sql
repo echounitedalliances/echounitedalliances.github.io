@@ -457,7 +457,7 @@ begin
     if abs(v_turn) < 320 then
         v_probs := v_probs ||
             ('This routing turns ' || round(abs(v_turn))::text ||
-             ' degrees around the globe. A round-the-world fare has to complete the circle — keep going the same way rather than turning back.');
+             ' degrees around the globe. A round-the-world fare has to complete the circle: keep going the same way rather than turning back.');
     elsif abs(v_turn) > 400 then
         v_probs := v_probs ||
             ('This routing turns ' || round(abs(v_turn))::text ||

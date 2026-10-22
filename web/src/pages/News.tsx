@@ -56,7 +56,7 @@ export default function News() {
       <p className="eyebrow text-cyan">Newsroom</p>
       <h1 className="display mt-3 text-[clamp(34px,5vw,58px)]">Across the network</h1>
       <p className="mt-5 max-w-[64ch] text-lg text-ink-dim">
-        New routes, deliveries, network changes and the occasional farewell — what
+        New routes, deliveries, network changes and the occasional farewell: what
         the alliance's carriers have been doing lately.
       </p>
       <p className="mt-4 text-[12px] text-ink-faint">

@@ -361,7 +361,7 @@ export default function AccountTrips() {
                     <p className="mt-1.5 text-[13px] text-ink-faint">
                       {cancelled
                         ? 'It only leaves this list.'
-                        : 'The booking is not cancelled: it still stands, and its reference and a traveller’s surname still find it — or add it back here.'}
+                        : 'The booking is not cancelled: it still stands, and its reference and a traveller’s surname still find it. Or add it back here.'}
                     </p>
                     <div className="mt-4 flex flex-wrap gap-2">
                       <button

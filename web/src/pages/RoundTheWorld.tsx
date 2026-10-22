@@ -125,7 +125,7 @@ export default function RoundTheWorld() {
       <h1 className="display mt-3 text-[clamp(34px,5vw,58px)]">One fare, one direction</h1>
       <p className="mt-5 max-w-[64ch] text-lg text-ink-dim">
         Keep going the same way until you are home again, on any of the alliance's{' '}
-        {num(carrierCount)} carriers. The fare is set by how far round you go — not by how many
+        {num(carrierCount)} carriers. The fare is set by how far round you go, not by how many
         times you stop.
       </p>
 
@@ -244,7 +244,7 @@ export default function RoundTheWorld() {
               </div>
               <p className="mt-3 text-[12px] text-ink-faint">
                 A hop marked “connection needed” has no nonstop between those two
-                airports — it is still part of the fare, you will just change planes on
+                airports. It is still part of the fare, you will just change planes on
                 the way. Carrier counts are the members flying that hop nonstop today.
               </p>
             </div>
@@ -283,7 +283,7 @@ export default function RoundTheWorld() {
                         ? 'Eastbound'
                         : quote?.direction === 'WEST'
                           ? 'Westbound'
-                          : '—'}
+                          : '–'}
                     </dd>
                   </div>
                   <div className="flex justify-between gap-3">

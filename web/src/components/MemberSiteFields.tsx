@@ -201,7 +201,7 @@ export default function MemberSiteFields({
           >
             {GRADES.map((g) => (
               <option key={g} value={g}>
-                {GRADE[g].label} — {GRADE_HELP[g]}
+                {GRADE[g].label}: {GRADE_HELP[g]}
               </option>
             ))}
           </select>

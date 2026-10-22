@@ -139,7 +139,7 @@ export default function FareCalendar({
                   {usd(row.cheapest_usd)}
                 </span>
               ) : (
-                <span className="mono text-[11px] text-ink-faint">—</span>
+                <span className="mono text-[11px] text-ink-faint">–</span>
               )}
             </button>
           )
@@ -147,7 +147,7 @@ export default function FareCalendar({
       </div>
       <p className="mt-2 text-[11px] text-ink-faint">
         Cheapest fare per day over nonstop and one-connection journeys. A day with no
-        price has nothing under two stops — search it to be sure.
+        price has nothing under two stops, so search it to be sure.
       </p>
     </section>
   )

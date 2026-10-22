@@ -651,7 +651,7 @@ export default function AirlinePage() {
             nothing; the way out is to pick an airport, so the notice says so. */}
         {ttCapped && (
           <p className="mono mt-3 border-l-2 border-l-[color:var(--color-warn)] bg-surface px-4 py-3 text-[12px] text-ink-dim">
-            Showing the first 1,000 services — the server will not return more in
+            Showing the first 1,000 services, because the server will not return more in
             one request. Click an airport on the map, or pick a route, for a
             complete list.
           </p>
@@ -716,7 +716,7 @@ export default function AirlinePage() {
                         ))}
                       </span>
                     </td>
-                    <td className="px-3 py-2 text-[12px] text-ink-faint">{t.aircraft_model ?? '—'}</td>
+                    <td className="px-3 py-2 text-[12px] text-ink-faint">{t.aircraft_model ?? '–'}</td>
                     <td className="mono px-3 py-2 text-right text-ink-dim">{usd(t.economy_price)}</td>
                   </tr>
                 ))}
