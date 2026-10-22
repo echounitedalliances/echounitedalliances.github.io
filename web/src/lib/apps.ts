@@ -51,7 +51,7 @@ export const MEMBER_APPS: MemberApp[] = [
     ],
     route: '/live',
     plannedUrl: 'https://live.echoalliances.com',
-    url: 'https://echoflightslive.github.io/',
+    url: 'https://live.echoalliances.com/',
     live: true,
     access: { membersOnly: false, badge: 'Open to all', signIn: 'Sign in for extras · Discord or Google' },
   },
