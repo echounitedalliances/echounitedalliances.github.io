@@ -644,8 +644,8 @@ const dict: Record<string, string> = {
   "rows": "행",
   "confirmed": "확정됨",
   "{list} and {last}": "{list} 및 {last}",
-  "Main division": "메인 디비전",
-  "Realism alliance": "리얼리즘 얼라이언스",
+  "Main Alliance": "메인 얼라이언스",
+  "Realism Alliance": "리얼리즘 얼라이언스",
 }
 
 export default dict

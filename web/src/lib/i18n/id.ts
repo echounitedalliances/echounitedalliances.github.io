@@ -636,8 +636,8 @@ const dict: Record<string, string> = {
   "rows": "baris",
   "confirmed": "terkonfirmasi",
   "{list} and {last}": "{list} dan {last}",
-  "Main division": "Divisi utama",
-  "Realism alliance": "Aliansi realisme",
+  "Main Alliance": "Aliansi Utama",
+  "Realism Alliance": "Aliansi Realisme",
 }
 
 export default dict

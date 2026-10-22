@@ -17,7 +17,7 @@ export const duration = (mins: number | null | undefined) => {
 
 /** The locale dates are written in, for the language being read. */
 export const dateLocale = () =>
-  ({ en: 'en-GB', id: 'id-ID', zh: 'zh-CN', ko: 'ko-KR', bn: 'bn-BD', hi: 'hi-IN' })[currentLang()]
+  ({ en: 'en-GB', id: 'id-ID', vi: 'vi-VN', fil: 'fil-PH', zh: 'zh-CN', ko: 'ko-KR', bn: 'bn-BD', hi: 'hi-IN' })[currentLang()]
 
 /** A country's name, from its two-letter code, in the language being read. */
 export const countryName = (cc: string): string => {

@@ -73,8 +73,8 @@ export const SITE = {
  * database/sql/16_division_policy.sql.
  */
 export const DIVISION_NOTES: Record<string, string> = {
-  kyra: 'Main division',
-  elysium: 'Realism alliance',
+  kyra: 'Main Alliance',
+  elysium: 'Realism Alliance',
 }
 
 export const discordConfigured = !SITE.discordInvite.includes('REPLACE-ME')

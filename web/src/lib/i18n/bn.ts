@@ -644,8 +644,8 @@ const dict: Record<string, string> = {
   "rows": "সারি",
   "confirmed": "নিশ্চিত",
   "{list} and {last}": "{list} এবং {last}",
-  "Main division": "প্রধান ডিভিশন",
-  "Realism alliance": "বাস্তবতাধর্মী অ্যালায়েন্স",
+  "Main Alliance": "প্রধান অ্যালায়েন্স",
+  "Realism Alliance": "বাস্তবতাধর্মী অ্যালায়েন্স",
 }
 
 export default dict

@@ -20,11 +20,13 @@ import type { ReactNode } from 'react'
  * a visitor reading English downloads none of them.
  */
 
-export type Lang = 'en' | 'id' | 'zh' | 'ko' | 'bn' | 'hi'
+export type Lang = 'en' | 'id' | 'vi' | 'fil' | 'zh' | 'ko' | 'bn' | 'hi'
 
 export const LANGS: { code: Lang; short: string; name: string; font?: string }[] = [
   { code: 'en', short: 'EN', name: 'English' },
   { code: 'id', short: 'ID', name: 'Bahasa Indonesia' },
+  { code: 'vi', short: 'VI', name: 'Tiếng Việt' },
+  { code: 'fil', short: 'FIL', name: 'Filipino' },
   { code: 'zh', short: '中文', name: '中文', font: 'Noto+Sans+SC:wght@400;500;700' },
   { code: 'ko', short: '한국어', name: '한국어', font: 'Noto+Sans+KR:wght@400;500;700' },
   { code: 'bn', short: 'বাংলা', name: 'বাংলা', font: 'Noto+Sans+Bengali:wght@400;500;700' },
@@ -35,6 +37,8 @@ type Dict = Record<string, string>
 
 const LOADERS: Record<Exclude<Lang, 'en'>, () => Promise<{ default: Dict }>> = {
   id: () => import('./i18n/id'),
+  vi: () => import('./i18n/vi'),
+  fil: () => import('./i18n/fil'),
   zh: () => import('./i18n/zh'),
   ko: () => import('./i18n/ko'),
   bn: () => import('./i18n/bn'),
