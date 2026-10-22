@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import { SLOGAN } from '../lib/alliance'
+import { isConfigured, supabase } from '../lib/supabase'
 
 /**
  * The arrival sequence: radar contact.
  *
  *   1. A radar scope draws itself: crosshairs, range rings, bearing ticks.
  *   2. The sweep turns once, and every member airline appears as a contact
- *      where it passes, 644 blips in their divisions' colours, counted in
+ *      where it passes, one blip per airline in the database, in its
+ *      division's colour, counted in
  *      the corner like a controller's readout.
  *   3. "Form up": every contact leaves its position and flies to a place on
  *      the Echo wing, so the alliance's airlines literally make the mark.
@@ -28,18 +30,46 @@ const T_FORM = 3350 // contacts reach the wing
 const T_LOCK = 3900 // wing filled
 const T_EXIT = 4900 // climb away
 
-/** The nine divisions' colours and roster sizes (October 2026), for the blips. */
-const DIVISIONS: [string, number][] = [
-  ['#7B35FF', 78], // Kyra
-  ['#D0FF4D', 78], // Aegis
+type Roster = [string, number][] // [division colour, airlines]
+
+/**
+ * Stand-in until the real roster arrives: the divisions' colours and sizes
+ * from the 22 October 2026 data. Only seen if the database is slow to answer
+ * or unreachable.
+ */
+const FALLBACK: Roster = [
+  ['#7B35FF', 80], // Kyra
+  ['#D0FF4D', 79], // Aegis
   ['#E46EFF', 62], // Elysium
-  ['#81FBFE', 78], // Proxima
-  ['#5DFE95', 75], // Rhea
-  ['#FF7E42', 77], // Vilis
+  ['#81FBFE', 80], // Proxima
+  ['#5DFE95', 80], // Rhea
+  ['#FF7E42', 80], // Vilis
   ['#7EA0F4', 80], // Elion
-  ['#EF9D9E', 79], // Aura
-  ['#FDECD8', 37], // Eos
+  ['#EF9D9E', 78], // Aura
+  ['#FDECD8', 57], // Eos
 ]
+
+/**
+ * The live roster: every division's colour and airline count, asked for as
+ * soon as the bundle runs, so the radar shows exactly as many contacts as
+ * the database holds airlines. The scope takes T_SCOPE to draw before the
+ * first contact appears, which is the window the answer has to land in.
+ */
+let roster: Roster | null = null
+const rosterReady: Promise<Roster | null> = !isConfigured
+  ? Promise.resolve(null)
+  : Promise.resolve(
+      supabase.from('v_division_summary').select('accent_color, carriers, sort_order').order('sort_order'),
+    ).then(
+      ({ data, error }) => {
+        if (error || !data?.length) return null
+        roster = (data as { accent_color: string | null; carriers: number }[])
+          .filter((d) => d.carriers > 0)
+          .map((d) => [d.accent_color || '#A855F7', d.carriers])
+        return roster
+      },
+      () => null,
+    )
 
 const WING_RATIO = 428 / 339
 const wingSrc = `${import.meta.env.BASE_URL}brand/echo-mark.png`
@@ -137,24 +167,27 @@ export default function Welcome() {
     const wy = cy - wingH / 2
 
     // One blip per member airline, coloured by division.
-    const blips: Blip[] = []
-    DIVISIONS.forEach(([color, n]) => {
-      for (let i = 0; i < n; i++) {
-        const a = Math.random() * Math.PI * 2
-        blips.push({
-          a,
-          rel: (a + Math.PI / 2) % (Math.PI * 2),
-          r: 0.12 + Math.sqrt(Math.random()) * 0.86,
-          color,
-          tx: cx,
-          ty: cy,
-          delay: Math.random() * 380,
-          bend: (Math.random() - 0.5) * 0.6,
-        })
-      }
-    })
-    // Sweep order: the contacts light as the beam reaches their bearing.
-    blips.sort((p, q) => p.rel - q.rel)
+    const build = (list: Roster) => {
+      const out: Blip[] = []
+      list.forEach(([color, n]) => {
+        for (let i = 0; i < n; i++) {
+          const a = Math.random() * Math.PI * 2
+          out.push({
+            a,
+            rel: (a + Math.PI / 2) % (Math.PI * 2),
+            r: 0.12 + Math.sqrt(Math.random()) * 0.86,
+            color,
+            tx: cx,
+            ty: cy,
+            delay: Math.random() * 380,
+            bend: (Math.random() - 0.5) * 0.6,
+          })
+        }
+      })
+      // Sweep order: the contacts light as the beam reaches their bearing.
+      return out.sort((p, q) => p.rel - q.rel)
+    }
+    let blips = build(roster ?? FALLBACK)
 
     // Wing targets: sample the mark's opaque pixels, then deal them out.
     const wing = wingImage ?? Object.assign(new Image(), { src: wingSrc })
@@ -188,6 +221,17 @@ export default function Welcome() {
     else wing.addEventListener('load', place, { once: true })
 
     const t0 = performance.now()
+
+    // The live count, if it lands before the sweep shows the first contact.
+    // Later than that it would visibly reshuffle the scope, so the stand-in
+    // stays for this run.
+    let live = true
+    if (!roster)
+      void rosterReady.then((list) => {
+        if (!live || !list || performance.now() - t0 >= T_SCOPE) return
+        blips = build(list)
+        if (wingReady) place()
+      })
     let raf = 0
 
     // The words, the readout and the fade-out run off the same clock as the
@@ -352,7 +396,10 @@ export default function Welcome() {
     ctx.fillStyle = '#050505'
     ctx.fillRect(0, 0, W, H)
     raf = requestAnimationFrame(frame)
-    return () => cancelAnimationFrame(raf)
+    return () => {
+      live = false
+      cancelAnimationFrame(raf)
+    }
   }, [show])
 
   if (!show) return null
