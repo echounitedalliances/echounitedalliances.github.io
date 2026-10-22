@@ -33,7 +33,7 @@ import EchoMark from './components/EchoMark'
 import Welcome from './components/Welcome'
 import MaintenanceLock from './components/MaintenanceLock'
 import LangMenu from './components/LangMenu'
-import { I18nProvider, rich, useT } from './lib/i18n'
+import { I18nProvider, rich, useI18n, useT } from './lib/i18n'
 
 /**
  * HashRouter, not BrowserRouter. GitHub Pages has no server to rewrite unknown
@@ -98,7 +98,7 @@ function AccountLink({ block = false }: { block?: boolean }) {
  * the row it always was; below, the links fold into a menu and only the two
  * things a visitor actually came for stay out: Discord, and their account.
  */
-function MenuButton({ open, onToggle }: { open: boolean; onToggle: () => void }) {
+function MenuButton({ open, onToggle, always }: { open: boolean; onToggle: () => void; always: boolean }) {
   const t = useT()
   return (
     <button
@@ -107,7 +107,7 @@ function MenuButton({ open, onToggle }: { open: boolean; onToggle: () => void })
       aria-expanded={open}
       aria-controls="site-menu"
       aria-label={open ? t('Close menu') : t('Open menu')}
-      className="mono flex h-9 w-9 shrink-0 items-center justify-center border border-edge text-ink-dim transition-colors hover:border-accent hover:text-ink lg:hidden"
+      className={`mono flex h-9 w-9 shrink-0 items-center justify-center border border-edge text-ink-dim transition-colors hover:border-accent hover:text-ink ${always ? '' : 'lg:hidden'}`}
     >
       <svg width="15" height="15" viewBox="0 0 15 15" aria-hidden="true">
         {open ? (
@@ -129,7 +129,7 @@ function MenuButton({ open, onToggle }: { open: boolean; onToggle: () => void })
 
 function Shell({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false)
-  const t = useT()
+  const { lang, t } = useI18n()
   const carrierCount = useCarrierCount()
   const airportCount = useAirportCount()
   const divisionCount = useDivisionCount()
@@ -183,6 +183,52 @@ function Shell({ children }: { children: React.ReactNode }) {
       cancelAnimationFrame(raf)
     }
   }, [])
+  // The full row of links fits in English at 1024px, but not in every
+  // language: Vietnamese needs about 1,350px. Rather than let the bar push
+  // past the edge of the screen, it folds into the menu button whenever the
+  // links do not fit, and unfolds again once there is room for them.
+  const row = useRef<HTMLDivElement>(null)
+  const [folded, setFolded] = useState(false)
+  const needed = useRef(0)
+  useEffect(() => {
+    needed.current = 0
+    setFolded(false)
+  }, [lang])
+  useEffect(() => {
+    const el = row.current
+    if (!el || typeof ResizeObserver === 'undefined') return
+    const check = () => {
+      if (!folded) {
+        if (el.scrollWidth > el.clientWidth + 1) {
+          needed.current = el.scrollWidth
+          setFolded(true)
+        }
+      } else if (needed.current && el.clientWidth >= needed.current) {
+        setFolded(false)
+      }
+    }
+    check()
+    // The row keeps its width when a late web font widens the links inside
+    // it, so watch the children too, and look again whenever fonts load.
+    const ro = new ResizeObserver(check)
+    ro.observe(el)
+    Array.from(el.children).forEach((c) => ro.observe(c))
+    // A font arriving changes what "fits" in both directions: a fallback face
+    // can be wider than the real one, so a fold made before the fonts loaded
+    // is measured again from scratch.
+    const refit = () => {
+      if (folded) {
+        needed.current = 0
+        setFolded(false)
+      } else check()
+    }
+    document.fonts?.addEventListener?.('loadingdone', refit)
+    return () => {
+      ro.disconnect()
+      document.fonts?.removeEventListener?.('loadingdone', refit)
+    }
+  }, [folded, lang, carrierCount])
+
   // A new page, or the menu open, always shows the bar.
   useEffect(() => setBarHidden(false), [pathname, open])
 
@@ -203,16 +249,16 @@ function Shell({ children }: { children: React.ReactNode }) {
         className={`site-bar ${barHidden && !open ? 'site-bar-hidden' : ''}`}
         onFocusCapture={() => setBarHidden(false)}
       >
-        <div className="mx-auto flex max-w-[1180px] items-center gap-x-3 px-4 py-2.5 sm:px-5 sm:py-3">
-          <Link to="/" className="flex items-baseline gap-2.5">
+        <div ref={row} className="mx-auto flex max-w-[1440px] items-center gap-x-3 px-4 py-2.5 sm:px-5 sm:py-3">
+          <Link to="/" className="flex shrink-0 items-baseline gap-2.5">
             {/* The wing, not a coloured square standing in for it. */}
             <EchoMark height={17} color="var(--color-ink)" />
             <span className="wordmark text-[21px]">Echo</span>
-            <span className="wordmark-sub hidden text-[9.5px] text-ink-faint sm:inline">
+            <span className="wordmark-sub hidden whitespace-nowrap text-[9.5px] text-ink-faint xl:inline">
               United Alliances
             </span>
           </Link>
-          <nav className="ml-auto hidden items-center gap-1 lg:flex">
+          <nav className={folded ? 'hidden' : 'ml-auto hidden items-center gap-1 lg:flex'}>
             {NAV.map((l) =>
               l.children ? (
                 <NavGroup key={l.to} item={l} />
@@ -232,7 +278,10 @@ function Shell({ children }: { children: React.ReactNode }) {
             )}
             <div className="ml-2 flex items-center gap-2">
               <OnlineBadge />
-              <SiteVisitorBadge />
+              {/* The drawer always carries it; the bar only has room on wide screens. */}
+              <span className="hidden 2xl:contents">
+                <SiteVisitorBadge />
+              </span>
             </div>
             {discordConfigured && (
               <a
@@ -249,7 +298,7 @@ function Shell({ children }: { children: React.ReactNode }) {
           </nav>
 
           {/* the phone header: Discord stays out, everything else folds in */}
-          <div className="ml-auto flex items-center gap-2 lg:hidden">
+          <div className={`ml-auto flex items-center gap-2 ${folded ? '' : 'lg:hidden'}`}>
             <LangMenu />
             {discordConfigured && (
               <a
@@ -261,13 +310,14 @@ function Shell({ children }: { children: React.ReactNode }) {
                 Discord
               </a>
             )}
-            <MenuButton open={open} onToggle={() => setOpen((o) => !o)} />
+            <MenuButton open={open} onToggle={() => setOpen((o) => !o)} always={folded} />
           </div>
         </div>
 
       </header>
 
       <MobileMenu
+        always={folded}
         open={open}
         onClose={() => setOpen(false)}
         links={NAV}

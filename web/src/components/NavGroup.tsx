@@ -50,7 +50,7 @@ export default function NavGroup({ item }: { item: NavItem }) {
       <div className="flex items-center">
         <NavLink
           to={item.to}
-          className={`mono py-1.5 pl-2.5 pr-1 text-[11px] uppercase tracking-[0.12em] transition-colors ${
+          className={`mono whitespace-nowrap py-1.5 pl-2.5 pr-1 text-[11px] uppercase tracking-[0.12em] transition-colors ${
             active ? 'text-cyan' : 'text-ink-faint hover:text-ink-dim'
           }`}
         >

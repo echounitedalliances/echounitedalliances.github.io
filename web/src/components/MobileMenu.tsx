@@ -28,12 +28,15 @@ import { useT } from '../lib/i18n'
  */
 export default function MobileMenu({
   open,
+  always = false,
   onClose,
   links,
   badges,
   account,
 }: {
   open: boolean
+  /** The bar has folded at desktop width too, so the drawer must not hide there. */
+  always?: boolean
   onClose: () => void
   links: NavItem[]
   /** The live counters, passed in so this file does not reach for them itself. */
@@ -86,7 +89,7 @@ export default function MobileMenu({
   if (!open) return null
 
   return (
-    <div className="fixed inset-0 z-50 lg:hidden">
+    <div className={`fixed inset-0 z-50 ${always ? '' : 'lg:hidden'}`}>
       <button
         type="button"
         aria-label={t('Close menu')}

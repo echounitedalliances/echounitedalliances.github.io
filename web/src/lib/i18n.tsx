@@ -25,7 +25,10 @@ export type Lang = 'en' | 'id' | 'vi' | 'fil' | 'zh' | 'ko' | 'bn' | 'hi'
 export const LANGS: { code: Lang; short: string; name: string; font?: string }[] = [
   { code: 'en', short: 'EN', name: 'English' },
   { code: 'id', short: 'ID', name: 'Bahasa Indonesia' },
-  { code: 'vi', short: 'VI', name: 'Tiếng Việt' },
+  // Bodoni Moda has no Vietnamese letters, so the italic headline word would
+  // lose its accents to a fallback face; Playfair Display is the nearest
+  // Didone italic that carries them.
+  { code: 'vi', short: 'VI', name: 'Tiếng Việt', font: 'Playfair+Display:ital,wght@1,500' },
   { code: 'fil', short: 'FIL', name: 'Filipino' },
   { code: 'zh', short: '中文', name: '中文', font: 'Noto+Sans+SC:wght@400;500;700' },
   { code: 'ko', short: '한국어', name: '한국어', font: 'Noto+Sans+KR:wght@400;500;700' },

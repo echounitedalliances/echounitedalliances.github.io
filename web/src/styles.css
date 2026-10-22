@@ -787,3 +787,15 @@ html[lang="zh"] .display, html[lang="ko"] .display { letter-spacing: 0; line-hei
 /* Letter-spacing pulls Bengali and Devanagari clusters apart; the small
    tracked caps labels read as broken words in those scripts. */
 html[lang="bn"] body *, html[lang="hi"] body * { letter-spacing: 0 !important; }
+
+/* Nothing may push the page sideways, in any language. The top bar folds
+   into its menu when its links do not fit (App.tsx); this is the backstop
+   for everything else, and long words in big headlines break rather than
+   run off the edge. */
+html, body { overflow-x: clip; max-width: 100%; }
+.display, h1, h2, h3 { overflow-wrap: break-word; min-width: 0; }
+html[lang="vi"] { --font-serif: "Playfair Display", Georgia, serif; }
+/* Vietnamese capitals stack two marks (Ồ, Ệ); at the display face's tight
+   leading they collide with the line above. */
+html[lang="vi"] .display, html[lang="vi"] .div-name, html[lang="vi"] .marquee-run span,
+html[lang="vi"] .home-offer-big, html[lang="vi"] .aotw-name { line-height: 1.15 !important; }
