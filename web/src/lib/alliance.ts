@@ -49,6 +49,25 @@ export const LEADERS: Leader[] = [
   { division_code: 'eos', name: 'Falcco', discord: '.fyxd' },
 ]
 
+/**
+ * Each leader's Echo email address, by Discord handle -- one entry per
+ * person, so someone who leads several divisions is filled in once.
+ *
+ * Put the address between the quotes, e.g. '_ahnafabrar_': 'ahnaf@echoalliances.com'.
+ * Left empty, the envelope beside that leader's name shows greyed out with
+ * "Contact details updated soon". A leader added to LEADERS above without a
+ * line here behaves the same way.
+ */
+export const LEADER_EMAILS: Record<string, string> = {
+  w4leste: '', // Naofum, Kyra
+  creativator_2001: '', // DCC, Aegis
+  jet_gooning: '', // Top G, Elysium
+  _ahnafabrar_: '', // Ahnaf, Proxima, Elion and Aura
+  _erwinsmith: '', // Reiner, Rhea
+  ykw_1009: '', // Yukai, Vilis
+  '.fyxd': '', // Falcco, Eos
+}
+
 export const SLOGAN = 'Home of the Excellence'
 
 /**

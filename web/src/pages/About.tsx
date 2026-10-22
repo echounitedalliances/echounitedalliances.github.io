@@ -7,6 +7,7 @@ import { accentOf, num, spell } from '../lib/format'
 import { useDivisionCount } from '../lib/carriers'
 import { Loading, NotConfigured } from '../components/ui'
 import EchoMark from '../components/EchoMark'
+import LeaderMail from '../components/LeaderMail'
 import { rich, useT } from '../lib/i18n'
 
 /**
@@ -157,7 +158,10 @@ export default function About() {
                     </div>
                     {leaders.map((leader) => (
                       <div key={leader.discord} className="mt-3">
-                        <p className="display text-2xl text-ink">{leader.name}</p>
+                        <p className="display flex items-center gap-2.5 text-2xl text-ink">
+                          {leader.name}
+                          <LeaderMail leader={leader} />
+                        </p>
                         <p className="mono mt-1 text-[12px] text-ink-faint">@{leader.discord}</p>
                       </div>
                     ))}

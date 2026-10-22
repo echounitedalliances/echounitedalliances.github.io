@@ -6,6 +6,7 @@ import { accentOf, num } from '../lib/format'
 import { DIVISION_NOTES } from '../lib/site'
 import { LEADERS } from '../lib/alliance'
 import { useT } from '../lib/i18n'
+import LeaderMail from './LeaderMail'
 
 /**
  * A division as a black tile that floods with its own colour, a pixel at a
@@ -57,7 +58,7 @@ export default function DivisionTile({
               {leaders.map((l, i) => (
                 <span key={l.discord}>
                   {i > 0 && ' & '}
-                  <b>{l.name}</b> <span className="div-handle">@{l.discord}</span>
+                  <b>{l.name}</b> <LeaderMail leader={l} /> <span className="div-handle">@{l.discord}</span>
                 </span>
               ))}
             </span>

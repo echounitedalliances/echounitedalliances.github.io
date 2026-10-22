@@ -661,6 +661,8 @@ const dict: Record<string, string> = {
   "{n} of them are widebodies for the long-haul work.": "Trong đó có {n} máy bay thân rộng cho các chặng bay dài.",
   "Its longest sector, {from} to {to}, takes {time}.": "Chặng dài nhất là {from} đến {to}, mất {time}.",
   "Its busiest sector, {from} to {to}, runs {n} times a week.": "Chặng đông nhất là {from} đến {to}, chạy {n} chuyến mỗi tuần.",
+  "Email {name}": "Gửi email cho {name}",
+  "Contact details updated soon": "Thông tin liên hệ sẽ sớm được cập nhật",
 }
 
 export default dict

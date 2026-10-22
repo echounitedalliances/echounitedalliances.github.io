@@ -665,6 +665,8 @@ const dict: Record<string, string> = {
   "{n} of them are widebodies for the long-haul work.": "其中有 {n} 架宽体机，专飞远程航线。",
   "Its longest sector, {from} to {to}, takes {time}.": "最长航段是 {from} 至 {to}，飞行 {time}。",
   "Its busiest sector, {from} to {to}, runs {n} times a week.": "最繁忙航段是 {from} 至 {to}，每周 {n} 班。",
+  "Email {name}": "给 {name} 发邮件",
+  "Contact details updated soon": "联系方式即将更新",
 }
 
 export default dict

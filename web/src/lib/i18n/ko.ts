@@ -665,6 +665,8 @@ const dict: Record<string, string> = {
   "{n} of them are widebodies for the long-haul work.": "그중 {n}대는 장거리용 광동체예요.",
   "Its longest sector, {from} to {to}, takes {time}.": "가장 긴 구간은 {from}에서 {to}까지, {time} 걸려요.",
   "Its busiest sector, {from} to {to}, runs {n} times a week.": "가장 바쁜 구간은 {from}에서 {to}까지, 주 {n}회 운항해요.",
+  "Email {name}": "{name}에게 이메일 보내기",
+  "Contact details updated soon": "연락처는 곧 업데이트돼요",
 }
 
 export default dict

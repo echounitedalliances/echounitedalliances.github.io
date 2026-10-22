@@ -799,3 +799,18 @@ html[lang="vi"] { --font-serif: "Playfair Display", Georgia, serif; }
    leading they collide with the line above. */
 html[lang="vi"] .display, html[lang="vi"] .div-name, html[lang="vi"] .marquee-run span,
 html[lang="vi"] .home-offer-big, html[lang="vi"] .aotw-name { line-height: 1.15 !important; }
+
+/* The envelope beside a leader's name (components/LeaderMail.tsx). Drawn in
+   currentColor so it follows the division tile when it fills on hover. */
+.leader-mail {
+  display: inline-grid; place-items: center; vertical-align: middle;
+  width: 24px; height: 24px; padding: 0;
+  border: 1px solid currentColor; border-radius: 999px;
+  background: transparent; color: inherit; opacity: .85; cursor: pointer;
+  transition: opacity .2s, background-color .2s, color .2s;
+}
+.leader-mail:hover { opacity: 1; background: var(--color-ink); color: #050505; border-color: var(--color-ink); }
+.div-tile:hover .leader-mail:not(.is-off):hover { background: #050505; color: var(--c); border-color: #050505; }
+.leader-mail.is-off, .leader-mail.is-off:hover {
+  opacity: .32; cursor: not-allowed; background: transparent; color: inherit; border-color: currentColor;
+}

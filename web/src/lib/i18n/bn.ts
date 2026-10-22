@@ -665,6 +665,8 @@ const dict: Record<string, string> = {
   "{n} of them are widebodies for the long-haul work.": "এর মধ্যে {n}টি ওয়াইডবডি, দূরপাল্লার রুটের জন্য।",
   "Its longest sector, {from} to {to}, takes {time}.": "এর সবচেয়ে লম্বা রুট {from} থেকে {to}, সময় লাগে {time}।",
   "Its busiest sector, {from} to {to}, runs {n} times a week.": "এর সবচেয়ে ব্যস্ত রুট {from} থেকে {to}, সপ্তাহে {n} বার চলে।",
+  "Email {name}": "{name}-কে ইমেল করুন",
+  "Contact details updated soon": "যোগাযোগের তথ্য শীঘ্রই আপডেট হবে",
 }
 
 export default dict

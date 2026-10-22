@@ -610,6 +610,8 @@ const dict: Record<string, string> = {
   "{n} of them are widebodies for the long-haul work.": "{n} rito ay widebody para sa mga long-haul na biyahe.",
   "Its longest sector, {from} to {to}, takes {time}.": "Ang pinakamahabang ruta nito, {from} papuntang {to}, ay tumatagal ng {time}.",
   "Its busiest sector, {from} to {to}, runs {n} times a week.": "Ang pinakaabalang ruta nito, {from} papuntang {to}, ay lumilipad nang {n} beses kada linggo.",
+  "Email {name}": "I-email si {name}",
+  "Contact details updated soon": "Ia-update ang contact details sa lalong madaling panahon",
 }
 
 export default dict

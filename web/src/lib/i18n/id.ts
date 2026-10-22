@@ -657,6 +657,8 @@ const dict: Record<string, string> = {
   "{n} of them are widebodies for the long-haul work.": "{n} di antaranya pesawat berbadan lebar untuk rute jarak jauh.",
   "Its longest sector, {from} to {to}, takes {time}.": "Rute terpanjangnya, {from} ke {to}, memakan waktu {time}.",
   "Its busiest sector, {from} to {to}, runs {n} times a week.": "Rute tersibuknya, {from} ke {to}, terbang {n} kali seminggu.",
+  "Email {name}": "Kirim email ke {name}",
+  "Contact details updated soon": "Kontak segera diperbarui",
 }
 
 export default dict
