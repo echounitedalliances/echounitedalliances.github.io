@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { SLOGAN } from '../lib/alliance'
 import { isConfigured, supabase } from '../lib/supabase'
+import { useT } from '../lib/i18n'
 
 /**
  * The arrival sequence: radar contact.
@@ -113,6 +114,7 @@ export default function Welcome() {
   })
   const canvas = useRef<HTMLCanvasElement>(null)
   const counter = useRef<HTMLSpanElement>(null)
+  const t = useT()
   const root = useRef<HTMLDivElement>(null)
   const hud = useRef<HTMLDivElement>(null)
   const words = useRef<(HTMLParagraphElement | null)[]>([])
@@ -405,13 +407,13 @@ export default function Welcome() {
   if (!show) return null
 
   return (
-    <div ref={root} className="welcome" role="status" aria-label="Welcome to Echo United Alliances">
+    <div ref={root} className="welcome" role="status" aria-label={t('Welcome to Echo United Alliances')}>
       <canvas ref={canvas} className="welcome-canvas" aria-hidden="true" />
 
       <div ref={hud} className="welcome-hud" aria-hidden="true">
-        <span>EUA radar</span>
+        <span>{t('EUA radar')}</span>
         <span>
-          Contacts <b ref={counter}>000</b>
+          {t('Contacts')} <b ref={counter}>000</b>
         </span>
       </div>
 

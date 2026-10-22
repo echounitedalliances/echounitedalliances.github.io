@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { isConfigured, supabase } from '../lib/supabase'
-import { usd } from '../lib/format'
+import { dateLocale, usd } from '../lib/format'
+import { useT } from '../lib/i18n'
 
 type Day = { travel_date: string; cheapest_usd: number; nonstop: boolean }
 
@@ -38,6 +39,7 @@ export default function FareCalendar({
   onPick: (date: string) => void
   span?: number
 }) {
+  const t = useT()
   const [days, setDays] = useState<Day[] | null>(null)
   const [failed, setFailed] = useState(false)
 
@@ -95,12 +97,12 @@ export default function FareCalendar({
   const best = prices.length ? Math.min(...prices) : null
 
   return (
-    <section className="mt-6" aria-label="Fares on nearby days">
+    <section className="mt-6" aria-label={t('Fares on nearby days')}>
       <div className="mb-2 flex items-baseline justify-between gap-3">
-        <p className="eyebrow text-ink-faint">Nearby days</p>
+        <p className="eyebrow text-ink-faint">{t('Nearby days')}</p>
         {days === null && (
           <p className="mono text-[10px] uppercase tracking-[0.12em] text-ink-faint">
-            Checking…
+            {t('Checking…')}
           </p>
         )}
       </div>
@@ -127,7 +129,7 @@ export default function FareCalendar({
               }`}
             >
               <span className="mono text-[10px] uppercase tracking-[0.1em] text-ink-faint">
-                {day.toLocaleDateString(undefined, { weekday: 'short' })}{' '}
+                {day.toLocaleDateString(dateLocale(), { weekday: 'short' })}{' '}
                 {day.getDate()}
               </span>
               {days === null ? (
@@ -146,8 +148,7 @@ export default function FareCalendar({
         })}
       </div>
       <p className="mt-2 text-[11px] text-ink-faint">
-        Cheapest fare per day over nonstop and one-connection journeys. A day with no
-        price has nothing under two stops, so search it to be sure.
+        {t('Cheapest fare per day over nonstop and one-connection journeys. A day with no price has nothing under two stops, so search it to be sure.')}
       </p>
     </section>
   )

@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AIRLINE_OF_THE_WEEK } from '../../lib/alliance'
 import { isConfigured, supabase } from '../../lib/supabase'
-import { flag, num } from '../../lib/format'
+import { flag, num, countryName } from '../../lib/format'
+import { useT } from '../../lib/i18n'
 import { Marquee, Reveal, prefersReducedMotion, useScrollProgress } from '../../lib/motion'
 
 /**
@@ -30,14 +31,6 @@ type Row = {
 
 const base = import.meta.env.BASE_URL
 
-function countryName(cc: string): string {
-  try {
-    return new Intl.DisplayNames(['en'], { type: 'region' }).of(cc.toUpperCase()) ?? cc
-  } catch {
-    return cc
-  }
-}
-
 /** This week's airline, as configured, with its figures read live. */
 export function useAirlineOfTheWeek() {
   const pick = AIRLINE_OF_THE_WEEK
@@ -63,12 +56,13 @@ export function useAirlineOfTheWeek() {
  */
 export function AirlineOfTheWeekCard() {
   const { pick, row } = useAirlineOfTheWeek()
+  const t = useT()
   const livery = pick.liveries[0]
   const accent = row?.accent_color ?? 'var(--color-ink)'
   return (
     <div className="aotw-card panel">
       <div className="aotw-card-text">
-        <p className="eyebrow text-ink-faint">Airline of the Week</p>
+        <p className="eyebrow text-ink-faint">{t('Airline of the Week')}</p>
         <h2 className="display aotw-card-name">{row?.airline_name ?? '\u00a0'}</h2>
         {row && (
           <p className="aotw-tags">
@@ -82,23 +76,23 @@ export function AirlineOfTheWeekCard() {
             )}
           </p>
         )}
-        <p className="aotw-card-blurb">{pick.blurb}</p>
+        <p className="aotw-card-blurb">{t(pick.blurb)}</p>
         {row && (
           <dl className="aotw-card-figs">
-            <div><dt className="eyebrow">Fleet</dt><dd>{num(row.fleet_size)}</dd></div>
-            <div><dt className="eyebrow">Routes</dt><dd>{num(row.routes)}</dd></div>
-            <div><dt className="eyebrow">Destinations</dt><dd>{num(row.destinations)}</dd></div>
+            <div><dt className="eyebrow">{t('Fleet')}</dt><dd>{num(row.fleet_size)}</dd></div>
+            <div><dt className="eyebrow">{t('Routes')}</dt><dd>{num(row.routes)}</dd></div>
+            <div><dt className="eyebrow">{t('Destinations')}</dt><dd>{num(row.destinations)}</dd></div>
           </dl>
         )}
         {row && (
           <Link to={`/d/${row.division_code}/${row.airline_slug}`} className="btn btn-ghost">
-            Visit {row.airline_name} →
+            {t('Visit {airline}', { airline: row.airline_name })} →
           </Link>
         )}
       </div>
       {livery && (
         <figure className="aotw-card-plane">
-          <img src={`${base}${livery.src}`} alt={`${row?.airline_name ?? 'This week’s airline'}’s ${livery.aircraft}`} decoding="async" />
+          <img src={`${base}${livery.src}`} alt={t('{airline} {aircraft}', { airline: row?.airline_name ?? t('This week’s airline'), aircraft: livery.aircraft })} decoding="async" />
           <figcaption className="eyebrow text-ink-faint">
             {livery.aircraft}
             {livery.registration ? ` · ${livery.registration}` : ''}
@@ -111,14 +105,15 @@ export function AirlineOfTheWeekCard() {
 
 export default function AirlineOfTheWeek() {
   const { pick, row } = useAirlineOfTheWeek()
+  const t = useT()
   const [shown, setShown] = useState(0)
   const [ref, p] = useScrollProgress<HTMLElement>()
 
   // More than one livery: show each in turn.
   useEffect(() => {
     if (pick.liveries.length < 2 || prefersReducedMotion()) return
-    const t = window.setInterval(() => setShown((i) => (i + 1) % pick.liveries.length), 6000)
-    return () => window.clearInterval(t)
+    const id = window.setInterval(() => setShown((i) => (i + 1) % pick.liveries.length), 6000)
+    return () => window.clearInterval(id)
   }, [pick.liveries.length])
 
   const livery = pick.liveries[shown]
@@ -133,8 +128,8 @@ export default function AirlineOfTheWeek() {
   return (
     <section ref={ref} className="aotw" aria-labelledby="aotw-h">
       <Marquee speed={0.7} className="aotw-band outline">
-        <span>Airline of the Week</span><i>·</i>
-        <span>{row?.airline_name ?? 'Airline of the Week'}</span><i>·</i>
+        <span>{t('Airline of the Week')}</span><i>·</i>
+        <span>{row?.airline_name ?? t('Airline of the Week')}</span><i>·</i>
       </Marquee>
 
       <div className="aotw-stage" aria-hidden="true">
@@ -155,7 +150,7 @@ export default function AirlineOfTheWeek() {
 
       <div className="home-wrap aotw-body">
         <Reveal>
-          <p className="eyebrow text-ink-faint">Airline of the Week</p>
+          <p className="eyebrow text-ink-faint">{t('Airline of the Week')}</p>
           <h2 className="display aotw-name" id="aotw-h">
             {row?.airline_name ?? ' '}
           </h2>
@@ -175,20 +170,20 @@ export default function AirlineOfTheWeek() {
           )}
         </Reveal>
         <Reveal delay={120} className="aotw-grid">
-          <p className="aotw-blurb">{pick.blurb}</p>
+          <p className="aotw-blurb">{t(pick.blurb)}</p>
           {row && (
             <dl className="aotw-figs">
-              <div><dt className="eyebrow">Fleet</dt><dd>{num(row.fleet_size)}</dd></div>
-              <div><dt className="eyebrow">Routes</dt><dd>{num(row.routes)}</dd></div>
-              <div><dt className="eyebrow">Destinations</dt><dd>{num(row.destinations)}</dd></div>
+              <div><dt className="eyebrow">{t('Fleet')}</dt><dd>{num(row.fleet_size)}</dd></div>
+              <div><dt className="eyebrow">{t('Routes')}</dt><dd>{num(row.routes)}</dd></div>
+              <div><dt className="eyebrow">{t('Destinations')}</dt><dd>{num(row.destinations)}</dd></div>
               {row.hubs && row.hubs.length > 0 && (
-                <div className="aotw-hubs"><dt className="eyebrow">Hubs</dt><dd>{row.hubs.join(' · ')}</dd></div>
+                <div className="aotw-hubs"><dt className="eyebrow">{t('Hubs')}</dt><dd>{row.hubs.join(' · ')}</dd></div>
               )}
             </dl>
           )}
           {row && (
             <Link to={`/d/${row.division_code}/${row.airline_slug}`} className="btn btn-ghost">
-              Fly {row.airline_name} →
+              {t('Fly {airline}', { airline: row.airline_name })} →
             </Link>
           )}
         </Reveal>

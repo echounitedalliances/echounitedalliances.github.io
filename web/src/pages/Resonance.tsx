@@ -11,6 +11,7 @@ import AccountTrips from '../components/AccountTrips'
 import type { AirportRow, Division } from '../lib/types'
 import { num } from '../lib/format'
 import { useCarrierCount } from '../lib/carriers'
+import { useT } from '../lib/i18n'
 
 /**
  * Resonance: sign in, keep a profile, and see every trip on the account.
@@ -24,6 +25,7 @@ export default function Resonance() {
   const carrierCount = useCarrierCount()
   const { ready, user, resonant, recovering, endRecovery, signOut, refreshResonant } = useAuth()
   const [error, setError] = useState<string | null>(null)
+  const tr = useT()
   const [divisions, setDivisions] = useState<Division[]>([])
   const [airportQuery, setAirportQuery] = useState('')
   const [airportHits, setAirportHits] = useState<AirportRow[]>([])
@@ -69,7 +71,7 @@ export default function Resonance() {
       setSaved(true)
       setTimeout(() => setSaved(false), 2500)
     } else {
-      setError(error.message)
+      setError(tr(error.message))
     }
   }
 
@@ -82,12 +84,10 @@ export default function Resonance() {
       <div className="mx-auto max-w-[720px] px-4 py-9 sm:px-5 sm:py-16">
         <p className="eyebrow text-cyan">Resonance</p>
         <h1 className="display mt-3 text-[clamp(36px,5vw,56px)]">
-          The alliance, remembered
+          {tr('The alliance, remembered')}
         </h1>
         <p className="mt-4 max-w-[58ch] text-lg text-ink-dim">
-          A Resonance account keeps your trips together across all {num(carrierCount)} carriers,
-          and remembers where you fly from. It is optional: you can search and
-          book without one.
+          {tr('A Resonance account keeps your trips together across all {n} carriers, and remembers where you fly from. It is optional: you can search and book without one.', { n: num(carrierCount) })}
         </p>
 
         <SignIn />
@@ -108,7 +108,7 @@ export default function Resonance() {
             {user.email}
             {resonant?.is_admin && (
               <span className="ml-3 border border-edge px-2 py-0.5 uppercase tracking-[0.12em] text-warn">
-                Admin
+                {tr('Admin')}
               </span>
             )}
           </p>
@@ -117,7 +117,7 @@ export default function Resonance() {
           onClick={() => void signOut()}
           className="btn btn-ghost"
         >
-          Sign out
+          {tr('Sign out')}
         </button>
       </div>
 
@@ -128,7 +128,7 @@ export default function Resonance() {
             onClick={endRecovery}
             className="mono mt-3 text-[11px] uppercase tracking-[0.14em] text-ink-faint hover:text-ink-dim"
           >
-            Skip for now
+            {tr('Skip for now')}
           </button>
         </div>
       )}
@@ -139,11 +139,11 @@ export default function Resonance() {
         <>
           <section className="panel mt-8 p-5">
             <h2 className="mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">
-              Your details
+              {tr('Your details')}
             </h2>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
               <label className="block">
-                <span className="eyebrow mb-1.5 block text-ink-faint">Display name</span>
+                <span className="eyebrow mb-1.5 block text-ink-faint">{tr('Display name')}</span>
                 <input
                   defaultValue={resonant.display_name ?? ''}
                   onBlur={(e) => void saveProfile({ display_name: e.target.value || null })}
@@ -151,13 +151,13 @@ export default function Resonance() {
                 />
               </label>
               <label className="block">
-                <span className="eyebrow mb-1.5 block text-ink-faint">Home division</span>
+                <span className="eyebrow mb-1.5 block text-ink-faint">{tr('Home division')}</span>
                 <select
                   defaultValue={resonant.home_division ?? ''}
                   onChange={(e) => void saveProfile({ home_division: e.target.value || null })}
                   className="w-full border border-edge bg-ground-2 px-3 py-2.5 text-ink outline-none focus:border-accent"
                 >
-                  <option value="">No preference</option>
+                  <option value="">{tr('No preference')}</option>
                   {divisions.map((d) => (
                     <option key={d.division_code} value={d.division_code}>
                       {d.division_name}
@@ -167,7 +167,7 @@ export default function Resonance() {
               </label>
               <label className="relative block">
                 <span className="eyebrow mb-1.5 block text-ink-faint">
-                  Home airport{' '}
+                  {tr('Home airport')}{' '}
                   {resonant.home_airport && (
                     <span className="mono text-cyan">{resonant.home_airport}</span>
                   )}
@@ -175,7 +175,7 @@ export default function Resonance() {
                 <input
                   value={airportQuery}
                   onChange={(e) => setAirportQuery(e.target.value)}
-                  placeholder="City or code"
+                  placeholder={tr('City or code')}
                   className="w-full border border-edge bg-ground-2 px-3 py-2.5 text-ink outline-none placeholder:text-ink-faint focus:border-accent"
                 />
                 {airportHits.length > 0 && (
@@ -204,7 +204,7 @@ export default function Resonance() {
             </div>
             {saved && (
               <p className="mono mt-3 text-[11px] uppercase tracking-[0.12em] text-good">
-                Saved
+                {tr('Saved')}
               </p>
             )}
           </section>
@@ -220,11 +220,10 @@ export default function Resonance() {
             <section className="panel mt-4 flex flex-wrap items-center justify-between gap-3 p-5">
               <div>
                 <h2 className="mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">
-                  Board
+                  {tr('Board')}
                 </h2>
                 <p className="mt-2 max-w-[54ch] text-sm text-ink-dim">
-                  Interested in helping run the alliance? Apply for admin,
-                  and it goes straight to the board on Discord.
+                  {tr('Interested in helping run the alliance? Apply for admin, and it goes straight to the board on Discord.')}
                 </p>
               </div>
               <button
@@ -232,7 +231,7 @@ export default function Resonance() {
                 onClick={() => setShowAdminModal(true)}
                 className="btn btn-ghost"
               >
-                Apply for admin
+                {tr('Apply for admin')}
               </button>
             </section>
           )}

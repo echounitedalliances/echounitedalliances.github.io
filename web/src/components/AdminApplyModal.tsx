@@ -3,6 +3,7 @@ import Modal from './Modal'
 import { useAuth } from '../lib/auth'
 import { submitAdminApplication } from '../lib/adminApply'
 import { MIN_PASSWORD, explain } from './ResonanceAuth'
+import { useT } from '../lib/i18n'
 
 /**
  * Applying to join the board, from either side of an account.
@@ -29,6 +30,7 @@ export default function AdminApplyModal({
   onClose: () => void
 }) {
   const { signUp } = useAuth()
+  const t = useT()
   const [email, setEmail] = useState(initialEmail)
   const [password, setPassword] = useState(initialPassword)
   const [discordUsername, setDiscordUsername] = useState('')
@@ -72,44 +74,34 @@ export default function AdminApplyModal({
       setStatus('error')
       setError(
         createAccount
-          ? 'Your account was created, but the application could not be sent. Message a board member directly.'
-          : 'Something went wrong. Try again, or message a board member directly.',
+          ? t('Your account was created, but the application could not be sent. Message a board member directly.')
+          : t('Something went wrong. Try again, or message a board member directly.'),
       )
     }
   }
 
   if (status === 'sent') {
     return (
-      <Modal title={createAccount && needsConfirmation ? 'Confirm your email' : 'Application sent'} onClose={onClose}>
+      <Modal title={createAccount && needsConfirmation ? t('Confirm your email') : t('Application sent')} onClose={onClose}>
         <p className="text-ink-dim">
-          {createAccount && 'Account created. '}
-          {createAccount && needsConfirmation ? (
-            <>
-              Confirm {email} from the email we just sent, then sign in and
-              choose “Apply for admin” on your Resonance page to send the
-              application to the board.
-            </>
-          ) : (
-            <>
-              Your admin application is with the board, and someone will follow
-              up with you on Discord.
-            </>
-          )}
+          {createAccount && `${t('Account created.')} `}
+          {createAccount && needsConfirmation
+            ? t('Confirm {email} from the email we just sent, then sign in and choose “Apply for admin” on your Resonance page to send the application to the board.', { email })
+            : t('Your admin application is with the board, and someone will follow up with you on Discord.')}
         </p>
       </Modal>
     )
   }
 
   return (
-    <Modal title="Apply for admin" onClose={onClose}>
+    <Modal title={t('Apply for admin')} onClose={onClose}>
       <form onSubmit={submit} className="flex flex-col gap-3">
         <p className="text-sm text-ink-dim">
-          This goes to the board, who will follow up with you on Discord. It
-          is a request, not an approval.
+          {t('This goes to the board, who will follow up with you on Discord. It is a request, not an approval.')}
         </p>
 
         <label className="block">
-          <span className="eyebrow mb-1.5 block text-ink-faint">Email</span>
+          <span className="eyebrow mb-1.5 block text-ink-faint">{t('Email')}</span>
           <input
             type="email"
             required
@@ -122,7 +114,7 @@ export default function AdminApplyModal({
 
         {createAccount && (
           <label className="block">
-            <span className="eyebrow mb-1.5 block text-ink-faint">Password</span>
+            <span className="eyebrow mb-1.5 block text-ink-faint">{t('Password')}</span>
             <input
               type="password"
               required
@@ -132,13 +124,13 @@ export default function AdminApplyModal({
               className="w-full border border-edge bg-ground-2 px-3 py-2.5 text-ink outline-none focus:border-accent"
             />
             <span className="mt-1.5 block text-[11px] text-ink-faint">
-              At least {MIN_PASSWORD} characters.
+              {t('At least {n} characters.', { n: MIN_PASSWORD })}
             </span>
           </label>
         )}
 
         <label className="block">
-          <span className="eyebrow mb-1.5 block text-ink-faint">Discord username</span>
+          <span className="eyebrow mb-1.5 block text-ink-faint">{t('Discord username')}</span>
           <input
             required
             value={discordUsername}
@@ -154,10 +146,10 @@ export default function AdminApplyModal({
           className="btn btn-primary mt-1"
         >
           {status === 'sending'
-            ? 'Sending…'
+            ? t('Sending…')
             : createAccount
-              ? 'Create account & apply'
-              : 'Send application'}
+              ? t('Create account & apply')
+              : t('Send application')}
         </button>
 
         {status === 'error' && <p className="text-[12px] text-danger">{error}</p>}

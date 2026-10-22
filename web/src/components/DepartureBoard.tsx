@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useT } from '../lib/i18n'
+import { dateLocale } from '../lib/format'
 import AirportField from './AirportField'
 import SplitFlap, { toFlap } from './SplitFlap'
 import { Loading } from './ui'
@@ -48,14 +50,14 @@ const TICK_MS = 15_000
  */
 function timeFormatter(tz?: string | null) {
   try {
-    return new Intl.DateTimeFormat(undefined, {
+    return new Intl.DateTimeFormat(dateLocale(), {
       hour: '2-digit',
       minute: '2-digit',
       hourCycle: 'h23',
       timeZone: tz || undefined,
     })
   } catch {
-    return new Intl.DateTimeFormat(undefined, {
+    return new Intl.DateTimeFormat(dateLocale(), {
       hour: '2-digit',
       minute: '2-digit',
       hourCycle: 'h23',
@@ -65,7 +67,7 @@ function timeFormatter(tz?: string | null) {
 
 function clockFormatter(tz?: string | null) {
   try {
-    return new Intl.DateTimeFormat(undefined, {
+    return new Intl.DateTimeFormat(dateLocale(), {
       hour: '2-digit',
       minute: '2-digit',
       second: '2-digit',
@@ -73,7 +75,7 @@ function clockFormatter(tz?: string | null) {
       timeZone: tz || undefined,
     })
   } catch {
-    return new Intl.DateTimeFormat(undefined, {
+    return new Intl.DateTimeFormat(dateLocale(), {
       hour: '2-digit',
       minute: '2-digit',
       second: '2-digit',
@@ -112,6 +114,7 @@ function WallClock({ tz }: { tz?: string | null }) {
 type Hub = { iata_code: string; city_name: string | null; airport_name: string | null }
 
 export default function DepartureBoard({ origin }: { origin?: string }) {
+  const t = useT()
   const [departures, setDepartures] = useState<BoardDeparture[]>([])
   const [hubs, setHubs] = useState<Hub[]>([])
   // null means "the alliance's busiest airport" -- NOT "wherever you are".
@@ -197,7 +200,7 @@ export default function DepartureBoard({ origin }: { origin?: string }) {
     <>
       <div className="mb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
         <h2 className="display text-2xl">
-          Departures
+          {t('Departures')}
           {hub && (
             <span className="ml-3 text-base font-normal text-ink-dim">
               {hub.origin_city} ({hub.origin_iata})
@@ -205,7 +208,7 @@ export default function DepartureBoard({ origin }: { origin?: string }) {
           )}
         </h2>
         <p className="mono flex flex-wrap items-baseline gap-x-2 text-[10px] uppercase tracking-[0.16em] text-ink-dim">
-          <span>Local time{hub ? ` at ${hub.origin_iata}` : ''}</span>
+          <span>{hub ? t('Local time at {airport}', { airport: hub.origin_iata }) : t('Local time')}</span>
           <span aria-hidden="true">·</span>
           <WallClock tz={hubTz} />
         </p>
@@ -219,7 +222,7 @@ export default function DepartureBoard({ origin }: { origin?: string }) {
             <Loading label="Reading the board" />
           ) : (
             <div className="mono py-16 text-center text-[11px] uppercase tracking-[0.16em] text-ink-faint">
-              {isConfigured ? 'No departures scheduled' : 'Board offline'}
+              {isConfigured ? t('No departures scheduled') : t('Board offline')}
             </div>
           )}
         </div>
@@ -228,7 +231,7 @@ export default function DepartureBoard({ origin }: { origin?: string }) {
       {hubs.length > 0 && (
         <div className="mt-4 flex flex-wrap items-center gap-2">
           <span className="mono mr-1 text-[10px] uppercase tracking-[0.16em] text-ink-faint">
-            Board at
+            {t('Board at')}
           </span>
           <button
             type="button"
@@ -236,7 +239,7 @@ export default function DepartureBoard({ origin }: { origin?: string }) {
             aria-pressed={pick === null}
             className={`chip ${pick === null ? 'chip-on' : ''}`}
           >
-            Busiest
+            {t('Busiest')}
           </button>
           {hubs.map((h) => (
             <button
@@ -270,10 +273,11 @@ export default function DepartureBoard({ origin }: { origin?: string }) {
 
       <p className="mt-3 text-[11px] text-ink-dim">
         {hub
-          ? `Next departures from ${hub.origin_city}. Every time here is local to ${hub.origin_iata}${
-              hub.origin_tz ? ` (${hub.origin_tz})` : ''
-            }, the way the board at the airport reads. Refreshed every minute.`
-          : 'Live from the alliance schedule.'}
+          ? t('Next departures from {city}. Every time here is local to {airport}, the way the board at the airport reads. Refreshed every minute.', {
+              city: hub.origin_city ?? hub.origin_iata,
+              airport: hub.origin_tz ? `${hub.origin_iata} (${hub.origin_tz})` : hub.origin_iata,
+            })
+          : t('Live from the alliance schedule.')}
       </p>
     </>
   )

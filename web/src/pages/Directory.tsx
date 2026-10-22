@@ -6,6 +6,7 @@ import { isConfigured, supabase } from '../lib/supabase'
 import type { Airline, Division } from '../lib/types'
 import { accentOf, num, spell } from '../lib/format'
 import { useCarrierCount, useDivisionCount } from '../lib/carriers'
+import { useT } from '../lib/i18n'
 
 const PAGE = 60
 
@@ -13,6 +14,7 @@ const PAGE = 60
 export default function Directory() {
   const carrierCount = useCarrierCount()
   const divisionCount = useDivisionCount()
+  const t = useT()
   const [params, setParams] = useSearchParams()
   const [divisions, setDivisions] = useState<Division[]>([])
   const [rows, setRows] = useState<Airline[] | null>(null)
@@ -46,7 +48,7 @@ export default function Directory() {
   }, [q])
 
   useEffect(() => {
-    const t = setTimeout(() => {
+    const id = setTimeout(() => {
       // The debounce exists to push a CHANGE from the box into the URL. If the
       // box already says what the URL says, there is nothing to push -- and
       // writing anyway is what made Clear all fail: it cleared every filter,
@@ -63,7 +65,7 @@ export default function Directory() {
         { replace: true },
       )
     }, 220)
-    return () => clearTimeout(t)
+    return () => clearTimeout(id)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [draft])
 
@@ -144,18 +146,20 @@ export default function Directory() {
 
   return (
     <div className="mx-auto max-w-[1180px] px-4 py-8 sm:px-5 sm:py-14">
-      <p className="eyebrow text-cyan">The carriers</p>
-      <h1 className="display mt-3 text-[clamp(36px,5vw,58px)]">Every airline in Echo</h1>
+      <p className="eyebrow text-cyan">{t('The carriers')}</p>
+      <h1 className="display mt-3 text-[clamp(36px,5vw,58px)]">{t('Every airline in Echo')}</h1>
       <p className="mt-4 max-w-[62ch] text-lg text-ink-dim">
-        {num(carrierCount)} member carriers across {spell(divisionCount)} divisions. Filter by division or
-        country, or search by name or code.
+        {t('{carriers} member carriers across {divisions} divisions. Filter by division or country, or search by name or code.', {
+          carriers: num(carrierCount),
+          divisions: spell(divisionCount),
+        })}
       </p>
 
       <div className="panel mt-8 p-4">
         <input
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
-          placeholder="Search by airline name, code or country…"
+          placeholder={t('Search by airline name, code or country…')}
           className="w-full border border-edge bg-ground-2 px-4 py-3 text-ink outline-none placeholder:text-ink-faint focus:border-accent"
         />
         <div className="mono mt-3 flex flex-wrap gap-1.5 text-[11px] uppercase tracking-[0.1em]">
@@ -165,7 +169,7 @@ export default function Directory() {
               division === '' ? 'border-[color:var(--color-accent)] text-ink' : 'border-edge-soft text-ink-faint hover:text-ink-dim'
             }`}
           >
-            All divisions
+            {t('All divisions')}
           </button>
           {divisions.map((d) => {
             const accent = accentOf(d)
@@ -197,12 +201,12 @@ export default function Directory() {
         {/* Always rendered while anything is filtering, whatever came back. */}
         {active.length > 0 && (
           <div className="mono mt-3 flex flex-wrap items-center gap-1.5 border-t border-edge-soft pt-3 text-[11px]">
-            <span className="mr-1 uppercase tracking-[0.14em] text-ink-faint">Filtering by</span>
+            <span className="mr-1 uppercase tracking-[0.14em] text-ink-faint">{t('Filtering by')}</span>
             {active.map((f) => (
               <button
                 key={f.key}
                 onClick={f.off}
-                aria-label={`Remove filter ${f.label}`}
+                aria-label={t('Remove filter {filter}', { filter: f.label })}
                 className="border border-[color:var(--color-accent)] px-2 py-0.5 text-ink transition-colors hover:bg-surface-2"
               >
                 {f.label} ×
@@ -213,7 +217,7 @@ export default function Directory() {
                 onClick={clearAll}
                 className="ml-1 uppercase tracking-[0.12em] text-ink-faint underline-offset-4 hover:text-ink hover:underline"
               >
-                Clear all
+                {t('Clear all')}
               </button>
             )}
           </div>
@@ -224,17 +228,17 @@ export default function Directory() {
         <Loading />
       ) : rows.length === 0 ? (
         <div className="panel mt-6 p-8 text-center">
-          <p className="text-ink-dim">No carrier matches that.</p>
+          <p className="text-ink-dim">{t('No carrier matches that.')}</p>
           {active.length > 0 && (
             <button onClick={clearAll} className="btn btn-ghost mt-4">
-              Clear {active.length === 1 ? 'the filter' : 'all filters'}
+              {active.length === 1 ? t('Clear the filter') : t('Clear all filters')}
             </button>
           )}
         </div>
       ) : (
         <>
           <p className="mono mt-6 text-[11px] uppercase tracking-[0.12em] text-ink-faint">
-            {num(rows.length)}{more ? '+' : ''} carriers
+            {t('{n} carriers', { n: `${num(rows.length)}${more ? '+' : ''}` })}
           </p>
           <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {rows.map((a) => <AirlineCard key={a.uid} a={a} />)}
@@ -246,7 +250,7 @@ export default function Directory() {
                 disabled={busy}
                 className="btn btn-ghost"
               >
-                {busy ? 'Loading…' : 'Load more carriers'}
+                {busy ? t('Loading…') : t('Load more carriers')}
               </button>
             </div>
           )}

@@ -1,4 +1,5 @@
 import { supabase } from './supabase'
+import { translate } from './i18n'
 import type { Itinerary } from './types'
 
 /**
@@ -191,7 +192,7 @@ export function journeyTotal(picks: (Itinerary | null)[]): number | null {
 
 /** The label a leg gets in the UI. */
 export function legLabel(q: JourneyQuery, i: number): string {
-  if (q.trip === 'return') return i === 0 ? 'Outbound' : 'Return'
-  if (q.trip === 'multi') return `Flight ${i + 1}`
-  return 'Your flight'
+  if (q.trip === 'return') return i === 0 ? translate('Outbound') : translate('Return')
+  if (q.trip === 'multi') return translate('Flight {n}', { n: i + 1 })
+  return translate('Your flight')
 }

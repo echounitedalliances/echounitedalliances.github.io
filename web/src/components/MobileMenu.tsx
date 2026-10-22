@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom'
 import EchoMark from './EchoMark'
 import { SITE, discordConfigured } from '../lib/site'
 import type { NavItem } from '../lib/nav'
+import { useT } from '../lib/i18n'
 
 /**
  * The phone navigation: a drawer in from the right, not a block that pushes
@@ -39,6 +40,7 @@ export default function MobileMenu({
   badges: React.ReactNode
   account: React.ReactNode
 }) {
+  const t = useT()
   const panel = useRef<HTMLDivElement>(null)
   /**
    * Drives the slide. It flips on the tick after the panel mounts, so the
@@ -87,7 +89,7 @@ export default function MobileMenu({
     <div className="fixed inset-0 z-50 lg:hidden">
       <button
         type="button"
-        aria-label="Close menu"
+        aria-label={t('Close menu')}
         tabIndex={-1}
         onClick={onClose}
         className={`absolute inset-0 w-full cursor-default bg-[#050505]/70 backdrop-blur-sm transition-opacity duration-200 motion-reduce:transition-none ${
@@ -100,7 +102,7 @@ export default function MobileMenu({
         id="site-menu"
         role="dialog"
         aria-modal="true"
-        aria-label="Site menu"
+        aria-label={t('Site menu')}
         tabIndex={-1}
         className={`absolute inset-y-0 right-0 flex w-[82%] max-w-[320px] flex-col overflow-y-auto border-l border-edge bg-[color:var(--color-ground)] outline-none transition-transform duration-200 ease-out motion-reduce:transition-none ${
           shown ? 'translate-x-0' : 'translate-x-full'
@@ -114,7 +116,7 @@ export default function MobileMenu({
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close menu"
+            aria-label={t('Close menu')}
             className="mono flex h-9 w-9 shrink-0 items-center justify-center border border-edge text-ink-dim transition-colors hover:border-accent hover:text-ink"
           >
             <svg width="15" height="15" viewBox="0 0 15 15" aria-hidden="true">
@@ -140,7 +142,7 @@ export default function MobileMenu({
                   }`
                 }
               >
-                {l.label}
+                {t(l.label)}
               </NavLink>
               {l.children?.map((c) => (
                 <NavLink
@@ -153,7 +155,7 @@ export default function MobileMenu({
                     }`
                   }
                 >
-                  {c.label}
+                  {t(c.label)}
                 </NavLink>
               ))}
             </div>
@@ -170,7 +172,7 @@ export default function MobileMenu({
               rel="noopener noreferrer"
               className="btn btn-primary w-full text-center"
             >
-              Join Discord
+              {t('Join Discord')}
             </a>
           )}
         </div>

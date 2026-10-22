@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { useT } from '../lib/i18n'
 
 /**
  * Paging for the long tables.
@@ -54,18 +55,19 @@ export default function Pager({
   /** What the rows are, for the count: "flights", "carriers", "routes". */
   label?: string
 }) {
+  const t = useT()
   const { page, setPage, size, setSize, total, pageCount, from, to } = paged
   if (total <= SIZES[0]) return null
 
   return (
     <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
       <p className="mono text-[11px] text-ink-faint">
-        {from}–{to} of {total} {label}
+        {t('{from}–{to} of {total} {label}', { from, to, total, label: t(label) })}
       </p>
 
       <div className="flex flex-wrap items-center gap-4">
         <label className="mono flex items-center gap-2 text-[11px] text-ink-faint">
-          Show
+          {t('Show')}
           <select
             value={size}
             onChange={(e) => setSize(Number(e.target.value))}
@@ -84,7 +86,7 @@ export default function Pager({
             type="button"
             onClick={() => setPage(page - 1)}
             disabled={page <= 1}
-            aria-label="Previous page"
+            aria-label={t('Previous page')}
             className="mono border border-edge px-2.5 py-1 text-[12px] text-ink-dim transition-colors hover:border-accent hover:text-ink disabled:cursor-default disabled:opacity-35 disabled:hover:border-edge disabled:hover:text-ink-dim"
           >
             ←
@@ -96,7 +98,7 @@ export default function Pager({
             type="button"
             onClick={() => setPage(page + 1)}
             disabled={page >= pageCount}
-            aria-label="Next page"
+            aria-label={t('Next page')}
             className="mono border border-edge px-2.5 py-1 text-[12px] text-ink-dim transition-colors hover:border-accent hover:text-ink disabled:cursor-default disabled:opacity-35 disabled:hover:border-edge disabled:hover:text-ink-dim"
           >
             →

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useT } from '../lib/i18n'
 
 /**
  * A split-flap board, the way an airport actually announces itself.
@@ -138,14 +139,17 @@ export default function SplitFlap({
   rows: BoardRow[]
   columns?: { time: number; flight: number; destination: number; carrier: number; status: number }
 }) {
+  // The headings translate; the flaps do not. A flap board has Latin glyphs
+  // only, like the real ones, so statuses and names stay as the board shows them.
+  const t = useT()
   return (
-    <div className="board" role="table" aria-label="Departures">
+    <div className="board" role="table" aria-label={t('Departures')}>
       <div className="board-head" role="row">
-        <span style={runWidth(columns.time)}>Time</span>
-        <span style={runWidth(columns.flight)}>Flight</span>
-        <span style={runWidth(columns.destination)}>Destination</span>
-        <span style={runWidth(columns.carrier)}>Carrier</span>
-        <span style={runWidth(columns.status)}>Status</span>
+        <span style={runWidth(columns.time)}>{t('Time')}</span>
+        <span style={runWidth(columns.flight)}>{t('Flight')}</span>
+        <span style={runWidth(columns.destination)}>{t('Destination')}</span>
+        <span style={runWidth(columns.carrier)}>{t('Carrier')}</span>
+        <span style={runWidth(columns.status)}>{t('Status')}</span>
       </div>
 
       {rows.map((r, i) => (

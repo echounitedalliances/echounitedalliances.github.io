@@ -6,9 +6,11 @@ import Pager, { usePaged } from '../components/Pager'
 import { isConfigured, supabase } from '../lib/supabase'
 import type { AirportRoute, AirportRow, Arc, Division, NetworkNode } from '../lib/types'
 import { accentOf, num } from '../lib/format'
+import { useT } from '../lib/i18n'
 
 /** The whole alliance drawn at once, with the busiest airports beside it. */
 export default function NetworkPage() {
+  const t = useT()
   const [arcs, setArcs] = useState<Arc[]>([])
   const [nodes, setNodes] = useState<NetworkNode[]>([])
   const [divisions, setDivisions] = useState<Division[]>([])
@@ -71,37 +73,35 @@ export default function NetworkPage() {
 
   return (
     <div className="mx-auto max-w-[1180px] px-4 py-8 sm:px-5 sm:py-12">
-      <p className="eyebrow text-cyan">Network</p>
-      <h1 className="display mt-3 text-[clamp(36px,5vw,58px)]">The alliance, drawn</h1>
+      <p className="eyebrow text-cyan">{t('Network')}</p>
+      <h1 className="display mt-3 text-[clamp(36px,5vw,58px)]">{t('The alliance, drawn')}</h1>
       <p className="mt-4 max-w-[64ch] text-lg text-ink-dim">
-        The 1,200 busiest city pairs Echo flies, coloured by the division that
-        operates them. Pick a division to light only its routes, or click any
-        airport to zoom in on what it reaches.
+        {t('The 1,200 busiest city pairs Echo flies, coloured by the division that operates them. Pick a division to light only its routes, or click any airport to zoom in on what it reaches.')}
       </p>
 
       {pinned && (
         <div className="panel mt-6 flex flex-wrap items-center gap-4 p-4">
           <div>
             <div className="mono text-[10px] uppercase tracking-[0.12em] text-ink-faint">
-              Fanned out from
+              {t('Fanned out from')}
             </div>
             <div className="mono text-xl text-cyan">{pinned}</div>
           </div>
           <div className="mono text-[12px] text-ink-dim">
-            {fanned === null ? 'loading…' : `${fanned.length} destinations`}
+            {fanned === null ? t('loading…') : t('{n} destinations', { n: fanned.length })}
           </div>
           <div className="ml-auto flex gap-2">
             <Link
               to={`/airports/${pinned}`}
               className="mono border border-edge px-3 py-1.5 text-[11px] uppercase tracking-[0.12em] text-ink hover:border-accent"
             >
-              Carriers here
+              {t('Carriers here')}
             </Link>
             <button
               onClick={() => { setPinned(null); setFanned(null) }}
               className="mono border border-edge px-3 py-1.5 text-[11px] uppercase tracking-[0.12em] text-ink-faint hover:text-ink"
             >
-              Show whole network
+              {t('Show whole network')}
             </button>
           </div>
         </div>
@@ -116,7 +116,7 @@ export default function NetworkPage() {
               : 'border-edge-soft text-ink-faint hover:text-ink-dim'
           }`}
         >
-          Whole alliance
+          {t('Whole alliance')}
         </button>
         {divisions.map((d) => {
           const accent = accentOf(d)
@@ -151,8 +151,8 @@ export default function NetworkPage() {
             zoomOnFocus
           />
           <div>
-            <h2 className="display text-2xl">Busiest airports</h2>
-            <p className="mt-1 text-ink-faint">By weekly alliance departures</p>
+            <h2 className="display text-2xl">{t('Busiest airports')}</h2>
+            <p className="mt-1 text-ink-faint">{t('By weekly alliance departures')}</p>
             {/* overflow-hidden CLIPPED this on a phone: the table is 456px wide
                  and three of its columns simply were not there. */}
             <div className="panel mt-4 overflow-x-auto">
@@ -164,7 +164,7 @@ export default function NetworkPage() {
                         key={h}
                         className="mono px-3 py-2 text-[10px] uppercase tracking-[0.1em] text-ink-faint"
                       >
-                        {h}
+                        {h && t(h)}
                       </th>
                     ))}
                   </tr>

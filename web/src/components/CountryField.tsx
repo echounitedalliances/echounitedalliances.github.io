@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { isConfigured, supabase } from '../lib/supabase'
 import type { CountryCount } from '../lib/types'
+import { countryName } from '../lib/format'
+import { useI18n } from '../lib/i18n'
 
 /**
  * The carrier directory's country filter.
@@ -34,6 +36,10 @@ export default function CountryField({
   id?: string
 }) {
   const [all, setAll] = useState<CountryCount[]>([])
+  const { lang, t } = useI18n()
+  // The database names countries in English; any other language reads the
+  // browser's own name for the code. Typing finds either.
+  const nameOf = (c: CountryCount) => (lang === 'en' ? c.country_name : countryName(c.country_code))
   const [text, setText] = useState('')
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState(0)
@@ -71,9 +77,12 @@ export default function CountryField({
     if (!q) return all
     return all.filter(
       (c) =>
-        c.country_name.toLowerCase().includes(q) || c.country_code.toLowerCase().includes(q),
+        c.country_name.toLowerCase().includes(q) ||
+        nameOf(c).toLowerCase().includes(q) ||
+        c.country_code.toLowerCase().includes(q),
     )
-  }, [all, text])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [all, text, lang])
 
   const choose = (c: CountryCount) => {
     onChange(c.country_code)
@@ -111,7 +120,7 @@ export default function CountryField({
 
   // What the box shows when it is not being typed in.
   const display = selected
-    ? `${selected.country_name} (${selected.country_code})`
+    ? `${nameOf(selected)} (${selected.country_code})`
     : value
       ? value
       : ''
@@ -119,7 +128,7 @@ export default function CountryField({
   return (
     <div className="relative w-full sm:max-w-[320px]" ref={box}>
       <label htmlFor={id} className="eyebrow mb-1.5 block text-ink-faint">
-        Country
+        {t('Country')}
       </label>
       <div className="relative">
         <input
@@ -136,7 +145,7 @@ export default function CountryField({
             setOpen(true)
           }}
           onKeyDown={onKeyDown}
-          placeholder={all.length ? `Any of ${all.length} countries` : 'Any country'}
+          placeholder={all.length ? t('Any of {n} countries', { n: all.length }) : t('Any country')}
           autoComplete="off"
           role="combobox"
           aria-expanded={open}
@@ -153,7 +162,7 @@ export default function CountryField({
           <button
             type="button"
             onClick={clear}
-            aria-label="Clear the country filter"
+            aria-label={t('Clear the country filter')}
             className="absolute right-2 top-1/2 -translate-y-1/2 px-1 text-ink-faint hover:text-ink"
           >
             ×
@@ -172,12 +181,12 @@ export default function CountryField({
         <ul
           id={listId}
           role="listbox"
-          aria-label="Countries"
+          aria-label={t('Countries')}
           className="panel absolute z-30 mt-1 max-h-72 w-full overflow-auto py-1"
         >
           {matches.length === 0 ? (
             <li className="px-3 py-3 text-sm text-ink-faint">
-              No carrier is registered in a country matching “{text.trim()}”.
+              {t('No carrier is registered in a country matching “{text}”.', { text: text.trim() })}
             </li>
           ) : (
             matches.map((c) => (
@@ -198,7 +207,7 @@ export default function CountryField({
                 >
                   <span className="mono w-7 shrink-0 text-cyan">{c.country_code}</span>
                   <span className="min-w-0 flex-1 truncate text-sm text-ink">
-                    {c.country_name}
+                    {nameOf(c)}
                   </span>
                   <span className="mono shrink-0 text-[11px] text-ink-faint">{c.carriers}</span>
                 </button>

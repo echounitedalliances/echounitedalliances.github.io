@@ -1,6 +1,7 @@
 import { SITE, discordConfigured } from '../lib/site'
 import { useOnlineCount } from '../lib/discordWidget'
 import { num } from '../lib/format'
+import { useT } from '../lib/i18n'
 
 /**
  * The join panel. Applying happens on Discord; this is the one place the
@@ -9,6 +10,7 @@ import { num } from '../lib/format'
  */
 export default function Join({ compact = false }: { compact?: boolean }) {
   const onlineCount = useOnlineCount()
+  const t = useT()
 
   if (compact) {
     return (
@@ -18,7 +20,7 @@ export default function Join({ compact = false }: { compact?: boolean }) {
         rel="noopener noreferrer"
         className="btn btn-ghost"
       >
-        Join on Discord ↗
+        {t('Join on Discord')} ↗
       </a>
     )
   }
@@ -28,22 +30,22 @@ export default function Join({ compact = false }: { compact?: boolean }) {
       <div className="mx-auto max-w-[1180px] px-5 py-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_380px]">
           <div>
-            <p className="eyebrow text-cyan">Membership</p>
+            <p className="eyebrow text-cyan">{t('Membership')}</p>
             <h2 className="display mt-3 text-[clamp(30px,4vw,44px)]">
-              Fly with Echo
+              {t('Fly with Echo')}
             </h2>
             <p className="mt-4 max-w-[60ch] text-lg text-ink-dim">
-              {SITE.joinRequirement}
+              {t(SITE.joinRequirement)}
             </p>
 
             <ol className="mt-8 grid gap-4 sm:grid-cols-3">
               {SITE.joinSteps.map((s, i) => (
                 <li key={s.title} className="border-t border-edge pt-3">
                   <div className="mono text-[11px] uppercase tracking-[0.12em] text-cyan">
-                    Step {i + 1}
+                    {t('Step {n}', { n: i + 1 })}
                   </div>
-                  <div className="mt-1 font-medium text-ink">{s.title}</div>
-                  <p className="mt-1 text-[14px] text-ink-faint">{s.body}</p>
+                  <div className="mt-1 font-medium text-ink">{t(s.title)}</div>
+                  <p className="mt-1 text-[14px] text-ink-faint">{t(s.body)}</p>
                 </li>
               ))}
             </ol>
@@ -57,12 +59,12 @@ export default function Join({ compact = false }: { compact?: boolean }) {
               {onlineCount != null && (
                 <div className="mono flex items-center gap-1.5 text-[11px] text-ink-faint">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                  {num(onlineCount)} online
+                  {t('{n} online', { n: num(onlineCount) })}
                 </div>
               )}
             </div>
             <p className="mt-2 text-ink-dim">
-              Apply on Discord, and a division lead picks it up from there.
+              {t('Apply on Discord, and a division lead picks it up from there.')}
             </p>
 
             {discordConfigured ? (
@@ -72,16 +74,16 @@ export default function Join({ compact = false }: { compact?: boolean }) {
                 rel="noopener noreferrer"
                 className="btn btn-primary mt-5 w-full"
               >
-                Open the Discord ↗
+                {t('Open the Discord')} ↗
               </a>
             ) : (
               <div className="mono mt-5 border border-edge px-5 py-3.5 text-center text-[11px] uppercase tracking-[0.14em] text-ink-faint">
-                Invite link not set yet
+                {t('Invite link not set yet')}
               </div>
             )}
 
             <p className="mt-3 text-[12px] text-ink-faint">
-              Applying in the game alone is not enough: both steps are required.
+              {t('Applying in the game alone is not enough: both steps are required.')}
             </p>
           </aside>
         </div>

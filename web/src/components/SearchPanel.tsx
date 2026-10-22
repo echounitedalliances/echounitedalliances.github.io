@@ -4,6 +4,7 @@ import AirportField from './AirportField'
 import { CABINS } from '../lib/types'
 import { dateInDays } from '../lib/format'
 import { encodeJourney, MAX_LEGS, type LegQuery, type TripType } from '../lib/journey'
+import { useT } from '../lib/i18n'
 
 /**
  * The alliance search: one way, return, or up to five flights in a row.
@@ -29,6 +30,7 @@ export default function SearchPanel({
   initial?: { trip: TripType; legs: LegQuery[]; cabin: string; pax: number; stops: number }
 }) {
   const nav = useNavigate()
+  const t = useT()
   const [trip, setTrip] = useState<TripType>(initial?.trip ?? 'oneway')
   const [from, setFrom] = useState(initial?.legs[0]?.from ?? '')
   const [to, setTo] = useState(initial?.legs[0]?.to ?? '')
@@ -87,26 +89,26 @@ export default function SearchPanel({
   return (
     <form onSubmit={go} className={`panel ${compact ? 'p-3' : 'p-4 sm:p-5'}`}>
       <div className="mb-3 flex flex-wrap items-center gap-1">
-        {TABS.map((t) => (
+        {TABS.map((tab) => (
           <button
-            key={t.key}
+            key={tab.key}
             type="button"
-            onClick={() => setTrip(t.key)}
-            aria-pressed={trip === t.key}
+            onClick={() => setTrip(tab.key)}
+            aria-pressed={trip === tab.key}
             className={`mono border px-3 py-1.5 text-[11px] uppercase tracking-[0.12em] transition-colors ${
-              trip === t.key
+              trip === tab.key
                 ? 'border-[color:var(--color-accent)] text-ink'
                 : 'border-edge-soft text-ink-faint hover:text-ink-dim'
             }`}
           >
-            {t.label}
+            {t(tab.label)}
           </button>
         ))}
         <Link
           to="/rtw"
           className="mono ml-auto text-[11px] uppercase tracking-[0.12em] text-cyan"
         >
-          Round the world →
+          {t('Round the world')} →
         </Link>
       </div>
 
@@ -130,7 +132,7 @@ export default function SearchPanel({
               />
               <div className="sm:w-44">
                 <label htmlFor={`mc-date-${i}`} className="eyebrow mb-1.5 block text-ink-faint">
-                  Departing
+                  {t('Departing')}
                 </label>
                 <input
                   id={`mc-date-${i}`}
@@ -145,7 +147,7 @@ export default function SearchPanel({
                 type="button"
                 onClick={() => dropLeg(i)}
                 disabled={legs.length <= 2}
-                aria-label={`Remove flight ${i + 1}`}
+                aria-label={t('Remove flight {n}', { n: i + 1 })}
                 className="mono h-[42px] shrink-0 border border-edge-soft px-3 text-[11px] text-ink-faint transition-colors hover:text-ink disabled:opacity-30"
               >
                 ×
@@ -158,7 +160,7 @@ export default function SearchPanel({
               onClick={addLeg}
               className="mono self-start text-[11px] uppercase tracking-[0.12em] text-cyan"
             >
-              + Add another flight
+              + {t('Add another flight')}
             </button>
           )}
         </div>
@@ -167,7 +169,7 @@ export default function SearchPanel({
           <AirportField id="sp-from" label="From" value={from} onChange={setFrom} placeholder="City or airport" />
           <AirportField id="sp-to" label="To" value={to} onChange={setTo} placeholder="City or airport" />
           <div className="sm:w-44">
-            <label className="eyebrow mb-1.5 block text-ink-faint">Departing</label>
+            <label className="eyebrow mb-1.5 block text-ink-faint">{t('Departing')}</label>
             <input
               type="date"
               value={date}
@@ -178,7 +180,7 @@ export default function SearchPanel({
           </div>
           {trip === 'return' && (
             <div className="sm:w-44">
-              <label className="eyebrow mb-1.5 block text-ink-faint">Returning</label>
+              <label className="eyebrow mb-1.5 block text-ink-faint">{t('Returning')}</label>
               <input
                 type="date"
                 value={ret}
@@ -193,15 +195,15 @@ export default function SearchPanel({
 
       <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-end">
         <div className="sm:w-52">
-          <label className="eyebrow mb-1.5 block text-ink-faint">Cabin</label>
+          <label className="eyebrow mb-1.5 block text-ink-faint">{t('Cabin')}</label>
           <select value={cabin} onChange={(e) => setCabin(e.target.value)} className={`${field} font-sans`}>
             {CABINS.map((c) => (
-              <option key={c.code} value={c.code}>{c.label}</option>
+              <option key={c.code} value={c.code}>{t(c.label)}</option>
             ))}
           </select>
         </div>
         <div className="sm:w-32">
-          <label className="eyebrow mb-1.5 block text-ink-faint">Travellers</label>
+          <label className="eyebrow mb-1.5 block text-ink-faint">{t('Travellers')}</label>
           <select value={pax} onChange={(e) => setPax(Number(e.target.value))} className={`${field} font-sans`}>
             {[1, 2, 3, 4, 5, 6].map((n) => (
               <option key={n} value={n}>{n}</option>
@@ -209,15 +211,15 @@ export default function SearchPanel({
           </select>
         </div>
         <div className="sm:w-40">
-          <label className="eyebrow mb-1.5 block text-ink-faint">Stops</label>
+          <label className="eyebrow mb-1.5 block text-ink-faint">{t('Stops')}</label>
           <select value={stops} onChange={(e) => setStops(Number(e.target.value))} className={`${field} font-sans`}>
-            <option value={0}>Nonstop only</option>
-            <option value={1}>Up to 1 stop</option>
-            <option value={2}>Up to 2 stops</option>
+            <option value={0}>{t('Nonstop only')}</option>
+            <option value={1}>{t('Up to 1 stop')}</option>
+            <option value={2}>{t('Up to 2 stops')}</option>
           </select>
         </div>
         <button type="submit" className="btn btn-primary sm:ml-auto sm:h-[42px]">
-          Search trips
+          {t('Search trips')}
         </button>
       </div>
     </form>

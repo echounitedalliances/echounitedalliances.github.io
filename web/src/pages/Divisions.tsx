@@ -6,6 +6,7 @@ import { capitalise, spell } from '../lib/format'
 import { useDivisionCount } from '../lib/carriers'
 import { Loading, NotConfigured } from '../components/ui'
 import DivisionTile from '../components/DivisionTile'
+import { useT } from '../lib/i18n'
 
 /**
  * Every division, three across: nine of them since Eos opened on 2 October
@@ -26,6 +27,7 @@ import DivisionTile from '../components/DivisionTile'
 export default function Divisions() {
   const [rows, setRows] = useState<Division[] | null>(null)
   const divisionCount = useDivisionCount()
+  const t = useT()
 
   useEffect(() => {
     if (!isConfigured) return
@@ -40,13 +42,12 @@ export default function Divisions() {
 
   return (
     <div className="mx-auto max-w-[1180px] px-4 py-8 sm:px-5 sm:py-14">
-      <p className="eyebrow text-cyan">The group</p>
+      <p className="eyebrow text-cyan">{t('The group')}</p>
       <h1 className="display mt-3 text-[clamp(36px,5vw,58px)]">
-        {capitalise(spell(rows?.length || divisionCount))} divisions
+        {capitalise(t('{n} divisions', { n: spell(rows?.length || divisionCount) }))}
       </h1>
       <p className="mt-4 max-w-[64ch] text-lg text-ink-dim">
-        Echo United Alliances is a multi-alliance group: each division runs its
-        own roster and its own leadership, and members fly under one network.
+        {t('Echo United Alliances is a multi-alliance group: each division runs its own roster and its own leadership, and members fly under one network.')}
       </p>
 
       {rows === null ? (

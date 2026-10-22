@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { CONDUCT, PRIVACY, TERMS, type Policy } from '../lib/policies'
 import { SITE, discordConfigured } from '../lib/site'
+import { useI18n } from '../lib/i18n'
 
 /**
  * One renderer for both policy pages.
@@ -14,16 +15,25 @@ import { SITE, discordConfigured } from '../lib/site'
  * conversation with a person on Discord.
  */
 function PolicyPage({ policy }: { policy: Policy }) {
+  // The policy text itself stays in English: it is the version that applies,
+  // and a mistranslated rule is worse than an untranslated one. Everything
+  // around it translates, and says so.
+  const { lang, t } = useI18n()
   return (
     <div className="mx-auto max-w-[1180px] px-4 py-8 sm:px-5 sm:py-14">
-      <p className="eyebrow text-cyan">{policy.eyebrow}</p>
-      <h1 className="display mt-3 text-[clamp(34px,5vw,58px)]">{policy.title}</h1>
-      <p className="mt-5 max-w-[64ch] text-lg text-ink-dim">{policy.lede}</p>
+      <p className="eyebrow text-cyan">{t(policy.eyebrow)}</p>
+      <h1 className="display mt-3 text-[clamp(34px,5vw,58px)]">{t(policy.title)}</h1>
+      {lang !== 'en' && (
+        <p className="mt-5 max-w-[64ch] border-l-2 border-l-[color:var(--color-cyan)] bg-surface px-4 py-3 text-ink-dim">
+          {t('This page is in English only. The English text is the one that applies.')}
+        </p>
+      )}
+      <p lang="en" className="mt-5 max-w-[64ch] text-lg text-ink-dim">{policy.lede}</p>
       <p className="mono mt-4 text-[11px] uppercase tracking-[0.14em] text-ink-faint">
-        Last updated {policy.updated}
+        {t('Last updated {date}', { date: policy.updated })}
       </p>
 
-      <div className="mt-12 flex flex-col gap-10">
+      <div lang="en" className="mt-12 flex flex-col gap-10">
         {policy.sections.map((s, i) => (
           <section key={s.heading} className="border-t border-edge-soft pt-8">
             <div className="grid gap-6 lg:grid-cols-[auto_1fr] lg:gap-10">
@@ -56,10 +66,9 @@ function PolicyPage({ policy }: { policy: Policy }) {
       </div>
 
       <div className="panel mt-12 p-6">
-        <h2 className="display text-xl">Questions, or something to report</h2>
+        <h2 className="display text-xl">{t('Questions, or something to report')}</h2>
         <p className="mt-2 max-w-[62ch] text-ink-dim">
-          Everything on this page is handled by a person, not a form. Open a ticket in
-          our Discord server, or message a division leader or board member directly.
+          {t('Everything on this page is handled by a person, not a form. Open a ticket in our Discord server, or message a division leader or board member directly.')}
         </p>
         <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
           {discordConfigured && (
@@ -69,11 +78,11 @@ function PolicyPage({ policy }: { policy: Policy }) {
               rel="noopener noreferrer"
               className="mono bg-accent px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#050505] transition-opacity hover:opacity-90"
             >
-              Join on Discord ↗
+              {t('Join on Discord')} ↗
             </a>
           )}
           <Link to="/about" className="mono text-[11px] uppercase tracking-[0.14em] text-cyan">
-            Who runs the alliance →
+            {t('Who runs the alliance')} →
           </Link>
           <a
             href={SITE.repoUrl}
@@ -81,7 +90,7 @@ function PolicyPage({ policy }: { policy: Policy }) {
             rel="noopener noreferrer"
             className="mono text-[11px] uppercase tracking-[0.14em] text-cyan"
           >
-            Read the source ↗
+            {t('Read the source')} ↗
           </a>
         </div>
       </div>

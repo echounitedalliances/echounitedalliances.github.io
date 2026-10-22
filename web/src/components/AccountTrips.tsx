@@ -6,6 +6,8 @@ import type { BookingDetails } from '../lib/types'
 import { shortDate, usd } from '../lib/format'
 import { TRIP_SORTS, bookedAt, tripArrival, tripDeparture } from '../lib/trips'
 import type { TripSort } from '../lib/trips'
+import { CABINS } from '../lib/types'
+import { rich, useT } from '../lib/i18n'
 
 /**
  * The bookings kept on a Resonance account, and what can be done with them.
@@ -26,9 +28,19 @@ import type { TripSort } from '../lib/trips'
 
 type Pending = { id: string; action: 'cancel' | 'remove' }
 
-const cabinLabel = (c: string) => c.replace(/_/g, ' ').toLowerCase()
+const cabinLabel = (c: string) => CABINS.find((x) => x.code === c)?.label ?? c
+
+/** Booking and passenger codes the database stores, as words. */
+const WORDS: Record<string, string> = {
+  ADULT: 'Adult',
+  CHILD: 'Child',
+  INFANT: 'Infant',
+  CONFIRMED: 'confirmed',
+  CANCELLED: 'cancelled',
+}
 
 export default function AccountTrips() {
+  const tr = useT()
   const [trips, setTrips] = useState<BookingDetails[] | null>(null)
   const [loadError, setLoadError] = useState<string | null>(null)
   const [sort, setSort] = useState<TripSort>('departure')
@@ -53,7 +65,7 @@ export default function AccountTrips() {
         .select('*')
         .order('created_at', { ascending: false })
       if (cancelled) return
-      if (error) setLoadError(error.message)
+      if (error) setLoadError(tr(error.message))
       setTrips((data as BookingDetails[]) ?? [])
     })()
     return () => {
@@ -100,7 +112,7 @@ export default function AccountTrips() {
       }
       setPending(null)
     } catch (e) {
-      setCardError({ id, message: e instanceof Error ? e.message : 'That did not work.' })
+      setCardError({ id, message: e instanceof Error ? tr(e.message) : tr('That did not work.') })
     } finally {
       setBusy(false)
     }
@@ -118,14 +130,14 @@ export default function AccountTrips() {
       })
       if (error) throw new Error(error.message)
       const row = ((data as BookingDetails[]) ?? [])[0]
-      if (!row) throw new Error('The booking was not returned.')
+      if (!row) throw new Error(tr('The booking was not returned.'))
       replace(row)
       setAdded(row.pnr)
       setRef('')
       setSurname('')
       setAdding(false)
     } catch (e) {
-      setAddError(e instanceof Error ? e.message : 'The booking could not be added.')
+      setAddError(e instanceof Error ? tr(e.message) : tr('The booking could not be added.'))
     } finally {
       setBusy(false)
     }
@@ -134,12 +146,11 @@ export default function AccountTrips() {
   const addForm = (
     <form onSubmit={add} className="panel mt-4 p-5">
       <p className="text-sm text-ink-dim">
-        Booked as a guest, or on another device? Add it with the six-character reference
-        and the family name of anyone travelling on it.
+        {tr('Booked as a guest, or on another device? Add it with the six-character reference and the family name of anyone travelling on it.')}
       </p>
       <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end">
         <label className="block flex-1">
-          <span className="eyebrow mb-1.5 block text-ink-faint">Booking reference</span>
+          <span className="eyebrow mb-1.5 block text-ink-faint">{tr('Booking reference')}</span>
           <input
             value={ref}
             onChange={(e) => setRef(e.target.value.toUpperCase())}
@@ -149,7 +160,7 @@ export default function AccountTrips() {
           />
         </label>
         <label className="block flex-1">
-          <span className="eyebrow mb-1.5 block text-ink-faint">Family name</span>
+          <span className="eyebrow mb-1.5 block text-ink-faint">{tr('Family name')}</span>
           <input
             value={surname}
             onChange={(e) => setSurname(e.target.value)}
@@ -161,7 +172,7 @@ export default function AccountTrips() {
           disabled={ref.trim().length !== 6 || !surname.trim() || busy}
           className="btn btn-primary"
         >
-          {busy ? 'Adding…' : 'Add to my trips'}
+          {busy ? tr('Adding…') : tr('Add to my trips')}
         </button>
       </div>
       {addError && (
@@ -175,12 +186,12 @@ export default function AccountTrips() {
   return (
     <section className="mt-10">
       <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
-        <h2 className="display text-2xl">Your trips</h2>
+        <h2 className="display text-2xl">{tr('Your trips')}</h2>
         <div className="flex flex-wrap items-center gap-2">
           {trips && trips.length > 1 && (
             <>
               <span className="mono mr-1 text-[10px] uppercase tracking-[0.16em] text-ink-faint">
-                Sort by
+                {tr('Sort by')}
               </span>
               {TRIP_SORTS.map((o) => (
                 <button
@@ -190,17 +201,17 @@ export default function AccountTrips() {
                   aria-pressed={sort === o.key}
                   className={`chip ${sort === o.key ? 'chip-on' : ''}`}
                 >
-                  {o.label}
+                  {tr(o.label)}
                 </button>
               ))}
               <button
                 type="button"
                 onClick={() => setNewestFirst((v) => !v)}
-                aria-label={newestFirst ? 'Showing latest first' : 'Showing earliest first'}
+                aria-label={newestFirst ? tr('Showing latest first') : tr('Showing earliest first')}
                 className="chip"
-                title={newestFirst ? 'Latest first' : 'Earliest first'}
+                title={newestFirst ? tr('Latest first') : tr('Earliest first')}
               >
-                {newestFirst ? 'Latest ↓' : 'Earliest ↑'}
+                {newestFirst ? `${tr('Latest')} ↓` : `${tr('Earliest')} ↑`}
               </button>
             </>
           )}
@@ -213,7 +224,7 @@ export default function AccountTrips() {
             aria-expanded={adding}
             className="btn btn-ghost"
           >
-            {adding ? 'Close' : 'Add a booking'}
+            {adding ? tr('Close') : tr('Add a booking')}
           </button>
         </div>
       </div>
@@ -222,7 +233,7 @@ export default function AccountTrips() {
 
       {added && (
         <p className="mono mt-4 text-[11px] uppercase tracking-[0.12em] text-good">
-          {added} is on your account now
+          {tr('{pnr} is on your account now', { pnr: added })}
         </p>
       )}
 
@@ -236,12 +247,12 @@ export default function AccountTrips() {
         <Loading />
       ) : trips.length === 0 ? (
         <div className="panel mt-4 p-8 text-center">
-          <p className="text-ink-dim">Nothing booked on this account yet.</p>
+          <p className="text-ink-dim">{tr('Nothing booked on this account yet.')}</p>
           <p className="mt-2 text-sm text-ink-faint">
-            Book while signed in to keep a trip here, or add one you made as a guest.
+            {tr('Book while signed in to keep a trip here, or add one you made as a guest.')}
           </p>
           <Link to="/" className="mono mt-4 inline-block text-cyan">
-            Search the alliance →
+            {tr('Search the alliance')} →
           </Link>
         </div>
       ) : (
@@ -262,16 +273,16 @@ export default function AccountTrips() {
                       cancelled ? 'text-danger' : 'text-ink-faint'
                     }`}
                   >
-                    {t.status.toLowerCase()} · {usd(Number(t.total_amount_usd))} ·{' '}
-                    {pax.length} {pax.length === 1 ? 'traveller' : 'travellers'}
+                    {tr(WORDS[t.status.toUpperCase()] ?? t.status.toLowerCase())} · {usd(Number(t.total_amount_usd))} ·{' '}
+                    {pax.length === 1 ? tr('1 traveller') : tr('{n} travellers', { n: pax.length })}
                   </div>
                 </div>
 
                 {segs.length === 0 ? (
                   <p className="mt-3 text-sm text-ink-faint">
                     {cancelled
-                      ? 'Cancelled. The flights have been released back to the airlines.'
-                      : 'No flights on this booking.'}
+                      ? tr('Cancelled. The flights have been released back to the airlines.')
+                      : tr('No flights on this booking.')}
                   </p>
                 ) : (
                   <div className="mt-3 flex flex-col gap-1">
@@ -285,7 +296,7 @@ export default function AccountTrips() {
                         <span className="ml-3 text-ink-faint">{shortDate(s.travel_date)}</span>
                         {isOpen && (
                           <span className="ml-3 text-ink-faint">
-                            {cabinLabel(s.cabin)} · {usd(s.price_usd)} each
+                            {tr(cabinLabel(s.cabin))} · {tr('{price} each', { price: usd(s.price_usd) })}
                           </span>
                         )}
                       </div>
@@ -296,29 +307,28 @@ export default function AccountTrips() {
                 {isOpen && (
                   <div className="mt-4 grid gap-4 border-t border-edge-soft pt-4 sm:grid-cols-2">
                     <div>
-                      <p className="eyebrow mb-1.5 text-ink-faint">Travellers</p>
+                      <p className="eyebrow mb-1.5 text-ink-faint">{tr('Travellers')}</p>
                       <ul className="flex flex-col gap-1 text-sm text-ink">
                         {pax.map((p) => (
                           <li key={p.seq}>
                             {p.given_name} {p.family_name}
                             <span className="mono ml-2 text-[10px] uppercase text-ink-faint">
-                              {p.type}
+                              {tr(WORDS[p.type] ?? p.type)}
                             </span>
                           </li>
                         ))}
                       </ul>
                     </div>
                     <div>
-                      <p className="eyebrow mb-1.5 text-ink-faint">Booking</p>
+                      <p className="eyebrow mb-1.5 text-ink-faint">{tr('Booking')}</p>
                       <p className="text-sm text-ink-dim">
-                        Booked {shortDate(t.created_at.slice(0, 10))}
+                        {tr('Booked {date}', { date: shortDate(t.created_at.slice(0, 10)) })}
                         <br />
-                        Contact {t.contact_name ? `${t.contact_name}, ` : ''}
-                        {t.contact_email}
+                        {tr('Contact {who}', { who: `${t.contact_name ? `${t.contact_name}, ` : ''}${t.contact_email}` })}
                       </p>
                       {t.divisions && t.divisions.length > 1 && (
                         <p className="mono mt-2 text-[11px] text-ink-faint">
-                          Crosses {t.divisions.length} divisions: {t.divisions.join(', ')}
+                          {tr('Crosses {n} divisions: {list}', { n: t.divisions.length, list: t.divisions.join(', ') })}
                         </p>
                       )}
                     </div>
@@ -328,11 +338,15 @@ export default function AccountTrips() {
                 {asking === 'cancel' ? (
                   <div className="panel mt-4 border-danger/45 p-4">
                     <p className="text-sm text-ink">
-                      Cancel <span className="mono text-cyan">{t.pnr}</span> for {pax.length}{' '}
-                      {pax.length === 1 ? 'traveller' : 'travellers'}?
+                      {rich(
+                        pax.length === 1
+                          ? tr('Cancel {pnr} for 1 traveller?')
+                          : tr('Cancel {pnr} for {n} travellers?', { n: pax.length }),
+                        { pnr: <span className="mono text-cyan">{t.pnr}</span> },
+                      )}
                     </p>
                     <p className="mt-1.5 text-[13px] text-ink-faint">
-                      This cannot be undone. The seats go back on sale immediately.
+                      {tr('This cannot be undone. The seats go back on sale immediately.')}
                     </p>
                     <div className="mt-4 flex flex-wrap gap-2">
                       <button
@@ -341,7 +355,7 @@ export default function AccountTrips() {
                         disabled={busy}
                         className="btn btn-danger"
                       >
-                        {busy ? 'Cancelling…' : 'Yes, cancel this booking'}
+                        {busy ? tr('Cancelling…') : tr('Yes, cancel this booking')}
                       </button>
                       <button
                         type="button"
@@ -349,19 +363,19 @@ export default function AccountTrips() {
                         disabled={busy}
                         className="btn btn-ghost"
                       >
-                        Keep it
+                        {tr('Keep it')}
                       </button>
                     </div>
                   </div>
                 ) : asking === 'remove' ? (
                   <div className="panel mt-4 p-4">
                     <p className="text-sm text-ink">
-                      Take <span className="mono text-cyan">{t.pnr}</span> off your account?
+                      {rich(tr('Take {pnr} off your account?'), { pnr: <span className="mono text-cyan">{t.pnr}</span> })}
                     </p>
                     <p className="mt-1.5 text-[13px] text-ink-faint">
                       {cancelled
-                        ? 'It only leaves this list.'
-                        : 'The booking is not cancelled: it still stands, and its reference and a traveller’s surname still find it. Or add it back here.'}
+                        ? tr('It only leaves this list.')
+                        : tr('The booking is not cancelled: it still stands, and its reference and a traveller’s surname still find it. Or add it back here.')}
                     </p>
                     <div className="mt-4 flex flex-wrap gap-2">
                       <button
@@ -370,7 +384,7 @@ export default function AccountTrips() {
                         disabled={busy}
                         className="btn btn-primary"
                       >
-                        {busy ? 'Removing…' : 'Remove from my account'}
+                        {busy ? tr('Removing…') : tr('Remove from my account')}
                       </button>
                       <button
                         type="button"
@@ -378,7 +392,7 @@ export default function AccountTrips() {
                         disabled={busy}
                         className="btn btn-ghost"
                       >
-                        Keep it here
+                        {tr('Keep it here')}
                       </button>
                     </div>
                   </div>
@@ -390,7 +404,7 @@ export default function AccountTrips() {
                       aria-expanded={isOpen}
                       className="mono text-[11px] uppercase tracking-[0.14em] text-cyan"
                     >
-                      {isOpen ? 'Hide details' : 'Details'}
+                      {isOpen ? tr('Hide details') : tr('Details')}
                     </button>
                     {!cancelled && (
                       <button
@@ -401,7 +415,7 @@ export default function AccountTrips() {
                         }}
                         className="mono text-[11px] uppercase tracking-[0.14em] text-ink-faint transition-colors hover:text-danger"
                       >
-                        Cancel booking
+                        {tr('Cancel booking')}
                       </button>
                     )}
                     <button
@@ -412,7 +426,7 @@ export default function AccountTrips() {
                       }}
                       className="mono text-[11px] uppercase tracking-[0.14em] text-ink-faint transition-colors hover:text-ink"
                     >
-                      Remove from account
+                      {tr('Remove from account')}
                     </button>
                   </div>
                 )}

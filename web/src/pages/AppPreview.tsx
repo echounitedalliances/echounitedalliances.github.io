@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { appByKey, type MemberApp } from '../lib/apps'
+import { rich, useT } from '../lib/i18n'
 
 /**
  * /live and /market: what a members' app will be, until it is plugged in.
@@ -106,6 +107,7 @@ function DiscordGlyph() {
 }
 
 function Preview({ app }: { app: MemberApp }) {
+  const t = useT()
   // Plugged in: this page only forwards.
   useEffect(() => {
     if (app.live) window.location.replace(app.url)
@@ -116,10 +118,10 @@ function Preview({ app }: { app: MemberApp }) {
       <section className="aurora relative overflow-hidden border-b border-edge-soft">
         <div className="mx-auto max-w-[1180px] px-4 pt-8 pb-8 sm:px-5 sm:pt-12">
           <Link to="/members" className="mono text-[11px] uppercase tracking-[0.12em] text-ink-faint hover:text-ink-dim">
-            ← Members' area
+            ← {t("Members' area")}
           </Link>
           <h1 className="display mt-3 text-[clamp(32px,6vw,64px)]">{app.name}</h1>
-          <p className="mt-3 max-w-[62ch] text-ink-dim sm:text-lg">{app.tagline}</p>
+          <p className="mt-3 max-w-[62ch] text-ink-dim sm:text-lg">{t(app.tagline)}</p>
         </div>
       </section>
 
@@ -139,25 +141,27 @@ function Preview({ app }: { app: MemberApp }) {
               role="status"
               className="w-full max-w-[440px] border border-edge bg-[color:var(--color-surface)]/95 p-6 text-center shadow-2xl backdrop-blur"
             >
-              <p className="eyebrow text-cyan">Members only</p>
-              <p className="display mt-2 text-[34px] leading-none">Page coming soon</p>
+              <p className="eyebrow text-cyan">{t('Members only')}</p>
+              <p className="display mt-2 text-[34px] leading-none">{t('Page coming soon')}</p>
               <p className="mt-3 text-[14px] text-ink-dim">
-                {app.name} is moving to <span className="mono text-ink">{app.plannedUrl.replace('https://', '')}</span>.
-                You'll sign in with your Discord account.
+                {rich(t("{app} is moving to {url}. You'll sign in with your Discord account."), {
+                  app: app.name,
+                  url: <span className="mono text-ink">{app.plannedUrl.replace('https://', '')}</span>,
+                })}
               </p>
               <ul className="mt-4 space-y-1.5 text-left text-[13px] text-ink-dim">
                 {app.points.map((p) => (
                   <li key={p} className="flex gap-2">
                     <span className="text-cyan">·</span>
-                    {p}
+                    {t(p)}
                   </li>
                 ))}
               </ul>
               <button type="button" disabled className="btn btn-primary mt-5 w-full justify-center gap-2">
-                <DiscordGlyph /> Sign in with Discord
+                <DiscordGlyph /> {t('Sign in with Discord')}
               </button>
               <p className="mono mt-3 text-[10.5px] uppercase tracking-[0.12em] text-ink-faint">
-                Preview · sample data
+                {t('Preview · sample data')}
               </p>
             </div>
           </div>

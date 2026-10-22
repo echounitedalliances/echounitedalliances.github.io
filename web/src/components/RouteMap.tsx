@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { Arc, NetworkNode } from '../lib/types'
 import { WORLD_OUTLINE_PATH } from '../lib/worldOutline'
+import { num } from '../lib/format'
+import { useT } from '../lib/i18n'
 
 /**
  * The network as a flat map.
@@ -91,6 +93,7 @@ export default function RouteMap({
   maxArcs = 400,
   zoomOnFocus = false,
 }: Props) {
+  const t = useT()
   const [hover, setHover] = useState<NetworkNode | null>(null)
 
   /**
@@ -308,7 +311,7 @@ export default function RouteMap({
           touchAction: 'pan-y',
         }}
         role="img"
-        aria-label={`Alliance route map, ${arcs.length} city pairs. Drag to pan; use the zoom buttons, or hold ctrl while scrolling.`}
+        aria-label={t('Alliance route map, {n} city pairs. Drag to pan; use the zoom buttons, or hold ctrl while scrolling.', { n: arcs.length })}
         // Why nothing is captured on press. This used to capture the pointer
         // the moment any press began, markers included -- and a captured
         // pointer's click is delivered to the capturing element, so the click
@@ -471,7 +474,7 @@ export default function RouteMap({
           <div className="mono text-[11px] tracking-[0.14em] text-cyan">{hover.iata_code}</div>
           <div className="text-sm text-ink">{hover.city_name ?? '–'}</div>
           <div className="mono text-[11px] text-ink-faint">
-            {hover.carriers} carriers · {hover.weekly_departures.toLocaleString('en-GB')} weekly
+            {t('{carriers} carriers · {weekly} weekly', { carriers: hover.carriers, weekly: num(hover.weekly_departures) })}
           </div>
         </div>
       )}
@@ -487,8 +490,8 @@ export default function RouteMap({
         {manual && (
           <button
             type="button"
-            aria-label="Reset the view"
-            title="Reset the view"
+            aria-label={t('Reset the view')}
+            title={t('Reset the view')}
             onClick={() => setManual(null)}
             className="mono h-8 w-8 border border-edge bg-[color:var(--color-ground)]/85 text-[11px] leading-none text-ink-dim transition-colors hover:border-accent hover:text-ink"
           >
@@ -497,7 +500,7 @@ export default function RouteMap({
         )}
         <button
           type="button"
-          aria-label="Zoom out"
+          aria-label={t('Zoom out')}
           onClick={() => zoomAbout(1 / 1.35, W / 2, H / 2)}
           className="mono h-8 w-8 border border-edge bg-[color:var(--color-ground)]/85 text-[15px] leading-none text-ink-dim transition-colors hover:border-accent hover:text-ink"
         >
@@ -505,7 +508,7 @@ export default function RouteMap({
         </button>
         <button
           type="button"
-          aria-label="Zoom in"
+          aria-label={t('Zoom in')}
           onClick={() => zoomAbout(1.35, W / 2, H / 2)}
           className="mono h-8 w-8 border border-edge bg-[color:var(--color-ground)]/85 text-[15px] leading-none text-ink-dim transition-colors hover:border-accent hover:text-ink"
         >

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { useT } from '../lib/i18n'
 import { supabase } from '../lib/supabase'
 import type { PlaceRow } from '../lib/types'
 
@@ -44,6 +45,7 @@ export default function AirportField({
   placeholder: string
   id: string
 }) {
+  const t = useT()
   const [text, setText] = useState('')
   const [rows, setRows] = useState<PlaceRow[]>([])
   const [open, setOpen] = useState(false)
@@ -122,7 +124,7 @@ export default function AirportField({
           out.push({
             kind: 'header',
             key: r.place_key,
-            label: `${r.place_name}: all airports`,
+            label: r.place_name,
             startsPlace: true,
           })
           out.push({ kind: 'airport', row: r, startsPlace: false })
@@ -189,7 +191,7 @@ export default function AirportField({
   return (
     <div className="relative flex-1" ref={box}>
       <label htmlFor={id} className="eyebrow mb-1.5 block text-ink-faint">
-        {label}
+        {t(label)}
       </label>
       <div className="relative">
         <input
@@ -212,7 +214,7 @@ export default function AirportField({
             e.target.select()
           }}
           onKeyDown={onKeyDown}
-          placeholder={placeholder}
+          placeholder={t(placeholder)}
           maxLength={60}
           autoComplete="off"
           role="combobox"
@@ -234,7 +236,7 @@ export default function AirportField({
             <button
               type="button"
               onClick={clear}
-              aria-label={`Clear ${label.toLowerCase()}`}
+              aria-label={t('Clear {field}', { field: t(label) })}
               className="absolute right-2 top-1/2 -translate-y-1/2 px-1 text-ink-faint hover:text-ink"
             >
               ×
@@ -247,12 +249,12 @@ export default function AirportField({
         <ul
           id={listId}
           role="listbox"
-          aria-label={`${label} suggestions`}
+          aria-label={t('{field} suggestions', { field: t(label) })}
           className="panel absolute z-30 mt-1 max-h-80 w-full overflow-auto py-1"
         >
           {showEmpty && (
             <li className="px-3 py-3 text-sm text-ink-faint">
-              No airport in the alliance matches “{text.trim()}”.
+              {t('No airport in the alliance matches “{text}”.', { text: text.trim() })}
             </li>
           )}
           {options.map((o, i) =>
@@ -264,7 +266,7 @@ export default function AirportField({
                   i > 0 ? 'mt-2 border-t border-edge' : ''
                 }`}
               >
-                {o.label}
+                {t('{place}: all airports', { place: o.label })}
               </li>
             ) : (
               <li

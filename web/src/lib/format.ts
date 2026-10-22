@@ -1,4 +1,5 @@
 /** Small formatters, in one place so the whole site reads the same way. */
+import { currentLang } from './i18n'
 
 export const num = (n: number | null | undefined) =>
   n == null ? '–' : n.toLocaleString('en-GB')
@@ -14,8 +15,28 @@ export const duration = (mins: number | null | undefined) => {
   return h ? `${h}h ${m.toString().padStart(2, '0')}m` : `${m}m`
 }
 
+/** The locale dates are written in, for the language being read. */
+export const dateLocale = () =>
+  ({ en: 'en-GB', id: 'id-ID', zh: 'zh-CN', ko: 'ko-KR', bn: 'bn-BD', hi: 'hi-IN' })[currentLang()]
+
+/** A country's name, from its two-letter code, in the language being read. */
+export const countryName = (cc: string): string => {
+  try {
+    return new Intl.DisplayNames([dateLocale()], { type: 'region' }).of(cc.toUpperCase()) ?? cc
+  } catch {
+    return cc
+  }
+}
+
+/** Monday-first one-letter day names, in the language being read. */
+export const weekdayInitials = (): string[] => {
+  const f = new Intl.DateTimeFormat(dateLocale(), { weekday: 'narrow', timeZone: 'UTC' })
+  // 1 January 2024 was a Monday.
+  return Array.from({ length: 7 }, (_, i) => f.format(new Date(Date.UTC(2024, 0, 1 + i))))
+}
+
 export const shortDate = (iso: string) =>
-  new Date(iso + 'T00:00:00').toLocaleDateString('en-GB', {
+  new Date(iso + 'T00:00:00').toLocaleDateString(dateLocale(), {
     weekday: 'short',
     day: 'numeric',
     month: 'short',
@@ -51,7 +72,10 @@ export const accentOf = (a: { accent_color?: string | null }) =>
 const WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight',
   'nine', 'ten', 'eleven', 'twelve']
 
-/** A small count in words, for copy that says "nine divisions". Past twelve, the figure. */
-export const spell = (n: number) => WORDS[n] ?? num(n)
+/**
+ * A small count in words, for copy that says "nine divisions". Past twelve,
+ * the figure -- and in every language but English, always the figure.
+ */
+export const spell = (n: number) => (currentLang() === 'en' ? WORDS[n] : undefined) ?? num(n)
 
 export const capitalise = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)

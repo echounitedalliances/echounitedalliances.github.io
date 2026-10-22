@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import Modal from '../components/Modal'
 import { Loading } from '../components/ui'
 import { categoriesOf, loadNews, NEWS_SOURCE, type Article } from '../lib/news'
+import { rich, useI18n } from '../lib/i18n'
 
 /**
  * The alliance news page.
@@ -21,6 +22,7 @@ import { categoriesOf, loadNews, NEWS_SOURCE, type Article } from '../lib/news'
  */
 export default function News() {
   const [articles, setArticles] = useState<Article[] | null>(null)
+  const { lang, t } = useI18n()
   const [error, setError] = useState<string | null>(null)
   const [category, setCategory] = useState('')
   const [open, setOpen] = useState<Article | null>(null)
@@ -53,33 +55,33 @@ export default function News() {
 
   return (
     <div className="mx-auto max-w-[1180px] px-4 py-8 sm:px-5 sm:py-14">
-      <p className="eyebrow text-cyan">Newsroom</p>
-      <h1 className="display mt-3 text-[clamp(34px,5vw,58px)]">Across the network</h1>
+      <p className="eyebrow text-cyan">{t('Newsroom')}</p>
+      <h1 className="display mt-3 text-[clamp(34px,5vw,58px)]">{t('Across the network')}</h1>
       <p className="mt-5 max-w-[64ch] text-lg text-ink-dim">
-        New routes, deliveries, network changes and the occasional farewell: what
-        the alliance's carriers have been doing lately.
+        {t("New routes, deliveries, network changes and the occasional farewell: what the alliance's carriers have been doing lately.")}
       </p>
       <p className="mt-4 text-[12px] text-ink-faint">
-        Reported by{' '}
-        <a
-          href={NEWS_SOURCE.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-cyan underline underline-offset-2"
-        >
-          {NEWS_SOURCE.name} ↗
-        </a>
-        , the community newsroom run by one of our members. Stories appear here as
-        soon as they are published there.
+        {rich(t('Reported by {source}, the community newsroom run by one of our members. Stories appear here as soon as they are published there.'), {
+          source: (
+            <a
+              href={NEWS_SOURCE.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-cyan underline underline-offset-2"
+            >
+              {NEWS_SOURCE.name} ↗
+            </a>
+          ),
+        })}
+        {lang !== 'en' && <> {t('Stories are shown in English, as their authors published them.')}</>}
       </p>
 
       {error && (
         <div className="panel mt-10 p-8">
-          <h2 className="display text-xl">The newsroom is not answering</h2>
+          <h2 className="display text-xl">{t('The newsroom is not answering')}</h2>
           <p className="mt-2 max-w-[62ch] text-ink-dim">
-            Stories are read live from {NEWS_SOURCE.name} rather than stored here, so
-            when that source is unreachable this page has nothing to show rather than
-            something out of date. {error}
+            {t('Stories are read live from {source} rather than stored here, so when that source is unreachable this page has nothing to show rather than something out of date.', { source: NEWS_SOURCE.name })}{' '}
+            {error}
           </p>
           <a
             href={NEWS_SOURCE.url}
@@ -87,7 +89,7 @@ export default function News() {
             rel="noopener noreferrer"
             className="mono mt-5 inline-block text-[11px] uppercase tracking-[0.14em] text-cyan"
           >
-            Read it on {NEWS_SOURCE.name} ↗
+            {t('Read it on {source}', { source: NEWS_SOURCE.name })} ↗
           </a>
         </div>
       )}
@@ -107,7 +109,7 @@ export default function News() {
                     : 'border-edge-soft text-ink-faint hover:text-ink-dim'
                 }`}
               >
-                All stories
+                {t('All stories')}
               </button>
               {categories.map((c) => (
                 <button
@@ -128,7 +130,7 @@ export default function News() {
 
           {shown.length === 0 ? (
             <div className="panel mt-8 p-10 text-center text-ink-dim">
-              Nothing filed under that heading yet.
+              {t('Nothing filed under that heading yet.')}
             </div>
           ) : (
             <>
@@ -146,7 +148,7 @@ export default function News() {
                   <span className="grid gap-6 p-6 sm:p-8 md:grid-cols-[1fr_auto] md:items-center">
                     <span className="block min-w-0">
                       <span className="mono flex flex-wrap items-center gap-2.5 text-[10px] uppercase tracking-[0.14em]">
-                        <span className="bg-accent px-2 py-0.5 text-[#050505]">Newest</span>
+                        <span className="bg-accent px-2 py-0.5 text-[#050505]">{t('Newest')}</span>
                         {featured.category && (
                           <span className="text-ink-faint">{featured.category}</span>
                         )}
@@ -159,7 +161,7 @@ export default function News() {
                         {featured.summary}
                       </span>
                       <span className="mono mt-4 inline-block text-[11px] uppercase tracking-[0.14em] text-cyan">
-                        Read the story →
+                        {t('Read the story')} →
                       </span>
                     </span>
                     <Thumb article={featured} size={132} />
@@ -190,7 +192,7 @@ export default function News() {
                       {a.summary}
                     </span>
                     <span className="mono mt-4 border-t border-edge-soft pt-3 text-[10px] uppercase tracking-[0.14em] text-cyan">
-                      Read more →
+                      {t('Read more')} →
                     </span>
                   </button>
                 ))}
@@ -229,7 +231,7 @@ export default function News() {
             />
           ) : (
             <p className="text-ink-faint">
-              This story has no body text on the source feed.
+              {t('This story has no body text on the source feed.')}
             </p>
           )}
 
@@ -239,7 +241,7 @@ export default function News() {
               onClick={() => setOpen(null)}
               className="mono bg-accent px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#050505] transition-opacity hover:opacity-90"
             >
-              Close
+              {t('Close')}
             </button>
             <a
               href={NEWS_SOURCE.url}
@@ -247,7 +249,7 @@ export default function News() {
               rel="noopener noreferrer"
               className="mono text-[11px] uppercase tracking-[0.14em] text-cyan"
             >
-              Read on {NEWS_SOURCE.name} ↗
+              {t('Read on {source}', { source: NEWS_SOURCE.name })} ↗
             </a>
           </div>
         </Modal>

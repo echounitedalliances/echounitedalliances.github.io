@@ -18,6 +18,7 @@ import {
   legLabel,
   searchJourney,
 } from '../lib/journey'
+import { useT } from '../lib/i18n'
 
 /**
  * "ECONOMY" and "PREMIUM_ECONOMY" are database values, not English. They were
@@ -123,6 +124,7 @@ function LegRow({ leg, last }: { leg: Itinerary['legs'][number]; last: boolean }
 export default function SearchResults() {
   const [params] = useSearchParams()
   const nav = useNavigate()
+  const t = useT()
   const q = useMemo(() => decodeJourney(params), [params])
   const key = params.toString()
 
@@ -294,13 +296,13 @@ export default function SearchResults() {
               <span className="text-ink-faint"> → {q.legs[0]?.from}</span>
             )}
             {q.trip === 'multi' && q.legs.length > 1 && (
-              <span className="text-ink-faint"> +{q.legs.length - 1} more</span>
+              <span className="text-ink-faint"> {t('+{n} more', { n: q.legs.length - 1 })}</span>
             )}
           </h1>
           <p className="mono mt-1 text-[12px] text-ink-faint">
             {q.legs[0]?.date && shortDate(q.legs[0].date)} ·{' '}
-            {cabinLabel(q.cabin)} · {q.pax}{' '}
-            {q.pax === 1 ? 'Traveller' : 'Travellers'}
+            {t(cabinLabel(q.cabin))} ·{' '}
+            {q.pax === 1 ? t('1 traveller') : t('{n} travellers', { n: q.pax })}
           </p>
         </div>
         <div className="mono flex flex-wrap gap-1 text-[11px] uppercase tracking-[0.1em]">
@@ -315,7 +317,7 @@ export default function SearchResults() {
                   : 'border-edge-soft text-ink-faint hover:text-ink-dim'
               }`}
             >
-              {o.label}
+              {t(o.label)}
             </button>
           ))}
           <button
@@ -327,14 +329,14 @@ export default function SearchResults() {
                 : 'border-edge-soft text-ink-faint hover:text-ink-dim'
             }`}
           >
-            Interline only
+            {t('Interline only')}
           </button>
         </div>
       </div>
 
       {!journeyIsValid(q) && (
         <div className="panel mt-6 p-8 text-center text-ink-dim">
-          That search is missing something. Pick an origin, a destination and a date.
+          {t('That search is missing something. Pick an origin, a destination and a date.')}
         </div>
       )}
 
@@ -342,8 +344,8 @@ export default function SearchResults() {
         <Loading
           label={
             single
-              ? `Searching ${num(carrierCount)} carriers`
-              : `Searching ${num(carrierCount)} carriers · ${q.legs.length} flights`
+              ? t('Searching {n} carriers', { n: num(carrierCount) })
+              : t('Searching {n} carriers · {legs} flights', { n: num(carrierCount), legs: q.legs.length })
           }
         />
       )}
@@ -360,30 +362,29 @@ export default function SearchResults() {
               </h2>
               <p className="mono text-[12px] text-ink-faint">
                 {shortDate(leg.date)}
-                {rows && ` · ${num(rows.length)} itineraries`}
+                {rows && ` · ${t('{n} itineraries', { n: num(rows.length) })}`}
               </p>
             </div>
 
             {errors[i] && (
               <div className="panel mt-4 border-l-2 border-l-[color:var(--color-warn)] p-4 text-ink-dim">
-                This flight could not be searched: {errors[i]}
+                {t('This flight could not be searched:')} {errors[i]}
               </div>
             )}
 
             {rows && rows.length === 0 && (
               <div className="panel mt-4 p-8 text-center">
-                <p className="text-ink">Nothing flies that on {shortDate(leg.date)}.</p>
+                <p className="text-ink">{t('Nothing flies that on {date}.', { date: shortDate(leg.date) })}</p>
                 <p className="mt-2 text-ink-dim">
-                  Try another date below, allow more stops, or check the airports are
-                  ones the alliance serves.
+                  {t('Try another date below, allow more stops, or check the airports are ones the alliance serves.')}
                 </p>
                 <Link to="/network" className="mono mt-4 inline-block text-cyan">
-                  Explore the network →
+                  {t('Explore the network')} →
                 </Link>
               </div>
             )}
 
-            {rows && TIERS.filter((t) => t.depth <= q.stops).map((tier) => {
+            {rows && TIERS.filter((x) => x.depth <= q.stops).map((tier) => {
               const tierRows = rows.filter((x) => x.stops === tier.depth)
               // A depth with nothing in it and nothing left to ask for is not
               // an empty section worth drawing.
@@ -397,10 +398,10 @@ export default function SearchResults() {
               return (
               <div key={tier.depth} className="mt-6">
                 <div className="flex items-baseline gap-3">
-                  <p className="eyebrow text-cyan">{tier.label}</p>
+                  <p className="eyebrow text-cyan">{t(tier.label)}</p>
                   <p className="mono text-[11px] text-ink-faint">
                     {tierRows.length === 0
-                      ? 'none found yet'
+                      ? t('none found yet')
                       : `${num(tierRows.length)}${tier.depth > 0 && !spent[tag] ? '+' : ''}`}
                   </p>
                 </div>
@@ -423,14 +424,16 @@ export default function SearchResults() {
                       <div className="mono mb-3 flex flex-wrap items-center text-[10px] uppercase tracking-[0.12em] [&>*+*]:before:mx-2.5 [&>*+*]:before:inline-block [&>*+*]:before:h-[9px] [&>*+*]:before:w-px [&>*+*]:before:translate-y-[1px] [&>*+*]:before:bg-[color:var(--color-edge)] [&>*+*]:before:align-middle [&>*+*]:before:content-['']">
                         <span className="text-ink-dim">
                           {it.stops === 0
-                            ? 'Nonstop'
-                            : `${it.stops} stop${it.stops > 1 ? 's' : ''}`}
+                            ? t('Nonstop')
+                            : it.stops === 1
+                              ? t('1 stop')
+                              : t('{n} stops', { n: it.stops })}
                         </span>
                         {it.via.length > 0 && (
-                          <span className="text-ink-faint">via {it.via.join(' · ')}</span>
+                          <span className="text-ink-faint">{t('via {airports}', { airports: it.via.join(' · ') })}</span>
                         )}
                         {it.is_interline && (
-                          <span className="text-cyan">Interline</span>
+                          <span className="text-cyan">{t('Interline')}</span>
                         )}
                         {Array.from(new Set(it.divisions)).map((d) => (
                           <Link
@@ -458,12 +461,12 @@ export default function SearchResults() {
                         <div className="mono text-2xl text-ink">{usd(it.total_price_usd)}</div>
                         <div className="mono text-[11px] text-ink-faint">
                           {q.pax > 1
-                            ? `Per traveller · ${duration(it.total_minutes)}`
+                            ? `${t('Per traveller')} · ${duration(it.total_minutes)}`
                             : duration(it.total_minutes)}
                         </div>
                       </div>
                       <button onClick={() => choose(i, it)} className="btn btn-book">
-                        {single ? 'Select' : chosen ? 'Chosen ✓' : 'Choose'}
+                        {single ? t('Select') : chosen ? `${t('Chosen')} ✓` : t('Choose')}
                       </button>
                     </div>
                   </article>
@@ -477,7 +480,7 @@ export default function SearchResults() {
                     onClick={() => setReveal((r) => r.map((v, n) => (n === i ? tierRows.length : v)))}
                     className="mono mt-3 w-full border border-edge py-3 text-[11px] uppercase tracking-[0.14em] text-ink-dim transition-colors hover:border-accent hover:text-ink"
                   >
-                    Show the other {num(tierRows.length - shownN)} nonstop · {num(tierRows.length)} in all
+                    {t('Show the other {n} nonstop · {total} in all', { n: num(tierRows.length - shownN), total: num(tierRows.length) })}
                   </button>
                 )}
 
@@ -489,10 +492,10 @@ export default function SearchResults() {
                     className="mono mt-3 w-full border border-edge py-3 text-[11px] uppercase tracking-[0.14em] text-ink-dim transition-colors hover:border-accent hover:text-ink disabled:opacity-50"
                   >
                     {loadingMore[tag]
-                      ? 'Searching…'
+                      ? t('Searching…')
                       : tierRows.length === 0
-                        ? `Look for ${tier.adjective} routings`
-                        : `Show more ${tier.adjective} flights`}
+                        ? t(`Look for ${tier.adjective} routings`)
+                        : t(`Show more ${tier.adjective} flights`)}
                   </button>
                 )}
               </div>
@@ -518,7 +521,7 @@ export default function SearchResults() {
             <div className="mono flex flex-wrap gap-x-4 gap-y-1 text-[11px] uppercase tracking-[0.12em]">
               {q.legs.map((l, i) => (
                 <span key={i} className={picks[i] ? 'text-ink' : 'text-ink-faint'}>
-                  {legLabel(q, i)}: {picks[i] ? usd(picks[i]!.total_price_usd) : 'not chosen'}
+                  {legLabel(q, i)}: {picks[i] ? usd(picks[i]!.total_price_usd) : t('not chosen')}
                 </span>
               ))}
             </div>
@@ -527,7 +530,7 @@ export default function SearchResults() {
                 <div className="text-right">
                   <div className="mono text-2xl text-ink">{usd(total)}</div>
                   <div className="mono text-[11px] text-ink-faint">
-                    {q.pax > 1 ? 'Per traveller, all flights' : 'All flights'}
+                    {q.pax > 1 ? t('Per traveller, all flights') : t('All flights')}
                   </div>
                 </div>
               )}
@@ -536,7 +539,7 @@ export default function SearchResults() {
                 disabled={total == null}
                 className="btn btn-book disabled:cursor-not-allowed disabled:opacity-40"
               >
-                Continue
+                {t('Continue')}
               </button>
             </div>
           </div>

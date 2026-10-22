@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ACTIVITIES } from '../lib/alliance'
 import { SITE, discordConfigured } from '../lib/site'
+import { rich, useT } from '../lib/i18n'
 
 /**
  * What the group does together.
@@ -11,16 +12,15 @@ import { SITE, discordConfigured } from '../lib/site'
  * the page says so once at the bottom instead of eight times.
  */
 export default function Activities() {
+  const t = useT()
   return (
     <div className="mx-auto max-w-[1180px] px-4 py-8 sm:px-5 sm:py-14">
-      <p className="eyebrow text-cyan">Our activities</p>
+      <p className="eyebrow text-cyan">{t('Our activities')}</p>
       <h1 className="display mt-3 text-[clamp(34px,5vw,58px)]">
-        More than a shared logo
+        {t('More than a shared logo')}
       </h1>
       <p className="mt-5 max-w-[64ch] text-lg text-ink-dim">
-        Echo members trade aircraft with each other, fill each other's orders,
-        and compete for the odd prize. None of it is automated and none of it
-        is scheduled. It runs on people being online at the same time.
+        {t("Echo members trade aircraft with each other, fill each other's orders, and compete for the odd prize. None of it is automated and none of it is scheduled. It runs on people being online at the same time.")}
       </p>
 
       <div className="mt-12 flex flex-col gap-12">
@@ -31,12 +31,12 @@ export default function Activities() {
                 <p className="mono text-[10px] uppercase tracking-[0.16em] text-ink-faint">
                   {String(i + 1).padStart(2, '0')}
                 </p>
-                <h2 className="display mt-2 text-[clamp(26px,3.4vw,38px)]">{a.name}</h2>
-                <p className="mt-2 text-lg text-cyan">{a.lede}</p>
+                <h2 className="display mt-2 text-[clamp(26px,3.4vw,38px)]">{t(a.name)}</h2>
+                <p className="mt-2 text-lg text-cyan">{t(a.lede)}</p>
                 <div className="mt-5 flex flex-col gap-4">
                   {a.body.map((para) => (
                     <p key={para.slice(0, 32)} className="max-w-[62ch] text-ink-dim">
-                      {para}
+                      {t(para)}
                     </p>
                   ))}
                 </div>
@@ -49,9 +49,9 @@ export default function Activities() {
                     className={n > 0 ? 'mt-4 border-t border-edge-soft pt-4' : ''}
                   >
                     <dt className="mono text-[10px] uppercase tracking-[0.14em] text-ink-faint">
-                      {f.label}
+                      {t(f.label)}
                     </dt>
-                    <dd className="mt-1.5 text-ink">{f.value}</dd>
+                    <dd className="mt-1.5 text-ink">{t(f.value)}</dd>
                   </div>
                 ))}
               </dl>
@@ -61,14 +61,15 @@ export default function Activities() {
       </div>
 
       <section className="panel mt-14 p-6">
-        <h2 className="display text-2xl">All of it happens on Discord</h2>
+        <h2 className="display text-2xl">{t('All of it happens on Discord')}</h2>
         <p className="mt-2 max-w-[62ch] text-ink-dim">
-          The sales channel, the buy tickets, the challenges and the results
-          are all there. You need to be a member of a division to take part, so{' '}
-          <Link to="/divisions" className="text-cyan">
-            pick one
-          </Link>{' '}
-          and apply in the game and on Discord both.
+          {rich(t('The sales channel, the buy tickets, the challenges and the results are all there. You need to be a member of a division to take part, so {link} and apply in the game and on Discord both.'), {
+            link: (
+              <Link to="/divisions" className="text-cyan">
+                {t('pick one')}
+              </Link>
+            ),
+          })}
         </p>
         {discordConfigured && (
           <a
@@ -77,7 +78,7 @@ export default function Activities() {
             rel="noopener noreferrer"
             className="btn btn-primary mt-5"
           >
-            Join on Discord ↗
+            {t('Join on Discord')} ↗
           </a>
         )}
       </section>

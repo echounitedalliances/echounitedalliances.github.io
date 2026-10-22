@@ -16,6 +16,7 @@ import { useOnlineCount } from '../lib/discordWidget'
 import { SITE, discordConfigured } from '../lib/site'
 import { SLOGAN, STORY } from '../lib/alliance'
 import { CountUp, Marquee, Reveal } from '../lib/motion'
+import { emph, rich, useT } from '../lib/i18n'
 import '../home.css'
 
 /**
@@ -88,6 +89,7 @@ export default function Home() {
   const divisionCount = useDivisionCount()
   const airportCount = useAirportCount()
   const online = useOnlineCount()
+  const t = useT()
   useMemberLanding()
 
   useEffect(() => {
@@ -149,9 +151,11 @@ export default function Home() {
           </h1>
           <div className="home-hero-foot hero-in" style={{ animationDelay: '650ms' }}>
             <p>
-              <strong>The largest alliance group in The Airline Simulator.</strong>{' '}
-              {num(carriers)} airlines in {spell(nDiv)} divisions, from first-week beginners
-              to the game’s biggest fleets. There’s room for yours.
+              <strong>{t('The largest alliance group in The Airline Simulator.')}</strong>{' '}
+              {t('{airlines} airlines in {divisions} divisions, from first-week beginners to the game’s biggest fleets. There’s room for yours.', {
+                airlines: num(carriers),
+                divisions: spell(nDiv),
+              })}
             </p>
             <div className="home-cta">
               <a
@@ -160,15 +164,15 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="btn btn-primary btn-lg"
               >
-                Join EUA ↗
+                {t('Join EUA')} ↗
               </a>
               <button type="button" className="btn btn-ghost btn-lg" onClick={() => scrollToId('why')}>
-                Why EUA
+                {t('Why EUA')}
               </button>
             </div>
           </div>
         </div>
-        <button type="button" className="home-scroll" onClick={() => scrollToId('why')} aria-label="Scroll to why EUA">
+        <button type="button" className="home-scroll" onClick={() => scrollToId('why')} aria-label={t('Scroll to why EUA')}>
           <span />
         </button>
       </section>
@@ -176,15 +180,15 @@ export default function Home() {
       {/* ---------- the sliding bands ---------- */}
       <div className="home-bands">
         <Marquee speed={0.4}>
-          <span>{num(carriers)} airlines</span><i>and</i>
-          <span>{spell(nDiv)} divisions</span><i>and</i>
-          <span>{num(totals.aircraft)} aircraft</span><i>and</i>
-          <span>{num(totals.routes)} routes</span><i>and</i>
+          <span>{t('{n} airlines', { n: num(carriers) })}</span><i>{t('and')}</i>
+          <span>{t('{n} divisions', { n: spell(nDiv) })}</span><i>{t('and')}</i>
+          <span>{t('{n} aircraft', { n: num(totals.aircraft) })}</span><i>{t('and')}</i>
+          <span>{t('{n} routes', { n: num(totals.routes) })}</span><i>{t('and')}</i>
         </Marquee>
         <Marquee speed={0.3} reverse className="outline">
-          <span>All levels welcome</span><i>·</i>
-          <span>One network</span><i>·</i>
-          <span>Every timezone</span><i>·</i>
+          <span>{t('All levels welcome')}</span><i>·</i>
+          <span>{t('One network')}</span><i>·</i>
+          <span>{t('Every timezone')}</span><i>·</i>
           <span>{SLOGAN}</span><i>·</i>
         </Marquee>
       </div>
@@ -193,10 +197,8 @@ export default function Home() {
       <section className="home-offer" id="why">
         <div className="home-wrap">
           <Reveal>
-            <p className="eyebrow">The headline benefit</p>
-            <h2 className="display home-h2">
-              New aircraft, <span className="serif">well</span> below list
-            </h2>
+            <p className="eyebrow">{t('The headline benefit')}</p>
+            <h2 className="display home-h2">{emph(t('New aircraft, *well* below list'))}</h2>
           </Reveal>
           <div className="home-offer-figure">
             <Reveal className="home-offer-big">
@@ -204,12 +206,13 @@ export default function Home() {
             </Reveal>
             <Reveal delay={150} className="home-offer-copy">
               <p>
-                <b>of the original price.</b> Name the models you want and what you’ll pay. A
-                veteran member fills the order, and the market is strictly watched, so your order
-                can’t be taken by someone else.
+                <b>{t('of the original price.')}</b>{' '}
+                {t('Name the models you want and what you’ll pay. A veteran member fills the order, and the market is strictly watched, so your order can’t be taken by someone else.')}
               </p>
               <p className="home-offer-note">
-                Members order through <Link to="/members">Echo Market</Link>, signed in with Discord.
+                {rich(t('Members order through {market}, signed in with Discord.'), {
+                  market: <Link to="/members">Echo Market</Link>,
+                })}
               </p>
             </Reveal>
           </div>
@@ -220,16 +223,16 @@ export default function Home() {
       <section className="home-section" aria-labelledby="stay">
         <div className="home-wrap">
           <Reveal>
-            <p className="eyebrow text-ink-faint">And everything around it</p>
+            <p className="eyebrow text-ink-faint">{t('And everything around it')}</p>
             <h2 className="display home-h2" id="stay">
-              Why players <span className="serif">stay</span>
+              {emph(t('Why players *stay*'))}
             </h2>
           </Reveal>
           <div className="home-rows">
             {BENEFITS.map((b, i) => (
               <Reveal key={b.title} delay={i * 60} className="home-row">
-                <h3 className="display">{b.title}</h3>
-                <p>{b.body}</p>
+                <h3 className="display">{t(b.title)}</h3>
+                <p>{t(b.body)}</p>
               </Reveal>
             ))}
           </div>
@@ -243,17 +246,20 @@ export default function Home() {
       <section className="home-section" aria-labelledby="growth">
         <div className="home-wrap">
           <Reveal>
-            <p className="eyebrow text-ink-faint">Since {STORY.founded}</p>
+            <p className="eyebrow text-ink-faint">{t('Since {date}', { date: t(STORY.founded) })}</p>
             <h2 className="display home-h2" id="growth">
-              From {spell(STORY.foundingMembers)} founders <span className="serif">to</span> {num(carriers)}
+              {emph(t('From {founders} founders *to* {airlines}', {
+                founders: spell(STORY.foundingMembers),
+                airlines: num(carriers),
+              }))}
             </h2>
           </Reveal>
           <div className="home-figures">
             {[
-              ['Member airlines', carriers],
-              ['Aircraft', totals.aircraft],
-              ['Routes', totals.routes],
-              ['Airports', airportCount],
+              [t('Member airlines'), carriers],
+              [t('Aircraft'), totals.aircraft],
+              [t('Routes'), totals.routes],
+              [t('Airports'), airportCount],
             ].map(([label, v], i) => (
               <Reveal key={label as string} delay={i * 80} className="home-fig">
                 <b>{(v as number) > 0 ? <CountUp to={v as number} /> : '–'}</b>
@@ -264,17 +270,17 @@ export default function Home() {
           <div className="home-story">
             <Reveal>
               <p>
-                EUA began as {STORY.foundingMembers === 3 ? 'three founders' : 'a handful of founders'} under the name{' '}
-                {STORY.foundedAs}. It has grown into {spell(nDiv)} divisions, and every one of those
-                airlines is a player who chose to fly with us.
-                {online != null && (
-                  <> Right now, {num(online)} of them are online on Discord.</>
-                )}{' '}
-                Invite your friends, so they can make it home too.
+                {t('EUA began as {count} founders under the name {name}. It has grown into {divisions} divisions, and every one of those airlines is a player who chose to fly with us.', {
+                  count: spell(STORY.foundingMembers),
+                  name: STORY.foundedAs,
+                  divisions: spell(nDiv),
+                })}
+                {online != null && <> {t('Right now, {n} of them are online on Discord.', { n: num(online) })}</>}{' '}
+                {t('Invite your friends, so they can make it home too.')}
               </p>
             </Reveal>
             <Reveal delay={120}>
-              <blockquote className="serif">“{STORY.closing}”</blockquote>
+              <blockquote className="serif">“{t(STORY.closing)}”</blockquote>
             </Reveal>
           </div>
         </div>
@@ -285,12 +291,12 @@ export default function Home() {
         <div className="home-wrap">
           <Reveal className="home-head-row">
             <div>
-              <p className="eyebrow text-ink-faint">{capitalise(spell(nDiv))} divisions</p>
+              <p className="eyebrow text-ink-faint">{capitalise(t('{n} divisions', { n: spell(nDiv) }))}</p>
               <h2 className="display home-h2" id="divs">
-                Pick your <span className="serif">colours</span>
+                {emph(t('Pick your *colours*'))}
               </h2>
             </div>
-            <Link to="/divisions" className="btn btn-ghost">All divisions →</Link>
+            <Link to="/divisions" className="btn btn-ghost">{t('All divisions')} →</Link>
           </Reveal>
           <div className="div-grid">
             {divisions.map((d) => (
@@ -305,19 +311,19 @@ export default function Home() {
         <div className="home-wrap">
           <Reveal className="home-head-row">
             <div>
-              <p className="eyebrow text-ink-faint">The network</p>
+              <p className="eyebrow text-ink-faint">{t('The network')}</p>
               <h2 className="display home-h2" id="net">
-                {num(airportCount)} airports. <span className="serif">One</span> map.
+                {emph(t('{n} airports. *One* map.', { n: num(airportCount) }))}
               </h2>
             </div>
-            <Link to="/network" className="btn btn-ghost">Explore the network →</Link>
+            <Link to="/network" className="btn btn-ghost">{t('Explore the network')} →</Link>
           </Reveal>
-          <Link to="/network" className="home-map" aria-label="Explore the network">
+          <Link to="/network" className="home-map" aria-label={t('Explore the network')}>
             <RouteCanvas
               arcs={arcs}
               mode="network"
               className="home-map-canvas"
-              label="Echo's busiest routes on a world map, coloured by division"
+              label={t("Echo's busiest routes on a world map, coloured by division")}
             />
           </Link>
           <div className="home-legend">
@@ -336,12 +342,12 @@ export default function Home() {
         <div className="home-wrap">
           <Reveal className="home-head-row">
             <div>
-              <p className="eyebrow text-ink-faint">Different on every visit</p>
+              <p className="eyebrow text-ink-faint">{t('Different on every visit')}</p>
               <h2 className="display home-h2" id="carriers">
-                Carriers in the <span className="serif">alliance</span>
+                {emph(t('Carriers in the *alliance*'))}
               </h2>
             </div>
-            <Link to="/airlines" className="btn btn-ghost">All {num(carriers)} →</Link>
+            <Link to="/airlines" className="btn btn-ghost">{t('All {n}', { n: num(carriers) })} →</Link>
           </Reveal>
           <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {spotlight.map((a, i) => (
@@ -357,33 +363,31 @@ export default function Home() {
       <section className="home-join" id="join">
         <div className="home-wrap">
           <Reveal>
-            <p className="eyebrow">Join Echo United Alliances</p>
-            <h2 className="display home-h2">
-              Two applications. <span className="serif">One</span> alliance.
-            </h2>
-            <p className="home-join-lede">{SITE.joinRequirement}</p>
+            <p className="eyebrow">{t('Join Echo United Alliances')}</p>
+            <h2 className="display home-h2">{emph(t('Two applications. *One* alliance.'))}</h2>
+            <p className="home-join-lede">{t(SITE.joinRequirement)}</p>
           </Reveal>
           <ol className="home-steps">
             {SITE.joinSteps.map((s, i) => (
               <Reveal as="li" key={s.title} delay={i * 100}>
                 <b className="display">{i + 1}</b>
-                <h3>{s.title}</h3>
-                <p>{s.body}</p>
+                <h3>{t(s.title)}</h3>
+                <p>{t(s.body)}</p>
               </Reveal>
             ))}
           </ol>
           <div className="home-join-cta">
             {discordConfigured && (
               <a href={SITE.discordInvite} target="_blank" rel="noopener noreferrer" className="btn btn-lg btn-dark">
-                Join on Discord ↗
+                {t('Join on Discord')} ↗
               </a>
             )}
             <Link to="/members" className="btn btn-lg btn-dark-ghost">
-              Already a member? Members’ area
+              {t('Already a member? Members’ area')}
             </Link>
             {online != null && (
               <span className="home-online">
-                <i /> {num(online)} online now
+                <i /> {t('{n} online now', { n: num(online) })}
               </span>
             )}
           </div>
@@ -394,13 +398,12 @@ export default function Home() {
       <section className="home-section" id="fly" aria-labelledby="fly-h">
         <div className="home-wrap">
           <Reveal>
-            <p className="eyebrow text-ink-faint">Just here to fly?</p>
+            <p className="eyebrow text-ink-faint">{t('Just here to fly?')}</p>
             <h2 className="display home-h2" id="fly-h">
-              Book a seat <span className="serif">on</span> any EUA airline
+              {emph(t('Book a seat *on* any EUA airline'))}
             </h2>
             <p className="mt-4 max-w-[60ch] text-ink-dim">
-              One search across all {num(carriers)} member carriers. Connect between divisions on a
-              single booking reference, and keep your trips in one place.
+              {t('One search across all {n} member carriers. Connect between divisions on a single booking reference, and keep your trips in one place.', { n: num(carriers) })}
             </p>
           </Reveal>
           <div className="mt-8">

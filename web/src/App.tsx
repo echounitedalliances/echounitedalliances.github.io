@@ -32,6 +32,8 @@ import MobileMenu from './components/MobileMenu'
 import EchoMark from './components/EchoMark'
 import Welcome from './components/Welcome'
 import MaintenanceLock from './components/MaintenanceLock'
+import LangMenu from './components/LangMenu'
+import { I18nProvider, rich, useT } from './lib/i18n'
 
 /**
  * HashRouter, not BrowserRouter. GitHub Pages has no server to rewrite unknown
@@ -43,11 +45,12 @@ import MaintenanceLock from './components/MaintenanceLock'
 /** The live count from Discord's public widget. Renders nothing until it loads. */
 function OnlineBadge() {
   const onlineCount = useOnlineCount()
+  const t = useT()
   if (onlineCount == null) return null
   return (
     <div className="mono flex items-center gap-1.5 whitespace-nowrap border border-edge px-2.5 py-1.5 text-[11px] text-ink-faint">
       <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-      {num(onlineCount)} online
+      {t('{n} online', { n: num(onlineCount) })}
     </div>
   )
 }
@@ -55,11 +58,12 @@ function OnlineBadge() {
 /** How many tabs have the site open right now, via Supabase Presence. */
 function SiteVisitorBadge() {
   const visitorCount = useSiteVisitorCount()
+  const t = useT()
   if (visitorCount == null) return null
   return (
     <div className="mono flex items-center gap-1.5 whitespace-nowrap border border-edge px-2.5 py-1.5 text-[11px] text-ink-faint">
       <span className="h-1.5 w-1.5 rounded-full bg-cyan" />
-      {num(visitorCount)} on site
+      {t('{n} on site', { n: num(visitorCount) })}
     </div>
   )
 }
@@ -67,7 +71,8 @@ function SiteVisitorBadge() {
 /** Signed out it reads "Resonance"; signed in it is your name. */
 function AccountLink({ block = false }: { block?: boolean }) {
   const { user, resonant } = useAuth()
-  const label = user ? (resonant?.display_name || 'Account') : 'Resonance'
+  const t = useT()
+  const label = user ? (resonant?.display_name || t('Account')) : 'Resonance'
   return (
     <NavLink
       to="/resonance"
@@ -94,13 +99,14 @@ function AccountLink({ block = false }: { block?: boolean }) {
  * things a visitor actually came for stay out: Discord, and their account.
  */
 function MenuButton({ open, onToggle }: { open: boolean; onToggle: () => void }) {
+  const t = useT()
   return (
     <button
       type="button"
       onClick={onToggle}
       aria-expanded={open}
       aria-controls="site-menu"
-      aria-label={open ? 'Close menu' : 'Open menu'}
+      aria-label={open ? t('Close menu') : t('Open menu')}
       className="mono flex h-9 w-9 shrink-0 items-center justify-center border border-edge text-ink-dim transition-colors hover:border-accent hover:text-ink lg:hidden"
     >
       <svg width="15" height="15" viewBox="0 0 15 15" aria-hidden="true">
@@ -123,6 +129,7 @@ function MenuButton({ open, onToggle }: { open: boolean; onToggle: () => void })
 
 function Shell({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false)
+  const t = useT()
   const carrierCount = useCarrierCount()
   const airportCount = useAirportCount()
   const divisionCount = useDivisionCount()
@@ -219,7 +226,7 @@ function Shell({ children }: { children: React.ReactNode }) {
                     }`
                   }
                 >
-                  {l.label}
+                  {t(l.label)}
                 </NavLink>
               ),
             )}
@@ -234,14 +241,16 @@ function Shell({ children }: { children: React.ReactNode }) {
                 rel="noopener noreferrer"
                 className="btn btn-primary ml-2 !px-4 !py-2"
               >
-                Join Discord
+                {t('Join Discord')}
               </a>
             )}
+            <LangMenu />
             <AccountLink />
           </nav>
 
           {/* the phone header: Discord stays out, everything else folds in */}
           <div className="ml-auto flex items-center gap-2 lg:hidden">
+            <LangMenu />
             {discordConfigured && (
               <a
                 href={SITE.discordInvite}
@@ -276,8 +285,9 @@ function Shell({ children }: { children: React.ReactNode }) {
       <footer className="mt-24 border-t border-edge-soft">
         <div className="mx-auto flex max-w-[1180px] flex-col gap-2 px-5 py-8 text-[12px] text-ink-faint sm:flex-row sm:justify-between">
           <span>
-            Echo United Alliances · a virtual airline group in{' '}
-            <span className="text-ink-dim">The Airline Simulator</span>
+            {rich(t('Echo United Alliances · a virtual airline group in {game}'), {
+              game: <span className="text-ink-dim">The Airline Simulator</span>,
+            })}
           </span>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             {/* This was hand-counted, with a note to re-check it on every
@@ -285,16 +295,20 @@ function Shell({ children }: { children: React.ReactNode }) {
                 claiming 602 carriers and 2,186 airports against 583 and 2,180.
                 It reads the same shared counts as the rest of the site now. */}
             <span className="mono">
-              {num(carrierCount)} carriers · {divisionCount} divisions · {num(airportCount)} airports
+              {t('{carriers} carriers · {divisions} divisions · {airports} airports', {
+                carriers: num(carrierCount),
+                divisions: divisionCount,
+                airports: num(airportCount),
+              })}
             </span>
             <Link to="/terms" className="hover:text-ink-dim">
-              Terms
+              {t('Terms')}
             </Link>
             <Link to="/conduct" className="hover:text-ink-dim">
-              Code of conduct
+              {t('Code of conduct')}
             </Link>
             <Link to="/privacy" className="hover:text-ink-dim">
-              Privacy
+              {t('Privacy')}
             </Link>
             {discordConfigured && (
               <a
@@ -303,7 +317,7 @@ function Shell({ children }: { children: React.ReactNode }) {
                 rel="noopener noreferrer"
                 className="mono text-cyan"
               >
-                Join on Discord ↗
+                {t('Join on Discord')} ↗
               </a>
             )}
           </div>
@@ -319,7 +333,7 @@ function Shell({ children }: { children: React.ReactNode }) {
             behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
           })
         }
-        aria-label="Back to top"
+        aria-label={t('Back to top')}
         tabIndex={showTop ? 0 : -1}
       >
         <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
@@ -327,6 +341,19 @@ function Shell({ children }: { children: React.ReactNode }) {
         </svg>
       </button>
     </div>
+  )
+}
+
+function NotFound() {
+  const t = useT()
+  return (
+    <>
+      <h1 className="display text-4xl">{t('Off the route map')}</h1>
+      <p className="mt-3 text-ink-dim">{t('That page is not in the network.')}</p>
+      <Link to="/" className="mono mt-6 inline-block text-cyan">
+        ← {t('Back to the alliance')}
+      </Link>
+    </>
   )
 }
 
@@ -341,6 +368,7 @@ export default function App() {
   }
 
   return (
+    <I18nProvider>
     <AuthProvider>
       <Welcome />
       <HashRouter>
@@ -371,11 +399,7 @@ export default function App() {
             path="*"
             element={
               <div className="mx-auto max-w-[1180px] px-5 py-24 text-center">
-                <h1 className="display text-4xl">Off the route map</h1>
-                <p className="mt-3 text-ink-dim">That page is not in the network.</p>
-                <Link to="/" className="mono mt-6 inline-block text-cyan">
-                  ← Back to the alliance
-                </Link>
+                <NotFound />
               </div>
             }
           />
@@ -383,5 +407,6 @@ export default function App() {
         </Shell>
       </HashRouter>
     </AuthProvider>
+    </I18nProvider>
   )
 }

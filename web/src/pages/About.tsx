@@ -7,6 +7,7 @@ import { accentOf, num, spell } from '../lib/format'
 import { useDivisionCount } from '../lib/carriers'
 import { Loading, NotConfigured } from '../components/ui'
 import EchoMark from '../components/EchoMark'
+import { rich, useT } from '../lib/i18n'
 
 /**
  * Who runs Echo.
@@ -22,6 +23,7 @@ import EchoMark from '../components/EchoMark'
 export default function About() {
   const [divisions, setDivisions] = useState<Division[] | null>(null)
   const divisionCount = useDivisionCount()
+  const t = useT()
 
   useEffect(() => {
     if (!isConfigured) return
@@ -64,20 +66,17 @@ export default function About() {
 
   return (
     <div className="mx-auto max-w-[1180px] px-4 py-8 sm:px-5 sm:py-14">
-      <p className="eyebrow text-cyan">About</p>
+      <p className="eyebrow text-cyan">{t('About')}</p>
       <h1 className="display mt-3 text-[clamp(34px,6vw,72px)]">{SLOGAN}</h1>
       {/* Two sentences, and the figures are a third. Splicing them into the
           middle of a sentence left it reading "...as one network. the
           excellence in the name" for as long as the query was in flight. */}
       <p className="mt-5 max-w-[64ch] text-lg text-ink-dim">
-        Echo United Alliances is a group of {spell(divisionCount)} alliances in The Airline
-        Simulator, each running its own roster and its own leadership, flying as
-        one network. The excellence in the name is not one airline's. It is all
-        of them, and the people who keep them flying together.
+        {t("Echo United Alliances is a group of {n} alliances in The Airline Simulator, each running its own roster and its own leadership, flying as one network. The excellence in the name is not one airline's. It is all of them, and the people who keep them flying together.", { n: spell(divisionCount) })}
       </p>
       {divisions !== null && (
         <p className="mono mt-4 text-[12px] uppercase tracking-[0.14em] text-ink-faint">
-          {num(totals.carriers)} carriers · {num(totals.aircraft)} aircraft · {divisions.length} divisions
+          {t('{carriers} carriers · {aircraft} aircraft · {divisions} divisions', { carriers: num(totals.carriers), aircraft: num(totals.aircraft), divisions: divisions.length })}
         </p>
       )}
 
@@ -85,40 +84,40 @@ export default function About() {
           It sits above the leadership roster because it answers the question
           somebody actually arrived with. */}
       <section className="mt-14 border-t border-edge-soft pt-10">
-        <h2 className="display text-2xl">Our story</h2>
+        <h2 className="display text-2xl">{t('Our story')}</h2>
         <div className="mt-6 grid gap-8 lg:grid-cols-[1.7fr_1fr] lg:gap-12">
           <div className="flex flex-col gap-4">
             {STORY.paragraphs.map((p) => (
               <p key={p.slice(0, 32)} className="max-w-[64ch] text-ink-dim">
-                {p}
+                {t(p)}
               </p>
             ))}
-            <p className="display mt-2 max-w-[64ch] text-xl text-ink">{STORY.closing}</p>
+            <p className="display mt-2 max-w-[64ch] text-xl text-ink">{t(STORY.closing)}</p>
           </div>
 
           <dl className="panel h-fit p-5">
             <div>
               <dt className="mono text-[10px] uppercase tracking-[0.14em] text-ink-faint">
-                Founded
+                {t('Founded')}
               </dt>
-              <dd className="mono mt-1 text-lg text-ink">{STORY.founded}</dd>
+              <dd className="mono mt-1 text-lg text-ink">{t(STORY.founded)}</dd>
             </div>
             <div className="mt-5">
               <dt className="mono text-[10px] uppercase tracking-[0.14em] text-ink-faint">
-                Founded as
+                {t('Founded as')}
               </dt>
               <dd className="mt-1 text-lg text-ink">{STORY.foundedAs}</dd>
             </div>
             <div className="mt-5">
               <dt className="mono text-[10px] uppercase tracking-[0.14em] text-ink-faint">
-                Founding members
+                {t('Founding members')}
               </dt>
               <dd className="mono mt-1 text-lg text-ink">{STORY.foundingMembers}</dd>
             </div>
             {divisions !== null && (
               <div className="mt-5 border-t border-edge-soft pt-5">
                 <dt className="mono text-[10px] uppercase tracking-[0.14em] text-ink-faint">
-                  Carriers today
+                  {t('Carriers today')}
                 </dt>
                 <dd className="mono mt-1 text-lg text-cyan">{num(totals.carriers)}</dd>
               </div>
@@ -128,12 +127,9 @@ export default function About() {
       </section>
 
       <section className="mt-14">
-        <h2 className="display text-2xl">The board</h2>
+        <h2 className="display text-2xl">{t('The board')}</h2>
         <p className="mt-1 max-w-[62ch] text-ink-faint">
-          Echo's board is its division leaders: the people who run each
-          alliance also run the group. They are listed here by the name and
-          handle they go by on Discord, which is where the group actually
-          meets; several of them own more than one carrier.
+          {t("Echo's board is its division leaders: the people who run each alliance also run the group. They are listed here by the name and handle they go by on Discord, which is where the group actually meets; several of them own more than one carrier.")}
         </p>
 
         {divisions === null ? (
@@ -167,7 +163,7 @@ export default function About() {
                     ))}
                   </div>
                   <p className="mono text-[10px] uppercase tracking-[0.1em] text-ink-faint">
-                    {num(division.carriers)} carriers
+                    {t('{n} carriers', { n: num(division.carriers) })}
                   </p>
                 </article>
               )
@@ -192,18 +188,21 @@ export default function About() {
       </section>
 
       <section className="mt-14">
-        <h2 className="display text-2xl">Joining</h2>
+        <h2 className="display text-2xl">{t('Joining')}</h2>
         <p className="mt-2 max-w-[62ch] text-ink-dim">
-          Every division takes applications in two places, in the game and on
-          the Echo Discord, and every one of them is read by hand.{' '}
-          <Link to="/divisions" className="text-cyan">
-            Meet the divisions
-          </Link>{' '}
-          to pick one, or see{' '}
-          <Link to="/activities" className="text-cyan">
-            what the group does together
-          </Link>
-          .
+          {t('Every division takes applications in two places, in the game and on the Echo Discord, and every one of them is read by hand.')}{' '}
+          {rich(t('{divisions} to pick one, or see {activities}.'), {
+            divisions: (
+              <Link to="/divisions" className="text-cyan">
+                {t('Meet the divisions')}
+              </Link>
+            ),
+            activities: (
+              <Link to="/activities" className="text-cyan">
+                {t('what the group does together')}
+              </Link>
+            ),
+          })}
         </p>
       </section>
     </div>

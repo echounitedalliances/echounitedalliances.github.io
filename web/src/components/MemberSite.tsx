@@ -1,6 +1,8 @@
 import { useState, type ReactNode } from 'react'
 import Modal from './Modal'
 import type { MemberSiteRow } from '../lib/types'
+import { dateLocale } from '../lib/format'
+import { translate, useT } from '../lib/i18n'
 
 /**
  * The handoff to a member's own website.
@@ -57,7 +59,7 @@ export const GRADE: Record<string, { label: string; tone: string; dot: string }>
  */
 function list(xs: string[]): string {
   if (xs.length < 2) return xs[0] ?? ''
-  return `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`
+  return translate('{list} and {last}', { list: xs.slice(0, -1).join(', '), last: xs[xs.length - 1] })
 }
 
 export const KIND: Record<string, string> = {
@@ -86,6 +88,7 @@ export function NoticeBody({
   > & { also_serves: string[] | null }
   actions: ReactNode
 }) {
+  const t = useT()
   const grade = GRADE[site.data_grade] ?? GRADE.unverified
   const kind = KIND[site.kind] ?? ''
   const also = site.also_serves ?? []
@@ -93,27 +96,27 @@ export function NoticeBody({
   return (
     <>
       <p className="mb-4 text-sm leading-relaxed text-ink-dim">
-        Not all member websites may be complete, and the most accurate schedule and
-        fare information remains the alliance webpage.
+        {t('Not all member websites may be complete, and the most accurate schedule and fare information remains the alliance webpage.')}
       </p>
 
       <div className="border-l-2 pl-4" style={{ borderColor: grade.dot }}>
-        <p className={`eyebrow mb-1.5 ${grade.tone}`}>{grade.label}</p>
+        <p className={`eyebrow mb-1.5 ${grade.tone}`}>{t(grade.label)}</p>
         <p className="whitespace-pre-line text-sm leading-relaxed text-ink">{site.data_note}</p>
         <p className="mt-2 text-[12px] text-ink-faint">
-          {site.site_name} {kind}. Checked against our data on{' '}
-          {new Date(site.checked_on).toLocaleDateString(undefined, {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
+          {kind ? t(`{site} ${kind}.`, { site: site.site_name }) : site.site_name}{' '}
+          {t('Checked against our data on {date}.', {
+            date: new Date(site.checked_on).toLocaleDateString(dateLocale(), {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            }),
           })}
-          .
         </p>
       </div>
 
       {also.length > 0 && (
         <p className="mt-4 text-[12px] text-ink-faint">
-          The same site also sells {list(also)}.
+          {t('The same site also sells {airlines}.', { airlines: list(also) })}
         </p>
       )}
 
@@ -121,7 +124,7 @@ export function NoticeBody({
 
       {site.alt_url && site.alt_label && (
         <p className="mt-4 text-[12px] text-ink-faint">
-          {site.alt_label}:{' '}
+          {t(site.alt_label)}:{' '}
           <a
             href={site.alt_url}
             target="_blank"
@@ -144,6 +147,7 @@ export default function MemberSite({
   accent: string
 }) {
   const [asking, setAsking] = useState(false)
+  const t = useT()
 
   return (
     <>
@@ -153,11 +157,11 @@ export default function MemberSite({
         className="mono px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#050505] transition-opacity hover:opacity-90"
         style={{ background: accent }}
       >
-        Visit {site.site_name} ↗
+        {t('Visit {airline}', { airline: site.site_name })} ↗
       </button>
 
       {asking && (
-        <Modal title={`Before you go to ${site.site_name}`} onClose={() => setAsking(false)}>
+        <Modal title={t('Before you go to {site}', { site: site.site_name })} onClose={() => setAsking(false)}>
           <NoticeBody
             site={site}
             actions={
@@ -170,14 +174,14 @@ export default function MemberSite({
                   className="mono px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#050505]"
                   style={{ background: accent }}
                 >
-                  Continue to {site.site_name} ↗
+                  {t('Continue to {site}', { site: site.site_name })} ↗
                 </a>
                 <button
                   type="button"
                   onClick={() => setAsking(false)}
                   className="mono border border-edge px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-ink-dim transition-colors hover:text-ink"
                 >
-                  Stay here
+                  {t('Stay here')}
                 </button>
               </>
             }

@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { MEMBER_ROUTES } from '../lib/apps'
 import { setAudience, useAudience, type Audience } from '../lib/audience'
+import { useT } from '../lib/i18n'
 
 /**
  * The two front doors: travelling with Echo, or flying with it.
@@ -22,6 +23,7 @@ export function isMemberPath(pathname: string): boolean {
 export function AudienceSwitch() {
   const { pathname } = useLocation()
   const member = isMemberPath(pathname)
+  const t = useT()
 
   const tab = (to: string, label: string, a: Audience, active: boolean) => (
     <Link
@@ -42,11 +44,11 @@ export function AudienceSwitch() {
   return (
     <div className="border-b border-edge-soft bg-[color:var(--color-ground-2)]">
       <nav
-        aria-label="Who is this for"
+        aria-label={t('Who is this for')}
         className="mx-auto flex max-w-[1180px] items-center gap-1 px-2 sm:px-3"
       >
-        {tab('/', 'Travellers', 'visitor', !member)}
-        {tab('/members', 'Members', 'member', member)}
+        {tab('/', t('Travellers'), 'visitor', !member)}
+        {tab('/members', t('Members'), 'member', member)}
         <span className="mono ml-auto hidden px-3 text-[10px] uppercase tracking-[0.14em] text-ink-faint sm:inline">
           Echo United Alliances
         </span>

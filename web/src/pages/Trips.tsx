@@ -5,6 +5,17 @@ import { isConfigured, supabase } from '../lib/supabase'
 import { useAuth } from '../lib/auth'
 import type { BookingDetails } from '../lib/types'
 import { shortDate, usd } from '../lib/format'
+import { CABINS } from '../lib/types'
+import { rich, useT } from '../lib/i18n'
+
+/** Booking and passenger codes the database stores, as words. */
+const WORDS: Record<string, string> = {
+  ADULT: 'Adult',
+  CHILD: 'Child',
+  INFANT: 'Infant',
+  CONFIRMED: 'confirmed',
+  CANCELLED: 'cancelled',
+}
 
 /**
  * Manage booking. No account needed: find_booking() is security definer and
@@ -20,6 +31,7 @@ import { shortDate, usd } from '../lib/format'
  */
 export default function Trips() {
   const [params] = useSearchParams()
+  const t = useT()
   const [pnr, setPnr] = useState(params.get('pnr') ?? '')
   const [surname, setSurname] = useState('')
   const [booking, setBooking] = useState<BookingDetails | null>(null)
@@ -49,12 +61,12 @@ export default function Trips() {
     })
     setBusy(false)
     if (error) {
-      setMsg(error.message)
+      setMsg(t(error.message))
       return
     }
     const rows = (data as BookingDetails[]) ?? []
     if (rows.length === 0) {
-      setMsg('No booking matches that reference and surname.')
+      setMsg(t('No booking matches that reference and surname.'))
       return
     }
     setBooking(rows[0])
@@ -73,7 +85,7 @@ export default function Trips() {
     if (error) {
       // The function raises when nothing live matches -- most likely because
       // it has already been cancelled in another tab.
-      setMsg(error.message)
+      setMsg(t(error.message))
       return
     }
     const rows = (data as BookingDetails[]) ?? []
@@ -91,7 +103,7 @@ export default function Trips() {
     })
     setKeeping(false)
     if (error) {
-      setKeepError(error.message)
+      setKeepError(t(error.message))
       return
     }
     const rows = (data as BookingDetails[]) ?? []
@@ -105,11 +117,10 @@ export default function Trips() {
 
   return (
     <div className="mx-auto max-w-[860px] px-4 py-8 sm:px-5 sm:py-14">
-      <p className="eyebrow text-cyan">Manage booking</p>
-      <h1 className="display mt-3 text-[clamp(36px,5vw,56px)]">Find your trip</h1>
+      <p className="eyebrow text-cyan">{t('Manage booking')}</p>
+      <h1 className="display mt-3 text-[clamp(36px,5vw,56px)]">{t('Find your trip')}</h1>
       <p className="mt-4 max-w-[58ch] text-ink-dim">
-        Enter the six-character reference from your confirmation and the family
-        name of anyone travelling on it.
+        {t('Enter the six-character reference from your confirmation and the family name of anyone travelling on it.')}
       </p>
 
       <form
@@ -117,7 +128,7 @@ export default function Trips() {
         className="panel mt-8 flex flex-col gap-3 p-5 sm:flex-row sm:items-end"
       >
         <label className="block flex-1">
-          <span className="eyebrow mb-1.5 block text-ink-faint">Booking reference</span>
+          <span className="eyebrow mb-1.5 block text-ink-faint">{t('Booking reference')}</span>
           <input
             value={pnr}
             onChange={(e) => setPnr(e.target.value.toUpperCase())}
@@ -127,7 +138,7 @@ export default function Trips() {
           />
         </label>
         <label className="block flex-1">
-          <span className="eyebrow mb-1.5 block text-ink-faint">Family name</span>
+          <span className="eyebrow mb-1.5 block text-ink-faint">{t('Family name')}</span>
           <input
             value={surname}
             onChange={(e) => setSurname(e.target.value)}
@@ -139,7 +150,7 @@ export default function Trips() {
           disabled={pnr.length !== 6 || !surname.trim() || busy}
           className="btn btn-book"
         >
-          {busy ? 'Looking…' : 'Retrieve'}
+          {busy ? t('Looking…') : t('Retrieve')}
         </button>
       </form>
 
@@ -150,7 +161,7 @@ export default function Trips() {
           <div className="flex flex-wrap items-baseline justify-between gap-3">
             <div>
               <div className="mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">
-                Reference
+                {t('Reference')}
               </div>
               <div className="mono text-3xl tracking-[0.24em] text-cyan">{booking.pnr}</div>
             </div>
@@ -160,7 +171,7 @@ export default function Trips() {
                   isCancelled ? 'text-danger' : 'text-ink-faint'
                 }`}
               >
-                {isCancelled ? 'cancelled' : booking.status.toLowerCase()}
+                {isCancelled ? t('cancelled') : t(WORDS[booking.status.toUpperCase()] ?? booking.status.toLowerCase())}
               </div>
               <div className="mono text-2xl text-ink">
                 {usd(Number(booking.total_amount_usd))}
@@ -170,13 +181,13 @@ export default function Trips() {
 
           <div className="mt-6">
             <h2 className="mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">
-              Travellers
+              {t('Travellers')}
             </h2>
             <ul className="mt-2 flex flex-wrap gap-2">
               {(booking.passengers ?? []).map((p) => (
                 <li key={p.seq} className="border border-edge-soft px-3 py-1 text-sm text-ink">
                   {p.given_name} {p.family_name}
-                  <span className="mono ml-2 text-[10px] uppercase text-ink-faint">{p.type}</span>
+                  <span className="mono ml-2 text-[10px] uppercase text-ink-faint">{t(WORDS[p.type] ?? p.type)}</span>
                 </li>
               ))}
             </ul>
@@ -184,11 +195,11 @@ export default function Trips() {
 
           <div className="mt-6">
             <h2 className="mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">
-              Flights
+              {t('Flights')}
             </h2>
             {isCancelled && (booking.segments ?? []).length === 0 && (
               <p className="mt-2 text-sm text-ink-faint">
-                The flights have been released back to the airlines.
+                {t('The flights have been released back to the airlines.')}
               </p>
             )}
             <div className="mt-2 flex flex-col">
@@ -204,7 +215,7 @@ export default function Trips() {
                     </span>
                     <span className="text-[12px] text-ink-faint">{shortDate(s.travel_date)}</span>
                     <span className="ml-auto text-[12px] text-ink-faint">
-                      {s.cabin.replace('_', ' ').toLowerCase()}
+                      {t(CABINS.find((c) => c.code === s.cabin)?.label ?? s.cabin)}
                     </span>
                   </div>
                 </div>
@@ -214,8 +225,7 @@ export default function Trips() {
 
           {booking.divisions && booking.divisions.length > 1 && (
             <p className="mono mt-5 text-[11px] text-ink-faint">
-              This itinerary crosses {booking.divisions.length} divisions:{' '}
-              {booking.divisions.join(', ')}
+              {t('This itinerary crosses {n} divisions: {list}', { n: booking.divisions.length, list: booking.divisions.join(', ') })}
             </p>
           )}
 
@@ -224,31 +234,35 @@ export default function Trips() {
           <div className="mt-6 border-t border-edge-soft pt-5 text-sm">
             {onMyAccount ? (
               <p className="text-ink-dim">
-                Kept on your Resonance account, under{' '}
-                <Link to="/resonance" className="text-cyan underline underline-offset-2">
-                  Your trips
-                </Link>
-                .
+                {rich(t('Kept on your Resonance account, under {trips}.'), {
+                  trips: (
+                    <Link to="/resonance" className="text-cyan underline underline-offset-2">
+                      {t('Your trips')}
+                    </Link>
+                  ),
+                })}
               </p>
             ) : resonant && !booking.resonant_id ? (
               <div className="flex flex-wrap items-center gap-3">
-                <p className="text-ink-dim">Keep this booking with your other trips?</p>
+                <p className="text-ink-dim">{t('Keep this booking with your other trips?')}</p>
                 <button
                   type="button"
                   onClick={() => void keep()}
                   disabled={keeping}
                   className="btn btn-ghost"
                 >
-                  {keeping ? 'Saving…' : 'Keep it on my account'}
+                  {keeping ? t('Saving…') : t('Keep it on my account')}
                 </button>
               </div>
             ) : !user ? (
               <p className="text-ink-faint">
-                Have a Resonance account?{' '}
-                <Link to="/resonance" className="text-cyan underline underline-offset-2">
-                  Sign in
-                </Link>{' '}
-                and add this booking under Your trips to keep it with your others.
+                {rich(t('Have a Resonance account? {signin} and add this booking under Your trips to keep it with your others.'), {
+                  signin: (
+                    <Link to="/resonance" className="text-cyan underline underline-offset-2">
+                      {t('Sign in')}
+                    </Link>
+                  ),
+                })}
               </p>
             ) : null}
             {keepError && (
@@ -262,18 +276,20 @@ export default function Trips() {
           <div className="mt-6 border-t border-edge-soft pt-5">
             {isCancelled ? (
               <p className="text-sm text-ink-dim">
-                This booking is cancelled. The reference stays valid to look up,
-                but it cannot be reinstated: a new trip means a new booking.
+                {t('This booking is cancelled. The reference stays valid to look up, but it cannot be reinstated: a new trip means a new booking.')}
               </p>
             ) : confirming ? (
               <div className="panel border-danger/45 p-4">
                 <p className="text-sm text-ink">
-                  Cancel <span className="mono text-cyan">{booking.pnr}</span> for{' '}
-                  {(booking.passengers ?? []).length}{' '}
-                  {(booking.passengers ?? []).length === 1 ? 'traveller' : 'travellers'}?
+                  {rich(
+                    (booking.passengers ?? []).length === 1
+                      ? t('Cancel {pnr} for 1 traveller?')
+                      : t('Cancel {pnr} for {n} travellers?', { n: (booking.passengers ?? []).length }),
+                    { pnr: <span className="mono text-cyan">{booking.pnr}</span> },
+                  )}
                 </p>
                 <p className="mt-1.5 text-[13px] text-ink-faint">
-                  This cannot be undone. The seats go back on sale immediately.
+                  {t('This cannot be undone. The seats go back on sale immediately.')}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   <button
@@ -281,20 +297,20 @@ export default function Trips() {
                     disabled={busy}
                     className="btn btn-danger"
                   >
-                    {busy ? 'Cancelling…' : 'Yes, cancel this booking'}
+                    {busy ? t('Cancelling…') : t('Yes, cancel this booking')}
                   </button>
                   <button
                     onClick={() => setConfirming(false)}
                     disabled={busy}
                     className="btn btn-ghost"
                   >
-                    Keep it
+                    {t('Keep it')}
                   </button>
                 </div>
               </div>
             ) : (
               <button onClick={() => setConfirming(true)} className="btn btn-ghost">
-                Cancel this booking
+                {t('Cancel this booking')}
               </button>
             )}
           </div>
@@ -303,7 +319,7 @@ export default function Trips() {
             to="/"
             className="mono mt-6 inline-block text-[11px] uppercase tracking-[0.14em] text-cyan"
           >
-            &larr; Back to Echo
+            &larr; {t('Back to Echo')}
           </Link>
         </article>
       )}

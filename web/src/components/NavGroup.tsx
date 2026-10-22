@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import type { NavItem } from '../lib/nav'
+import { useT } from '../lib/i18n'
 
 /**
  * A top-bar item that opens a small panel of related pages.
@@ -18,6 +19,7 @@ import type { NavItem } from '../lib/nav'
  */
 export default function NavGroup({ item }: { item: NavItem }) {
   const [open, setOpen] = useState(false)
+  const t = useT()
   const box = useRef<HTMLDivElement>(null)
   const { pathname } = useLocation()
   const children = item.children ?? []
@@ -52,14 +54,14 @@ export default function NavGroup({ item }: { item: NavItem }) {
             active ? 'text-cyan' : 'text-ink-faint hover:text-ink-dim'
           }`}
         >
-          {item.label}
+          {t(item.label)}
         </NavLink>
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-haspopup="true"
-          aria-label={`More under ${item.label}`}
+          aria-label={t('More under {section}', { section: t(item.label) })}
           className={`py-1.5 pr-2 text-[11px] leading-none transition-colors ${
             active ? 'text-cyan' : 'text-ink-faint hover:text-ink-dim'
           }`}
@@ -80,7 +82,7 @@ export default function NavGroup({ item }: { item: NavItem }) {
             onClick={() => setOpen(false)}
             className="mono block px-4 py-2.5 text-[11px] uppercase tracking-[0.12em] text-ink-dim transition-colors hover:bg-surface-2 hover:text-ink"
           >
-            {item.label}
+            {t(item.label)}
           </NavLink>
           {children.map((c) => (
             <NavLink
@@ -93,7 +95,7 @@ export default function NavGroup({ item }: { item: NavItem }) {
                 }`
               }
             >
-              {c.label}
+              {t(c.label)}
             </NavLink>
           ))}
         </div>

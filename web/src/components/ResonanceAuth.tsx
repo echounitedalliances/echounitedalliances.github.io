@@ -4,6 +4,7 @@ import { useAuth } from '../lib/auth'
 import { useCarrierCount } from '../lib/carriers'
 import { num } from '../lib/format'
 import AdminApplyModal from './AdminApplyModal'
+import { rich, translate, useT } from '../lib/i18n'
 
 /**
  * Getting into a Resonance account.
@@ -38,19 +39,19 @@ export function explain(error: { message: string; code?: string; status?: number
   const code = error.code ?? ''
   const msg = error.message ?? ''
   if (code === 'over_email_send_rate_limit' || /rate limit/i.test(msg)) {
-    return 'Too many emails from this project in the last hour. That is a limit on the sending account, not on you. It clears by itself; try again a little later, or sign in with a password instead.'
+    return translate('Too many emails from this project in the last hour. That is a limit on the sending account, not on you. It clears by itself; try again a little later, or sign in with a password instead.')
   }
   if (code === 'user_already_exists' || code === 'email_exists' || /already registered/i.test(msg)) {
-    return 'That address already has an account. Sign in with your password, or use Forgot password if you have never set one.'
+    return translate('That address already has an account. Sign in with your password, or use Forgot password if you have never set one.')
   }
   if (code === 'weak_password') {
-    return `${msg} Passwords need at least ${MIN_PASSWORD} characters.`
+    return `${msg} ${translate('Passwords need at least {n} characters.', { n: MIN_PASSWORD })}`
   }
   if (code === 'signup_disabled') {
-    return 'New accounts are turned off for this project at the moment.'
+    return translate('New accounts are turned off for this project at the moment.')
   }
   if (code === 'email_provider_disabled') {
-    return 'Email sign-in is switched off for this project.'
+    return translate('Email sign-in is switched off for this project.')
   }
   return msg
 }
@@ -75,10 +76,11 @@ function Field({
   id: string
 }) {
   const [reveal, setReveal] = useState(false)
+  const t = useT()
   const isPassword = type === 'password'
   return (
     <label className="block" htmlFor={id}>
-      <span className="eyebrow mb-1.5 block text-ink-faint">{label}</span>
+      <span className="eyebrow mb-1.5 block text-ink-faint">{t(label)}</span>
       <span className="relative block">
         <input
           id={id}
@@ -100,7 +102,7 @@ function Field({
             aria-pressed={reveal}
             className="mono absolute right-2 top-1/2 -translate-y-1/2 px-1.5 py-1 text-[10px] uppercase tracking-[0.12em] text-ink-faint hover:text-ink"
           >
-            {reveal ? 'Hide' : 'Show'}
+            {reveal ? t('Hide') : t('Show')}
           </button>
         )}
       </span>
@@ -113,6 +115,7 @@ type Mode = 'password' | 'signup' | 'forgot'
 
 export function SignIn() {
   const carrierCount = useCarrierCount()
+  const t = useT()
   const { signInWithPassword, signUp, sendPasswordReset } = useAuth()
   const [mode, setMode] = useState<Mode>('password')
   const [email, setEmail] = useState('')
@@ -152,7 +155,7 @@ export function SignIn() {
       if (error) {
         setError(
           error.code === 'invalid_credentials'
-            ? 'That email and password do not match. If you joined before passwords existed you will not have one yet, so use Forgot password to set your first.'
+            ? t('That email and password do not match. If you joined before passwords existed you will not have one yet, so use Forgot password to set your first.')
             : explain(error),
         )
       }
@@ -166,7 +169,7 @@ export function SignIn() {
       if (error) setError(explain(error))
       else if (needsConfirmation)
         setNote(
-          `Account created. Confirm ${email} from the email we just sent, then sign in with your password.`,
+          t('Account created. Confirm {email} from the email we just sent, then sign in with your password.', { email }),
         )
       // With confirmation off there is already a session, and the page has
       // re-rendered as the account by the time this line runs.
@@ -178,25 +181,25 @@ export function SignIn() {
     if (error) setError(explain(error))
     else
       setNote(
-        `If ${email} has an account, a reset link is on its way. Opening it brings you back here to choose a new password.`,
+        t('If {email} has an account, a reset link is on its way. Opening it brings you back here to choose a new password.', { email }),
       )
   }
 
   const heading =
     mode === 'signup'
-      ? 'Create an account'
+      ? t('Create an account')
       : mode === 'forgot'
-        ? 'Reset your password'
-        : 'Sign in'
+        ? t('Reset your password')
+        : t('Sign in')
 
   const cta =
     mode === 'signup'
       ? wantsAdmin
-        ? 'Continue'
-        : 'Create account'
+        ? t('Continue')
+        : t('Create account')
       : mode === 'forgot'
-        ? 'Send reset link'
-        : 'Sign in'
+        ? t('Send reset link')
+        : t('Sign in')
 
   const emailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)
   const wantsPassword = mode !== 'forgot'
@@ -209,14 +212,12 @@ export function SignIn() {
 
         {mode === 'signup' && (
           <p className="-mt-2 text-sm text-ink-dim">
-            One account across all {num(carrierCount)} carriers. You can also book without one.
+            {t('One account across all {n} carriers. You can also book without one.', { n: num(carrierCount) })}
           </p>
         )}
         {mode === 'forgot' && (
           <p className="-mt-2 text-sm text-ink-dim">
-            We email you a link that brings you back here to choose a new one.
-            This is also how to set your first password if you have never had
-            one.
+            {t('We email you a link that brings you back here to choose a new one. This is also how to set your first password if you have never had one.')}
           </p>
         )}
 
@@ -240,7 +241,7 @@ export function SignIn() {
             autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
             hint={
               mode === 'signup'
-                ? `At least ${MIN_PASSWORD} characters. Use something you do not use elsewhere.`
+                ? t('At least {n} characters. Use something you do not use elsewhere.', { n: MIN_PASSWORD })
                 : undefined
             }
           />
@@ -254,27 +255,30 @@ export function SignIn() {
               onChange={(e) => setWantsAdmin(e.target.checked)}
               className="h-4 w-4 border-edge bg-ground-2 accent-cyan"
             />
-            Admin? Check this box to apply for admin
+            {t('Admin? Check this box to apply for admin')}
           </label>
         )}
 
         {mode === 'signup' && (
           <p className="text-[12px] text-ink-faint">
-            Creating an account means you agree to the{' '}
-            <Link to="/terms" className="text-cyan hover:underline">
-              Terms
-            </Link>{' '}
-            and the{' '}
-            <Link to="/privacy" className="text-cyan hover:underline">
-              Privacy Policy
-            </Link>
-            .
+            {rich(t('Creating an account means you agree to the {terms} and the {privacy}.'), {
+              terms: (
+                <Link to="/terms" className="text-cyan hover:underline">
+                  {t('Terms')}
+                </Link>
+              ),
+              privacy: (
+                <Link to="/privacy" className="text-cyan hover:underline">
+                  {t('Privacy Policy')}
+                </Link>
+              ),
+            })}
           </p>
         )}
 
         <div className="flex flex-wrap items-center gap-3">
           <button type="submit" disabled={!canSubmit} className="btn btn-book">
-            {busy ? 'Working…' : cta}
+            {busy ? t('Working…') : cta}
           </button>
 
           {mode === 'password' && (
@@ -284,14 +288,14 @@ export function SignIn() {
                 onClick={() => go('signup')}
                 className="mono text-[11px] uppercase tracking-[0.14em] text-cyan"
               >
-                Create an account
+                {t('Create an account')}
               </button>
               <button
                 type="button"
                 onClick={() => go('forgot')}
                 className="mono text-[11px] uppercase tracking-[0.14em] text-ink-faint hover:text-ink-dim"
               >
-                Forgot password
+                {t('Forgot password')}
               </button>
             </>
           )}
@@ -301,7 +305,7 @@ export function SignIn() {
               onClick={() => go('password')}
               className="mono text-[11px] uppercase tracking-[0.14em] text-ink-faint hover:text-ink-dim"
             >
-              ← Back to sign in
+              ← {t('Back to sign in')}
             </button>
           )}
         </div>
@@ -319,11 +323,13 @@ export function SignIn() {
       </form>
 
       <p className="mono mt-6 text-[11px] text-ink-faint">
-        Already booked without an account? Retrieve it with your reference on{' '}
-        <Link to="/trips" className="text-cyan">
-          manage booking
-        </Link>
-        .
+        {rich(t('Already booked without an account? Retrieve it with your reference on {link}.'), {
+          link: (
+            <Link to="/trips" className="text-cyan">
+              {t('manage booking')}
+            </Link>
+          ),
+        })}
       </p>
 
       {showAdminModal && (
@@ -348,6 +354,7 @@ export function SignIn() {
  */
 export function PasswordCard({ highlight = false }: { highlight?: boolean }) {
   const { setPassword: save } = useAuth()
+  const t = useT()
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
   const [busy, setBusy] = useState(false)
@@ -380,12 +387,12 @@ export function PasswordCard({ highlight = false }: { highlight?: boolean }) {
       }`}
     >
       <h2 className="mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">
-        {highlight ? 'Choose a new password' : 'Password'}
+        {highlight ? t('Choose a new password') : t('Password')}
       </h2>
       <p className="mt-2 max-w-[54ch] text-sm text-ink-dim">
         {highlight
-          ? 'Your reset link worked. Pick a new password and you are done.'
-          : 'Change the password you sign in with. If you forget it, Forgot password on the sign-in screen emails you a way back.'}
+          ? t('Your reset link worked. Pick a new password and you are done.')
+          : t('Change the password you sign in with. If you forget it, Forgot password on the sign-in screen emails you a way back.')}
       </p>
 
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -396,7 +403,7 @@ export function PasswordCard({ highlight = false }: { highlight?: boolean }) {
           value={password}
           onChange={setPassword}
           autoComplete="new-password"
-          hint={`At least ${MIN_PASSWORD} characters.`}
+          hint={t('At least {n} characters.', { n: MIN_PASSWORD })}
         />
         <Field
           id="res-newpw2"
@@ -405,17 +412,17 @@ export function PasswordCard({ highlight = false }: { highlight?: boolean }) {
           value={confirm}
           onChange={setConfirm}
           autoComplete="new-password"
-          hint={mismatch ? 'These do not match yet.' : undefined}
+          hint={mismatch ? t('These do not match yet.') : undefined}
         />
       </div>
 
       <div className="mt-4 flex flex-wrap items-center gap-3">
         <button type="submit" disabled={!ok} className="btn btn-ghost">
-          {busy ? 'Saving…' : 'Save password'}
+          {busy ? t('Saving…') : t('Save password')}
         </button>
         {done && (
           <span className="mono text-[11px] uppercase tracking-[0.12em] text-good">
-            Password saved
+            {t('Password saved')}
           </span>
         )}
       </div>

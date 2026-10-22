@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useT } from '../lib/i18n'
 import { Link, useParams } from 'react-router-dom'
 import { Loading, NotConfigured } from '../components/ui'
 import Pager, { usePaged } from '../components/Pager'
@@ -21,6 +22,7 @@ type Carrier = {
 /** Find-by-airport: who in the alliance serves this place, and how widely. */
 export default function AirportPage() {
   const { iata = '' } = useParams()
+  const t = useT()
   const [airport, setAirport] = useState<AirportRow | null>(null)
   const [carriers, setCarriers] = useState<Carrier[] | null>(null)
   // Above the early return below: a hook after it runs on some renders
@@ -48,7 +50,7 @@ export default function AirportPage() {
 
   return (
     <div className="mx-auto max-w-[1180px] px-4 py-8 sm:px-5 sm:py-14">
-      <p className="eyebrow text-cyan">Airport</p>
+      <p className="eyebrow text-cyan">{t('Airport')}</p>
       <div className="mt-3 flex flex-wrap items-baseline gap-4">
         <h1 className="display text-[clamp(40px,6vw,72px)]">{airport.iata_code}</h1>
         <div>
@@ -64,10 +66,10 @@ export default function AirportPage() {
 
       <div className="mt-8 grid grid-cols-2 gap-x-8 gap-y-4 sm:grid-cols-4">
         {[
-          ['Alliance carriers', airport.carriers],
-          ['Weekly departures', airport.weekly_departures],
-          ['Destinations served', airport.out_degree],
-          ['A hub for', airport.hub_for],
+          [t('Alliance carriers'), airport.carriers],
+          [t('Weekly departures'), airport.weekly_departures],
+          [t('Destinations served'), airport.out_degree],
+          [t('A hub for'), airport.hub_for],
         ].map(([l, v]) => (
           <div key={l as string}>
             <div className="mono text-2xl text-ink">{num(Number(v))}</div>
@@ -78,13 +80,13 @@ export default function AirportPage() {
 
       {airport.timezone && (
         <p className="mono mt-5 text-[12px] text-ink-faint">
-          Local time zone {airport.timezone}
+          {t('Local time zone {tz}', { tz: airport.timezone })}
         </p>
       )}
 
       {hubs.length > 0 && (
         <section className="mt-12">
-          <h2 className="display text-2xl">Hubbed here</h2>
+          <h2 className="display text-2xl">{t('Hubbed here')}</h2>
           <div className="mt-4 flex flex-wrap gap-2">
             {hubs.map((c) => (
               <Link
@@ -105,7 +107,7 @@ export default function AirportPage() {
 
       <section className="mt-12">
         <h2 className="display text-2xl">
-          Carriers serving {airport.iata_code}{' '}
+          {t('Carriers serving {airport}', { airport: airport.iata_code })}{' '}
           <span className="mono align-middle text-base text-ink-faint">
             {carriers ? carriers.length : ''}
           </span>
@@ -114,7 +116,7 @@ export default function AirportPage() {
           <Loading />
         ) : carriers.length === 0 ? (
           <p className="panel mt-4 p-8 text-center text-ink-dim">
-            No alliance carrier currently departs {airport.iata_code}.
+            {t('No alliance carrier currently departs {airport}.', { airport: airport.iata_code })}
           </p>
         ) : (
           <div className="panel mt-4 overflow-x-auto">
@@ -123,7 +125,7 @@ export default function AirportPage() {
                 <tr className="bg-surface-2 text-left">
                   {['Carrier', 'Division', 'Destinations from here', ''].map((h) => (
                     <th key={h} className="mono px-4 py-2 text-[10px] uppercase tracking-[0.1em] text-ink-faint">
-                      {h}
+                      {h && t(h)}
                     </th>
                   ))}
                 </tr>
@@ -136,7 +138,7 @@ export default function AirportPage() {
                         to={`/d/${c.division_code}/${c.airline_slug}`}
                         className="text-ink transition-colors hover:text-cyan"
                       >
-                        {c.airline_name?.trim() || 'Unnamed carrier'}
+                        {c.airline_name?.trim() || t('Unnamed carrier')}
                       </Link>
                       <span className="mono ml-2 text-[11px] text-ink-faint">{c.carrier_code}</span>
                     </td>
@@ -147,7 +149,7 @@ export default function AirportPage() {
                     <td className="px-4 py-2.5 text-right">
                       {c.is_hub && (
                         <span className="mono border border-edge px-2 py-0.5 text-[10px] uppercase tracking-[0.1em] text-ink-faint">
-                          Hub
+                          {t('Hub')}
                         </span>
                       )}
                     </td>

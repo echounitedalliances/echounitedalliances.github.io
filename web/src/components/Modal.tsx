@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { useT } from '../lib/i18n'
 
 /**
  * A small centred dialog, used for the two things on this site that have to
@@ -29,6 +30,7 @@ export default function Modal({
   /** For long-form content: a news story needs a reading measure, a notice does not. */
   wide?: boolean
 }) {
+  const t = useT()
   const panel = useRef<HTMLDivElement>(null)
   const opener = useRef<Element | null>(null)
 
@@ -99,7 +101,7 @@ export default function Modal({
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close"
+            aria-label={t('Close')}
             className="-mr-1 -mt-1 shrink-0 px-2 py-1 text-lg leading-none text-ink-faint transition-colors hover:text-ink"
           >
             ×

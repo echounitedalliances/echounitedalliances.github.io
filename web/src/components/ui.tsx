@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import type { Airline } from '../lib/types'
 import { accentOf, flag, initials, num } from '../lib/format'
 import EchoMark from './EchoMark'
+import { useT } from '../lib/i18n'
 
 /** A carrier's stand-in identity: its code on its division's accent. */
 export function Mark({
@@ -38,6 +39,7 @@ export function Stat({
   label: string
   accent?: string
 }) {
+  const t = useT()
   return (
     <div className="px-4 py-3">
       <div
@@ -47,7 +49,7 @@ export function Stat({
         {typeof value === 'number' ? num(value) : value}
       </div>
       <div className="mt-1 text-[11px] uppercase tracking-[0.09em] text-ink-faint">
-        {label}
+        {t(label)}
       </div>
     </div>
   )
@@ -79,6 +81,7 @@ export function DivisionChip({
 
 /** One carrier in a list or grid. Same object everywhere it appears. */
 export function AirlineCard({ a }: { a: Airline }) {
+  const t = useT()
   const accent = accentOf(a)
   return (
     <Link
@@ -90,7 +93,7 @@ export function AirlineCard({ a }: { a: Airline }) {
       <div className="min-w-0 flex-1">
         <div className="flex items-baseline gap-2">
           <span className="truncate font-medium text-ink">
-            {a.airline_name?.trim() || 'Unnamed carrier'}
+            {a.airline_name?.trim() || t('Unnamed carrier')}
           </span>
           <span className="mono shrink-0 text-[11px] text-ink-faint">
             {a.carrier_code}
@@ -105,9 +108,9 @@ export function AirlineCard({ a }: { a: Airline }) {
           )}
         </div>
         <div className="mono mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-ink-dim">
-          <span>{num(a.fleet_size)} aircraft</span>
-          <span>{num(a.routes)} routes</span>
-          <span>{num(a.destinations)} destinations</span>
+          <span>{t('{n} aircraft', { n: num(a.fleet_size) })}</span>
+          <span>{t('{n} routes', { n: num(a.routes) })}</span>
+          <span>{t('{n} destinations', { n: num(a.destinations) })}</span>
         </div>
       </div>
     </Link>
@@ -129,6 +132,7 @@ export function AirlineCard({ a }: { a: Airline }) {
  * more than the two lines it costs.
  */
 export function Loading({ label = 'Loading' }: { label?: string }) {
+  const t = useT()
   return (
     <div
       role="status"
@@ -136,7 +140,7 @@ export function Loading({ label = 'Loading' }: { label?: string }) {
       className="flex flex-col items-center justify-center gap-4 py-16"
     >
       <EchoMark height={28} color="transparent" className="echo-loader" />
-      <p className="echo-loader-text mono text-[11px] uppercase tracking-[0.16em]">{label}…</p>
+      <p className="echo-loader-text mono text-[11px] uppercase tracking-[0.16em]">{t(label)}…</p>
     </div>
   )
 }

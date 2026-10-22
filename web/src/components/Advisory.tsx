@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import Modal from './Modal'
 import { currentAdvisory, dismiss, isDismissed } from '../lib/advisories'
+import { useT } from '../lib/i18n'
 
 /**
  * The disruption notice on the home page.
@@ -24,6 +25,7 @@ import { currentAdvisory, dismiss, isDismissed } from '../lib/advisories'
  */
 export default function Advisory() {
   const advisory = currentAdvisory()
+  const t = useT()
   const [show, setShow] = useState(false)
 
   useEffect(() => {
@@ -51,17 +53,17 @@ export default function Advisory() {
   }
 
   return (
-    <Modal title={advisory.title} onClose={close} labelledBy="advisory-title">
+    <Modal title={t(advisory.title)} onClose={close} labelledBy="advisory-title">
       <div className="border-l-2 border-warn pl-4">
         {advisory.body.map((p) => (
           <p key={p} className="mb-3 text-sm leading-relaxed text-ink-dim last:mb-0">
-            {p}
+            {t(p)}
           </p>
         ))}
       </div>
 
       {advisory.footnote && (
-        <p className="mt-4 text-[12px] text-ink-faint">{advisory.footnote}</p>
+        <p className="mt-4 text-[12px] text-ink-faint">{t(advisory.footnote)}</p>
       )}
 
       <div className="mt-6">
@@ -70,7 +72,7 @@ export default function Advisory() {
           onClick={close}
           className="mono bg-accent px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#050505] transition-opacity hover:opacity-90"
         >
-          Understood
+          {t('Understood')}
         </button>
       </div>
     </Modal>

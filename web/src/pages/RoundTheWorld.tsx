@@ -7,6 +7,7 @@ import { CABINS } from '../lib/types'
 import { dateInDays, num, usd } from '../lib/format'
 import { encodeJourney, MAX_LEGS } from '../lib/journey'
 import { useCarrierCount } from '../lib/carriers'
+import { rich, useT } from '../lib/i18n'
 
 type Hop = {
   seq: number
@@ -53,6 +54,7 @@ type Quote = {
  */
 export default function RoundTheWorld() {
   const nav = useNavigate()
+  const t = useT()
   const carrierCount = useCarrierCount()
   const [stops, setStops] = useState<string[]>(['LHR', 'DXB', 'SIN', 'SYD', 'LAX'])
   const [cabin, setCabin] = useState('ECONOMY')
@@ -121,22 +123,20 @@ export default function RoundTheWorld() {
 
   return (
     <div className="mx-auto max-w-[1180px] px-4 py-8 sm:px-5 sm:py-14">
-      <p className="eyebrow text-cyan">Round the world</p>
-      <h1 className="display mt-3 text-[clamp(34px,5vw,58px)]">One fare, one direction</h1>
+      <p className="eyebrow text-cyan">{t('Round the world')}</p>
+      <h1 className="display mt-3 text-[clamp(34px,5vw,58px)]">{t('One fare, one direction')}</h1>
       <p className="mt-5 max-w-[64ch] text-lg text-ink-dim">
-        Keep going the same way until you are home again, on any of the alliance's{' '}
-        {num(carrierCount)} carriers. The fare is set by how far round you go, not by how many
-        times you stop.
+        {t("Keep going the same way until you are home again, on any of the alliance's {n} carriers. The fare is set by how far round you go, not by how many times you stop.", { n: num(carrierCount) })}
       </p>
 
       <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_380px]">
         <div>
           <div className="panel p-5">
             <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
-              <p className="eyebrow text-ink-faint">Your stops, in order</p>
+              <p className="eyebrow text-ink-faint">{t('Your stops, in order')}</p>
               <div className="w-44">
                 <label htmlFor="rtw-cabin" className="eyebrow mb-1.5 block text-ink-faint">
-                  Cabin
+                  {t('Cabin')}
                 </label>
                 <select
                   id="rtw-cabin"
@@ -145,7 +145,7 @@ export default function RoundTheWorld() {
                   className="w-full border border-edge bg-ground-2 px-3 py-2.5 text-ink outline-none focus:border-accent"
                 >
                   {CABINS.map((c) => (
-                    <option key={c.code} value={c.code}>{c.label}</option>
+                    <option key={c.code} value={c.code}>{t(c.label)}</option>
                   ))}
                 </select>
               </div>
@@ -159,7 +159,7 @@ export default function RoundTheWorld() {
                   </span>
                   <AirportField
                     id={`rtw-${i}`}
-                    label={i === 0 ? 'Start and finish' : `Stop ${i + 1}`}
+                    label={i === 0 ? t('Start and finish') : t('Stop {n}', { n: i + 1 })}
                     value={s}
                     onChange={(v) => setStop(i, v)}
                     placeholder="City or airport"
@@ -168,7 +168,7 @@ export default function RoundTheWorld() {
                     type="button"
                     onClick={() => dropStop(i)}
                     disabled={stops.length <= 3}
-                    aria-label={`Remove stop ${i + 1}`}
+                    aria-label={t('Remove stop {n}', { n: i + 1 })}
                     className="mono h-[42px] shrink-0 border border-edge-soft px-3 text-[11px] text-ink-faint transition-colors hover:text-ink disabled:opacity-30"
                   >
                     ×
@@ -181,25 +181,24 @@ export default function RoundTheWorld() {
                   onClick={addStop}
                   className="mono self-start text-[11px] uppercase tracking-[0.12em] text-cyan"
                 >
-                  + Add a stop
+                  + {t('Add a stop')}
                 </button>
               )}
             </div>
             <p className="mt-4 text-[12px] text-ink-faint">
-              The tour closes itself: after your last stop you fly home to{' '}
-              {filled[0] || 'your first city'}.
+              {t('The tour closes itself: after your last stop you fly home to {city}.', { city: filled[0] || t('your first city') })}
             </p>
           </div>
 
           {error && (
             <div className="panel mt-4 border-l-2 border-l-[color:var(--color-warn)] p-4 text-ink-dim">
-              The quote could not be worked out: {error}
+              {t('The quote could not be worked out:')} {error}
             </div>
           )}
 
           {quote && quote.problems.length > 0 && (
             <div className="panel mt-4 border-l-2 border-l-[color:var(--color-warn)] p-5">
-              <p className="eyebrow mb-2 text-warn">Not a round-the-world fare yet</p>
+              <p className="eyebrow mb-2 text-warn">{t('Not a round-the-world fare yet')}</p>
               <ul className="flex flex-col gap-2">
                 {quote.problems.map((p) => (
                   <li key={p} className="text-sm leading-relaxed text-ink-dim">
@@ -212,7 +211,7 @@ export default function RoundTheWorld() {
 
           {quote && quote.hops.length > 0 && (
             <div className="mt-6">
-              <p className="eyebrow mb-3 text-ink-faint">The route</p>
+              <p className="eyebrow mb-3 text-ink-faint">{t('The route')}</p>
               <div className="flex flex-col gap-2">
                 {quote.hops.map((h) => (
                   <div
@@ -233,19 +232,17 @@ export default function RoundTheWorld() {
                     </span>
                     {h.nonstop ? (
                       <span className="mono text-[11px] text-good">
-                        {h.carrier_count} {h.carrier_count === 1 ? 'carrier' : 'carriers'}
-                        {h.cheapest_usd != null && ` · from ${usd(h.cheapest_usd)}`}
+                        {h.carrier_count === 1 ? t('1 carrier') : t('{n} carriers', { n: h.carrier_count })}
+                        {h.cheapest_usd != null && ` · ${t('from {price}', { price: usd(h.cheapest_usd) })}`}
                       </span>
                     ) : (
-                      <span className="mono text-[11px] text-warn">connection needed</span>
+                      <span className="mono text-[11px] text-warn">{t('connection needed')}</span>
                     )}
                   </div>
                 ))}
               </div>
               <p className="mt-3 text-[12px] text-ink-faint">
-                A hop marked “connection needed” has no nonstop between those two
-                airports. It is still part of the fare, you will just change planes on
-                the way. Carrier counts are the members flying that hop nonstop today.
+                {t('A hop marked “connection needed” has no nonstop between those two airports. It is still part of the fare, you will just change planes on the way. Carrier counts are the members flying that hop nonstop today.')}
               </p>
             </div>
           )}
@@ -256,49 +253,49 @@ export default function RoundTheWorld() {
           <div className="panel p-5">
             {filled.length < 3 ? (
               <p className="text-ink-dim">
-                Name at least three cities and the alliance will price the loop.
+                {t('Name at least three cities and the alliance will price the loop.')}
               </p>
             ) : (
               <>
                 <div className="mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">
-                  {busy ? 'Working it out…' : quote?.band_name ? `${quote.band_name} band` : 'Quote'}
+                  {busy ? t('Working it out…') : quote?.band_name ? t('{band} band', { band: quote.band_name }) : t('Quote')}
                 </div>
 
                 {quote?.fare_usd != null && (
                   <div className="mt-1">
                     <span className="mono text-4xl text-ink">{usd(quote.fare_usd)}</span>
-                    <span className="mono ml-2 text-[12px] text-ink-faint">per traveller</span>
+                    <span className="mono ml-2 text-[12px] text-ink-faint">{t('per traveller')}</span>
                   </div>
                 )}
 
                 <dl className="mt-5 flex flex-col gap-2.5 text-sm">
                   <div className="flex justify-between gap-3">
-                    <dt className="text-ink-faint">Distance</dt>
+                    <dt className="text-ink-faint">{t('Distance')}</dt>
                     <dd className="mono text-ink">{num(quote?.total_km ?? 0)} km</dd>
                   </div>
                   <div className="flex justify-between gap-3">
-                    <dt className="text-ink-faint">Direction</dt>
+                    <dt className="text-ink-faint">{t('Direction')}</dt>
                     <dd className="mono text-ink">
                       {quote?.direction === 'EAST'
-                        ? 'Eastbound'
+                        ? t('Eastbound')
                         : quote?.direction === 'WEST'
-                          ? 'Westbound'
+                          ? t('Westbound')
                           : '–'}
                     </dd>
                   </div>
                   <div className="flex justify-between gap-3">
-                    <dt className="text-ink-faint">Around the globe</dt>
+                    <dt className="text-ink-faint">{t('Around the globe')}</dt>
                     <dd className={`mono ${turn >= 320 && turn <= 400 ? 'text-good' : 'text-warn'}`}>
-                      {turn}° of 360°
+                      {t('{n}° of 360°', { n: turn })}
                     </dd>
                   </div>
                   <div className="flex justify-between gap-3">
-                    <dt className="text-ink-faint">Countries</dt>
+                    <dt className="text-ink-faint">{t('Countries')}</dt>
                     <dd className="mono text-ink">{quote?.countries ?? 0}</dd>
                   </div>
                   <div className="flex justify-between gap-3">
-                    <dt className="text-ink-faint">Stops</dt>
-                    <dd className="mono text-ink">{quote?.hops.length ?? 0} flights</dd>
+                    <dt className="text-ink-faint">{t('Stops')}</dt>
+                    <dd className="mono text-ink">{t('{n} flights', { n: quote?.hops.length ?? 0 })}</dd>
                   </div>
                 </dl>
 
@@ -307,25 +304,20 @@ export default function RoundTheWorld() {
                   <div className="mt-5 border-t border-edge pt-4">
                     {quote.segments_usd == null ? (
                       <p className="text-[12px] leading-relaxed text-ink-faint">
-                        At least one hop has no nonstop, so there is no like-for-like
-                        price to compare this against.
+                        {t('At least one hop has no nonstop, so there is no like-for-like price to compare this against.')}
                       </p>
                     ) : quote.segments_usd > quote.fare_usd ? (
                       <p className="text-[13px] leading-relaxed text-ink-dim">
-                        Bought as separate flights these hops come to{' '}
-                        <span className="mono text-ink">{usd(quote.segments_usd)}</span>. The
-                        round-the-world fare saves{' '}
-                        <span className="mono text-good">
-                          {usd(quote.segments_usd - quote.fare_usd)}
-                        </span>
-                        .
+                        {rich(t('Bought as separate flights these hops come to {total}. The round-the-world fare saves {saving}.'), {
+                          total: <span className="mono text-ink">{usd(quote.segments_usd)}</span>,
+                          saving: <span className="mono text-good">{usd(quote.segments_usd - quote.fare_usd)}</span>,
+                        })}
                       </p>
                     ) : (
                       <p className="text-[13px] leading-relaxed text-ink-dim">
-                        Bought as separate flights these hops come to{' '}
-                        <span className="mono text-ink">{usd(quote.segments_usd)}</span>, which
-                        is <span className="mono text-warn">less</span> than the round-the-world
-                        fare. Add stops, or fly it as a multi-city instead.
+                        {rich(t('Bought as separate flights these hops come to {total}, which is less than the round-the-world fare. Add stops, or fly it as a multi-city instead.'), {
+                          total: <span className="mono text-ink">{usd(quote.segments_usd)}</span>,
+                        })}
                       </p>
                     )}
                   </div>
@@ -336,12 +328,10 @@ export default function RoundTheWorld() {
                   disabled={!quote?.ok}
                   className="btn btn-book mt-5 w-full disabled:cursor-not-allowed disabled:opacity-40"
                 >
-                  Choose flights
+                  {t('Choose flights')}
                 </button>
                 <p className="mt-3 text-[11px] leading-relaxed text-ink-faint">
-                  Takes you to the multi-city search with the first{' '}
-                  {Math.min(quote?.hops.length ?? 0, MAX_LEGS)} hops filled in, a week
-                  apart. Change the dates there.
+                  {t('Takes you to the multi-city search with the first {n} hops filled in, a week apart. Change the dates there.', { n: Math.min(quote?.hops.length ?? 0, MAX_LEGS) })}
                 </p>
               </>
             )}

@@ -6,9 +6,11 @@ import { AirlineCard, Loading, NotConfigured } from '../components/ui'
 import { isConfigured, supabase } from '../lib/supabase'
 import type { Airline, Arc, Division, NetworkNode } from '../lib/types'
 import { accentOf, num } from '../lib/format'
+import { useT } from '../lib/i18n'
 
 export default function DivisionPage() {
   const { code = '' } = useParams()
+  const t = useT()
   const [division, setDivision] = useState<Division | null>(null)
   const [members, setMembers] = useState<Airline[] | null>(null)
   const [arcs, setArcs] = useState<Arc[]>([])
@@ -59,7 +61,7 @@ export default function DivisionPage() {
         <div className="mx-auto grid max-w-[1180px] gap-8 px-4 py-8 sm:px-5 sm:py-14 lg:grid-cols-[1.1fr_.9fr]">
           <div>
             <Link to="/divisions" className="mono text-[11px] uppercase tracking-[0.14em] text-ink-faint">
-              ← All divisions
+              ← {t('All divisions')}
             </Link>
             <div className="mt-4 flex items-center gap-4">
               <EchoMark height={34} color={accent} />
@@ -74,10 +76,10 @@ export default function DivisionPage() {
             )}
             <div className="mt-8 grid grid-cols-2 gap-x-8 gap-y-4 sm:grid-cols-4">
               {[
-                ['Carriers', division.carriers],
-                ['Aircraft', division.aircraft],
-                ['Routes', division.routes],
-                ['Destinations', division.destinations],
+                [t('Carriers'), division.carriers],
+                [t('Aircraft'), division.aircraft],
+                [t('Routes'), division.routes],
+                [t('Destinations'), division.destinations],
               ].map(([l, v]) => (
                 <div key={l as string}>
                   <div className="mono text-2xl" style={{ color: accent }}>
@@ -89,7 +91,7 @@ export default function DivisionPage() {
             </div>
             {division.top_hubs && division.top_hubs.length > 0 && (
               <div className="mt-7">
-                <div className="eyebrow mb-2 text-ink-faint">Principal hubs</div>
+                <div className="eyebrow mb-2 text-ink-faint">{t('Principal hubs')}</div>
                 <div className="flex flex-wrap gap-2">
                   {division.top_hubs.map((h) => (
                     <Link
@@ -114,7 +116,7 @@ export default function DivisionPage() {
               className="w-full"
             />
             <p className="mono mt-1 text-center text-[10px] uppercase tracking-[0.16em] text-ink-faint">
-              {division.division_name} routes lit · rest of the alliance dimmed
+              {t('{division} routes lit · rest of the alliance dimmed', { division: division.division_name })}
             </p>
           </div>
         </div>
@@ -123,7 +125,7 @@ export default function DivisionPage() {
       <section className="mx-auto max-w-[1180px] px-4 py-8 sm:px-5 sm:py-14">
         <div className="flex flex-wrap items-baseline justify-between gap-4">
           <h2 className="display text-3xl">
-            Member carriers{' '}
+            {t('Member carriers')}{' '}
             <span className="mono align-middle text-base text-ink-faint">
               {members ? members.length : ''}
             </span>
@@ -139,7 +141,7 @@ export default function DivisionPage() {
                     : 'border-edge-soft text-ink-faint hover:text-ink-dim'
                 }`}
               >
-                {s === 'prominence' ? 'Size' : s === 'name' ? 'A–Z' : 'Fleet'}
+                {s === 'prominence' ? t('Size') : s === 'name' ? t('A–Z') : t('Fleet')}
               </button>
             ))}
           </div>

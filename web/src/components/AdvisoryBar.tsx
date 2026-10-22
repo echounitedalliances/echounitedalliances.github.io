@@ -6,6 +6,7 @@ import {
   isBannerDismissed,
   isDismissed,
 } from '../lib/advisories'
+import { useT } from '../lib/i18n'
 
 /**
  * The running advisory, condensed to one line above the top bar.
@@ -31,6 +32,7 @@ import {
  */
 export default function AdvisoryBar({ onHome }: { onHome: boolean }) {
   const advisory = currentAdvisory()
+  const t = useT()
   const [read, setRead] = useState(() => (advisory ? isDismissed(advisory.id) : false))
   const [closed, setClosed] = useState(() =>
     advisory ? isBannerDismissed(advisory.id) : false,
@@ -71,12 +73,12 @@ export default function AdvisoryBar({ onHome }: { onHome: boolean }) {
             aria-hidden="true"
             className="h-1.5 w-1.5 shrink-0 rounded-full bg-warn"
           />
-          <span className="eyebrow shrink-0 text-warn">Advisory</span>
+          <span className="eyebrow shrink-0 text-warn">{t('Advisory')}</span>
           <span className="min-w-0 flex-1 truncate text-[12px] text-ink-dim sm:text-[13px]">
-            {advisory.headline}
+            {t(advisory.headline)}
           </span>
           <span className="mono shrink-0 text-[10px] uppercase tracking-[0.14em] text-ink-faint">
-            {open ? 'Less' : 'More'}
+            {open ? t('Less') : t('More')}
           </span>
         </button>
 
@@ -86,7 +88,7 @@ export default function AdvisoryBar({ onHome }: { onHome: boolean }) {
             setClosed(true)
             dismissBanner(advisory.id)
           }}
-          aria-label="Dismiss this advisory"
+          aria-label={t('Dismiss this advisory')}
           className="absolute right-3 top-1.5 px-1.5 py-0.5 text-[13px] leading-none text-ink-faint transition-colors hover:text-ink"
         >
           ×
@@ -94,14 +96,14 @@ export default function AdvisoryBar({ onHome }: { onHome: boolean }) {
 
         <div id="advisory-detail" hidden={!open} className="pb-4 pl-4">
           <div className="border-l-2 border-warn pl-4">
-            <p className="display mb-2 text-base">{advisory.title}</p>
+            <p className="display mb-2 text-base">{t(advisory.title)}</p>
             {advisory.body.map((p) => (
               <p key={p} className="mb-2 text-[13px] leading-relaxed text-ink-dim last:mb-0">
-                {p}
+                {t(p)}
               </p>
             ))}
             {advisory.footnote && (
-              <p className="mt-3 text-[12px] text-ink-faint">{advisory.footnote}</p>
+              <p className="mt-3 text-[12px] text-ink-faint">{t(advisory.footnote)}</p>
             )}
           </div>
         </div>

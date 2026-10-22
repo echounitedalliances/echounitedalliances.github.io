@@ -16,12 +16,12 @@ import type {
   RoutePairRow,
   TimetableRow,
 } from '../lib/types'
-import { accentOf, duration, flag, num, usd } from '../lib/format'
-
-const DAYS = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
+import { accentOf, duration, flag, num, usd, weekdayInitials } from '../lib/format'
+import { rich, useT } from '../lib/i18n'
 
 export default function AirlinePage() {
   const { code = '', slug = '' } = useParams()
+  const t = useT()
   const [a, setA] = useState<Airline | null>(null)
   const [fleet, setFleet] = useState<FleetRow[]>([])
   const [routes, setRoutes] = useState<RoutePairRow[]>([])
@@ -227,9 +227,9 @@ export default function AirlinePage() {
   if (missing) {
     return (
       <div className="mx-auto max-w-[1180px] px-5 py-24 text-center">
-        <h1 className="display text-4xl">No such carrier</h1>
+        <h1 className="display text-4xl">{t('No such carrier')}</h1>
         <Link to="/airlines" className="mono mt-6 inline-block text-cyan">
-          ← All carriers
+          ← {t('All carriers')}
         </Link>
       </div>
     )
@@ -238,6 +238,7 @@ export default function AirlinePage() {
 
   const accent = accentOf(a)
   const named = a.airline_name?.trim()
+  const DAYS = weekdayInitials()
   // Already scoped by the query above — a second pass here would only be a
   // chance for the two to disagree.
   const shown = timetable ?? []
@@ -289,26 +290,26 @@ export default function AirlinePage() {
               className="mono text-[11px] uppercase tracking-[0.14em]"
               style={{ color: accent }}
             >
-              ← {a.division_name} division
+              ← {t('{division} division', { division: a.division_name })}
             </Link>
 
             <div className="mt-5 flex items-start gap-4">
               <Mark airline={a} size={62} />
               <div className="min-w-0">
                 <h1 className="display text-[clamp(32px,4.6vw,52px)]">
-                  {named || 'Unnamed carrier'}
+                  {named || t('Unnamed carrier')}
                 </h1>
                 <div className="mono mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-[12px] text-ink-faint">
                   <span style={{ color: accent }}>{a.carrier_code}</span>
                   {a.airline_code && a.airline_code !== a.carrier_code && (
-                    <span>in-game code {a.airline_code}</span>
+                    <span>{t('in-game code {code}', { code: a.airline_code })}</span>
                   )}
                   {a.airline_country && (
                     <span>{flag(a.airline_country)} {a.airline_country}</span>
                   )}
                   {a.is_division_leader && (
                     <span className="border border-edge px-2 py-0.5 uppercase tracking-[0.12em]">
-                      Division leader
+                      {t('Division leader')}
                     </span>
                   )}
                   {/* Renders nothing unless the signed-in account is an admin. */}
@@ -323,10 +324,10 @@ export default function AirlinePage() {
 
             <div className="mt-8 grid grid-cols-2 gap-x-8 gap-y-4 sm:grid-cols-4">
               {[
-                ['Aircraft', num(a.fleet_size)],
-                ['Types', num(a.aircraft_types)],
-                ['Routes', num(a.routes)],
-                ['Destinations', num(a.destinations)],
+                [t('Aircraft'), num(a.fleet_size)],
+                [t('Types'), num(a.aircraft_types)],
+                [t('Routes'), num(a.routes)],
+                [t('Destinations'), num(a.destinations)],
               ].map(([l, v]) => (
                 <div key={l}>
                   <div className="mono text-2xl" style={{ color: accent }}>{v}</div>
@@ -337,7 +338,7 @@ export default function AirlinePage() {
 
             {a.hubs && a.hubs.length > 0 && (
               <div className="mt-7">
-                <div className="eyebrow mb-2 text-ink-faint">Hubs</div>
+                <div className="eyebrow mb-2 text-ink-faint">{t('Hubs')}</div>
                 <div className="flex flex-wrap gap-2">
                   {a.hubs.map((h) => (
                     <Link
@@ -363,13 +364,13 @@ export default function AirlinePage() {
                   className="mono px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-[#050505]"
                   style={{ background: accent }}
                 >
-                  Book with {named ?? a.carrier_code} ↗
+                  {t('Book with {airline}', { airline: named ?? a.carrier_code })} ↗
                 </a>
               ) : site ? (
                 <MemberSite site={site} accent={accent} />
               ) : (
                 <span className="mono border border-edge px-5 py-2.5 text-[11px] uppercase tracking-[0.14em] text-ink-faint">
-                  Contact airline for booking
+                  {t('Contact airline for booking')}
                 </span>
               )}
               {/* Only when no member site is shown: website_url mirrors that
@@ -382,7 +383,7 @@ export default function AirlinePage() {
                   rel="noopener noreferrer"
                   className="mono text-[11px] uppercase tracking-[0.14em] text-cyan"
                 >
-                  Website ↗
+                  {t('Website')} ↗
                 </a>
               )}
               {/* Renders nothing unless the signed-in account is an admin. */}
@@ -424,13 +425,13 @@ export default function AirlinePage() {
                     aria-pressed={mapMode === m}
                     className={`chip ${mapMode === m ? 'chip-on' : ''}`}
                   >
-                    {m === 'airline' ? named || 'This carrier' : `${a.division_name} division`}
+                    {m === 'airline' ? named || t('This carrier') : t('{division} division', { division: a.division_name })}
                   </button>
                 ))}
               </div>
               {mapMode === 'division' && divLoading && (
                 <span className="mono text-[10px] uppercase tracking-[0.14em] text-ink-faint">
-                  Drawing the division…
+                  {t('Drawing the division…')}
                 </span>
               )}
             </div>
@@ -448,8 +449,8 @@ export default function AirlinePage() {
             />
             <p className="mono mt-1 text-center text-[10px] uppercase tracking-[0.16em] text-ink-faint">
               {mapMode === 'division'
-                ? `${num((divArcs ?? []).length)} city pairs across ${a.division_name}`
-                : `${num(routes.length)} routes · click an airport for its routes`}
+                ? t('{n} city pairs across {division}', { n: num((divArcs ?? []).length), division: a.division_name })
+                : t('{n} routes · click an airport for its routes', { n: num(routes.length) })}
             </p>
 
             {/* Airline mode only: the division network is not this carrier's,
@@ -459,28 +460,27 @@ export default function AirlinePage() {
                 <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-edge-soft px-4 py-3">
                   <h3 className="mono text-[11px] uppercase tracking-[0.14em] text-ink">
                     {airportRoutes.length > 0 ? (
-                      <>
-                        {num(airportRoutes.length)}{' '}
-                        {airportRoutes.length === 1 ? 'route' : 'routes'} from{' '}
-                        <span className="text-cyan">{ttAirport}</span>
-                      </>
+                      rich(
+                        airportRoutes.length === 1
+                          ? t('{n} route from {airport}', { n: 1 })
+                          : t('{n} routes from {airport}', { n: num(airportRoutes.length) }),
+                        { airport: <span className="text-cyan">{ttAirport}</span> },
+                      )
                     ) : (
-                      <>
-                        Nothing from <span className="text-cyan">{ttAirport}</span>
-                      </>
+                      rich(t('Nothing from {airport}'), { airport: <span className="text-cyan">{ttAirport}</span> })
                     )}
                   </h3>
                   <button
                     onClick={() => setTtAirport('')}
                     className="mono text-[10px] uppercase tracking-[0.12em] text-ink-faint hover:text-ink"
                   >
-                    Clear
+                    {t('Clear')}
                   </button>
                 </div>
 
                 {airportRoutes.length === 0 ? (
                   <p className="px-4 py-5 text-sm text-ink-dim">
-                    {named || 'This carrier'} does not serve {ttAirport}.
+                    {t('{airline} does not serve {airport}.', { airline: named || t('This carrier'), airport: ttAirport })}
                   </p>
                 ) : (
                   <ul className="max-h-[320px] overflow-auto">
@@ -497,14 +497,14 @@ export default function AirlinePage() {
                           </Link>
                         </span>
                         <span className="mono text-[11px] text-ink-faint">
-                          {r.departures_per_week}/wk · {duration(r.fastest_minutes)}
-                          {r.cheapest_economy_usd != null && ` · from ${usd(r.cheapest_economy_usd)}`}
+                          {t('{n}/wk', { n: r.departures_per_week })} · {duration(r.fastest_minutes)}
+                          {r.cheapest_economy_usd != null && ` · ${t('from {price}', { price: usd(r.cheapest_economy_usd) })}`}
                         </span>
                         <button
                           onClick={() => showFullTimetable(r.other)}
                           className="mono ml-auto border border-edge px-2.5 py-1 text-[10px] uppercase tracking-[0.12em] text-ink-dim transition-colors hover:border-accent hover:text-ink"
                         >
-                          Show full timetable
+                          {t('Show full timetable')}
                         </button>
                       </li>
                     ))}
@@ -518,16 +518,16 @@ export default function AirlinePage() {
 
       <section className="mx-auto grid max-w-[1180px] gap-10 px-4 py-8 sm:px-5 sm:py-14 lg:grid-cols-2">
         <div>
-          <h2 className="display text-2xl">Fleet</h2>
+          <h2 className="display text-2xl">{t('Fleet')}</h2>
           <p className="mt-1 text-ink-faint">
-            {num(a.fleet_size)} aircraft across {num(a.aircraft_types)} types
+            {t('{aircraft} aircraft across {types} types', { aircraft: num(a.fleet_size), types: num(a.aircraft_types) })}
           </p>
           <div className="panel mt-4 overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-surface-2 text-left">
-                  <th className="mono px-4 py-2 text-[10px] uppercase tracking-[0.1em] text-ink-faint">Type</th>
-                  <th className="mono px-4 py-2 text-right text-[10px] uppercase tracking-[0.1em] text-ink-faint">Count</th>
+                  <th className="mono px-4 py-2 text-[10px] uppercase tracking-[0.1em] text-ink-faint">{t('Type')}</th>
+                  <th className="mono px-4 py-2 text-right text-[10px] uppercase tracking-[0.1em] text-ink-faint">{t('Count')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -538,7 +538,7 @@ export default function AirlinePage() {
                   </tr>
                 ))}
                 {fleet.length === 0 && (
-                  <tr><td className="px-4 py-6 text-ink-faint" colSpan={2}>No fleet recorded.</td></tr>
+                  <tr><td className="px-4 py-6 text-ink-faint" colSpan={2}>{t('No fleet recorded.')}</td></tr>
                 )}
               </tbody>
             </table>
@@ -547,16 +547,16 @@ export default function AirlinePage() {
         </div>
 
         <div>
-          <h2 className="display text-2xl">Busiest routes</h2>
-          <p className="mt-1 text-ink-faint">By departures a week, both directions counted together</p>
+          <h2 className="display text-2xl">{t('Busiest routes')}</h2>
+          <p className="mt-1 text-ink-faint">{t('By departures a week, both directions counted together')}</p>
           <div className="panel mt-4 max-h-[520px] overflow-auto">
             <table className="w-full text-sm">
               <thead className="sticky top-0">
                 <tr className="bg-surface-2 text-left">
-                  <th className="mono px-4 py-2 text-[10px] uppercase tracking-[0.1em] text-ink-faint">Route</th>
-                  <th className="mono px-4 py-2 text-right text-[10px] uppercase tracking-[0.1em] text-ink-faint">Weekly</th>
-                  <th className="mono px-4 py-2 text-right text-[10px] uppercase tracking-[0.1em] text-ink-faint">Block</th>
-                  <th className="mono px-4 py-2 text-right text-[10px] uppercase tracking-[0.1em] text-ink-faint">From</th>
+                  <th className="mono px-4 py-2 text-[10px] uppercase tracking-[0.1em] text-ink-faint">{t('Route')}</th>
+                  <th className="mono px-4 py-2 text-right text-[10px] uppercase tracking-[0.1em] text-ink-faint">{t('Weekly')}</th>
+                  <th className="mono px-4 py-2 text-right text-[10px] uppercase tracking-[0.1em] text-ink-faint">{t('Block')}</th>
+                  <th className="mono px-4 py-2 text-right text-[10px] uppercase tracking-[0.1em] text-ink-faint">{t('From')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -570,7 +570,7 @@ export default function AirlinePage() {
                   <tr key={`${r.airport_a}-${r.airport_b}`} className="border-t border-edge-soft">
                     <td className="mono px-4 py-2 text-ink">
                       <Link to={`/airports/${from}`} className="hover:text-cyan">{from}</Link>
-                      <span className="text-ink-faint" title={oneWay ? 'One way only' : 'Both directions'}>
+                      <span className="text-ink-faint" title={oneWay ? t('One way only') : t('Both directions')}>
                         {oneWay ? ' → ' : ' ⇄ '}
                       </span>
                       <Link to={`/airports/${to}`} className="hover:text-cyan">{to}</Link>
@@ -582,7 +582,7 @@ export default function AirlinePage() {
                   )
                 })}
                 {routes.length === 0 && (
-                  <tr><td className="px-4 py-6 text-ink-faint" colSpan={4}>No routes filed.</td></tr>
+                  <tr><td className="px-4 py-6 text-ink-faint" colSpan={4}>{t('No routes filed.')}</td></tr>
                 )}
               </tbody>
             </table>
@@ -591,18 +591,17 @@ export default function AirlinePage() {
           {idleRoutes.length > 0 && (
             <div className="mt-5">
               <h3 className="mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">
-                Not flying · {idleRoutes.length}
+                {t('Not flying')} · {idleRoutes.length}
               </h3>
               <p className="mt-1 text-[13px] text-ink-faint">
-                Routes {a?.airline_name} holds in the game with nothing scheduled to sell:
-                opened with no flights yet, or flights with no aircraft assigned.
+                {t('Routes {airline} holds in the game with nothing scheduled to sell: opened with no flights yet, or flights with no aircraft assigned.', { airline: a?.airline_name ?? a.carrier_code })}
               </p>
               <div className="mono mt-3 flex flex-wrap gap-1.5 text-[11px]">
                 {idleRoutes.map((r) => (
                   <span
                     key={`${r.airport_a}-${r.airport_b}`}
                     className="border border-edge px-2 py-0.5 text-ink-dim"
-                    title={r.reason === 'no_flights' ? 'Opened, no flights yet' : 'Flights with no aircraft assigned'}
+                    title={r.reason === 'no_flights' ? t('Opened, no flights yet') : t('Flights with no aircraft assigned')}
                   >
                     {r.airport_a} ⇄ {r.airport_b}
                   </span>
@@ -615,7 +614,7 @@ export default function AirlinePage() {
 
       <section ref={timetableRef} className="mx-auto max-w-[1180px] px-5 pb-16">
         <div className="flex flex-wrap items-baseline justify-between gap-3">
-          <h2 className="display text-2xl">Timetable</h2>
+          <h2 className="display text-2xl">{t('Timetable')}</h2>
           <div className="mono flex flex-wrap items-center gap-2 text-[11px]">
             {ttRoute ? (
               <button
@@ -635,25 +634,23 @@ export default function AirlinePage() {
               )
             )}
             <span className="text-ink-faint">
-              {timetable ? `${num(shown.length)} services` : ''}
+              {timetable ? t('{n} services', { n: num(shown.length) }) : ''}
             </span>
           </div>
         </div>
         <p className="mt-1 text-ink-faint">
           {ttRoute
-            ? `Every service between ${ttRoute.a} and ${ttRoute.b}, both directions.`
+            ? t('Every service between {a} and {b}, both directions.', { a: ttRoute.a, b: ttRoute.b })
             : ttAirport
-              ? `Every departure from ${ttAirport}. Times are local to it.`
-              : 'Departure times are local to the departure airport. 0 = Monday.'}
+              ? t('Every departure from {airport}. Times are local to it.', { airport: ttAirport })
+              : t('Departure times are local to the departure airport.')}
         </p>
 
         {/* Saying "1,000 services" when there are 2,790 is worse than saying
             nothing; the way out is to pick an airport, so the notice says so. */}
         {ttCapped && (
           <p className="mono mt-3 border-l-2 border-l-[color:var(--color-warn)] bg-surface px-4 py-3 text-[12px] text-ink-dim">
-            Showing the first 1,000 services, because the server will not return more in
-            one request. Click an airport on the map, or pick a route, for a
-            complete list.
+            {t('Showing the first 1,000 services, because the server will not return more in one request. Click an airport on the map, or pick a route, for a complete list.')}
           </p>
         )}
 
@@ -661,13 +658,11 @@ export default function AirlinePage() {
           <Loading />
         ) : shown.length === 0 ? (
           <p className="panel mt-4 p-8 text-center text-ink-dim">
-            No scheduled services
             {ttRoute
-              ? ` between ${ttRoute.a} and ${ttRoute.b}`
+              ? t('No scheduled services between {a} and {b}.', { a: ttRoute.a, b: ttRoute.b })
               : ttAirport
-                ? ` from ${ttAirport}`
-                : ''}
-            .
+                ? t('No scheduled services from {airport}.', { airport: ttAirport })
+                : t('No scheduled services.')}
           </p>
         ) : (
           <div className="panel mt-4 max-h-[560px] overflow-auto">
@@ -676,26 +671,26 @@ export default function AirlinePage() {
                 <tr className="bg-surface-2 text-left">
                   {['Flight', 'Route', 'Departs', 'Arrives', 'Duration', 'Days', 'Aircraft', 'From'].map((h) => (
                     <th key={h} className="mono px-3 py-2 text-[10px] uppercase tracking-[0.1em] text-ink-faint">
-                      {h}
+                      {t(h)}
                     </th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {timetablePage.slice.map((t, i) => (
-                  <tr key={t.flight_designator + i} className="border-t border-edge-soft">
-                    <td className="mono px-3 py-2 text-cyan">{t.flight_designator}</td>
+                {timetablePage.slice.map((row, i) => (
+                  <tr key={row.flight_designator + i} className="border-t border-edge-soft">
+                    <td className="mono px-3 py-2 text-cyan">{row.flight_designator}</td>
                     <td className="mono px-3 py-2 text-ink">
-                      {t.origin_iata} → {t.destination_iata}
+                      {row.origin_iata} → {row.destination_iata}
                     </td>
-                    <td className="mono px-3 py-2 text-ink-dim">{t.departure_time.slice(0, 5)}</td>
+                    <td className="mono px-3 py-2 text-ink-dim">{row.departure_time.slice(0, 5)}</td>
                     <td className="mono px-3 py-2 text-ink-dim">
-                      {t.arrival_time.slice(0, 5)}
-                      {t.arrival_days_after > 0 && (
-                        <sup className="ml-0.5 text-cyan">+{t.arrival_days_after}</sup>
+                      {row.arrival_time.slice(0, 5)}
+                      {row.arrival_days_after > 0 && (
+                        <sup className="ml-0.5 text-cyan">+{row.arrival_days_after}</sup>
                       )}
                     </td>
-                    <td className="mono px-3 py-2 text-ink-dim">{duration(t.duration_minutes)}</td>
+                    <td className="mono px-3 py-2 text-ink-dim">{duration(row.duration_minutes)}</td>
                     <td className="mono px-3 py-2">
                       <span className="inline-flex gap-0.5">
                         {DAYS.map((d, di) => (
@@ -707,8 +702,8 @@ export default function AirlinePage() {
                             title={d}
                             className="inline-block w-[15px] text-center text-[10px]"
                             style={{
-                              color: t.days.includes(di) ? accent : 'var(--color-ink-faint)',
-                              opacity: t.days.includes(di) ? 1 : 0.3,
+                              color: row.days.includes(di) ? accent : 'var(--color-ink-faint)',
+                              opacity: row.days.includes(di) ? 1 : 0.3,
                             }}
                           >
                             {d}
@@ -716,8 +711,8 @@ export default function AirlinePage() {
                         ))}
                       </span>
                     </td>
-                    <td className="px-3 py-2 text-[12px] text-ink-faint">{t.aircraft_model ?? '–'}</td>
-                    <td className="mono px-3 py-2 text-right text-ink-dim">{usd(t.economy_price)}</td>
+                    <td className="px-3 py-2 text-[12px] text-ink-faint">{row.aircraft_model ?? '–'}</td>
+                    <td className="mono px-3 py-2 text-right text-ink-dim">{usd(row.economy_price)}</td>
                   </tr>
                 ))}
               </tbody>

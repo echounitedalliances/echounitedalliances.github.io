@@ -5,6 +5,7 @@ import type { Division } from '../lib/types'
 import { accentOf, num } from '../lib/format'
 import { DIVISION_NOTES } from '../lib/site'
 import { LEADERS } from '../lib/alliance'
+import { useT } from '../lib/i18n'
 
 /**
  * A division as a black tile that floods with its own colour, a pixel at a
@@ -26,6 +27,7 @@ export default function DivisionTile({
   style?: React.CSSProperties
   className?: string
 }) {
+  const t = useT()
   const accent = accentOf(d)
   const note = DIVISION_NOTES[d.division_code]
   const leaders = LEADERS.filter((l) => l.division_code === d.division_code)
@@ -44,14 +46,14 @@ export default function DivisionTile({
       </span>
       <span className="div-top">
         <EchoMark height={22} color="var(--tile-ink)" />
-        {note && <span className="div-tag">{note}</span>}
+        {note && <span className="div-tag">{t(note)}</span>}
       </span>
       {detailed ? (
         <span>
           <span className="div-name">{d.division_name}</span>
           {leaders.length > 0 && (
             <span className="div-lead">
-              <small>Led by</small>{' '}
+              <small>{t('Led by')}</small>{' '}
               {leaders.map((l, i) => (
                 <span key={l.discord}>
                   {i > 0 && ' & '}
@@ -63,10 +65,10 @@ export default function DivisionTile({
           <span className="div-figs">
             {(
               [
-                ['Carriers', d.carriers],
-                ['Aircraft', d.aircraft],
-                ['Routes', d.routes],
-                ['Airports', d.destinations],
+                [t('Carriers'), d.carriers],
+                [t('Aircraft'), d.aircraft],
+                [t('Routes'), d.routes],
+                [t('Airports'), d.destinations],
               ] as const
             ).map(([label, v]) => (
               <span key={label}>
@@ -80,8 +82,8 @@ export default function DivisionTile({
         <span>
           <span className="div-name">{d.division_name}</span>
           <span className="div-meta">
-            <span>{num(d.carriers)} airlines</span>
-            <span>{num(d.routes)} routes</span>
+            <span>{t('{n} airlines', { n: num(d.carriers) })}</span>
+            <span>{t('{n} routes', { n: num(d.routes) })}</span>
           </span>
         </span>
       )}
