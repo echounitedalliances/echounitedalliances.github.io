@@ -81,6 +81,21 @@ export const SLOGAN = 'Home of the Excellence'
  */
 export type Livery = { src: string; aircraft: string; registration?: string }
 
+/**
+ * Lock the Airline of the Week segment until this moment, ISO timestamp with
+ * an explicit offset. Set to null, the segment shows AIRLINE_OF_THE_WEEK
+ * straight away. While locked, home/AirlineOfTheWeek.tsx shows a teaser with
+ * a live countdown instead of the pick below -- on both the home page
+ * section and the Members card, since showing the real pick early on one and
+ * not the other would just leak it through the back door.
+ *
+ * Like MAINTENANCE_LOCK_UNTIL in lib/site.ts, this switches over live, in an
+ * already-open tab, the instant it passes -- no rebuild, no reload. Which
+ * also means the pick below ships in the bundle the whole time it is locked;
+ * there is no way to keep it out and still reveal it without a rebuild.
+ */
+export const AIRLINE_OF_THE_WEEK_LOCK_UNTIL: string | null = '2026-10-24T22:00:00+07:00'
+
 export const AIRLINE_OF_THE_WEEK: {
   division_code: string
   airline_slug: string
@@ -88,13 +103,20 @@ export const AIRLINE_OF_THE_WEEK: {
   blurb: string
   liveries: Livery[]
 } = {
-  division_code: 'eos',
-  airline_slug: 'ostrander',
+  division_code: 'aura',
+  // Best guess from the site's own slugify rule (lowercase, non-alphanumerics
+  // to underscores): "FlyNarita Express" -> "flynarita_express". Not
+  // verified against the live database -- if it is wrong, this segment will
+  // show the teaser's countdown reach zero and then go blank rather than
+  // erroring, since useAirlineOfTheWeek() just gets no row back.
+  airline_slug: 'flynarita_express',
   blurb:
-    'Flying the Austrian flag from Vienna and Innsbruck, with hubs as far as London, Madrid and St Petersburg, Ostrander is one of the carriers building Eos, EUA’s newest division.',
-  liveries: [
-    { src: 'brand/liveries/ostrander-a350.webp', aircraft: 'Airbus A350', registration: 'OE-AZY' },
-  ],
+    'Flying the Japanese flag from Narita, FlyNarita Express (FNE) is one of the carriers building Echo Aura, with a 310-aircraft fleet spanning the A321neo and the A330-900.',
+  // No image yet -- waiting on a clean side-profile livery, cut out on a
+  // transparent background, the way every other entry here is. Add it under
+  // web/public/brand/liveries/ and list it here before the lock lifts, or
+  // the reveal will show the real figures with no plane crossing the screen.
+  liveries: [],
 }
 
 export type Activity = {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { AIRLINE_OF_THE_WEEK } from '../../lib/alliance'
+import { AIRLINE_OF_THE_WEEK, AIRLINE_OF_THE_WEEK_LOCK_UNTIL } from '../../lib/alliance'
 import { isConfigured, supabase } from '../../lib/supabase'
 import { flag, num, countryName } from '../../lib/format'
 import { useT } from '../../lib/i18n'
@@ -31,12 +31,42 @@ type Row = {
 
 const base = import.meta.env.BASE_URL
 
-/** This week's airline, as configured, with its figures read live. */
+const lockUntil = AIRLINE_OF_THE_WEEK_LOCK_UNTIL ? new Date(AIRLINE_OF_THE_WEEK_LOCK_UNTIL) : null
+
+function stillLocked() {
+  return !!lockUntil && lockUntil.getTime() > Date.now()
+}
+
+/** Whole seconds remaining, floored at 0. */
+function remaining() {
+  return lockUntil ? Math.max(0, Math.floor((lockUntil.getTime() - Date.now()) / 1000)) : 0
+}
+
+function pad(n: number) {
+  return String(n).padStart(2, '0')
+}
+
+/**
+ * This week's airline, as configured, with its figures read live -- and
+ * whether the reveal is still locked. Shared by both the section and the
+ * card below, so neither can show the pick before the other does.
+ */
 export function useAirlineOfTheWeek() {
   const pick = AIRLINE_OF_THE_WEEK
   const [row, setRow] = useState<Row | null>(null)
+  const [locked, setLocked] = useState(stillLocked)
+
+  // Flips itself the moment the deadline passes, in every tab already open.
   useEffect(() => {
-    if (!isConfigured) return
+    if (!locked) return
+    const id = window.setInterval(() => {
+      if (!stillLocked()) setLocked(false)
+    }, 1000)
+    return () => window.clearInterval(id)
+  }, [locked])
+
+  useEffect(() => {
+    if (!isConfigured || locked) return
     void supabase
       .from('mv_airline_directory')
       .select(
@@ -46,8 +76,30 @@ export function useAirlineOfTheWeek() {
       .eq('airline_slug', pick.airline_slug)
       .maybeSingle()
       .then(({ data }) => setRow((data as Row) ?? null))
-  }, [pick.division_code, pick.airline_slug])
-  return { pick, row }
+  }, [pick.division_code, pick.airline_slug, locked])
+
+  return { pick, row, locked }
+}
+
+/** HH:MM:SS to the reveal, ticking every second. */
+function RevealCountdown() {
+  const t = useT()
+  const [secs, setSecs] = useState(remaining)
+  useEffect(() => {
+    const id = window.setInterval(() => setSecs(remaining()), 1000)
+    return () => window.clearInterval(id)
+  }, [])
+  const h = Math.floor(secs / 3600)
+  const m = Math.floor((secs % 3600) / 60)
+  const s = secs % 60
+  return (
+    <div className="mt-2">
+      <p className="eyebrow text-ink-faint">{t('Revealed in')}</p>
+      <p className="mono mt-1 text-[clamp(28px,5vw,44px)] tabular-nums text-ink">
+        {pad(h)}:{pad(m)}:{pad(s)}
+      </p>
+    </div>
+  )
 }
 
 /**
@@ -55,10 +107,26 @@ export function useAirlineOfTheWeek() {
  * what it flies, and a link to its page.
  */
 export function AirlineOfTheWeekCard() {
-  const { pick, row } = useAirlineOfTheWeek()
+  const { pick, row, locked } = useAirlineOfTheWeek()
   const t = useT()
   const livery = pick.liveries[0]
   const accent = row?.accent_color ?? 'var(--color-ink)'
+
+  if (locked) {
+    return (
+      <div className="aotw-card panel">
+        <div className="aotw-card-text">
+          <p className="eyebrow text-ink-faint">{t('Airline of the Week')}</p>
+          <h2 className="display aotw-card-name">{t('Locked for now')}</h2>
+          <p className="aotw-card-blurb">
+            {t('This week’s carrier is still under wraps.')}
+          </p>
+          <RevealCountdown />
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="aotw-card panel">
       <div className="aotw-card-text">
@@ -104,17 +172,42 @@ export function AirlineOfTheWeekCard() {
 }
 
 export default function AirlineOfTheWeek() {
-  const { pick, row } = useAirlineOfTheWeek()
+  const { pick, row, locked } = useAirlineOfTheWeek()
   const t = useT()
   const [shown, setShown] = useState(0)
   const [ref, p] = useScrollProgress<HTMLElement>()
 
   // More than one livery: show each in turn.
   useEffect(() => {
-    if (pick.liveries.length < 2 || prefersReducedMotion()) return
+    if (locked || pick.liveries.length < 2 || prefersReducedMotion()) return
     const id = window.setInterval(() => setShown((i) => (i + 1) % pick.liveries.length), 6000)
     return () => window.clearInterval(id)
-  }, [pick.liveries.length])
+  }, [locked, pick.liveries.length])
+
+  if (locked) {
+    return (
+      <section ref={ref} className="aotw" aria-labelledby="aotw-h">
+        <Marquee speed={0.7} className="aotw-band outline">
+          <span>{t('Airline of the Week')}</span><i>·</i>
+          <span>{t('Locked for now')}</span><i>·</i>
+        </Marquee>
+        <div className="home-wrap aotw-body">
+          <Reveal>
+            <p className="eyebrow text-ink-faint">{t('Airline of the Week')}</p>
+            <h2 className="display aotw-name" id="aotw-h">
+              {t('Locked for now')}
+            </h2>
+          </Reveal>
+          <Reveal delay={120} className="aotw-grid">
+            <p className="aotw-blurb">
+              {t('This week’s carrier is still under wraps.')}
+            </p>
+            <RevealCountdown />
+          </Reveal>
+        </div>
+      </section>
+    )
+  }
 
   const livery = pick.liveries[shown]
   const accent = row?.accent_color ?? 'var(--color-ink)'
