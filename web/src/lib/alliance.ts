@@ -112,11 +112,13 @@ export const AIRLINE_OF_THE_WEEK: {
   airline_slug: 'flynarita_express',
   blurb:
     'Flying the Japanese flag from Narita, FlyNarita Express (FNE) is one of the carriers building Echo Aura, with a 310-aircraft fleet spanning the A321neo and the A330-900.',
-  // No image yet -- waiting on a clean side-profile livery, cut out on a
-  // transparent background, the way every other entry here is. Add it under
-  // web/public/brand/liveries/ and list it here before the lock lifts, or
-  // the reveal will show the real figures with no plane crossing the screen.
-  liveries: [],
+  liveries: [
+    {
+      src: 'brand/liveries/flynarita-express-a321neo.webp',
+      aircraft: 'Airbus A321neo',
+      registration: 'JAA00N',
+    },
+  ],
 }
 
 export type Activity = {
