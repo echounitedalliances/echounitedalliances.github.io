@@ -5,6 +5,7 @@ import { isConfigured, supabase } from '../../lib/supabase'
 import { flag, num, countryName } from '../../lib/format'
 import { useT } from '../../lib/i18n'
 import { Marquee, Reveal, prefersReducedMotion, useScrollProgress } from '../../lib/motion'
+import { applyPreviewCodeFromUrl, hasPreviewAccess } from '../../lib/preview'
 
 /**
  * Airline of the Week: the chosen carrier's livery crossing the screen as the
@@ -54,7 +55,14 @@ function pad(n: number) {
 export function useAirlineOfTheWeek() {
   const pick = AIRLINE_OF_THE_WEEK
   const [row, setRow] = useState<Row | null>(null)
-  const [locked, setLocked] = useState(stillLocked)
+  const [locked, setLocked] = useState(() => stillLocked() && !hasPreviewAccess())
+
+  // A one-time ?preview=CODE in the URL unlocks early; applying it writes to
+  // storage and to the address bar, so it has to happen in an effect, not
+  // during render.
+  useEffect(() => {
+    if (locked && applyPreviewCodeFromUrl()) setLocked(false)
+  }, [locked])
 
   // Flips itself the moment the deadline passes, in every tab already open.
   useEffect(() => {
