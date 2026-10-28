@@ -752,6 +752,28 @@ h1.display .serif, h2.display .serif { color: var(--color-heading-serif); }
 .to-top:hover { background: #fff; color: #000; }
 @media (prefers-reduced-motion: reduce) { .site-bar, .to-top { transition: none; } }
 
+/* Sneak Peek lock: the same corner and the same drawn-in-difference look as
+   back-to-top, stacked just above it so the two never collide once scrolling
+   brings the second one in. Always visible, where back-to-top is not. */
+.sneak-lock {
+  position: fixed;
+  right: max(18px, calc(env(safe-area-inset-right, 0px) + 12px));
+  bottom: calc(74px + env(safe-area-inset-bottom, 0px));
+  z-index: 38;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .55);
+  background: transparent;
+  color: #fff;
+  mix-blend-mode: difference;
+  cursor: pointer;
+  transition: background-color .2s ease, color .2s ease;
+}
+.sneak-lock:hover { background: #fff; color: #000; }
+
 /* Language picker. It sits in the floating bar, so it blends with the page
    like the rest of the bar: the open list stays legible over black and
    white sections alike, just inverted over the white ones. */
