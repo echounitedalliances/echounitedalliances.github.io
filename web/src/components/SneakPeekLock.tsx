@@ -20,9 +20,10 @@ function LockGlyph({ open }: { open: boolean }) {
 
 /**
  * The one lock in the corner of every page, standing in front of whatever is
- * in SNEAK_PEEK_FEATURES (lib/sneakPeek.ts). Click it and it shows a teaser
- * of what is coming with a box for the code; get the code right once and
- * this browser can open any of them, from then on, without asking again.
+ * in SNEAK_PEEK_FEATURES (lib/sneakPeek.ts). Click it locked and all it
+ * shows is a box for the code -- not what is behind it, so the feature list
+ * itself stays part of the surprise. Get the code right once and this
+ * browser can see and open any of them, from then on, without asking again.
  *
  * Mounted once in App.tsx, same as Welcome and AdvisoryBar, so it floats
  * over every route rather than belonging to any one page.
@@ -59,18 +60,12 @@ export default function SneakPeekLock() {
 
       {panelOpen && (
         <Modal title={t('Sneak Peek')} onClose={() => setPanelOpen(false)}>
-          {!unlocked && (
-            <p className="text-sm text-ink-dim">
-              {t('A few features go up here before they go live everywhere else. Here is what is waiting.')}
-            </p>
-          )}
-
-          <ul className="mt-4 flex flex-col gap-4">
-            {SNEAK_PEEK_FEATURES.map((f) => (
-              <li key={f.id}>
-                <p className="display text-base">{t(f.name)}</p>
-                <p className="mt-1 text-sm text-ink-dim">{t(f.teaser)}</p>
-                {unlocked && (
+          {unlocked ? (
+            <ul className="flex flex-col gap-4">
+              {SNEAK_PEEK_FEATURES.map((f) => (
+                <li key={f.id}>
+                  <p className="display text-base">{t(f.name)}</p>
+                  <p className="mt-1 text-sm text-ink-dim">{t(f.teaser)}</p>
                   <button
                     type="button"
                     onClick={() => {
@@ -81,10 +76,14 @@ export default function SneakPeekLock() {
                   >
                     {t('Open')} →
                   </button>
-                )}
-              </li>
-            ))}
-          </ul>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-sm text-ink-dim">
+              {t('A few features go up here before they go live everywhere else. Have a code? Enter it below.')}
+            </p>
+          )}
 
           {!unlocked && (
             <form onSubmit={submit} className="mt-5 border-t border-edge-soft pt-4">
