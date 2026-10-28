@@ -667,6 +667,187 @@ const dict: Record<string, string> = {
   "Its busiest sector, {from} to {to}, runs {n} times a week.": "इसका सबसे व्यस्त रूट {from} से {to} है, जो हफ़्ते में {n} बार चलता है।",
   "Email {name}": "{name} को ईमेल करें",
   "Contact details updated soon": "संपर्क जानकारी जल्द अपडेट होगी",
+
+  "Activities": "गतिविधियाँ",
+  "Travel tools": "यात्रा टूल्स",
+  "Your account": "आपका खाता",
+  "About & policies": "परिचय व नीतियाँ",
+  "Sneak Peek": "झलक पहले",
+  "Sneak peek": "झलक पहले",
+  "Sneak peek (unlocked)": "झलक पहले (अनलॉक)",
+  "Unlocked for this browser": "इस ब्राउज़र के लिए अनलॉक हो गया",
+  "Look for the chat bubble in the bottom-left corner to open it.": "इसे खोलने के लिए नीचे बाईं ओर कोने में चैट बबल देखें।",
+  "A few features go up here before they go live everywhere else. Have a code? Enter it below.": "कुछ फ़ीचर पूरी साइट पर आने से पहले यहाँ आते हैं। कोड है? नीचे डालें।",
+  "Have a code?": "कोड है?",
+  "Unlock": "अनलॉक करें",
+  "That code did not work.": "वह कोड काम नहीं आया।",
+  "Close chat": "चैट बंद करें",
+  "Open Echo Assistant chat": "Echo Assistant चैट खोलें",
+  "A chat widget with instant answers to the questions members ask most -- joining, divisions, the market, Airline of the Week, and more. No waiting on Discord for the basics.":
+    "एक चैट विजेट जो सदस्यों के सबसे ज़्यादा पूछे जाने वाले सवालों का तुरंत जवाब देता है -- जुड़ना, डिवीज़न, मार्केट, इस हफ़्ते की एयरलाइन, और भी बहुत कुछ। आम बातों के लिए अब Discord पर इंतज़ार नहीं करना पड़ेगा।",
+  "Fixed answers, written and checked ahead of time.": "पहले से लिखे और जाँचे हुए तय जवाब।",
+  "Hi! Pick a question below and I will answer right away.": "नमस्ते! नीचे से कोई सवाल चुनिए, मैं तुरंत जवाब दूँगा।",
+  "Topics": "विषय",
+  "Questions": "सवाल",
+  "Clear chat": "चैट साफ़ करें",
+
+  "How do I join Echo United Alliances?": "Echo United Alliances में कैसे जुड़ें?",
+  "Two applications, not one: send a request from your airline in The Airline Simulator's alliance browser, and post an application with EUA on Discord (or use the form on the Join page). A division lead matches the two up -- an in-game request alone will not be actioned, and neither will a Discord application without the in-game one.":
+    "दो आवेदन लगते हैं, एक नहीं: The Airline Simulator के अलायंस ब्राउज़र में अपनी एयरलाइन से रिक्वेस्ट भेजें, और Discord पर EUA को आवेदन दें (या Join पेज पर दिए फ़ॉर्म का इस्तेमाल करें)। डिवीज़न लीड दोनों को मिलाते हैं -- सिर्फ़ गेम के अंदर की रिक्वेस्ट पर कोई कार्रवाई नहीं होगी, और गेम के अंदर की रिक्वेस्ट के बिना Discord आवेदन पर भी नहीं।",
+  "Which division should I apply to?": "किस डिवीज़न में आवेदन करें?",
+  "Whichever fits how you like to play. The Divisions page lists all of them with their badges -- Kyra is the main alliance, Elysium runs on realism rules, and the rest each have their own character. Pick one and apply there; you are not applying to Echo as a whole first.":
+    "जो आपके खेलने के तरीके से मेल खाए। Divisions पेज पर सभी अपने बैज के साथ सूचीबद्ध हैं -- Kyra मुख्य अलायंस है, Elysium रियलिज़्म नियमों पर चलता है, और बाकी सबका अपना अलग अंदाज़ है। एक चुनकर वहीं आवेदन करें; पहले पूरे Echo में आवेदन नहीं करना होता।",
+  "How long does an application take?": "आवेदन में कितना समय लगता है?",
+  "There is no fixed turnaround. Divisions are run separately and each reviews applications by hand, at its own pace, so allow a little time rather than expecting an instant answer.":
+    "कोई तय समय नहीं है। हर डिवीज़न अलग चलता है और अपनी रफ़्तार से हाथों-हाथ आवेदन देखता है, इसलिए तुरंत जवाब की उम्मीद करने के बजाय थोड़ा समय दें।",
+  "Do I have to use Discord?": "क्या Discord इस्तेमाल करना ज़रूरी है?",
+  "Yes. Discord is where applications are matched to divisions, where activities like the FFA sales and the discount market actually run, and where division leads are reachable. The website is the front door; Discord is where membership happens.":
+    "हाँ। Discord पर ही आवेदन डिवीज़न से जोड़े जाते हैं, FFA सेल और डिस्काउंट मार्केट जैसी गतिविधियाँ असल में वहीं चलती हैं, और डिवीज़न लीड से वहीं संपर्क हो सकता है। वेबसाइट बस सामने का दरवाज़ा है; असली सदस्यता Discord पर होती है।",
+  "Can I have more than one airline in the alliance?": "क्या अलायंस में एक से ज़्यादा एयरलाइन रख सकते हैं?",
+  "Several members do -- more than one of the division leaders themselves run multiple carriers. Each airline still needs its own in-game application to the division you want it in.":
+    "कई सदस्य रखते हैं -- कई डिवीज़न लीडर खुद भी एक से ज़्यादा एयरलाइन चलाते हैं। फिर भी हर एयरलाइन को जिस डिवीज़न में जाना है वहाँ अलग से गेम के अंदर आवेदन करना पड़ता है।",
+  "Is Echo good for beginners?": "क्या Echo शुरुआती लोगों के लिए अच्छा है?",
+  "That is who it was built around: most members joined early in their time with The Airline Simulator, and the alliance exists to make that growth faster and the market safer, not just to showcase airlines that have already arrived.":
+    "यही तो इसका मक़सद है: ज़्यादातर सदस्य The Airline Simulator शुरू करने के शुरुआती दौर में ही जुड़े, और अलायंस इसी तरक्की को तेज़ और मार्केट को सुरक्षित बनाने के लिए है, सिर्फ़ पहले से जमी हुई एयरलाइनों को दिखाने के लिए नहीं।",
+  "Can I move my airline to a different division later?": "क्या बाद में अपनी एयरलाइन किसी दूसरे डिवीज़न में ले जा सकते हैं?",
+  "Talk to the leads of your current and target divisions on Discord first -- this is not something the website handles, and it is a courtesy to the division you would be leaving as much as a request to the one you would be joining.":
+    "पहले Discord पर अपने मौजूदा और जिस डिवीज़न में जाना है उसके लीड से बात करें -- यह वेबसाइट नहीं सँभालती, और यह जिस डिवीज़न से जा रहे हैं उसके लिए शिष्टाचार भी है, उतना ही जितना नए डिवीज़न से अनुरोध।",
+  "What if my application is turned down?": "अगर आवेदन अस्वीकार हो जाए तो?",
+  "Ask the division lead what to fix and try again, or try a different division -- each reviews on its own criteria, so a no from one is not a verdict on the airline itself.":
+    "डिवीज़न लीड से पूछें क्या सुधारना है और फिर कोशिश करें, या किसी दूसरे डिवीज़न में आज़माएँ -- हर डिवीज़न अपने मापदंड पर परखता है, इसलिए एक जगह से ना का मतलब यह नहीं कि एयरलाइन में कोई कमी है।",
+
+  "What is a division?": "डिवीज़न क्या है?",
+  "Echo United Alliances is a multi-alliance group: each division runs its own roster and its own leadership, and every member flies under one shared network regardless of which division they are in.":
+    "Echo United Alliances कई अलायंस का एक समूह है: हर डिवीज़न अपनी टीम और अपनी लीडरशिप खुद चलाता है, और हर सदस्य, चाहे किसी भी डिवीज़न में हो, एक ही साझा नेटवर्क पर उड़ता है।",
+  "Who leads each division?": "हर डिवीज़न किसके हाथ में है?",
+  "The board is simply the division leaders, one or more per division. They are listed on the About page by their Discord handle, since that is how the group actually knows them -- several lead more than one division at once.":
+    "बोर्ड बस डिवीज़न लीडर ही होते हैं, हर डिवीज़न में एक या उससे ज़्यादा। About पेज पर उन्हें उनके Discord हैंडल से सूचीबद्ध किया गया है, क्योंकि समूह असल में उन्हें वहीं से जानता है -- कई लोग एक साथ कई डिवीज़न चलाते हैं।",
+  "What is the difference between Kyra and Elysium?": "Kyra और Elysium में क्या फ़र्क़ है?",
+  "Kyra is the main alliance; Elysium is the realism alliance, for members who want their operation held to realism rules. Both sit under the same group and the same shared network, just with different house rules.":
+    "Kyra मुख्य अलायंस है; Elysium रियलिज़्म अलायंस है, उन सदस्यों के लिए जो अपना काम रियलिज़्म नियमों के हिसाब से चलाना चाहते हैं। दोनों एक ही समूह और एक ही साझा नेटवर्क के अंदर हैं, बस नियम अलग हैं।",
+  "How many divisions does Echo have?": "Echo में कितने डिवीज़न हैं?",
+  "Nine at the moment, each with its own roster and leadership. The exact count and every carrier in them is on the Divisions and Airlines pages, read live from the roster rather than fixed here.":
+    "अभी नौ हैं, हर एक की अपनी टीम और लीडरशिप है। सही संख्या और उनकी हर एयरलाइन Divisions और Airlines पेज पर है, जो सीधे टीम से पढ़ी जाती है, यहाँ तय नहीं की गई।",
+  "How do I contact my division lead?": "अपने डिवीज़न लीड से कैसे संपर्क करें?",
+  "By their Discord handle, listed on the About page. Where a lead has shared an email instead, it shows next to their name there too; until they do, it reads as contact details updated soon rather than guessing one.":
+    "उनके Discord हैंडल से, जो About पेज पर सूचीबद्ध है। अगर किसी लीड ने ईमेल शेयर किया है तो वह भी उनके नाम के पास दिखता है; जब तक नहीं किया, वहाँ लिखा रहता है संपर्क जानकारी जल्द अपडेट होगी, अंदाज़ा लगाने की बजाय।",
+  "Do divisions have their own rules?": "क्या हर डिवीज़न के अपने नियम हैं?",
+  "Yes -- beyond the alliance-wide code of conduct, each division sets its own expectations for its roster. Ask your division lead what applies to yours.":
+    "हाँ -- पूरे अलायंस के आचार संहिता के अलावा, हर डिवीज़न अपनी टीम के लिए अलग उम्मीदें तय करता है। आपके डिवीज़न में क्या लागू होता है, यह डिवीज़न लीड से पूछें।",
+
+  "What is an FFA sale?": "FFA सेल क्या है?",
+  "Free for all: a member with an aircraft to sell posts it in the FFA channel on Discord, and anyone in the group can buy it -- no queue, no seniority, no allocation. Buyers are expected to say why they want it; FFA works because people take what they can actually use.":
+    "फ्री फ़ॉर ऑल: जिस सदस्य के पास बेचने के लिए विमान है वह उसे Discord के FFA चैनल में डालता है, और समूह में कोई भी उसे ख़रीद सकता है -- कोई लाइन नहीं, कोई वरिष्ठता नहीं, कोई बँटवारा नहीं। ख़रीदारों से उम्मीद की जाती है कि वे बताएँ क्यों चाहिए; FFA इसलिए काम करता है क्योंकि लोग वही लेते हैं जो वाक़ई काम आएगा।",
+  "How does the discount aircraft market work?": "डिस्काउंट एयरक्राफ़्ट मार्केट कैसे काम करता है?",
+  "The other way round from a shop: you open a buy ticket naming the aircraft you want and the price you will pay, anywhere from 50% to 90% of the original price, and a veteran member who can fulfil it picks it up. It runs continuously, not on a schedule.":
+    "सामान्य दुकान के उलट: आप एक बाय टिकट खोलते हैं जिसमें बताया जाता है कौन-सा विमान चाहिए और कितनी क़ीमत देंगे, आमतौर पर असली क़ीमत का 50% से 90% तक, और कोई अनुभवी सदस्य जो उसे पूरा कर सकता है वह उसे उठा लेता है। यह बिना किसी शेड्यूल के लगातार चलता रहता है।",
+  "Where do alliance activities actually happen?": "अलायंस की गतिविधियाँ असल में कहाँ होती हैं?",
+  "On Discord -- the sales channel, the buy tickets, the challenges and their results are all there. You need to be a member of a division to take part, so joining comes first.":
+    "Discord पर -- सेल चैनल, बाय टिकट, चैलेंज और उनके नतीजे सब वहीं हैं। हिस्सा लेने के लिए किसी डिवीज़न का सदस्य होना ज़रूरी है, इसलिए पहले जुड़ना ही पहला क़दम है।",
+  "Are there challenges with prizes?": "क्या इनाम वाले चैलेंज भी होते हैं?",
+  "Occasionally, yes. They are not run to a fixed calendar -- watch Discord for when one is announced.":
+    "कभी-कभी, हाँ। इनका कोई तय कैलेंडर नहीं है -- कब घोषणा होगी, यह जानने के लिए Discord पर नज़र रखें।",
+  "Who can take part in FFA and the market?": "FFA और मार्केट में कौन हिस्सा ले सकता है?",
+  "Any member of any division. Neither is limited to one division's roster -- the whole group can buy and sell across both.":
+    "किसी भी डिवीज़न का कोई भी सदस्य। दोनों में से कोई भी किसी एक डिवीज़न की टीम तक सीमित नहीं है -- पूरा समूह दोनों में ख़रीद-बिक्री कर सकता है।",
+  "What price can I ask in the discount market?": "डिस्काउंट मार्केट में कितनी क़ीमत माँग सकते हैं?",
+  "Buyers post what they are willing to pay, between 50% and 90% of the aircraft's original price. A veteran member decides whether to fill the ticket at that price.":
+    "ख़रीदार जो क़ीमत देने को तैयार हैं वह डालते हैं, जो विमान की असली क़ीमत के 50% से 90% के बीच होती है। उस क़ीमत पर टिकट पूरा करना है या नहीं, यह अनुभवी सदस्य तय करता है।",
+  "Is there a queue for FFA sales?": "क्या FFA सेल के लिए लाइन लगती है?",
+  "No. An FFA sale is open to the whole alliance the instant it is posted -- whoever buys first with a genuine reason gets it, not whoever asked first in some other sense.":
+    "नहीं। FFA सेल पोस्ट होते ही पूरे अलायंस के लिए खुल जाती है -- जो असली वजह के साथ पहले ख़रीदे, वह पाता है, न कि जो किसी और तरीक़े से पहले बोल दे।",
+  "How often do FFA sales happen?": "FFA सेल कितनी बार होती है?",
+  "Whenever a member has something to sell -- there is no schedule. Keep an eye on the FFA channel rather than expecting them at set times.":
+    "जब भी किसी सदस्य के पास बेचने के लिए कुछ हो -- कोई तय शेड्यूल नहीं है। तय समय की उम्मीद करने की बजाय FFA चैनल पर नज़र रखें।",
+
+  "What is Airline of the Week?": "इस हफ़्ते की एयरलाइन क्या है?",
+  "A regular feature on the home page that puts one member carrier in front of the whole group -- its livery, its name, and figures like fleet size, routes and destinations, read live from the roster.":
+    "होम पेज का एक नियमित फ़ीचर जो एक सदस्य एयरलाइन को पूरे समूह के सामने लाता है -- उसकी लिवरी, नाम, और फ़्लीट साइज़, रूट्स व डेस्टिनेशन जैसे आँकड़े, जो सीधे टीम से लिए जाते हैं।",
+  "How is the airline chosen?": "एयरलाइन कैसे चुनी जाती है?",
+  "By the board, each week. It is alliance policy rather than something generated automatically, which is also why the pick and its write-up live in the site's own code rather than the database.":
+    "बोर्ड हर हफ़्ते चुनता है। यह अलायंस की नीति है, न कि अपने आप बनने वाली कोई चीज़, इसीलिए चुनाव और उसका विवरण डेटाबेस में नहीं बल्कि सीधे साइट के कोड में ही रहता है।",
+  "Why does the home page show a countdown instead of this week's airline?": "होम पेज पर इस हफ़्ते की एयरलाइन की जगह काउंटडाउन क्यों दिखता है?",
+  "Reveals go out at an announced time, not the moment they are set up -- so the segment shows a countdown until that moment and switches itself over automatically, live, with no reload needed.":
+    "रिवील तैयार होते ही नहीं, बल्कि बताए गए समय पर होता है -- इसलिए यह हिस्सा उस समय तक काउंटडाउन दिखाता है और फिर बिना रीलोड किए, सीधे, अपने आप बदल जाता है।",
+  "Can my airline be Airline of the Week?": "क्या मेरी एयरलाइन भी इस हफ़्ते की एयरलाइन बन सकती है?",
+  "It is a board pick, not an application, so there is no form for it -- but being active in the alliance and visible on Discord is how a carrier ends up on the board's radar in the first place.":
+    "यह बोर्ड की पसंद है, आवेदन नहीं, इसलिए इसके लिए कोई फ़ॉर्म नहीं है -- लेकिन अलायंस में सक्रिय रहना और Discord पर नज़र आना ही किसी एयरलाइन के शुरुआत में ही बोर्ड की नज़र में आने का तरीक़ा है।",
+
+  "Can I search and book flights on this site?": "क्या इस साइट पर फ़्लाइट खोज और बुक कर सकते हैं?",
+  "Yes -- search the network from the home page, pick an itinerary, and book it. It is a simulated booking against the alliance's own network, not a real airline ticket.":
+    "हाँ -- होम पेज से नेटवर्क खोजें, कोई यात्रा योजना चुनें, और बुक करें। यह अलायंस के अपने नेटवर्क पर एक सिम्युलेटेड बुकिंग है, असली एयरलाइन टिकट नहीं।",
+  "How do I find a booking I already made?": "पहले की गई बुकिंग कैसे ढूँढें?",
+  "Use Manage Booking on the Trips page: enter the six-character reference from your confirmation along with the surname of anyone travelling on it.":
+    "Trips पेज पर Manage Booking का इस्तेमाल करें: अपने कन्फ़र्मेशन से छह अक्षरों का रेफ़रेंस और साथ यात्रा कर रहे किसी का सरनेम डालें।",
+  "What is the Round the World feature?": "Round the World फ़ीचर क्या है?",
+  "One fare, one direction: you build a route of stops around the alliance's network and it prices as a single round-the-world itinerary rather than separate one-way fares.":
+    "एक किराया, एक दिशा: आप अलायंस के नेटवर्क में रुकने की एक लाइन बनाते हैं और उसकी क़ीमत अलग-अलग वन-वे किरायों की बजाय एक पूरी राउंड-द-वर्ल्ड यात्रा के तौर पर लगती है।",
+  "Is there a route map for the whole alliance?": "क्या पूरे अलायंस का रूट मैप है?",
+  "Yes, on the Network page -- it draws every route across every division's carriers on one map, rather than one airline at a time.":
+    "हाँ, Network पेज पर -- यह हर डिवीज़न की एयरलाइनों के सारे रूट एक ही नक़्शे पर दिखाता है, एक बार में एक एयरलाइन की बजाय।",
+  "Where can I find a specific member airline?": "किसी ख़ास सदस्य एयरलाइन को कहाँ ढूँढें?",
+  "The Airlines directory lists every carrier in the alliance and can be filtered by division or country -- search it by name if you know roughly who you are looking for.":
+    "Airlines डायरेक्टरी में अलायंस की हर एयरलाइन सूचीबद्ध है और डिवीज़न या देश के हिसाब से फ़िल्टर की जा सकती है -- अगर मोटा-मोटा अंदाज़ा है किसे ढूँढ रहे हैं तो नाम से खोजें।",
+  "Do I need an account to search or book?": "क्या खोजने या बुक करने के लिए खाता चाहिए?",
+  "No -- searching and booking work for anyone. An account (Resonance) only comes in if you want to manage bookings under your profile or use the members-only tools.":
+    "नहीं -- खोजना और बुक करना कोई भी कर सकता है। खाता (Resonance) सिर्फ़ तब चाहिए जब आप अपनी प्रोफ़ाइल में बुकिंग सँभालना चाहें या सदस्यों के लिए ही बने टूल इस्तेमाल करना चाहें।",
+  "Are these real flight tickets?": "क्या ये असली फ़्लाइट टिकट हैं?",
+  "No. Booking on this site is a simulation layered on the alliance's own network, built for The Airline Simulator community -- not a real-world travel agency.":
+    "नहीं। इस साइट पर बुकिंग अलायंस के अपने नेटवर्क पर बनी एक सिमुलेशन है, जो The Airline Simulator समुदाय के लिए बनाई गई है -- असली दुनिया की कोई ट्रैवल एजेंसी नहीं।",
+  "Can I change or cancel a booking?": "क्या बुकिंग बदल या रद्द कर सकते हैं?",
+  "Look it up first on the Trips page with your reference and surname -- what you can do with it from there depends on the booking itself, so start there rather than guessing.":
+    "पहले Trips पेज पर अपने रेफ़रेंस और सरनेम से उसे ढूँढें -- वहाँ से क्या कर सकते हैं यह बुकिंग पर ही निर्भर करता है, इसलिए अंदाज़ा लगाने की बजाय वहीं से शुरू करें।",
+
+  "What is Resonance?": "Resonance क्या है?",
+  "The sign-in system for this site, using the Discord account you already use on the EUA server. Signed out, the link in the bar reads Resonance; signed in, it shows your name.":
+    "इस साइट का साइन-इन सिस्टम, जो उसी Discord खाते से चलता है जो आप EUA सर्वर पर पहले से इस्तेमाल करते हैं। साइन आउट होने पर बार में लिंक पर Resonance लिखा रहता है; साइन इन करने पर आपका नाम दिखता है।",
+  "What is Echo Live?": "Echo Live क्या है?",
+  "One of the members' tools on the Members page, open to everyone rather than gated to a sign-in.":
+    "Members पेज पर सदस्यों के टूल्स में से एक, जो साइन इन की ज़रूरत के बिना सबके लिए खुला है।",
+  "What is Echo Market and who can use it?": "Echo Market क्या है और इसे कौन इस्तेमाल कर सकता है?",
+  "A members' tool for EUA airlines, signed in with the Discord account you use on the alliance's server -- unlike Echo Live, it is not open to everyone.":
+    "EUA एयरलाइनों के लिए एक सदस्य टूल, जो अलायंस के सर्वर पर इस्तेमाल होने वाले Discord खाते से साइन इन होता है -- Echo Live के उलट, यह सबके लिए खुला नहीं है।",
+  "I am not in EUA yet -- can I still sign in?": "मैं अभी EUA में नहीं हूँ -- क्या फिर भी साइन इन कर सकता हूँ?",
+  "The Members page links straight to how to join if you are not in yet -- sign-in with Resonance uses your Discord account, so joining the alliance on Discord is the step that actually unlocks the members-only tools.":
+    "अगर आप अभी तक नहीं जुड़े हैं तो Members पेज सीधे जुड़ने के तरीक़े से जोड़ता है -- Resonance से साइन इन आपके Discord खाते का इस्तेमाल करता है, इसलिए Discord पर अलायंस से जुड़ना ही असल में सदस्यों के टूल खोलने वाला क़दम है।",
+  "How do I apply to help admin the alliance?": "अलायंस चलाने में मदद के लिए कैसे आवेदन करें?",
+  "There is an apply option for admin roles once you are signed in -- ask on Discord if you cannot find it, since exactly where it appears can change as the site does.":
+    "साइन इन करने के बाद एडमिन भूमिकाओं के लिए आवेदन का विकल्प होता है -- अगर न मिले तो Discord पर पूछें, क्योंकि यह ठीक-ठीक कहाँ दिखता है यह साइट बदलने के साथ बदल सकता है।",
+  "I forgot my booking reference -- what now?": "मैं अपना बुकिंग रेफ़रेंस भूल गया -- अब क्या करूँ?",
+  "If you booked while signed in to Resonance, your trips are attached to your account rather than only to the reference -- sign in and check My Trips first before trying to recall the six characters.":
+    "अगर आपने Resonance में साइन इन रहते हुए बुकिंग की थी, तो आपकी यात्राएँ सिर्फ़ रेफ़रेंस से नहीं बल्कि आपके खाते से जुड़ी रहती हैं -- छह अक्षर याद करने की कोशिश करने से पहले साइन इन करके My Trips देखें।",
+
+  "Where does the news on this site come from?": "इस साइट की ख़बरें कहाँ से आती हैं?",
+  "The Newsroom is read live from a community newsroom run by one of our members, not stored on this site -- stories appear here as soon as they are published there, and if that source is briefly unreachable the page shows nothing rather than something stale.":
+    "Newsroom हमारे किसी सदस्य द्वारा चलाए जा रहे एक सामुदायिक न्यूज़रूम से सीधे पढ़ा जाता है, यह इस साइट पर सहेजा नहीं जाता -- वहाँ प्रकाशित होते ही कहानियाँ यहाँ दिखने लगती हैं, और अगर वह स्रोत कुछ देर के लिए उपलब्ध न हो तो पुरानी जानकारी दिखाने की बजाय पेज कुछ नहीं दिखाता।",
+  "Why are some news stories only in English?": "कुछ ख़बरें सिर्फ़ अंग्रेज़ी में क्यों हैं?",
+  "Stories are shown as their authors published them. If you are browsing in another language, that is a translation of the site around the story, not of the story itself.":
+    "कहानियाँ वैसे ही दिखाई जाती हैं जैसे लेखकों ने उन्हें प्रकाशित किया। अगर आप किसी और भाषा में देख रहे हैं, तो वह अनुवाद कहानी के आसपास की साइट का है, कहानी का ख़ुद का नहीं।",
+  "Can I submit a story to the newsroom?": "क्या न्यूज़रूम को कोई कहानी भेज सकता हूँ?",
+  "That is run by the newsroom's own team, separately from this site -- ask on Discord who runs it if you want to pitch something.":
+    "इसे न्यूज़रूम की अपनी टीम चलाती है, इस साइट से अलग -- अगर कुछ सुझाना है तो Discord पर पूछें कौन इसे चलाता है।",
+
+  "When was Echo founded?": "Echo की स्थापना कब हुई?",
+  "On 24 March 2026, as Axian Alliance, with three founding members. It has grown a great deal since, entirely on the back of its members.":
+    "24 मार्च 2026 को, Axian Alliance के नाम से, तीन संस्थापक सदस्यों के साथ। तब से यह बहुत बढ़ा है, पूरी तरह अपने सदस्यों की बदौलत।",
+  "What does \"Home of the Excellence\" mean?": "\"Home of the Excellence\" का क्या मतलब है?",
+  "It is the alliance's slogan -- the standard it holds its members and its own running of the group to, across every division.":
+    "यह अलायंस का नारा है -- वह मापदंड जो यह अपने सदस्यों और हर डिवीज़न में अपने समूह को चलाने के तरीक़े के लिए रखता है।",
+  "What game is Echo United Alliances for?": "Echo United Alliances किस गेम के लिए है?",
+  "The Airline Simulator. Echo is a virtual airline alliance group built around it, not an airline or a real-world company.":
+    "The Airline Simulator। Echo इसी के इर्द-गिर्द बना एक वर्चुअल एयरलाइन अलायंस समूह है, न कि कोई एयरलाइन या असली दुनिया की कंपनी।",
+  "Where do I find the Discord invite?": "Discord का न्योता कहाँ मिलेगा?",
+  "The Join Discord button in the site header and footer links straight to it, and it is set never to expire -- if it ever fails, that is worth reporting rather than assuming the alliance closed up.":
+    "साइट के हेडर और फ़ुटर में Join Discord बटन सीधे वहाँ ले जाता है, और इसे कभी ख़त्म न होने के लिए सेट किया गया है -- अगर कभी काम न करे, तो अलायंस बंद मान लेने की बजाय इसकी जानकारी देना बेहतर है।",
+  "Where are the Terms of Service?": "Terms of Service कहाँ हैं?",
+  "Linked in the footer of every page, along with the Code of Conduct and the Privacy Policy.":
+    "हर पेज के फ़ुटर में लिंक है, Code of Conduct और Privacy Policy के साथ।",
+  "What does the Privacy Policy cover, and can I check it?": "Privacy Policy में क्या शामिल है, और क्या मैं इसे ख़ुद जाँच सकता हूँ?",
+  "What this site collects and why, including that this is a GitHub Pages site with a public source -- the Privacy page says that every claim on it can be checked, and links to where.":
+    "यह साइट क्या इकट्ठा करती है और क्यों, साथ ही यह भी कि यह सार्वजनिक सोर्स वाली GitHub Pages साइट है -- Privacy पेज कहता है कि इसमें हर दावे की जाँच की जा सकती है, और कहाँ जाँचना है इसका लिंक भी देता है।",
+  "Is the source code for this site public?": "क्या इस साइट का सोर्स कोड सार्वजनिक है?",
+  "Yes -- the whole site is open on GitHub, linked from the Privacy page. That is also how its figures, like the number of carriers and airports, stay honest: they are read live rather than typed in once and left to go stale.":
+    "हाँ -- पूरी साइट GitHub पर खुली है, जिसका लिंक Privacy पेज पर है। इसी तरह इसके आँकड़े, जैसे एयरलाइनों और हवाई अड्डों की संख्या, सही बने रहते हैं: इन्हें एक बार टाइप करके पुराना पड़ने देने की बजाय सीधे पढ़ा जाता है।",
 }
 
 export default dict

@@ -612,6 +612,189 @@ const dict: Record<string, string> = {
   "Its busiest sector, {from} to {to}, runs {n} times a week.": "Ang pinakaabalang ruta nito, {from} papuntang {to}, ay lumilipad nang {n} beses kada linggo.",
   "Email {name}": "I-email si {name}",
   "Contact details updated soon": "Ia-update ang contact details sa lalong madaling panahon",
+
+  "Account": "Account",
+  "Airline of the Week": "Airline ng Linggo",
+  "Activities": "Mga Aktibidad",
+  "Travel tools": "Mga Travel Tool",
+  "Your account": "Account Mo",
+  "About & policies": "Tungkol sa Amin & Patakaran",
+  "Sneak Peek": "Paunang Tingin",
+  "Sneak peek": "Paunang tingin",
+  "Sneak peek (unlocked)": "Paunang tingin (bukas na)",
+  "Unlocked for this browser": "Bukas na para sa browser na ito",
+  "Look for the chat bubble in the bottom-left corner to open it.": "Hanapin ang chat bubble sa ibabang kaliwang sulok para buksan ito.",
+  "A few features go up here before they go live everywhere else. Have a code? Enter it below.": "May mga feature na lumalabas dito muna bago ma-live sa buong site. May code ka ba? I-enter sa baba.",
+  "Have a code?": "May code ka ba?",
+  "Unlock": "I-unlock",
+  "That code did not work.": "Hindi gumana ang code na iyon.",
+  "Close chat": "Isara ang chat",
+  "Open Echo Assistant chat": "Buksan ang chat ng Echo Assistant",
+  "A chat widget with instant answers to the questions members ask most -- joining, divisions, the market, Airline of the Week, and more. No waiting on Discord for the basics.":
+    "Isang chat widget na may agarang sagot sa mga tanong na pinakamadalas itanong ng mga miyembro -- tungkol sa pagsali, division, market, Airline ng Linggo, at marami pa. Hindi na kailangang maghintay sa Discord para sa mga basic na bagay.",
+  "Fixed answers, written and checked ahead of time.": "Nakatakdang sagot, na-sulat at na-check na nang maaga.",
+  "Hi! Pick a question below and I will answer right away.": "Hi! Pumili ng tanong sa baba at sasagutin ko agad.",
+  "Topics": "Mga Paksa",
+  "Questions": "Mga Tanong",
+  "Clear chat": "I-clear ang chat",
+
+  "How do I join Echo United Alliances?": "Paano sumali sa Echo United Alliances?",
+  "Two applications, not one: send a request from your airline in The Airline Simulator's alliance browser, and post an application with EUA on Discord (or use the form on the Join page). A division lead matches the two up -- an in-game request alone will not be actioned, and neither will a Discord application without the in-game one.":
+    "Dalawang aplikasyon, hindi isa: magpadala ng request mula sa airline mo sa alliance browser ng The Airline Simulator, tapos mag-post ng aplikasyon sa EUA sa Discord (o gamitin ang form sa Join page). Ita-tally ng division lead ang dalawa -- ang in-game request lang hindi aaksyunan, at ganoon din ang Discord application na walang kasamang in-game request.",
+  "Which division should I apply to?": "Aling division ang dapat kong i-apply-an?",
+  "Whichever fits how you like to play. The Divisions page lists all of them with their badges -- Kyra is the main alliance, Elysium runs on realism rules, and the rest each have their own character. Pick one and apply there; you are not applying to Echo as a whole first.":
+    "Kung alin ang bagay sa paraan ng paglalaro mo. Nakalista lahat sa Divisions page kasama ang mga badge nila -- si Kyra ang main alliance, si Elysium ay realism rules ang sinusunod, at ang iba naman may sariling character. Pumili ng isa at doon mag-apply; hindi ka unang nag-a-apply sa Echo bilang isang kabuuan.",
+  "How long does an application take?": "Gaano katagal ang proseso ng aplikasyon?",
+  "There is no fixed turnaround. Divisions are run separately and each reviews applications by hand, at its own pace, so allow a little time rather than expecting an instant answer.":
+    "Walang fixed na turnaround. Hiwalay ang pagpapatakbo ng bawat division at isa-isang sinusuri nila ang aplikasyon ayon sa bilis nila, kaya bigyan ng konting oras sa halip na asahan ang instant na sagot.",
+  "Do I have to use Discord?": "Kailangan ko bang gumamit ng Discord?",
+  "Yes. Discord is where applications are matched to divisions, where activities like the FFA sales and the discount market actually run, and where division leads are reachable. The website is the front door; Discord is where membership happens.":
+    "Oo. Sa Discord natutugma ang mga aplikasyon sa division, doon talaga tumatakbo ang mga aktibidad gaya ng FFA sales at discount market, at doon maaabot ang mga division lead. Ang website ang pintuan; sa Discord talaga nangyayari ang membership.",
+  "Can I have more than one airline in the alliance?": "Pwede ba akong magkaroon ng higit sa isang airline sa alliance?",
+  "Several members do -- more than one of the division leaders themselves run multiple carriers. Each airline still needs its own in-game application to the division you want it in.":
+    "Marami nga sa mga miyembro ang ganito -- kahit ilan sa mga division leader mismo ay may higit sa isang airline. Pero kailangan pa rin ng bawat airline ng sarili nitong in-game application papunta sa division na gusto mo.",
+  "Is Echo good for beginners?": "Maganda ba ang Echo para sa mga baguhan?",
+  "That is who it was built around: most members joined early in their time with The Airline Simulator, and the alliance exists to make that growth faster and the market safer, not just to showcase airlines that have already arrived.":
+    "Sila mismo ang target: karamihan sa mga miyembro ay sumali noong bago pa lang sila sa The Airline Simulator, at ang alliance ay para mas mapabilis ang paglago nila at mas maging ligtas ang market, hindi lang para i-showcase ang mga airline na matagal nang established.",
+  "Can I move my airline to a different division later?": "Pwede ko bang ilipat ang airline ko sa ibang division sa susunod?",
+  "Talk to the leads of your current and target divisions on Discord first -- this is not something the website handles, and it is a courtesy to the division you would be leaving as much as a request to the one you would be joining.":
+    "Kausapin muna ang leads ng kasalukuyan mong division at ng target division sa Discord -- hindi ito hinahawakan ng website, at isa itong courtesy sa division na iiwan mo, kasing-halaga ng request sa division na sasalihan mo.",
+  "What if my application is turned down?": "Paano kung ma-reject ang aplikasyon ko?",
+  "Ask the division lead what to fix and try again, or try a different division -- each reviews on its own criteria, so a no from one is not a verdict on the airline itself.":
+    "Tanungin ang division lead kung ano ang kailangang ayusin at subukan ulit, o subukan ang ibang division -- may sariling criteria ang bawat isa, kaya ang pagtanggi ng isa ay hindi verdict sa airline mismo.",
+
+  "What is a division?": "Ano ang division?",
+  "Echo United Alliances is a multi-alliance group: each division runs its own roster and its own leadership, and every member flies under one shared network regardless of which division they are in.":
+    "Ang Echo United Alliances ay isang multi-alliance group: may sariling team at leadership ang bawat division, at lumilipad ang bawat miyembro sa iisang shared network, kahit anong division ang kinabibilangan niya.",
+  "Who leads each division?": "Sino ang namumuno sa bawat division?",
+  "The board is simply the division leaders, one or more per division. They are listed on the About page by their Discord handle, since that is how the group actually knows them -- several lead more than one division at once.":
+    "Ang board ay ang mga division leader mismo, isa o higit pa bawat division. Nakalista sila sa About page gamit ang Discord handle nila, dahil iyon talaga ang paraan ng pagkakakilanlan sa kanila ng grupo -- ilan sa kanila ang namumuno sa higit sa isang division nang sabay.",
+  "What is the difference between Kyra and Elysium?": "Ano ang pagkakaiba ng Kyra at Elysium?",
+  "Kyra is the main alliance; Elysium is the realism alliance, for members who want their operation held to realism rules. Both sit under the same group and the same shared network, just with different house rules.":
+    "Si Kyra ang main alliance; si Elysium ang realism alliance, para sa mga miyembrong gustong sundin ang realism rules sa operations nila. Parehas silang nasa ilalim ng parehong grupo at parehong network, iba lang ang house rules.",
+  "How many divisions does Echo have?": "Ilang division mayroon ang Echo?",
+  "Nine at the moment, each with its own roster and leadership. The exact count and every carrier in them is on the Divisions and Airlines pages, read live from the roster rather than fixed here.":
+    "Siyam sa ngayon, may sariling team at leadership ang bawat isa. Ang eksaktong bilang at lahat ng airline sa loob nito ay nasa Divisions at Airlines pages, kinukuha nang live mula sa roster at hindi fixed dito.",
+  "How do I contact my division lead?": "Paano ko makokontak ang division lead ko?",
+  "By their Discord handle, listed on the About page. Where a lead has shared an email instead, it shows next to their name there too; until they do, it reads as contact details updated soon rather than guessing one.":
+    "Sa pamamagitan ng Discord handle nila, nakalista sa About page. Kung may email na naibahagi ang isang lead, lalabas din ito sa tabi ng pangalan nila; kung wala pa, lalabas na contact details updated soon sa halip na manghula na lang.",
+  "Do divisions have their own rules?": "May sariling rules ba ang mga division?",
+  "Yes -- beyond the alliance-wide code of conduct, each division sets its own expectations for its roster. Ask your division lead what applies to yours.":
+    "Oo -- bukod sa alliance-wide code of conduct, nagtatakda ang bawat division ng sarili nilang expectations para sa team nila. Tanungin ang division lead mo kung ano ang applicable sa inyo.",
+
+  "What is an FFA sale?": "Ano ang FFA sale?",
+  "Free for all: a member with an aircraft to sell posts it in the FFA channel on Discord, and anyone in the group can buy it -- no queue, no seniority, no allocation. Buyers are expected to say why they want it; FFA works because people take what they can actually use.":
+    "Free for all: ang miyembrong may eroplanong ibebenta ay mag-po-post nito sa FFA channel sa Discord, at kahit sino sa grupo ay pwedeng bumili -- walang pila, walang seniority, walang allocation. Inaasahang sasabihin ng bibili kung bakit nila gusto; gumagana ang FFA dahil kinukuha ng mga tao kung ano lang talaga ang magagamit nila.",
+  "How does the discount aircraft market work?": "Paano gumagana ang discount aircraft market?",
+  "The other way round from a shop: you open a buy ticket naming the aircraft you want and the price you will pay, anywhere from 50% to 90% of the original price, and a veteran member who can fulfil it picks it up. It runs continuously, not on a schedule.":
+    "Kabaligtaran ito ng ordinaryong tindahan: magbubukas ka ng buy ticket na nagsasabi kung anong eroplano ang gusto mo at magkano ang babayaran mo, mula 50% hanggang 90% ng original price, tapos may veteran member na magfufulfill nito. Tuloy-tuloy ito, walang schedule.",
+  "Where do alliance activities actually happen?": "Saan talaga nagaganap ang mga aktibidad ng alliance?",
+  "On Discord -- the sales channel, the buy tickets, the challenges and their results are all there. You need to be a member of a division to take part, so joining comes first.":
+    "Sa Discord -- naroon lahat ang sales channel, ang buy tickets, ang mga challenge at ang resulta nila. Kailangan mong maging miyembro ng isang division para makasali, kaya ang pagsali muna ang kailangan.",
+  "Are there challenges with prizes?": "May mga challenge bang may premyo?",
+  "Occasionally, yes. They are not run to a fixed calendar -- watch Discord for when one is announced.":
+    "Paminsan-minsan, oo. Walang fixed na schedule -- bantayan ang Discord kung kailan may ia-announce.",
+  "Who can take part in FFA and the market?": "Sino ang pwedeng sumali sa FFA at market?",
+  "Any member of any division. Neither is limited to one division's roster -- the whole group can buy and sell across both.":
+    "Kahit sinong miyembro ng kahit anong division. Wala sa dalawa ang limitado sa team ng isang division lang -- kaya ng buong grupo na magbenta at bumili sa pareho.",
+  "What price can I ask in the discount market?": "Anong presyo ang pwede kong hingin sa discount market?",
+  "Buyers post what they are willing to pay, between 50% and 90% of the aircraft's original price. A veteran member decides whether to fill the ticket at that price.":
+    "Ipopost ng bibili kung magkano ang handa nilang bayaran, sa pagitan ng 50% at 90% ng original price ng eroplano. Desisyon ng veteran member kung ipunan ang ticket sa presyong iyon.",
+  "Is there a queue for FFA sales?": "May pila ba para sa FFA sale?",
+  "No. An FFA sale is open to the whole alliance the instant it is posted -- whoever buys first with a genuine reason gets it, not whoever asked first in some other sense.":
+    "Wala. Bukas ang FFA sale sa buong alliance sa sandaling ma-post ito -- sino man ang unang bumili nang may tunay na dahilan, sa kanya ito mapupunta, hindi iyong nauna lang magtanong.",
+  "How often do FFA sales happen?": "Gaano kadalas nagkakaroon ng FFA sale?",
+  "Whenever a member has something to sell -- there is no schedule. Keep an eye on the FFA channel rather than expecting them at set times.":
+    "Tuwing may ibebenta ang isang miyembro -- walang schedule. Bantayan na lang ang FFA channel sa halip na umasa sa fixed na oras.",
+
+  "What is Airline of the Week?": "Ano ang Airline ng Linggo?",
+  "A regular feature on the home page that puts one member carrier in front of the whole group -- its livery, its name, and figures like fleet size, routes and destinations, read live from the roster.":
+    "Regular na feature sa home page na nagpapakita ng isang airline ng miyembro sa harap ng buong grupo -- ang livery nito, pangalan, at mga detalye tulad ng laki ng fleet, mga ruta, at destinasyon, kinukuha nang live mula sa roster.",
+  "How is the airline chosen?": "Paano pinipili ang airline?",
+  "By the board, each week. It is alliance policy rather than something generated automatically, which is also why the pick and its write-up live in the site's own code rather than the database.":
+    "Pinipili ng board, bawat linggo. Patakaran ito ng alliance at hindi awtomatikong ginagawa, kaya nga nasa code mismo ng site ang pinili at ang write-up nito, hindi sa database.",
+  "Why does the home page show a countdown instead of this week's airline?": "Bakit countdown ang ipinapakita ng home page sa halip na ang airline ngayong linggo?",
+  "Reveals go out at an announced time, not the moment they are set up -- so the segment shows a countdown until that moment and switches itself over automatically, live, with no reload needed.":
+    "Lumalabas ang reveal sa oras na naka-announce, hindi sa sandaling na-set up ito -- kaya nagpapakita ang segment ng countdown hanggang sa oras na iyon tapos nagpapalit ito mismo nang awtomatiko, live, walang kailangang i-reload.",
+  "Can my airline be Airline of the Week?": "Pwede bang maging Airline ng Linggo ang airline ko?",
+  "It is a board pick, not an application, so there is no form for it -- but being active in the alliance and visible on Discord is how a carrier ends up on the board's radar in the first place.":
+    "Pinipili ito ng board, hindi aplikasyon, kaya walang form para dito -- pero ang pagiging active sa alliance at pagiging visible sa Discord ang paraan para mapansin ng board ang isang airline sa simula pa lang.",
+
+  "Can I search and book flights on this site?": "Pwede ba akong maghanap at mag-book ng flight dito sa site?",
+  "Yes -- search the network from the home page, pick an itinerary, and book it. It is a simulated booking against the alliance's own network, not a real airline ticket.":
+    "Oo -- maghanap sa network mula sa home page, pumili ng itinerary, tapos i-book. Simulated booking ito laban sa sariling network ng alliance, hindi totoong tiket ng eroplano.",
+  "How do I find a booking I already made?": "Paano ko mahahanap ang booking na nagawa ko na?",
+  "Use Manage Booking on the Trips page: enter the six-character reference from your confirmation along with the surname of anyone travelling on it.":
+    "Gamitin ang Manage Booking sa Trips page: ilagay ang six-character reference mula sa confirmation mo kasama ang apelyido ng kahit sinong kasama sa biyahe.",
+  "What is the Round the World feature?": "Ano ang Round the World feature?",
+  "One fare, one direction: you build a route of stops around the alliance's network and it prices as a single round-the-world itinerary rather than separate one-way fares.":
+    "Isang fare, isang direksyon: gumagawa ka ng ruta ng mga stop sa buong network ng alliance at pinepresyuhan ito bilang isang round-the-world itinerary, hindi hiwa-hiwalay na one-way fares.",
+  "Is there a route map for the whole alliance?": "May route map ba para sa buong alliance?",
+  "Yes, on the Network page -- it draws every route across every division's carriers on one map, rather than one airline at a time.":
+    "Meron, sa Network page -- iginuguhit nito ang lahat ng ruta ng lahat ng airline sa bawat division sa iisang mapa, hindi isa-isang airline lang.",
+  "Where can I find a specific member airline?": "Saan ko mahahanap ang specific na airline ng miyembro?",
+  "The Airlines directory lists every carrier in the alliance and can be filtered by division or country -- search it by name if you know roughly who you are looking for.":
+    "Nakalista sa Airlines directory ang lahat ng airline sa alliance at pwedeng i-filter ayon sa division o bansa -- hanapin gamit ang pangalan kung may idea ka kung sino ang hinahanap mo.",
+  "Do I need an account to search or book?": "Kailangan ko ba ng account para maghanap o mag-book?",
+  "No -- searching and booking work for anyone. An account (Resonance) only comes in if you want to manage bookings under your profile or use the members-only tools.":
+    "Hindi -- pwede ng kahit sino ang maghanap at mag-book. Kailangan lang ng account (Resonance) kung gusto mong i-manage ang mga booking sa profile mo o gamitin ang mga tool na para sa miyembro lang.",
+  "Are these real flight tickets?": "Totoong flight ticket ba ito?",
+  "No. Booking on this site is a simulation layered on the alliance's own network, built for The Airline Simulator community -- not a real-world travel agency.":
+    "Hindi. Ang booking dito sa site ay simulation lang na nakapatong sa sariling network ng alliance, ginawa para sa community ng The Airline Simulator -- hindi totoong travel agency.",
+  "Can I change or cancel a booking?": "Pwede ko bang baguhin o kanselahin ang booking?",
+  "Look it up first on the Trips page with your reference and surname -- what you can do with it from there depends on the booking itself, so start there rather than guessing.":
+    "Hanapin muna ito sa Trips page gamit ang reference at apelyido mo -- ang magagawa mo mula doon ay depende sa booking mismo, kaya magsimula roon sa halip na manghula.",
+
+  "What is Resonance?": "Ano ang Resonance?",
+  "The sign-in system for this site, using the Discord account you already use on the EUA server. Signed out, the link in the bar reads Resonance; signed in, it shows your name.":
+    "Ang sign-in system ng site na ito, gamit ang Discord account na ginagamit mo na sa EUA server. Kapag naka-sign out, ang link sa bar ay nagsasabing Resonance; kapag naka-sign in, ipinapakita nito ang pangalan mo.",
+  "What is Echo Live?": "Ano ang Echo Live?",
+  "One of the members' tools on the Members page, open to everyone rather than gated to a sign-in.":
+    "Isa sa mga tool ng miyembro sa Members page, bukas sa lahat at hindi kailangang mag-sign in.",
+  "What is Echo Market and who can use it?": "Ano ang Echo Market at sino ang pwedeng gumamit nito?",
+  "A members' tool for EUA airlines, signed in with the Discord account you use on the alliance's server -- unlike Echo Live, it is not open to everyone.":
+    "Isang tool ng miyembro para sa mga airline ng EUA, naka-sign in gamit ang Discord account na ginagamit mo sa server ng alliance -- hindi tulad ng Echo Live, hindi ito bukas sa lahat.",
+  "I am not in EUA yet -- can I still sign in?": "Hindi pa ako miyembro ng EUA -- pwede pa ba akong mag-sign in?",
+  "The Members page links straight to how to join if you are not in yet -- sign-in with Resonance uses your Discord account, so joining the alliance on Discord is the step that actually unlocks the members-only tools.":
+    "Diretso ang link ng Members page sa paraan ng pagsali kung wala ka pa -- gumagamit ng Discord account mo ang sign-in with Resonance, kaya ang pagsali sa alliance sa Discord ang talagang hakbang na magbubukas sa mga tool na para sa miyembro lang.",
+  "How do I apply to help admin the alliance?": "Paano ako mag-a-apply para tumulong mag-admin ng alliance?",
+  "There is an apply option for admin roles once you are signed in -- ask on Discord if you cannot find it, since exactly where it appears can change as the site does.":
+    "May apply option para sa mga admin role kapag naka-sign in ka na -- magtanong sa Discord kung hindi mo mahanap, dahil maaaring magbago ang eksaktong lokasyon nito kasabay ng pagbabago ng site.",
+  "I forgot my booking reference -- what now?": "Nakalimutan ko ang booking reference ko -- ano na?",
+  "If you booked while signed in to Resonance, your trips are attached to your account rather than only to the reference -- sign in and check My Trips first before trying to recall the six characters.":
+    "Kung nag-book ka habang naka-sign in sa Resonance, naka-attach ang mga trip mo sa account mo, hindi lang sa reference -- mag-sign in muna at tingnan ang My Trips bago subukang alalahanin ang six characters.",
+
+  "Where does the news on this site come from?": "Saan nanggagaling ang balita sa site na ito?",
+  "The Newsroom is read live from a community newsroom run by one of our members, not stored on this site -- stories appear here as soon as they are published there, and if that source is briefly unreachable the page shows nothing rather than something stale.":
+    "Binabasa nang live ang Newsroom mula sa community newsroom na pinapatakbo ng isa sa mga miyembro namin, hindi naka-store dito sa site -- lumalabas ang mga artikulo dito sa sandaling ma-publish sila doon, at kung hindi ma-reach ang source sandali, walang ipapakita ang page sa halip na luma nang balita.",
+  "Why are some news stories only in English?": "Bakit may mga balitang nasa English lang?",
+  "Stories are shown as their authors published them. If you are browsing in another language, that is a translation of the site around the story, not of the story itself.":
+    "Ipinapakita ang mga artikulo ayon sa pagka-publish ng may-akda nito. Kung nagba-browse ka sa ibang wika, ang na-translate ay ang bahagi ng site sa paligid ng artikulo, hindi ang laman ng artikulo mismo.",
+  "Can I submit a story to the newsroom?": "Pwede ba akong magsumite ng artikulo sa newsroom?",
+  "That is run by the newsroom's own team, separately from this site -- ask on Discord who runs it if you want to pitch something.":
+    "Pinapatakbo iyon ng sarili nilang team, hiwalay sa site na ito -- magtanong sa Discord kung sino ang nag-aayos nito kung may gusto kang i-pitch.",
+
+  "When was Echo founded?": "Kailan naitatag ang Echo?",
+  "On 24 March 2026, as Axian Alliance, with three founding members. It has grown a great deal since, entirely on the back of its members.":
+    "Noong 24 Marso 2026, bilang Axian Alliance, kasama ang tatlong founding member. Lumago ito nang malaki mula noon, lahat dahil sa mga miyembro nito.",
+  "What does \"Home of the Excellence\" mean?": "Ano ang ibig sabihin ng \"Home of the Excellence\"?",
+  "It is the alliance's slogan -- the standard it holds its members and its own running of the group to, across every division.":
+    "Ito ang slogan ng alliance -- ang standard na hinihingi nito sa mga miyembro at sa pagpapatakbo mismo ng grupo, sa lahat ng division.",
+  "What game is Echo United Alliances for?": "Para saang laro ang Echo United Alliances?",
+  "The Airline Simulator. Echo is a virtual airline alliance group built around it, not an airline or a real-world company.":
+    "The Airline Simulator. Ang Echo ay isang virtual airline alliance group na ginawa para dito, hindi isang airline o kumpanya sa totoong mundo.",
+  "Where do I find the Discord invite?": "Saan ko mahahanap ang Discord invite?",
+  "The Join Discord button in the site header and footer links straight to it, and it is set never to expire -- if it ever fails, that is worth reporting rather than assuming the alliance closed up.":
+    "Diretso dinadala ng Join Discord button sa header at footer ng site papunta rito, at naka-set itong hindi mag-e-expire -- kung sakaling hindi gumana, mas mabuting i-report ito kaysa akalaing nagsara na ang alliance.",
+  "Where are the Terms of Service?": "Nasaan ang Terms of Service?",
+  "Linked in the footer of every page, along with the Code of Conduct and the Privacy Policy.":
+    "Naka-link sa footer ng bawat page, kasama ang Code of Conduct at Privacy Policy.",
+  "What does the Privacy Policy cover, and can I check it?": "Ano ang saklaw ng Privacy Policy, at pwede ko ba itong i-check?",
+  "What this site collects and why, including that this is a GitHub Pages site with a public source -- the Privacy page says that every claim on it can be checked, and links to where.":
+    "Kung ano ang kinokolekta ng site na ito at bakit, kasama na rin na ito ay isang GitHub Pages site na may public source -- sinasabi ng Privacy page na pwedeng i-check ang bawat claim dito, at naka-link kung saan.",
+  "Is the source code for this site public?": "Public ba ang source code ng site na ito?",
+  "Yes -- the whole site is open on GitHub, linked from the Privacy page. That is also how its figures, like the number of carriers and airports, stay honest: they are read live rather than typed in once and left to go stale.":
+    "Oo -- bukas ang buong site sa GitHub, naka-link mula sa Privacy page. Ganito rin pinapanatiling tapat ang mga numero nito, tulad ng bilang ng airline at paliparan: binabasa ang mga ito nang live sa halip na i-type nang isang beses at hayaang maluma.",
 }
 
 export default dict

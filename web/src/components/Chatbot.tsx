@@ -1,17 +1,33 @@
 import { useEffect, useRef, useState } from 'react'
-import Modal from './Modal'
+import EchoMark from './EchoMark'
 import { useT } from '../lib/i18n'
 import { CHATBOT_CATEGORIES, CHATBOT_PRESETS } from '../data/chatbotPresets'
 
-type Turn = { id: string; question: string; answer: string }
+type Turn = { id: string; question: string; answer: string; time: string }
+
+function now() {
+  return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+}
+
+/** The wing, dark on a light disc, standing in for an avatar on every bot line. */
+function BotAvatar() {
+  return (
+    <span className="chat-avatar" aria-hidden="true">
+      <EchoMark height={11} color="#050505" />
+    </span>
+  )
+}
 
 /**
- * The Echo Assistant: fifty fixed questions with fixed answers, picked from
- * chips rather than typed. Nothing here calls out to anything -- an answer
- * is just the preset's own text, looked up by id -- so it can never say
- * something about the alliance that was not written and checked ahead of
- * time. It is one of the features behind the Sneak Peek lock; see
- * lib/sneakPeek.ts for how that gate works.
+ * The Echo Assistant, as a proper chat window rather than a form: a
+ * scrollable thread of bubbles, a bot avatar, and a composer -- except the
+ * composer is chips, not a text box, because this is fifty fixed questions
+ * with fixed answers, not a model. Picking a question appends it and its
+ * answer to the thread as if typed and replied to; nothing here calls out
+ * to anything.
+ *
+ * Anchored bottom-left by its caller (SneakPeekLock), which also owns
+ * whether this is mounted at all.
  */
 export default function Chatbot({ onClose }: { onClose: () => void }) {
   const t = useT()
@@ -26,68 +42,95 @@ export default function Chatbot({ onClose }: { onClose: () => void }) {
   const ask = (id: string) => {
     const preset = CHATBOT_PRESETS.find((p) => p.id === id)
     if (!preset) return
-    setThread((prev) => [...prev, { id, question: preset.question, answer: preset.answer }])
+    setThread((prev) => [...prev, { id, question: preset.question, answer: preset.answer, time: now() }])
   }
 
   const visible = CHATBOT_PRESETS.filter((p) => p.category === category)
 
   return (
-    <Modal title={t('Echo Assistant')} onClose={onClose} wide>
-      <p className="text-sm text-ink-dim">
-        {t('Fifty preset questions, with answers written and checked ahead of time -- nothing here is generated. Pick one below.')}
-      </p>
-
-      <div className="mt-4 flex flex-wrap gap-1.5">
-        {CHATBOT_CATEGORIES.map((c) => (
-          <button
-            key={c}
-            type="button"
-            onClick={() => setCategory(c)}
-            className={`chip ${category === c ? 'chip-on' : ''}`}
-          >
-            {t(c)}
-          </button>
-        ))}
-      </div>
-
-      <div className="mt-3 flex max-h-32 flex-wrap gap-1.5 overflow-y-auto">
-        {visible.map((p) => (
-          <button
-            key={p.id}
-            type="button"
-            onClick={() => ask(p.id)}
-            className="mono border border-edge-soft px-2.5 py-1.5 text-left text-[11.5px] text-ink-dim transition-colors hover:border-accent hover:text-ink"
-          >
-            {t(p.question)}
-          </button>
-        ))}
-      </div>
-
-      <div className="mt-4 max-h-[42vh] overflow-y-auto border-t border-edge-soft pt-4">
-        {thread.length === 0 ? (
-          <p className="eyebrow text-ink-faint">{t('Nothing asked yet -- pick a question above.')}</p>
-        ) : (
-          <div className="flex flex-col gap-4">
-            {thread.map((turn, i) => (
-              <div key={`${turn.id}-${i}`}>
-                <p className="mono text-[11px] uppercase tracking-[0.1em] text-cyan">{t(turn.question)}</p>
-                <p className="mt-1.5 text-[14px] leading-relaxed text-ink">{t(turn.answer)}</p>
-              </div>
-            ))}
+    <div role="dialog" aria-modal="false" aria-label={t('Echo Assistant')} className="chat-window">
+      <div className="chat-header">
+        <div className="flex items-center gap-2.5">
+          <BotAvatar />
+          <div>
+            <p className="display text-[15px] leading-none">{t('Echo Assistant')}</p>
+            <p className="mt-0.5 text-[11px] leading-none text-ink-faint">
+              {t('Fixed answers, written and checked ahead of time.')}
+            </p>
           </div>
-        )}
+        </div>
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label={t('Close chat')}
+          className="shrink-0 px-1.5 py-1 text-lg leading-none text-ink-faint transition-colors hover:text-ink"
+        >
+          ×
+        </button>
+      </div>
+
+      <div className="chat-body">
+        <div className="chat-msg chat-msg-bot">
+          <BotAvatar />
+          <p className="chat-bubble-bot">
+            {t('Hi! Pick a question below and I will answer right away.')}
+          </p>
+        </div>
+
+        {thread.map((turn, i) => (
+          <div key={`${turn.id}-${i}`} className="contents">
+            <div className="chat-msg chat-msg-user">
+              <p className="chat-bubble-user">{t(turn.question)}</p>
+            </div>
+            <div className="chat-msg chat-msg-bot">
+              <BotAvatar />
+              <div>
+                <p className="chat-bubble-bot">{t(turn.answer)}</p>
+                <p className="chat-time">{turn.time}</p>
+              </div>
+            </div>
+          </div>
+        ))}
         <div ref={end} />
       </div>
 
-      {thread.length > 0 && (
-        <button
-          type="button"
-          onClick={() => setThread([])}
-          className="mono mt-4 text-[11px] uppercase tracking-[0.12em] text-ink-faint hover:text-ink"
-        >
-          {t('Clear chat')}
-        </button>
-      )}
-    </Modal>
+      <div className="chat-composer">
+        <p className="eyebrow mb-1.5 text-ink-faint">{t('Topics')}</p>
+        <div className="flex flex-wrap gap-1.5">
+          {CHATBOT_CATEGORIES.map((c) => (
+            <button
+              key={c}
+              type="button"
+              onClick={() => setCategory(c)}
+              className={`chip ${category === c ? 'chip-on' : ''}`}
+            >
+              {t(c)}
+            </button>
+          ))}
+        </div>
+        <p className="eyebrow mb-1.5 mt-3 text-ink-faint">{t('Questions')}</p>
+        <div className="flex max-h-28 flex-col gap-1.5 overflow-y-auto">
+          {visible.map((p) => (
+            <button
+              key={p.id}
+              type="button"
+              onClick={() => ask(p.id)}
+              className="mono border border-edge-soft px-2.5 py-1.5 text-left text-[11.5px] text-ink-dim transition-colors hover:border-accent hover:text-ink"
+            >
+              {t(p.question)}
+            </button>
+          ))}
+        </div>
+        {thread.length > 0 && (
+          <button
+            type="button"
+            onClick={() => setThread([])}
+            className="mono mt-2.5 text-[11px] uppercase tracking-[0.12em] text-ink-faint hover:text-ink"
+          >
+            {t('Clear chat')}
+          </button>
+        )}
+      </div>
+    </div>
   )
 }

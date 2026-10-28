@@ -774,6 +774,114 @@ h1.display .serif, h2.display .serif { color: var(--color-heading-serif); }
 }
 .sneak-lock:hover { background: #fff; color: #000; }
 
+/* Echo Assistant: the opposite corner from the lock and back-to-top, so
+   none of the three floating buttons ever compete for the same spot. Solid,
+   not difference-blended -- a chat window is a surface of its own, not a
+   control floating over the page, so it reads like one from the moment it
+   opens. */
+.chat-bubble {
+  position: fixed;
+  left: max(18px, calc(env(safe-area-inset-left, 0px) + 12px));
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  z-index: 38;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--color-edge);
+  background: var(--color-ink);
+  color: #050505;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .35);
+  transition: transform .18s cubic-bezier(.2,.7,.3,1);
+}
+.chat-bubble:hover { transform: translateY(-1px); }
+
+.chat-window {
+  position: fixed;
+  left: max(18px, calc(env(safe-area-inset-left, 0px) + 12px));
+  bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+  z-index: 60;
+  width: min(380px, calc(100vw - 32px));
+  height: min(600px, 72vh);
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border: 1px solid var(--color-edge);
+  border-radius: 14px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, .45);
+  overflow: hidden;
+}
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--color-edge-soft);
+  flex: none;
+}
+.chat-avatar {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--color-ink);
+  flex: none;
+}
+.chat-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.chat-msg { display: flex; align-items: flex-end; gap: 8px; }
+.chat-msg-user { justify-content: flex-end; }
+.chat-bubble-bot,
+.chat-bubble-user {
+  max-width: 85%;
+  padding: 9px 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.chat-bubble-bot {
+  background: var(--color-ground-2);
+  border: 1px solid var(--color-edge-soft);
+  color: var(--color-ink);
+  border-bottom-left-radius: 4px;
+}
+.chat-bubble-user {
+  background: var(--color-ink);
+  color: #050505;
+  border-bottom-right-radius: 4px;
+}
+.chat-time {
+  margin-top: 3px;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 10px;
+  color: var(--color-ink-faint);
+}
+.chat-composer {
+  flex: none;
+  padding: 12px 14px 14px;
+  border-top: 1px solid var(--color-edge-soft);
+}
+@media (max-width: 480px) {
+  .chat-bubble { left: max(14px, calc(env(safe-area-inset-left, 0px) + 8px)); }
+  .chat-window {
+    left: 8px;
+    right: 8px;
+    bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+    width: auto;
+  }
+}
+
 /* Language picker. It sits in the floating bar, so it blends with the page
    like the rest of the bar: the open list stays legible over black and
    white sections alike, just inverted over the white ones. */
