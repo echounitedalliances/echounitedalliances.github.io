@@ -837,6 +837,19 @@ const dict: Record<string, string> = {
   "Is the source code for this site public?": "이 사이트의 소스 코드는 공개돼 있나요?",
   "Yes -- the whole site is open on GitHub, linked from the Privacy page. That is also how its figures, like the number of carriers and airports, stay honest: they are read live rather than typed in once and left to go stale.":
     "네 -- 사이트 전체가 GitHub에 공개돼 있고, Privacy 페이지에 링크가 있어요. 항공사 수나 공항 수 같은 수치가 정직하게 유지되는 것도 같은 이유예요. 한 번 입력하고 방치하는 게 아니라 실시간으로 가져오거든요.",
+
+  "Sneak Peek": "미리보기",
+  "Sneak peek": "미리보기",
+  "Sneak peek (unlocked)": "미리보기 (잠금 해제됨)",
+  "A few features go up here before they go live everywhere else. Have a code? Enter it below.": "몇몇 기능은 전체 공개 전에 여기 먼저 올라와요. 코드가 있나요? 아래에 입력해 주세요.",
+  "Have a code?": "코드가 있나요?",
+  "Unlock": "잠금 해제",
+  "That code did not work.": "코드가 맞지 않아요.",
+  "Unlocked for this browser": "이 브라우저에서는 잠금 해제됨",
+  "or": "또는",
+  "Sign in to Resonance with the Discord account you already use on the EUA server -- no separate password to set or remember.":
+    "EUA 서버에서 이미 쓰고 있는 Discord 계정으로 Resonance에 로그인하세요 -- 따로 비밀번호를 만들거나 기억할 필요 없어요.",
+  "Look for it on the Resonance sign-in page.": "Resonance 로그인 페이지에서 찾을 수 있어요.",
 }
 
 export default dict

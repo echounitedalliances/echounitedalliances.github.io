@@ -784,6 +784,19 @@ const dict: Record<string, string> = {
   "Is the source code for this site public?": "Public ba ang source code ng site na ito?",
   "Yes -- the whole site is open on GitHub, linked from the Privacy page. That is also how its figures, like the number of carriers and airports, stay honest: they are read live rather than typed in once and left to go stale.":
     "Oo -- bukas ang buong site sa GitHub, naka-link mula sa Privacy page. Ganito rin pinapanatiling tapat ang mga numero nito, tulad ng bilang ng airline at paliparan: binabasa ang mga ito nang live sa halip na i-type nang isang beses at hayaang maluma.",
+
+  "Sneak Peek": "Paunang Tingin",
+  "Sneak peek": "Paunang tingin",
+  "Sneak peek (unlocked)": "Paunang tingin (bukas na)",
+  "A few features go up here before they go live everywhere else. Have a code? Enter it below.": "May mga feature na lumalabas dito muna bago ma-live sa buong site. May code ka ba? I-enter sa baba.",
+  "Have a code?": "May code ka ba?",
+  "Unlock": "I-unlock",
+  "That code did not work.": "Hindi gumana ang code na iyon.",
+  "Unlocked for this browser": "Bukas na para sa browser na ito",
+  "or": "o",
+  "Sign in to Resonance with the Discord account you already use on the EUA server -- no separate password to set or remember.":
+    "Mag-sign in sa Resonance gamit ang Discord account na ginagamit mo na sa EUA server -- hindi na kailangang gumawa o tandaan ang hiwalay na password.",
+  "Look for it on the Resonance sign-in page.": "Hanapin ito sa Resonance sign-in page.",
 }
 
 export default dict

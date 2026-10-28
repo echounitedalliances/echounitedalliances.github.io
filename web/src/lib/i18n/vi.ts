@@ -833,6 +833,19 @@ const dict: Record<string, string> = {
   "Is the source code for this site public?": "Mã nguồn của trang này có công khai không?",
   "Yes -- the whole site is open on GitHub, linked from the Privacy page. That is also how its figures, like the number of carriers and airports, stay honest: they are read live rather than typed in once and left to go stale.":
     "Có -- cả trang web đều mở trên GitHub, có liên kết từ trang Privacy. Đó cũng là cách các con số trên trang, như số hãng bay và sân bay, luôn trung thực: chúng được lấy trực tiếp chứ không gõ một lần rồi để cũ đi.",
+
+  "Sneak Peek": "Xem Trước",
+  "Sneak peek": "Xem trước",
+  "Sneak peek (unlocked)": "Xem trước (đã mở khoá)",
+  "A few features go up here before they go live everywhere else. Have a code? Enter it below.": "Vài tính năng xuất hiện ở đây trước khi ra mắt khắp trang. Có mã không? Nhập bên dưới nhé.",
+  "Have a code?": "Có mã không?",
+  "Unlock": "Mở khoá",
+  "That code did not work.": "Mã đó không đúng rồi.",
+  "Unlocked for this browser": "Đã mở khoá cho trình duyệt này",
+  "or": "hoặc",
+  "Sign in to Resonance with the Discord account you already use on the EUA server -- no separate password to set or remember.":
+    "Đăng nhập Resonance bằng tài khoản Discord bạn đã dùng trên server EUA -- khỏi cần đặt hay nhớ thêm mật khẩu riêng.",
+  "Look for it on the Resonance sign-in page.": "Tìm nó ở trang đăng nhập Resonance.",
 }
 
 export default dict

@@ -57,6 +57,14 @@ type AuthState = {
   recovering: boolean
   endRecovery: () => void
   signInWithPassword: (email: string, password: string) => Promise<Result>
+  /**
+   * Starts the Discord OAuth redirect. Resolves once Supabase has handed off
+   * to Discord (or failed to, e.g. the provider is not enabled on this
+   * project yet) -- not once sign-in is complete, which only happens after
+   * the round trip back from Discord, picked up by the existing
+   * onAuthStateChange listener like any other sign-in.
+   */
+  signInWithDiscord: () => Promise<Result>
   /** Resolves with needsConfirmation when the project requires a confirmed email. */
   signUp: (email: string, password: string) => Promise<Result & { needsConfirmation: boolean }>
   sendPasswordReset: (email: string) => Promise<Result>
@@ -151,6 +159,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // GoTrue answers "Invalid login credentials" whether the address is
         // unknown or the password is wrong, which is what stops this being a
         // way to find out who has an account. Passed through unchanged.
+        return { error }
+      },
+
+      signInWithDiscord: async () => {
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: 'discord',
+          options: { redirectTo: redirectTo() },
+        })
         return { error }
       },
 

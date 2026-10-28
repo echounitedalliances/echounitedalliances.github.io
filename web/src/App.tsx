@@ -33,6 +33,8 @@ import EchoMark from './components/EchoMark'
 import Welcome from './components/Welcome'
 import MaintenanceLock from './components/MaintenanceLock'
 import EchoAssistant from './components/EchoAssistant'
+import SneakPeekLock from './components/SneakPeekLock'
+import { SneakPeekProvider } from './lib/sneakPeek'
 import LangMenu from './components/LangMenu'
 import { I18nProvider, rich, useI18n, useT } from './lib/i18n'
 
@@ -392,6 +394,7 @@ function Shell({ children }: { children: React.ReactNode }) {
         </svg>
       </button>
       <EchoAssistant />
+      <SneakPeekLock />
     </div>
   )
 }
@@ -421,6 +424,7 @@ export default function App() {
 
   return (
     <I18nProvider>
+    <SneakPeekProvider>
     <AuthProvider>
       <Welcome />
       <HashRouter>
@@ -459,6 +463,7 @@ export default function App() {
         </Shell>
       </HashRouter>
     </AuthProvider>
+    </SneakPeekProvider>
     </I18nProvider>
   )
 }

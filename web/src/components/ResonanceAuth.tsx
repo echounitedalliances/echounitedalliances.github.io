@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../lib/auth'
 import { useCarrierCount } from '../lib/carriers'
 import { num } from '../lib/format'
+import { useSneakPeek } from '../lib/sneakPeek'
 import AdminApplyModal from './AdminApplyModal'
+import DiscordGlyph from './DiscordGlyph'
 import { rich, translate, useT } from '../lib/i18n'
 
 /**
@@ -52,6 +54,9 @@ export function explain(error: { message: string; code?: string; status?: number
   }
   if (code === 'email_provider_disabled') {
     return translate('Email sign-in is switched off for this project.')
+  }
+  if (/provider is not enabled/i.test(msg)) {
+    return translate('Discord sign-in is not turned on for this project yet.')
   }
   return msg
 }
@@ -116,15 +121,31 @@ type Mode = 'password' | 'signup' | 'forgot'
 export function SignIn() {
   const carrierCount = useCarrierCount()
   const t = useT()
-  const { signInWithPassword, signUp, sendPasswordReset } = useAuth()
+  const { signInWithPassword, signInWithDiscord, signUp, sendPasswordReset } = useAuth()
+  const { unlocked: discordSignInUnlocked } = useSneakPeek()
   const [mode, setMode] = useState<Mode>('password')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [busy, setBusy] = useState(false)
+  const [discordBusy, setDiscordBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [note, setNote] = useState<string | null>(null)
   const [wantsAdmin, setWantsAdmin] = useState(false)
   const [showAdminModal, setShowAdminModal] = useState(false)
+
+  const discordSignIn = async () => {
+    setDiscordBusy(true)
+    setError(null)
+    setNote(null)
+    const { error } = await signInWithDiscord()
+    // On success this redirects the whole page to Discord, so there is
+    // nothing left here to update -- only a failure to start the redirect
+    // (e.g. the provider is not enabled yet) comes back to this component.
+    if (error) {
+      setDiscordBusy(false)
+      setError(explain(error))
+    }
+  }
 
   const go = (m: Mode) => {
     setMode(m)
@@ -219,6 +240,24 @@ export function SignIn() {
           <p className="-mt-2 text-sm text-ink-dim">
             {t('We email you a link that brings you back here to choose a new one. This is also how to set your first password if you have never had one.')}
           </p>
+        )}
+
+        {mode === 'password' && discordSignInUnlocked && (
+          <>
+            <button
+              type="button"
+              onClick={discordSignIn}
+              disabled={discordBusy}
+              className="btn btn-ghost w-full justify-center gap-2"
+            >
+              <DiscordGlyph /> {discordBusy ? t('Working…') : t('Sign in with Discord')}
+            </button>
+            <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.12em] text-ink-faint">
+              <span className="h-px flex-1 bg-edge-soft" />
+              {t('or')}
+              <span className="h-px flex-1 bg-edge-soft" />
+            </div>
+          </>
         )}
 
         <Field

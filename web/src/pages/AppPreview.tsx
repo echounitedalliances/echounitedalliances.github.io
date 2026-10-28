@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { appByKey, type MemberApp } from '../lib/apps'
 import { rich, useT } from '../lib/i18n'
+import DiscordGlyph from '../components/DiscordGlyph'
 
 /**
  * /live and /market: what a members' app will be, until it is plugged in.
@@ -95,14 +96,6 @@ function MarketMock() {
         </div>
       ))}
     </div>
-  )
-}
-
-function DiscordGlyph() {
-  return (
-    <svg width="16" height="12" viewBox="0 0 71 55" aria-hidden="true" fill="currentColor">
-      <path d="M60.1 4.9A58.5 58.5 0 0 0 45.6.4a40 40 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A39 39 0 0 0 25.8.4 58.4 58.4 0 0 0 11.2 4.9C2 18.7-.5 32.2.7 45.5a58.9 58.9 0 0 0 17.9 9 43 43 0 0 0 3.8-6.2 38 38 0 0 1-6-2.9l1.5-1.1a42 42 0 0 0 35.9 0l1.5 1.1a38 38 0 0 1-6 2.9 43 43 0 0 0 3.8 6.2 58.7 58.7 0 0 0 17.9-9c1.5-15.4-2.5-28.8-10.9-40.6ZM23.7 37.3c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2 6.5 3.3 6.4 7.2c0 4-2.8 7.2-6.4 7.2Zm23.6 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2 6.5 3.3 6.4 7.2c0 4-2.8 7.2-6.4 7.2Z" />
-    </svg>
   )
 }
 

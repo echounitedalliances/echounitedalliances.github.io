@@ -829,6 +829,19 @@ const dict: Record<string, string> = {
   "Is the source code for this site public?": "Apakah source code situs ini publik?",
   "Yes -- the whole site is open on GitHub, linked from the Privacy page. That is also how its figures, like the number of carriers and airports, stay honest: they are read live rather than typed in once and left to go stale.":
     "Ya -- seluruh situs ini terbuka di GitHub, ditautkan dari halaman Privacy. Begitu juga caranya angka-angka di situs ini, seperti jumlah maskapai dan bandara, tetap jujur: dibaca langsung, bukan diketik sekali lalu dibiarkan basi.",
+
+  "Sneak Peek": "Intip Duluan",
+  "Sneak peek": "Intip duluan",
+  "Sneak peek (unlocked)": "Intip duluan (terbuka)",
+  "A few features go up here before they go live everywhere else. Have a code? Enter it below.": "Beberapa fitur tayang di sini dulu sebelum aktif di seluruh situs. Punya kode? Masukkan di bawah.",
+  "Have a code?": "Punya kode?",
+  "Unlock": "Buka",
+  "That code did not work.": "Kode itu tidak berhasil.",
+  "Unlocked for this browser": "Terbuka untuk browser ini",
+  "or": "atau",
+  "Sign in to Resonance with the Discord account you already use on the EUA server -- no separate password to set or remember.":
+    "Masuk ke Resonance dengan akun Discord yang sudah kamu pakai di server EUA -- tidak perlu kata sandi terpisah untuk dibuat atau diingat.",
+  "Look for it on the Resonance sign-in page.": "Cari ini di halaman masuk Resonance.",
 }
 
 export default dict

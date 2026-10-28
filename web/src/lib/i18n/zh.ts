@@ -837,6 +837,19 @@ const dict: Record<string, string> = {
   "Is the source code for this site public?": "这个网站的源代码是公开的吗？",
   "Yes -- the whole site is open on GitHub, linked from the Privacy page. That is also how its figures, like the number of carriers and airports, stay honest: they are read live rather than typed in once and left to go stale.":
     "是的 -- 整个网站都在 GitHub 上公开，Privacy 页面有链接。这也是网站上的数字（比如航司数量和机场数量）能保持真实的原因：它们都是实时读取的，而不是写死一次就放着过时。",
+
+  "Sneak Peek": "抢先看",
+  "Sneak peek": "抢先看",
+  "Sneak peek (unlocked)": "抢先看（已解锁）",
+  "A few features go up here before they go live everywhere else. Have a code? Enter it below.": "有些功能会先在这里上线，之后才会在全站开放。有口令吗？在下面输入。",
+  "Have a code?": "有口令吗？",
+  "Unlock": "解锁",
+  "That code did not work.": "口令不对。",
+  "Unlocked for this browser": "此浏览器已解锁",
+  "or": "或",
+  "Sign in to Resonance with the Discord account you already use on the EUA server -- no separate password to set or remember.":
+    "用你在 EUA 服务器上已经在用的 Discord 账户登录 Resonance -- 不用再单独设置或记一个密码。",
+  "Look for it on the Resonance sign-in page.": "在 Resonance 登录页面可以找到它。",
 }
 
 export default dict

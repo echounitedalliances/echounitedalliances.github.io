@@ -9,9 +9,12 @@
  *   market.echoalliances.com   Echo Market, aircraft orders
  *   desk.echoalliances.com     the market's seller desk
  *
- * Nothing here signs anyone in or reads their data. This site only links
- * out; each app does its own Discord login, so a member signs in there.
+ * This site still reads none of their data. It only links out to each app,
+ * which keeps its own Discord login -- Resonance (lib/auth.tsx) separately
+ * added its own, optional Discord sign-in, behind the Sneak Peek lock while
+ * it is new, but that is this site's own accounts, not a window into theirs.
  *
+
  * TO PLUG ONE IN: set `url` to where it lives and `live: true`. The tile on
  * /members starts linking straight to it, and its page here (/live, /market)
  * forwards there instead of showing "coming soon". Nothing else changes.

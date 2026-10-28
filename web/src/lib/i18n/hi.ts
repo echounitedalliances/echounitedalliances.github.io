@@ -837,6 +837,19 @@ const dict: Record<string, string> = {
   "Is the source code for this site public?": "क्या इस साइट का सोर्स कोड सार्वजनिक है?",
   "Yes -- the whole site is open on GitHub, linked from the Privacy page. That is also how its figures, like the number of carriers and airports, stay honest: they are read live rather than typed in once and left to go stale.":
     "हाँ -- पूरी साइट GitHub पर खुली है, जिसका लिंक Privacy पेज पर है। इसी तरह इसके आँकड़े, जैसे एयरलाइनों और हवाई अड्डों की संख्या, सही बने रहते हैं: इन्हें एक बार टाइप करके पुराना पड़ने देने की बजाय सीधे पढ़ा जाता है।",
+
+  "Sneak Peek": "झलक पहले",
+  "Sneak peek": "झलक पहले",
+  "Sneak peek (unlocked)": "झलक पहले (अनलॉक)",
+  "A few features go up here before they go live everywhere else. Have a code? Enter it below.": "कुछ फ़ीचर पूरी साइट पर आने से पहले यहाँ आते हैं। कोड है? नीचे डालें।",
+  "Have a code?": "कोड है?",
+  "Unlock": "अनलॉक करें",
+  "That code did not work.": "वह कोड काम नहीं आया।",
+  "Unlocked for this browser": "इस ब्राउज़र के लिए अनलॉक हो गया",
+  "or": "या",
+  "Sign in to Resonance with the Discord account you already use on the EUA server -- no separate password to set or remember.":
+    "EUA सर्वर पर आप पहले से जो Discord खाता इस्तेमाल करते हैं उसी से Resonance में साइन इन करें -- अलग से पासवर्ड बनाने या याद रखने की ज़रूरत नहीं।",
+  "Look for it on the Resonance sign-in page.": "यह Resonance साइन-इन पेज पर मिलेगा।",
 }
 
 export default dict
