@@ -26,7 +26,7 @@ function BotAvatar() {
  * answer to the thread as if typed and replied to; nothing here calls out
  * to anything.
  *
- * Anchored bottom-left by its caller (EchoAssistant), which also owns
+ * Anchored bottom-right by its caller (EchoAssistant), which also owns
  * whether this is mounted at all.
  */
 export default function Chatbot({ onClose }: { onClose: () => void }) {

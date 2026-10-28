@@ -774,15 +774,15 @@ h1.display .serif, h2.display .serif { color: var(--color-heading-serif); }
 }
 .sneak-lock:hover { background: #fff; color: #000; }
 
-/* Echo Assistant: the opposite corner from back-to-top, so the two
-   floating buttons never compete for the same spot. Solid, not
-   difference-blended -- a chat window is a surface of its own, not a
-   control floating over the page, so it reads like one from the moment it
-   opens. */
+/* Echo Assistant: stacked above back-to-top in the same corner, same as the
+   Sneak Peek lock was before it was hidden, so the other corner stays free
+   of floating buttons entirely. Solid, not difference-blended -- a chat
+   window is a surface of its own, not a control floating over the page, so
+   it reads like one from the moment it opens. */
 .chat-bubble {
   position: fixed;
-  left: max(18px, calc(env(safe-area-inset-left, 0px) + 12px));
-  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  right: max(18px, calc(env(safe-area-inset-right, 0px) + 12px));
+  bottom: calc(74px + env(safe-area-inset-bottom, 0px));
   z-index: 38;
   width: 48px;
   height: 48px;
@@ -800,8 +800,8 @@ h1.display .serif, h2.display .serif { color: var(--color-heading-serif); }
 
 .chat-window {
   position: fixed;
-  left: max(18px, calc(env(safe-area-inset-left, 0px) + 12px));
-  bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+  right: max(18px, calc(env(safe-area-inset-right, 0px) + 12px));
+  bottom: calc(132px + env(safe-area-inset-bottom, 0px));
   z-index: 60;
   width: min(380px, calc(100vw - 32px));
   height: min(600px, 72vh);
@@ -873,11 +873,10 @@ h1.display .serif, h2.display .serif { color: var(--color-heading-serif); }
   border-top: 1px solid var(--color-edge-soft);
 }
 @media (max-width: 480px) {
-  .chat-bubble { left: max(14px, calc(env(safe-area-inset-left, 0px) + 8px)); }
+  .chat-bubble { right: max(14px, calc(env(safe-area-inset-right, 0px) + 8px)); }
   .chat-window {
     left: 8px;
     right: 8px;
-    bottom: calc(76px + env(safe-area-inset-bottom, 0px));
     width: auto;
   }
 }

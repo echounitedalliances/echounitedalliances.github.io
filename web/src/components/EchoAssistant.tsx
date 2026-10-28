@@ -17,10 +17,10 @@ function ChatGlyph() {
 }
 
 /**
- * The Echo Assistant's entry point: a floating bubble, bottom-left, on
- * every page. Launched behind the Sneak Peek lock; now that it is a real
- * feature rather than a preview, it is just here, same as the back-to-top
- * button on the other side of the screen.
+ * The Echo Assistant's entry point: a floating bubble, bottom-right, on
+ * every page, stacked above the back-to-top button in the same corner.
+ * Launched behind the Sneak Peek lock; now that it is a real feature rather
+ * than a preview, it is just here.
  *
  * Mounted once in App.tsx.
  */
