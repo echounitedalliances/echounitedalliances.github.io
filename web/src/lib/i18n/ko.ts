@@ -850,6 +850,13 @@ const dict: Record<string, string> = {
   "Sign in to Resonance with the Discord account you already use on the EUA server -- no separate password to set or remember.":
     "EUA 서버에서 이미 쓰고 있는 Discord 계정으로 Resonance에 로그인하세요 -- 따로 비밀번호를 만들거나 기억할 필요 없어요.",
   "Look for it on the Resonance sign-in page.": "Resonance 로그인 페이지에서 찾을 수 있어요.",
+
+  "Your airline": "내 항공사",
+  "Airline name or code": "항공사 이름 또는 코드",
+  "Claim your airline": "내 항공사 연결하기",
+  "Link the airline you fly for to your Resonance account, self-reported, the same way you already set a home airport and division.":
+    "당신이 운항하는 항공사를 Resonance 계정에 연결하세요. 홈 공항과 디비전을 설정했던 것처럼 직접 입력하는 방식이에요.",
+  "Look for it under Your details on the Resonance page.": "Resonance 페이지의 Your details에서 찾을 수 있어요.",
 }
 
 export default dict

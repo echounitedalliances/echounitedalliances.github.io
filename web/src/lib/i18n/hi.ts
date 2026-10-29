@@ -850,6 +850,13 @@ const dict: Record<string, string> = {
   "Sign in to Resonance with the Discord account you already use on the EUA server -- no separate password to set or remember.":
     "EUA सर्वर पर आप पहले से जो Discord खाता इस्तेमाल करते हैं उसी से Resonance में साइन इन करें -- अलग से पासवर्ड बनाने या याद रखने की ज़रूरत नहीं।",
   "Look for it on the Resonance sign-in page.": "यह Resonance साइन-इन पेज पर मिलेगा।",
+
+  "Your airline": "आपकी एयरलाइन",
+  "Airline name or code": "एयरलाइन का नाम या कोड",
+  "Claim your airline": "अपनी एयरलाइन क्लेम करें",
+  "Link the airline you fly for to your Resonance account, self-reported, the same way you already set a home airport and division.":
+    "आप जिस एयरलाइन के लिए उड़ते हैं उसे अपने Resonance खाते से जोड़ें, खुद बताकर, जैसे आपने पहले से होम एयरपोर्ट और डिवीज़न सेट किया है।",
+  "Look for it under Your details on the Resonance page.": "यह Resonance पेज पर Your details के नीचे मिलेगा।",
 }
 
 export default dict

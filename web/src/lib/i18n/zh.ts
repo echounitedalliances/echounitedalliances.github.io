@@ -850,6 +850,13 @@ const dict: Record<string, string> = {
   "Sign in to Resonance with the Discord account you already use on the EUA server -- no separate password to set or remember.":
     "用你在 EUA 服务器上已经在用的 Discord 账户登录 Resonance -- 不用再单独设置或记一个密码。",
   "Look for it on the Resonance sign-in page.": "在 Resonance 登录页面可以找到它。",
+
+  "Your airline": "你的航司",
+  "Airline name or code": "航司名称或代码",
+  "Claim your airline": "认领你的航司",
+  "Link the airline you fly for to your Resonance account, self-reported, the same way you already set a home airport and division.":
+    "把你所飞的航司和你的 Resonance 账户关联起来，自行填写，就像你之前设置常驻机场和分部一样。",
+  "Look for it under Your details on the Resonance page.": "在 Resonance 页面的 Your details 部分可以找到它。",
 }
 
 export default dict

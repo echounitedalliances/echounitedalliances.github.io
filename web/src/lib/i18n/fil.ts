@@ -797,6 +797,13 @@ const dict: Record<string, string> = {
   "Sign in to Resonance with the Discord account you already use on the EUA server -- no separate password to set or remember.":
     "Mag-sign in sa Resonance gamit ang Discord account na ginagamit mo na sa EUA server -- hindi na kailangang gumawa o tandaan ang hiwalay na password.",
   "Look for it on the Resonance sign-in page.": "Hanapin ito sa Resonance sign-in page.",
+
+  "Your airline": "Airline Mo",
+  "Airline name or code": "Pangalan o code ng airline",
+  "Claim your airline": "I-claim ang Airline Mo",
+  "Link the airline you fly for to your Resonance account, self-reported, the same way you already set a home airport and division.":
+    "I-link ang airline na nililipad mo sa account mo sa Resonance, sariling sinabi, tulad ng pag-set mo na ng home airport at division.",
+  "Look for it under Your details on the Resonance page.": "Hanapin ito sa ilalim ng Your details sa Resonance page.",
 }
 
 export default dict

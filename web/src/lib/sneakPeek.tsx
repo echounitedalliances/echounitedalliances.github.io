@@ -34,6 +34,13 @@ export const SNEAK_PEEK_FEATURES: SneakPeekFeature[] = [
       'Sign in to Resonance with the Discord account you already use on the EUA server -- no separate password to set or remember.',
     whereToFind: 'Look for it on the Resonance sign-in page.',
   },
+  {
+    id: 'claim-airline',
+    name: 'Claim your airline',
+    teaser:
+      'Link the airline you fly for to your Resonance account, self-reported, the same way you already set a home airport and division.',
+    whereToFind: 'Look for it under Your details on the Resonance page.',
+  },
 ]
 
 const KEY = 'eua-sneak-peek'

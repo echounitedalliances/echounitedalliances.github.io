@@ -36,6 +36,8 @@ export type Resonant = {
   family_name: string | null
   home_airport: string | null
   home_division: string | null
+  /** Self-claimed, not verified against the game. See database/sql/43_claim_airline.sql. */
+  claimed_airline_uid: string | null
   is_admin: boolean
   joined_at: string
 }

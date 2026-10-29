@@ -846,6 +846,13 @@ const dict: Record<string, string> = {
   "Sign in to Resonance with the Discord account you already use on the EUA server -- no separate password to set or remember.":
     "Đăng nhập Resonance bằng tài khoản Discord bạn đã dùng trên server EUA -- khỏi cần đặt hay nhớ thêm mật khẩu riêng.",
   "Look for it on the Resonance sign-in page.": "Tìm nó ở trang đăng nhập Resonance.",
+
+  "Your airline": "Hãng bay của bạn",
+  "Airline name or code": "Tên hoặc mã hãng bay",
+  "Claim your airline": "Nhận Hãng Bay Của Bạn",
+  "Link the airline you fly for to your Resonance account, self-reported, the same way you already set a home airport and division.":
+    "Liên kết hãng bay bạn đang lái với tài khoản Resonance, tự khai báo, giống như cách bạn đã đặt sân bay và division.",
+  "Look for it under Your details on the Resonance page.": "Tìm nó ở mục Thông tin của bạn trên trang Resonance.",
 }
 
 export default dict
