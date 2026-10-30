@@ -103,7 +103,19 @@ export default function AirlinePage() {
       }
       setA(air)
 
-      const [f, r, w, idle] = await Promise.all([
+      // The idle pairs come on their own: the slowest of these by far, and
+      // not something the fleet, routes or map should wait for.
+      void supabase
+        .from('v_airline_idle_routes')
+        .select('airport_a, airport_b, reason')
+        .eq('airline_uid', air.uid)
+        .order('airport_a')
+        .order('airport_b')
+        .then(({ data: idle }) =>
+          setIdleRoutes((idle as { airport_a: string; airport_b: string; reason: string }[]) ?? []),
+        )
+
+      const [f, r, w] = await Promise.all([
         supabase
           .from('v_fleet')
           .select('aircraft_model, manufacturer, aircraft_count')
@@ -121,18 +133,11 @@ export default function AirlinePage() {
         // Most carriers have no site of their own, so this returns no rows
         // far more often than it returns one.
         supabase.rpc('airline_site', { p_uid: air.uid }),
-        supabase
-          .from('v_airline_idle_routes')
-          .select('airport_a, airport_b, reason')
-          .eq('airline_uid', air.uid)
-          .order('airport_a')
-          .order('airport_b'),
       ])
       const routeRows = (r.data as RoutePairRow[]) ?? []
       setFleet((f.data as FleetRow[]) ?? [])
       setRoutes(routeRows)
       setSite(((w.data as MemberSiteRow[]) ?? [])[0] ?? null)
-      setIdleRoutes((idle.data as { airport_a: string; airport_b: string; reason: string }[]) ?? [])
 
       // Draw this carrier's own network: look up the coordinates for the
       // airports it actually touches, then build arcs from its routes.

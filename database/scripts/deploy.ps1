@@ -144,7 +144,9 @@ $files += @('04_views.sql', '05_reservations.sql', '06_inventory.sql',
             '45_drop_booking_and_search.sql',
             # Uzuri, the tenth division (30 October 2026). 43 is the airline
             # claim, written the same week in another session.
-            '46_division_uzuri.sql')
+            '46_division_uzuri.sql',
+            # Idle-routes view rewritten to work without the index 45 dropped.
+            '47_idle_routes_without_pair_index.sql')
 
 # Refuse the truncating reload against a database people are using.
 #
