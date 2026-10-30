@@ -667,7 +667,11 @@ h1.display .serif, h2.display .serif { color: var(--color-heading-serif); }
 /* Division tiles ----------------------------------------------------
    Black until pointed at, then flooded with the division's own colour a
    pixel at a time (components/DivisionTile.tsx). Home page and /divisions. */
-.div-grid { margin-top: clamp(32px, 5vw, 56px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--color-edge); border: 1px solid var(--color-edge); }
+/* The rules between tiles are each tile's own outline, not the grid's
+   background showing through the gaps -- so an unfilled slot in the last
+   row stays black instead of reading as a grey block. */
+.div-grid { margin-top: clamp(32px, 5vw, 56px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; padding: 1px; }
+.div-grid > .div-tile { outline: 1px solid var(--color-edge); }
 .div-tile {
   --tile-ink: var(--c);
   position: relative; overflow: hidden; isolation: isolate;
@@ -684,9 +688,6 @@ h1.display .serif, h2.display .serif { color: var(--color-heading-serif); }
 .div-meta { margin-top: 10px; display: flex; justify-content: space-between; gap: 12px; font-size: 14px; color: var(--color-ink-faint); transition: color .3s .2s; }
 .div-tile:hover .div-meta, .div-tile:focus-visible .div-meta { color: #050505; }
 .div-tile .echo-mark { transition: background-color .3s .2s; }
-/* Three across leaves a tenth division alone on the last row; let a lone
-   last tile take the whole row instead -- it is always the newest. */
-@media (min-width: 901px) { .div-grid > :last-child:nth-child(3n + 1) { grid-column: 1 / -1; } }
 @media (max-width: 900px) { .div-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .div-grid { grid-template-columns: 1fr; } .div-tile { min-height: 150px; } }
 
