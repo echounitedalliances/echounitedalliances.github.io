@@ -857,6 +857,8 @@ const dict: Record<string, string> = {
   "Link the airline you fly for to your Resonance account, self-reported, the same way you already set a home airport and division.":
     "당신이 운항하는 항공사를 Resonance 계정에 연결하세요. 홈 공항과 디비전을 설정했던 것처럼 직접 입력하는 방식이에요.",
   "Look for it under Your details on the Resonance page.": "Resonance 페이지의 Your details에서 찾을 수 있어요.",
+  "That Discord account is not in the EUA server, so it was signed back out. Join the alliance on Discord first, then try again.":
+    "그 Discord 계정은 EUA 서버에 없어서 다시 로그아웃됐어요. 먼저 Discord에서 얼라이언스에 가입한 다음 다시 시도해 주세요.",
 }
 
 export default dict

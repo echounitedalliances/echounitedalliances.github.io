@@ -857,6 +857,8 @@ const dict: Record<string, string> = {
   "Link the airline you fly for to your Resonance account, self-reported, the same way you already set a home airport and division.":
     "आप जिस एयरलाइन के लिए उड़ते हैं उसे अपने Resonance खाते से जोड़ें, खुद बताकर, जैसे आपने पहले से होम एयरपोर्ट और डिवीज़न सेट किया है।",
   "Look for it under Your details on the Resonance page.": "यह Resonance पेज पर Your details के नीचे मिलेगा।",
+  "That Discord account is not in the EUA server, so it was signed back out. Join the alliance on Discord first, then try again.":
+    "वह Discord खाता EUA सर्वर में नहीं है, इसलिए इसे वापस साइन आउट कर दिया गया। पहले Discord पर अलायंस से जुड़ें, फिर दोबारा कोशिश करें।",
 }
 
 export default dict

@@ -3,6 +3,33 @@ import type { Session, User } from '@supabase/supabase-js'
 import { isConfigured, supabase } from './supabase'
 
 /**
+ * The EUA Discord server, same id the online-count widget reads
+ * (lib/discordWidget.ts). Used only to check that a Discord sign-in is
+ * actually a member here, not to read anything else about the server.
+ */
+const EUA_GUILD_ID = '1485632790035955722'
+
+/**
+ * Whether the Discord account behind this OAuth access token is in the EUA
+ * server. Returns null, not false, when the check itself failed (network,
+ * CORS, Discord outage) -- a failure to verify is not the same as a
+ * confirmed "not a member", and must never be treated as one, or a Discord
+ * hiccup would lock out real members.
+ */
+async function isInEuaDiscord(providerToken: string): Promise<boolean | null> {
+  try {
+    const res = await fetch('https://discord.com/api/users/@me/guilds', {
+      headers: { Authorization: `Bearer ${providerToken}` },
+    })
+    if (!res.ok) return null
+    const guilds = (await res.json()) as { id: string }[]
+    return guilds.some((g) => g.id === EUA_GUILD_ID)
+  } catch {
+    return null
+  }
+}
+
+/**
  * Resonance: the alliance's membership programme. A member is a Resonant.
  *
  * Sign-in is a password. There was a one-time email link too, and it is gone:
@@ -64,9 +91,17 @@ type AuthState = {
    * to Discord (or failed to, e.g. the provider is not enabled on this
    * project yet) -- not once sign-in is complete, which only happens after
    * the round trip back from Discord, picked up by the existing
-   * onAuthStateChange listener like any other sign-in.
+   * onAuthStateChange listener like any other sign-in. That listener also
+   * checks the EUA server for this account and signs it back out, setting
+   * discordGuildError, if it is not a member there.
    */
   signInWithDiscord: () => Promise<Result>
+  /**
+   * Set right after a Discord sign-in that was rejected and signed back out
+   * for not being in the EUA server. Cleared the next time Discord sign-in
+   * is attempted.
+   */
+  discordGuildError: boolean
   /** Resolves with needsConfirmation when the project requires a confirmed email. */
   signUp: (email: string, password: string) => Promise<Result & { needsConfirmation: boolean }>
   sendPasswordReset: (email: string) => Promise<Result>
@@ -88,6 +123,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null)
   const [resonant, setResonant] = useState<Resonant | null>(null)
   const [recovering, setRecovering] = useState(false)
+  const [discordGuildError, setDiscordGuildError] = useState(false)
 
   const loadResonant = async (user: User | null) => {
     if (!user) {
@@ -137,6 +173,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (event === 'PASSWORD_RECOVERY') setRecovering(true)
       setSession(next)
       void loadResonant(next?.user ?? null)
+
+      // provider_token is only ever present on the callback right after an
+      // OAuth sign-in -- not on a restored session or a token refresh -- so
+      // this runs the guild check exactly once, at the moment it matters.
+      if (next?.provider_token && next.user?.app_metadata?.provider === 'discord') {
+        const token = next.provider_token
+        void isInEuaDiscord(token).then((inGuild) => {
+          // null means the check itself failed (network, CORS, Discord
+          // outage), not that they are confirmed absent -- never sign
+          // someone out over a failure to verify.
+          if (inGuild === false) {
+            setDiscordGuildError(true)
+            void supabase.auth.signOut()
+          }
+        })
+      }
     })
     return () => {
       cancelled = true
@@ -151,6 +203,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       user: session?.user ?? null,
       resonant,
       recovering,
+      discordGuildError,
       endRecovery: () => setRecovering(false),
 
       signInWithPassword: async (email: string, password: string) => {
@@ -165,9 +218,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       },
 
       signInWithDiscord: async () => {
+        setDiscordGuildError(false)
         const { error } = await supabase.auth.signInWithOAuth({
           provider: 'discord',
-          options: { redirectTo: redirectTo() },
+          // The default scope covers identify + email; guilds is added on
+          // top of that (not instead of it) so the EUA-membership check
+          // still has a Discord profile and address to work with.
+          options: { redirectTo: redirectTo(), scopes: 'identify email guilds' },
         })
         return { error }
       },
@@ -205,7 +262,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       },
       refreshResonant: async () => loadResonant(session?.user ?? null),
     }),
-    [ready, session, resonant, recovering],
+    [ready, session, resonant, recovering, discordGuildError],
   )
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>

@@ -804,6 +804,8 @@ const dict: Record<string, string> = {
   "Link the airline you fly for to your Resonance account, self-reported, the same way you already set a home airport and division.":
     "I-link ang airline na nililipad mo sa account mo sa Resonance, sariling sinabi, tulad ng pag-set mo na ng home airport at division.",
   "Look for it under Your details on the Resonance page.": "Hanapin ito sa ilalim ng Your details sa Resonance page.",
+  "That Discord account is not in the EUA server, so it was signed back out. Join the alliance on Discord first, then try again.":
+    "Wala sa EUA server ang Discord account na iyon, kaya na-sign out ulit ito. Sumali muna sa alliance sa Discord, tapos subukan ulit.",
 }
 
 export default dict

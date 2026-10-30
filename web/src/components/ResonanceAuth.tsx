@@ -121,7 +121,7 @@ type Mode = 'password' | 'signup' | 'forgot'
 export function SignIn() {
   const carrierCount = useCarrierCount()
   const t = useT()
-  const { signInWithPassword, signInWithDiscord, signUp, sendPasswordReset } = useAuth()
+  const { signInWithPassword, signInWithDiscord, signUp, sendPasswordReset, discordGuildError } = useAuth()
   const { unlocked: discordSignInUnlocked } = useSneakPeek()
   const [mode, setMode] = useState<Mode>('password')
   const [email, setEmail] = useState('')
@@ -252,6 +252,11 @@ export function SignIn() {
             >
               <DiscordGlyph /> {discordBusy ? t('Working…') : t('Sign in with Discord')}
             </button>
+            {discordGuildError && (
+              <p className="border-l-2 border-l-[color:var(--color-danger)] bg-surface-2 p-3 text-sm text-ink-dim">
+                {t('That Discord account is not in the EUA server, so it was signed back out. Join the alliance on Discord first, then try again.')}
+              </p>
+            )}
             <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.12em] text-ink-faint">
               <span className="h-px flex-1 bg-edge-soft" />
               {t('or')}
