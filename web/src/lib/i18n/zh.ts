@@ -447,7 +447,8 @@ const dict: Record<string, string> = {
   "Who runs the alliance": "谁在运营联盟",
   "Read the source": "查看源代码",
   "The alliance, remembered": "记得你的联盟",
-  "A Resonance account keeps your trips together across all {n} carriers, and remembers where you fly from. It is optional: you can search and book without one.": "Resonance 账户把你在 {n} 家航司的行程都放在一起，还会记住你常从哪里出发。不注册也完全可以搜索和预订。",
+  "A Resonance account is for Echo members -- sign in with the Discord account you use on the EUA server, and your trips stay together across all {n} carriers. You do not need one to search or book; it is the alliance’s own account, not a gate in front of booking.":
+    "Resonance 账户是给 Echo 成员的 -- 用你在 EUA 服务器上用的 Discord 账户登录，你的行程就会在全部 {n} 家航司之间保持在一起。搜索和预订都不需要账户；这是联盟自己的账户，不是预订前面的一道门槛。",
   "Admin": "管理员",
   "Sign out": "退出登录",
   "Skip for now": "暂时跳过",

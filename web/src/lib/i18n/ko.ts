@@ -447,7 +447,8 @@ const dict: Record<string, string> = {
   "Who runs the alliance": "얼라이언스를 운영하는 사람들",
   "Read the source": "소스 코드 보기",
   "The alliance, remembered": "당신을 기억하는 얼라이언스",
-  "A Resonance account keeps your trips together across all {n} carriers, and remembers where you fly from. It is optional: you can search and book without one.": "Resonance 계정 하나면 항공사 {n}곳의 여행이 한곳에 모이고, 자주 출발하는 곳도 기억해요. 필수는 아니에요: 계정 없이도 검색하고 예약할 수 있어요.",
+  "A Resonance account is for Echo members -- sign in with the Discord account you use on the EUA server, and your trips stay together across all {n} carriers. You do not need one to search or book; it is the alliance’s own account, not a gate in front of booking.":
+    "Resonance 계정은 Echo 멤버를 위한 것이에요 -- EUA 서버에서 쓰는 Discord 계정으로 로그인하면, {n}곳의 모든 항공사에서 여행 기록이 하나로 모여요. 검색이나 예약에는 계정이 필요 없어요. 이건 얼라이언스 자체의 계정이지, 예약을 막는 장벽이 아니에요.",
   "Admin": "관리자",
   "Sign out": "로그아웃",
   "Skip for now": "나중에 하기",

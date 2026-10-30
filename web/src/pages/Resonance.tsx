@@ -135,7 +135,7 @@ export default function Resonance() {
           {tr('The alliance, remembered')}
         </h1>
         <p className="mt-4 max-w-[58ch] text-lg text-ink-dim">
-          {tr('A Resonance account keeps your trips together across all {n} carriers, and remembers where you fly from. It is optional: you can search and book without one.', { n: num(carrierCount) })}
+          {tr('A Resonance account is for Echo members -- sign in with the Discord account you use on the EUA server, and your trips stay together across all {n} carriers. You do not need one to search or book; it is the alliance’s own account, not a gate in front of booking.', { n: num(carrierCount) })}
         </p>
 
         <SignIn />

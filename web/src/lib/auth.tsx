@@ -15,15 +15,27 @@ const EUA_GUILD_ID = '1485632790035955722'
  * CORS, Discord outage) -- a failure to verify is not the same as a
  * confirmed "not a member", and must never be treated as one, or a Discord
  * hiccup would lock out real members.
+ *
+ * Paginated: Discord caps /users/@me/guilds at 200 per request, and someone
+ * in more than 200 servers would otherwise come back false -- a false
+ * rejection for the single busiest Discord users, who are exactly the kind
+ * likely to run an alliance.
  */
 async function isInEuaDiscord(providerToken: string): Promise<boolean | null> {
+  const PAGE_SIZE = 200
+  let after: string | undefined
   try {
-    const res = await fetch('https://discord.com/api/users/@me/guilds', {
-      headers: { Authorization: `Bearer ${providerToken}` },
-    })
-    if (!res.ok) return null
-    const guilds = (await res.json()) as { id: string }[]
-    return guilds.some((g) => g.id === EUA_GUILD_ID)
+    for (;;) {
+      const url = new URL('https://discord.com/api/users/@me/guilds')
+      url.searchParams.set('limit', String(PAGE_SIZE))
+      if (after) url.searchParams.set('after', after)
+      const res = await fetch(url, { headers: { Authorization: `Bearer ${providerToken}` } })
+      if (!res.ok) return null
+      const guilds = (await res.json()) as { id: string }[]
+      if (guilds.some((g) => g.id === EUA_GUILD_ID)) return true
+      if (guilds.length < PAGE_SIZE) return false
+      after = guilds[guilds.length - 1].id
+    }
   } catch {
     return null
   }
@@ -177,13 +189,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // provider_token is only ever present on the callback right after an
       // OAuth sign-in -- not on a restored session or a token refresh -- so
       // this runs the guild check exactly once, at the moment it matters.
-      if (next?.provider_token && next.user?.app_metadata?.provider === 'discord') {
+      // app_metadata.providers (plural, every identity ever linked) is
+      // checked alongside .provider (singular, the one just used), since
+      // the token on hand is Discord's either way the moment it is present.
+      const providers = (next?.user?.app_metadata?.providers as string[] | undefined) ?? []
+      const isDiscordSignIn =
+        next?.user?.app_metadata?.provider === 'discord' || providers.includes('discord')
+      if (next?.provider_token && isDiscordSignIn) {
         const token = next.provider_token
         void isInEuaDiscord(token).then((inGuild) => {
           // null means the check itself failed (network, CORS, Discord
           // outage), not that they are confirmed absent -- never sign
           // someone out over a failure to verify.
-          if (inGuild === false) {
+          if (inGuild === null) {
+            console.warn('EUA Discord guild check did not complete (network/CORS/Discord outage); letting the sign-in stand rather than guessing.')
+            return
+          }
+          if (!inGuild) {
             setDiscordGuildError(true)
             void supabase.auth.signOut()
           }

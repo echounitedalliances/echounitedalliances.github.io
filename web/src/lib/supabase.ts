@@ -30,5 +30,20 @@ if (!isConfigured && import.meta.env.DEV) {
 export const supabase = createClient(
   isConfigured ? url : 'https://placeholder.supabase.co',
   isConfigured ? key : 'placeholder-anon-key',
-  { auth: { persistSession: true, autoRefreshToken: true } },
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      // The default ("implicit") flow comes back from an OAuth or email
+      // link with the session itself stuffed into the URL's hash fragment
+      // (#access_token=...). This site is a HashRouter, which reads that
+      // same fragment as a ROUTE (#/resonance) -- the two collide into one
+      // unparseable mess, and a Discord sign-in can complete at Discord's
+      // end and still land back here looking signed out, because the
+      // session never actually gets read out of it. PKCE instead comes
+      // back as a `?code=` query parameter, entirely separate from the
+      // hash, so the two no longer fight over the same part of the URL.
+      flowType: 'pkce',
+    },
+  },
 )

@@ -447,7 +447,8 @@ const dict: Record<string, string> = {
   "Who runs the alliance": "কারা অ্যালায়েন্স চালান",
   "Read the source": "সোর্স কোড পড়ুন",
   "The alliance, remembered": "যে অ্যালায়েন্স আপনাকে মনে রাখে",
-  "A Resonance account keeps your trips together across all {n} carriers, and remembers where you fly from. It is optional: you can search and book without one.": "একটা Resonance অ্যাকাউন্টে {n}টি এয়ারলাইনের সব ট্রিপ এক জায়গায় থাকে, আর মনে রাখে আপনি সাধারণত কোথা থেকে ওড়েন। বাধ্যতামূলক না: অ্যাকাউন্ট ছাড়াও খুঁজতে আর বুক করতে পারবেন।",
+  "A Resonance account is for Echo members -- sign in with the Discord account you use on the EUA server, and your trips stay together across all {n} carriers. You do not need one to search or book; it is the alliance’s own account, not a gate in front of booking.":
+    "Resonance অ্যাকাউন্ট হলো Echo সদস্যদের জন্য -- EUA সার্ভারে ব্যবহৃত Discord অ্যাকাউন্ট দিয়ে সাইন ইন করুন, আর আপনার ট্রিপগুলো সবগুলো {n}টি এয়ারলাইন জুড়ে একসাথে থাকবে। খোঁজা বা বুক করার জন্য অ্যাকাউন্ট লাগবে না; এটা অ্যালায়েন্সের নিজস্ব অ্যাকাউন্ট, বুকিংয়ের সামনে কোনো বাধা নয়।",
   "Admin": "অ্যাডমিন",
   "Sign out": "সাইন আউট",
   "Skip for now": "এখন বাদ দিন",
