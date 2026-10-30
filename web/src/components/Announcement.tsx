@@ -6,6 +6,7 @@ import { isConfigured, supabase } from '../lib/supabase'
 import { SITE, discordConfigured } from '../lib/site'
 import { num } from '../lib/format'
 import { emph, useT } from '../lib/i18n'
+import { divisionPath } from '../lib/alliance'
 
 /**
  * A one-off welcome on the home page for something new in the group -- at the
@@ -108,7 +109,7 @@ export default function Announcement() {
           )}
         </dl>
         <div className="mt-6 flex flex-wrap items-center gap-3">
-          <Link to={`/d/${ANNOUNCEMENT.division}`} onClick={close} className="btn announce-cta">
+          <Link to={divisionPath(ANNOUNCEMENT.division)} onClick={close} className="btn announce-cta">
             {t('Meet Uzuri')} →
           </Link>
           {discordConfigured && (

@@ -19,9 +19,11 @@ import type {
 import { accentOf, duration, flag, num, usd, weekdayInitials } from '../lib/format'
 import { rich, useI18n } from '../lib/i18n'
 import { composeProfile, type ProfileFacts } from '../lib/profile'
+import { divisionFromUrl, divisionPath } from '../lib/alliance'
 
 export default function AirlinePage() {
-  const { code = '', slug = '' } = useParams()
+  const { code: name = '', slug = '' } = useParams()
+  const code = divisionFromUrl(name)
   const { lang, t } = useI18n()
   const [a, setA] = useState<Airline | null>(null)
   const [fleet, setFleet] = useState<FleetRow[]>([])
@@ -308,7 +310,7 @@ export default function AirlinePage() {
         <div className="mx-auto grid max-w-[1180px] gap-8 px-4 py-8 sm:px-5 sm:py-12 lg:grid-cols-[1.05fr_.95fr]">
           <div>
             <Link
-              to={`/d/${a.division_code}`}
+              to={divisionPath(a.division_code)}
               className="mono text-[11px] uppercase tracking-[0.14em]"
               style={{ color: accent }}
             >

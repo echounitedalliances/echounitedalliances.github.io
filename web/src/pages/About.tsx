@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { isConfigured, supabase } from '../lib/supabase'
 import type { Division } from '../lib/types'
-import { LEADERS, SLOGAN, STORY } from '../lib/alliance'
+import { LEADERS, SLOGAN, STORY, divisionPath } from '../lib/alliance'
 import { accentOf, num, spell } from '../lib/format'
 import { useDivisionCount } from '../lib/carriers'
 import { Loading, NotConfigured } from '../components/ui'
@@ -149,7 +149,7 @@ export default function About() {
                     <div className="flex items-center gap-2.5">
                       <EchoMark height={15} color={accent} />
                       <Link
-                        to={`/d/${division.division_code}`}
+                        to={divisionPath(division.division_code)}
                         className="mono text-[10px] uppercase tracking-[0.16em] transition-colors hover:text-ink"
                         style={{ color: accent }}
                       >

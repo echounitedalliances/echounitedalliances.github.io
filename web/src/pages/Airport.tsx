@@ -6,6 +6,7 @@ import Pager, { usePaged } from '../components/Pager'
 import { isConfigured, supabase } from '../lib/supabase'
 import type { AirportRow } from '../lib/types'
 import { flag, num } from '../lib/format'
+import { divisionPath } from '../lib/alliance'
 
 type Carrier = {
   uid: string
@@ -91,7 +92,7 @@ export default function AirportPage() {
             {hubs.map((c) => (
               <Link
                 key={c.uid}
-                to={`/d/${c.division_code}/${c.airline_slug}`}
+                to={divisionPath(c.division_code, c.airline_slug)}
                 className="mono border px-3 py-1.5 text-[12px] transition-colors"
                 style={{
                   borderColor: `${c.accent_color ?? '#A855F7'}55`,
@@ -135,7 +136,7 @@ export default function AirportPage() {
                   <tr key={c.uid} className="border-t border-edge-soft">
                     <td className="px-4 py-2.5">
                       <Link
-                        to={`/d/${c.division_code}/${c.airline_slug}`}
+                        to={divisionPath(c.division_code, c.airline_slug)}
                         className="text-ink transition-colors hover:text-cyan"
                       >
                         {c.airline_name?.trim() || t('Unnamed carrier')}

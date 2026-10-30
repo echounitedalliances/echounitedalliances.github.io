@@ -4,7 +4,7 @@ import EchoMark from './EchoMark'
 import type { Division } from '../lib/types'
 import { accentOf, num } from '../lib/format'
 import { DIVISION_NOTES } from '../lib/site'
-import { LEADERS } from '../lib/alliance'
+import { LEADERS, divisionPath } from '../lib/alliance'
 import { useT } from '../lib/i18n'
 import LeaderMail from './LeaderMail'
 
@@ -36,7 +36,7 @@ export default function DivisionTile({
 
   return (
     <Link
-      to={`/d/${d.division_code}`}
+      to={divisionPath(d.division_code)}
       className={`div-tile ${detailed ? 'div-tile-detailed' : ''} ${className}`}
       style={{ ['--c' as string]: accent, ...style }}
     >

@@ -75,6 +75,28 @@ export const LEADER_EMAILS: Record<string, string> = {
 export const SLOGAN = 'Home of the Excellence'
 
 /**
+ * Divisions renamed in the game after their code was fixed. The database
+ * keeps the old code (Lior is still "proxima" there), but the address
+ * follows the name: links go to /d/lior, and /d/proxima keeps working for
+ * anyone who saved it.
+ */
+const DIVISION_URL: Record<string, string> = { proxima: 'lior' }
+const DIVISION_FROM_URL: Record<string, string> = Object.fromEntries(
+  Object.entries(DIVISION_URL).map(([code, url]) => [url, code]),
+)
+
+/** The page for a division, or for one of its airlines. */
+export function divisionPath(code: string, slug?: string) {
+  const base = `/d/${DIVISION_URL[code] ?? code}`
+  return slug ? `${base}/${slug}` : base
+}
+
+/** The division code behind a /d/<name> address. */
+export function divisionFromUrl(name: string) {
+  return DIVISION_FROM_URL[name] ?? name
+}
+
+/**
  * Airline of the Week, on the home page.
  *
  * Chosen by the board each week; change `division_code` and `airline_slug`
