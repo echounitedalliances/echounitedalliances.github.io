@@ -8,8 +8,6 @@ import AdminApplyModal from '../components/AdminApplyModal'
 import AdminApplications from '../components/AdminApplications'
 import AdminMemberSites from '../components/AdminMemberSites'
 import type { AirportRow, Airline, Division } from '../lib/types'
-import { num } from '../lib/format'
-import { useCarrierCount } from '../lib/carriers'
 import { useSneakPeek } from '../lib/sneakPeek'
 import { useT } from '../lib/i18n'
 
@@ -22,7 +20,6 @@ import { useT } from '../lib/i18n'
  * components/ResonanceAuth; the site only ever holds the session.
  */
 export default function Resonance() {
-  const carrierCount = useCarrierCount()
   const { ready, user, resonant, recovering, endRecovery, signOut, refreshResonant } = useAuth()
   const { unlocked: claimAirlineUnlocked } = useSneakPeek()
   const [error, setError] = useState<string | null>(null)
@@ -134,7 +131,7 @@ export default function Resonance() {
           {tr('The alliance, remembered')}
         </h1>
         <p className="mt-4 max-w-[58ch] text-lg text-ink-dim">
-          {tr('A Resonance account is for Echo members: sign in with the Discord account you use on the EUA server to save your home division and airport and claim your airline. Admins sign in the same way to look after the site. Everything else here is open without one.', { n: num(carrierCount) })}
+          {tr('A Resonance account remembers your home division and airport, and is how the alliance’s admins sign in to look after the site. It is optional: everything on the site is open without one.')}
         </p>
 
         <SignIn />

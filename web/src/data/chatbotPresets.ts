@@ -245,7 +245,7 @@ export const CHATBOT_PRESETS: ChatPreset[] = [
     category: 'Travel tools',
     question: 'Do I need an account to use the site?',
     answer:
-      'No -- everything on the site is open to anyone. An account (Resonance) is for members who want to save a profile or claim their airline, and for the admins who look after the site.',
+      'No -- everything on the site is open to anyone. An account (Resonance) is for members who want to save a profile, and for the admins who look after the site.',
   },
   {
     id: 'tools-real-tickets',
