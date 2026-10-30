@@ -1,0 +1,28 @@
+[
+  {
+    "allianceId": "d2356e82-dfd9-4db0-b021-291cbd3494cc",
+    "leaderUid": "2c11834c-c57f-4a57-a2f2-a81e475d7a33",
+    "allianceName": "Echo Uzuri",
+    "allianceDescription": "Welcome to Echo Uzuri. We are a multi-alliances alliance, as well as the most active alliance in TAS.\n\nTenth alliance of Echo United Alliances. \n\nYou need to join our Discord server to apply!",
+    "allianceType": "invite_only",
+    "aircraftRequriement": 0,
+    "flightRequirement": 0,
+    "allianceLogo": "customAlliance_d2356e82-dfd9-4db0-b021-291cbd3494cc_8a232707-f75b-4590-9020-1a9425b4ed09",
+    "allianceLogoColor": "#FAE246",
+    "allianceLogoXTransform": 1,
+    "allianceLogoYTransform": 1,
+    "createdTime": "2026-10-30T09:09:23.139+00:00",
+    "allianceMemberUidList": [
+      "35e11da9-0f2a-4b13-b8b0-3dc4fcc2d9e0",
+      "58640c4f-e7b5-465d-b437-a8f91f702dd2"
+    ],
+    "allianceTag": "split-slope-common",
+    "socialLink": "https://echoalliances.com",
+    "marketAccessMinDays": 2,
+    "memberJoinTimes": {
+      "2c11834c-c57f-4a57-a2f2-a81e475d7a33": "2026-10-30T09:09:23.139Z",
+      "35e11da9-0f2a-4b13-b8b0-3dc4fcc2d9e0": "2026-10-30T09:19:54.374+00:00",
+      "58640c4f-e7b5-465d-b437-a8f91f702dd2": "2026-10-30T09:39:38.326+00:00"
+    }
+  }
+]

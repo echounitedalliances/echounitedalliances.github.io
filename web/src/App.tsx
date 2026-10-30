@@ -8,9 +8,6 @@ import DivisionPage from './pages/Division'
 import AirlinePage from './pages/Airline'
 import Directory from './pages/Directory'
 import AirportPage from './pages/Airport'
-import SearchResults from './pages/SearchResults'
-import Book from './pages/Book'
-import Trips from './pages/Trips'
 import NetworkPage from './pages/Network'
 import { MAINTENANCE_LOCK_UNTIL, SITE, discordConfigured } from './lib/site'
 import { useOnlineCount } from './lib/discordWidget'
@@ -20,7 +17,6 @@ import { useAirportCount, useCarrierCount, useDivisionCount } from './lib/carrie
 import Resonance from './pages/Resonance'
 import { Conduct, Privacy, Terms } from './pages/Policy'
 import News from './pages/News'
-import RoundTheWorld from './pages/RoundTheWorld'
 import Members from './pages/Members'
 import { LivePreview, MarketPreview } from './pages/AppPreview'
 import { AudienceSwitch } from './components/Audience'
@@ -437,12 +433,8 @@ export default function App() {
           <Route path="/airlines" element={<Directory />} />
           <Route path="/airports/:iata" element={<AirportPage />} />
           <Route path="/network" element={<NetworkPage />} />
-          <Route path="/search" element={<SearchResults />} />
-          <Route path="/book" element={<Book />} />
-          <Route path="/trips" element={<Trips />} />
           <Route path="/resonance" element={<Resonance />} />
           <Route path="/news" element={<News />} />
-          <Route path="/rtw" element={<RoundTheWorld />} />
           <Route path="/members" element={<Members />} />
           <Route path="/live" element={<LivePreview />} />
           <Route path="/market" element={<MarketPreview />} />

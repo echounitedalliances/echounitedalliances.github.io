@@ -447,8 +447,7 @@ const dict: Record<string, string> = {
   "Who runs the alliance": "কারা অ্যালায়েন্স চালান",
   "Read the source": "সোর্স কোড পড়ুন",
   "The alliance, remembered": "যে অ্যালায়েন্স আপনাকে মনে রাখে",
-  "A Resonance account is for Echo members -- sign in with the Discord account you use on the EUA server, and your trips stay together across all {n} carriers. You do not need one to search or book; it is the alliance’s own account, not a gate in front of booking.":
-    "Resonance অ্যাকাউন্ট হলো Echo সদস্যদের জন্য -- EUA সার্ভারে ব্যবহৃত Discord অ্যাকাউন্ট দিয়ে সাইন ইন করুন, আর আপনার ট্রিপগুলো সবগুলো {n}টি এয়ারলাইন জুড়ে একসাথে থাকবে। খোঁজা বা বুক করার জন্য অ্যাকাউন্ট লাগবে না; এটা অ্যালায়েন্সের নিজস্ব অ্যাকাউন্ট, বুকিংয়ের সামনে কোনো বাধা নয়।",
+  "A Resonance account keeps your trips together across all {n} carriers, and remembers where you fly from. It is optional: you can search and book without one.": "একটা Resonance অ্যাকাউন্টে {n}টি এয়ারলাইনের সব ট্রিপ এক জায়গায় থাকে, আর মনে রাখে আপনি সাধারণত কোথা থেকে ওড়েন। বাধ্যতামূলক না: অ্যাকাউন্ট ছাড়াও খুঁজতে আর বুক করতে পারবেন।",
   "Admin": "অ্যাডমিন",
   "Sign out": "সাইন আউট",
   "Skip for now": "এখন বাদ দিন",
@@ -668,7 +667,26 @@ const dict: Record<string, string> = {
   "Its busiest sector, {from} to {to}, runs {n} times a week.": "এর সবচেয়ে ব্যস্ত রুট {from} থেকে {to}, সপ্তাহে {n} বার চলে।",
   "Email {name}": "{name}-কে ইমেল করুন",
   "Contact details updated soon": "যোগাযোগের তথ্য শীঘ্রই আপডেট হবে",
-
+  "Welcome, *Uzuri*": "স্বাগতম, *Uzuri*",
+  "New division": "নতুন ডিভিশন",
+  "Echo United Alliances now has ten divisions. Uzuri is the newest, led by {leader}, and it is taking its first airlines right now: the perfect time to get in early and help shape it.": "Echo United Alliances-এ এখন দশটি ডিভিশন। Uzuri সবচেয়ে নতুন, নেতৃত্বে {leader}, আর এখন এর প্রথম এয়ারলাইনগুলো নিচ্ছে: আগেভাগে যোগ দিয়ে একে গড়ে তোলার সেরা সময়।",
+  "Meet Uzuri": "Uzuri দেখুন",
+  "Maybe later": "পরে দেখব",
+  "30 October 2026": "৩০ অক্টোবর ২০২৬",
+  "Live from the schedule": "সময়সূচি থেকে সরাসরি",
+  "The whole alliance, *departing*": "পুরো অ্যালায়েন্স, *উড়ছে*",
+  "What leaves next from any airport the alliance serves, across all {n} member carriers, in your own time zone.": "অ্যালায়েন্সের যেকোনো বিমানবন্দর থেকে পরের ফ্লাইটগুলো, সব {n}টি সদস্য এয়ারলাইনের, আপনার নিজের টাইমজোনে।",
+  "A Resonance account remembers your home division and airport, and is how the alliance’s admins sign in to look after the site. It is optional: everything on the site is open without one.": "একটা Resonance অ্যাকাউন্ট আপনার নিজের ডিভিশন আর বিমানবন্দর মনে রাখে, আর অ্যালায়েন্সের অ্যাডমিনরা এটা দিয়েই সাইন ইন করে সাইট দেখাশোনা করেন। বাধ্যতামূলক না: অ্যাকাউন্ট ছাড়াই সাইটের সবকিছু দেখা যায়।",
+  "One account across all {n} carriers. Everything on the site is open without one.": "সব {n}টি এয়ারলাইনের জন্য একটা অ্যাকাউন্ট। অ্যাকাউন্ট ছাড়াই সবকিছু দেখা যায়।",
+  "Every member carrier gets its own page here, with its routes, fleet and timetable drawn into the alliance network for everyone to see.": "প্রতিটি সদস্য এয়ারলাইনের এখানে নিজস্ব পেজ আছে: রুট, বহর আর সময়সূচি অ্যালায়েন্সের নেটওয়ার্কে আঁকা, সবাই দেখতে পারে।",
+  "A Resonance account is for Echo members: sign in with the Discord account you use on the EUA server to save your home division and airport and claim your airline. Admins sign in the same way to look after the site. Everything else here is open without one.": "Resonance অ্যাকাউন্ট Echo-র সদস্যদের জন্য: EUA সার্ভারে যে Discord অ্যাকাউন্ট ব্যবহার করেন তা দিয়ে সাইন ইন করে আপনার ডিভিশন আর বিমানবন্দর সেভ করুন এবং নিজের এয়ারলাইন দাবি করুন। অ্যাডমিনরাও একইভাবে সাইন ইন করে সাইট দেখাশোনা করেন। বাকি সবকিছু অ্যাকাউন্ট ছাড়াই দেখা যায়।",
+  "Ten at the moment, each with its own roster and leadership. Uzuri is the newest, opened on 30 October 2026. The exact count and every carrier in them is on the Divisions and Airlines pages, read live from the roster rather than fixed here.": "এখন দশটি, প্রতিটির নিজস্ব সদস্য তালিকা আর নেতৃত্ব আছে। Uzuri সবচেয়ে নতুন, চালু হয়েছে ৩০ অক্টোবর ২০২৬। সঠিক সংখ্যা আর সব এয়ারলাইন ডিভিশন ও এয়ারলাইন পেজে আছে, তালিকা থেকে সরাসরি পড়া, এখানে স্থির করে লেখা নয়।",
+  "Can I book flights on this site?": "এই সাইটে কি ফ্লাইট বুক করা যায়?",
+  "Not any more: booking was retired on 30 October 2026. Every route, timetable and the live departure board are still here, and an airline page links to that airline's own booking site when it has one.": "আর না: বুকিং ৩০ অক্টোবর ২০২৬ থেকে বন্ধ। সব রুট, সময়সূচি আর লাইভ ডিপার্চার বোর্ড এখনও আছে, আর এয়ারলাইনের পেজ থেকে সেই এয়ারলাইনের নিজের বুকিং সাইটে যাওয়া যায়, যদি থাকে।",
+  "Do I need an account to use the site?": "সাইট ব্যবহার করতে কি অ্যাকাউন্ট লাগে?",
+  "No -- everything on the site is open to anyone. An account (Resonance) is for members who want to save a profile or claim their airline, and for the admins who look after the site.": "না -- সাইটের সবকিছু সবার জন্য খোলা। অ্যাকাউন্ট (Resonance) সেই সদস্যদের জন্য যারা প্রোফাইল সেভ করতে বা নিজের এয়ারলাইন দাবি করতে চান, আর সাইট দেখাশোনা করা অ্যাডমিনদের জন্য।",
+  "Are these real flights?": "এগুলো কি আসল ফ্লাইট?",
+  "No. Every schedule, fare and route here comes from airlines in The Airline Simulator, a game -- this is the alliance's own site, not a real-world airline or travel agency.": "না। এখানকার সব সময়সূচি, ভাড়া আর রুট The Airline Simulator গেমের এয়ারলাইনগুলো থেকে আসে -- এটি অ্যালায়েন্সের নিজস্ব সাইট, কোনো আসল এয়ারলাইন বা ট্রাভেল এজেন্সি নয়।",
   "Activities": "কার্যক্রম",
   "Travel tools": "ভ্রমণ টুল",
   "Your account": "আপনার অ্যাকাউন্ট",
@@ -680,165 +698,56 @@ const dict: Record<string, string> = {
   "Topics": "বিষয়",
   "Questions": "প্রশ্ন",
   "Clear chat": "চ্যাট মুছুন",
-
   "How do I join Echo United Alliances?": "Echo United Alliances-এ কীভাবে যোগ দেব?",
-  "Two applications, not one: send a request from your airline in The Airline Simulator's alliance browser, and post an application with EUA on Discord (or use the form on the Join page). A division lead matches the two up -- an in-game request alone will not be actioned, and neither will a Discord application without the in-game one.":
-    "দুটি আবেদন লাগে, একটা নয়: The Airline Simulator-এর অ্যালায়েন্স ব্রাউজারে আপনার এয়ারলাইন থেকে একটা রিকোয়েস্ট পাঠান, আর Discord-এ EUA-র কাছে একটা আবেদন পোস্ট করুন (অথবা Join পেজের ফর্মটা ব্যবহার করুন)। একজন ডিভিশন লিড দুটো মিলিয়ে দেখেন -- শুধু গেমের ভেতরের রিকোয়েস্টে কিছু হবে না, আর গেমের ভেতরের রিকোয়েস্ট ছাড়া শুধু Discord-এর আবেদনেও কিছু হবে না।",
   "Which division should I apply to?": "কোন ডিভিশনে আবেদন করা উচিত?",
-  "Whichever fits how you like to play. The Divisions page lists all of them with their badges -- Kyra is the main alliance, Elysium runs on realism rules, and the rest each have their own character. Pick one and apply there; you are not applying to Echo as a whole first.":
-    "আপনার খেলার ধরনের সাথে যেটা মানানসই। Divisions পেজে সবগুলো তাদের ব্যাজসহ তালিকাভুক্ত আছে -- Kyra হলো মূল অ্যালায়েন্স, Elysium রিয়ালিজম নিয়মে চলে, আর বাকিগুলোর নিজস্ব চরিত্র আছে। একটা বেছে নিয়ে সেখানে আবেদন করুন; আগে পুরো Echo-তে আবেদন করতে হচ্ছে না।",
   "How long does an application take?": "আবেদনে কত সময় লাগে?",
-  "There is no fixed turnaround. Divisions are run separately and each reviews applications by hand, at its own pace, so allow a little time rather than expecting an instant answer.":
-    "নির্দিষ্ট কোনো সময় নেই। প্রতিটি ডিভিশন আলাদাভাবে চলে আর নিজের গতিতে হাতে-কলমে আবেদন পর্যালোচনা করে, তাই সাথে সাথে উত্তর আশা না করে একটু সময় দিন।",
   "Do I have to use Discord?": "Discord ব্যবহার করতেই হবে কি?",
-  "Yes. Discord is where applications are matched to divisions, where activities like the FFA sales and the discount market actually run, and where division leads are reachable. The website is the front door; Discord is where membership happens.":
-    "হ্যাঁ। Discord-এই আবেদন ডিভিশনের সাথে মেলানো হয়, FFA সেল আর ডিসকাউন্ট মার্কেটের মতো কার্যক্রম আসলেই সেখানে চলে, আর ডিভিশন লিডদের সেখানেই পাওয়া যায়। ওয়েবসাইটটা শুধু সামনের দরজা; সদস্যপদের আসল কাজ হয় Discord-এ।",
   "Can I have more than one airline in the alliance?": "অ্যালায়েন্সে একের বেশি এয়ারলাইন রাখা যাবে কি?",
-  "Several members do -- more than one of the division leaders themselves run multiple carriers. Each airline still needs its own in-game application to the division you want it in.":
-    "অনেক সদস্যই রাখেন -- এমনকি কয়েকজন ডিভিশন লিডার নিজেরাই একাধিক এয়ারলাইন চালান। তবে প্রতিটা এয়ারলাইনের জন্য যে ডিভিশনে যেতে চান সেখানে আলাদাভাবে গেমের ভেতরের আবেদন লাগবে।",
   "Is Echo good for beginners?": "Echo কি নতুনদের জন্য ভালো?",
-  "That is who it was built around: most members joined early in their time with The Airline Simulator, and the alliance exists to make that growth faster and the market safer, not just to showcase airlines that have already arrived.":
-    "সেটাই মূল লক্ষ্য: বেশিরভাগ সদস্য The Airline Simulator-এ খেলা শুরুর একদম শুরুর দিকেই যোগ দিয়েছেন, আর অ্যালায়েন্সটা আছে সেই বৃদ্ধিকে দ্রুত আর মার্কেটকে নিরাপদ করতে, শুধু ইতিমধ্যে প্রতিষ্ঠিত এয়ারলাইনগুলো দেখানোর জন্য নয়।",
   "Can I move my airline to a different division later?": "পরে আমার এয়ারলাইন অন্য ডিভিশনে সরাতে পারব কি?",
-  "Talk to the leads of your current and target divisions on Discord first -- this is not something the website handles, and it is a courtesy to the division you would be leaving as much as a request to the one you would be joining.":
-    "প্রথমে Discord-এ বর্তমান আর লক্ষ্য ডিভিশনের লিডদের সাথে কথা বলুন -- এটা ওয়েবসাইট সামলায় না, আর এটা যে ডিভিশন ছেড়ে যাচ্ছেন তার প্রতি সৌজন্য, যতটা নতুন ডিভিশনের কাছে অনুরোধ।",
   "What if my application is turned down?": "আবেদন বাতিল হলে কী করব?",
-  "Ask the division lead what to fix and try again, or try a different division -- each reviews on its own criteria, so a no from one is not a verdict on the airline itself.":
-    "ডিভিশন লিডকে জিজ্ঞাসা করুন কী ঠিক করতে হবে আর আবার চেষ্টা করুন, অথবা অন্য ডিভিশন চেষ্টা করুন -- প্রতিটা নিজস্ব মানদণ্ডে পর্যালোচনা করে, তাই একজনের না মানেই এয়ারলাইনের সমস্যা নয়।",
-
   "What is a division?": "ডিভিশন কী?",
-  "Echo United Alliances is a multi-alliance group: each division runs its own roster and its own leadership, and every member flies under one shared network regardless of which division they are in.":
-    "Echo United Alliances একটি মাল্টি-অ্যালায়েন্স গ্রুপ: প্রতিটি ডিভিশন নিজের টিম আর নিজের নেতৃত্ব চালায়, আর কোন ডিভিশনে আছেন তা না দেখেই প্রতিটি সদস্য একই শেয়ার্ড নেটওয়ার্কে ওড়ে।",
   "Who leads each division?": "প্রতিটি ডিভিশন কে চালান?",
-  "The board is simply the division leaders, one or more per division. They are listed on the About page by their Discord handle, since that is how the group actually knows them -- several lead more than one division at once.":
-    "বোর্ড মানেই ডিভিশন লিডাররা, প্রতি ডিভিশনে একজন বা তার বেশি। About পেজে তাদের Discord হ্যান্ডেল দিয়ে তালিকাভুক্ত করা হয়েছে, কারণ গ্রুপ আসলে সেভাবেই তাদের চেনে -- কয়েকজন একসাথে একাধিক ডিভিশন চালান।",
   "What is the difference between Kyra and Elysium?": "Kyra আর Elysium-এর মধ্যে পার্থক্য কী?",
-  "Kyra is the main alliance; Elysium is the realism alliance, for members who want their operation held to realism rules. Both sit under the same group and the same shared network, just with different house rules.":
-    "Kyra মূল অ্যালায়েন্স; Elysium রিয়ালিজম অ্যালায়েন্স, যারা নিজেদের কার্যক্রম রিয়ালিজম নিয়মে রাখতে চান তাদের জন্য। দুটোই একই গ্রুপ আর একই শেয়ার্ড নেটওয়ার্কের অধীনে, শুধু নিজস্ব নিয়ম আলাদা।",
   "How many divisions does Echo have?": "Echo-তে কয়টা ডিভিশন আছে?",
-  "Nine at the moment, each with its own roster and leadership. The exact count and every carrier in them is on the Divisions and Airlines pages, read live from the roster rather than fixed here.":
-    "এই মুহূর্তে নয়টি, প্রতিটার নিজস্ব টিম আর নেতৃত্ব আছে। সঠিক সংখ্যা আর তাদের প্রতিটা এয়ারলাইন Divisions আর Airlines পেজে আছে, এখানে স্থির না রেখে সরাসরি টিম থেকে পড়া হয়।",
   "How do I contact my division lead?": "আমার ডিভিশন লিডের সাথে কীভাবে যোগাযোগ করব?",
-  "By their Discord handle, listed on the About page. Where a lead has shared an email instead, it shows next to their name there too; until they do, it reads as contact details updated soon rather than guessing one.":
-    "তাদের Discord হ্যান্ডেলে, About পেজে তালিকাভুক্ত আছে। কোনো লিড ইমেইল শেয়ার করলে সেটাও তার নামের পাশে দেখা যায়; না করা পর্যন্ত আন্দাজ না করে সেখানে লেখা থাকে যোগাযোগের তথ্য শীঘ্রই আপডেট হবে।",
   "Do divisions have their own rules?": "ডিভিশনগুলোর কি নিজস্ব নিয়ম আছে?",
-  "Yes -- beyond the alliance-wide code of conduct, each division sets its own expectations for its roster. Ask your division lead what applies to yours.":
-    "হ্যাঁ -- অ্যালায়েন্স-ব্যাপী আচরণবিধির বাইরেও, প্রতিটা ডিভিশন নিজের টিমের জন্য আলাদা প্রত্যাশা ঠিক করে। আপনার ডিভিশনে কী প্রযোজ্য তা ডিভিশন লিডকে জিজ্ঞাসা করুন।",
-
   "What is an FFA sale?": "FFA সেল কী?",
-  "Free for all: a member with an aircraft to sell posts it in the FFA channel on Discord, and anyone in the group can buy it -- no queue, no seniority, no allocation. Buyers are expected to say why they want it; FFA works because people take what they can actually use.":
-    "ফ্রি ফর অল: বিক্রির জন্য একটা বিমান আছে এমন সদস্য সেটা Discord-এর FFA চ্যানেলে পোস্ট করেন, আর গ্রুপের যে কেউ সেটা কিনতে পারেন -- কোনো লাইন, জ্যেষ্ঠতা বা বণ্টন নেই। ক্রেতাদের কাছ থেকে চাওয়া হয় কেন চান তা বলতে; FFA কাজ করে কারণ মানুষ শুধু সত্যিই যা কাজে লাগবে তাই নেয়।",
   "How does the discount aircraft market work?": "ডিসকাউন্ট এয়ারক্রাফট মার্কেট কীভাবে কাজ করে?",
-  "The other way round from a shop: you open a buy ticket naming the aircraft you want and the price you will pay, anywhere from 50% to 90% of the original price, and a veteran member who can fulfil it picks it up. It runs continuously, not on a schedule.":
-    "সাধারণ দোকানের ঠিক উল্টো: আপনি একটা বাই টিকিট খোলেন যেখানে কোন বিমান চান আর কত দাম দেবেন তা লেখেন, মূল দামের ৫০% থেকে ৯০% পর্যন্ত, আর একজন অভিজ্ঞ সদস্য যিনি সেটা পূরণ করতে পারবেন তিনি সেটা নিয়ে নেন। এটা কোনো নির্দিষ্ট সময়সূচি ছাড়াই চলতেই থাকে।",
   "Where do alliance activities actually happen?": "অ্যালায়েন্সের কার্যক্রম আসলে কোথায় হয়?",
-  "On Discord -- the sales channel, the buy tickets, the challenges and their results are all there. You need to be a member of a division to take part, so joining comes first.":
-    "Discord-এ -- সেল চ্যানেল, বাই টিকিট, চ্যালেঞ্জ আর তাদের ফলাফল সব সেখানেই থাকে। অংশ নিতে হলে কোনো ডিভিশনের সদস্য হতে হবে, তাই আগে যোগ দেওয়াটাই আসল কথা।",
   "Are there challenges with prizes?": "পুরস্কারসহ চ্যালেঞ্জ আছে কি?",
-  "Occasionally, yes. They are not run to a fixed calendar -- watch Discord for when one is announced.":
-    "মাঝে মাঝে, হ্যাঁ। এগুলো কোনো নির্দিষ্ট ক্যালেন্ডার মেনে চলে না -- কখন ঘোষণা হয় তা জানতে Discord দেখুন।",
   "Who can take part in FFA and the market?": "FFA আর মার্কেটে কারা অংশ নিতে পারেন?",
-  "Any member of any division. Neither is limited to one division's roster -- the whole group can buy and sell across both.":
-    "যেকোনো ডিভিশনের যেকোনো সদস্য। দুটোর কোনোটাই একটা ডিভিশনের টিমে সীমাবদ্ধ নয় -- পুরো গ্রুপ দুটোতেই কেনাবেচা করতে পারে।",
   "What price can I ask in the discount market?": "ডিসকাউন্ট মার্কেটে কত দাম চাইতে পারি?",
-  "Buyers post what they are willing to pay, between 50% and 90% of the aircraft's original price. A veteran member decides whether to fill the ticket at that price.":
-    "ক্রেতারা কত দিতে রাজি তা পোস্ট করেন, বিমানের মূল দামের ৫০% থেকে ৯০%-এর মধ্যে। সেই দামে টিকিট পূরণ করবেন কিনা তা একজন অভিজ্ঞ সদস্য ঠিক করেন।",
   "Is there a queue for FFA sales?": "FFA সেলের জন্য কোনো লাইন আছে কি?",
-  "No. An FFA sale is open to the whole alliance the instant it is posted -- whoever buys first with a genuine reason gets it, not whoever asked first in some other sense.":
-    "না। FFA সেল পোস্ট হওয়ার সাথে সাথেই পুরো অ্যালায়েন্সের জন্য খোলা থাকে -- আসল কারণসহ যে প্রথমে কেনেন তিনিই পান, অন্য কোনোভাবে আগে কথা বলা কেউ নয়।",
   "How often do FFA sales happen?": "FFA সেল কত ঘন ঘন হয়?",
-  "Whenever a member has something to sell -- there is no schedule. Keep an eye on the FFA channel rather than expecting them at set times.":
-    "যখনই কোনো সদস্যের কাছে বিক্রির কিছু থাকে -- কোনো নির্দিষ্ট সময়সূচি নেই। নির্দিষ্ট সময় আশা না করে FFA চ্যানেলের দিকে নজর রাখুন।",
-
   "What is Airline of the Week?": "সপ্তাহের সেরা এয়ারলাইন কী?",
-  "A regular feature on the home page that puts one member carrier in front of the whole group -- its livery, its name, and figures like fleet size, routes and destinations, read live from the roster.":
-    "হোম পেজের একটা নিয়মিত ফিচার যা একটা সদস্য এয়ারলাইনকে পুরো গ্রুপের সামনে তুলে ধরে -- তার লিভারি, নাম, আর ফ্লিট সাইজ, রুট ও গন্তব্যের মতো তথ্য, সরাসরি টিম থেকে পড়া হয়।",
   "How is the airline chosen?": "এয়ারলাইন কীভাবে বেছে নেওয়া হয়?",
-  "By the board, each week. It is alliance policy rather than something generated automatically, which is also why the pick and its write-up live in the site's own code rather than the database.":
-    "বোর্ড বেছে নেয়, প্রতি সপ্তাহে। এটা অ্যালায়েন্সের সিদ্ধান্ত, স্বয়ংক্রিয়ভাবে তৈরি কিছু নয়, তাই নির্বাচন আর তার লেখাটা সরাসরি সাইটের কোডেই থাকে, ডেটাবেজে নয়।",
   "Why does the home page show a countdown instead of this week's airline?": "হোম পেজে এই সপ্তাহের এয়ারলাইনের বদলে কাউন্টডাউন কেন দেখায়?",
-  "Reveals go out at an announced time, not the moment they are set up -- so the segment shows a countdown until that moment and switches itself over automatically, live, with no reload needed.":
-    "প্রকাশ হয় ঘোষিত একটা সময়ে, তৈরি হওয়ার মুহূর্তে নয় -- তাই এই অংশটা সেই সময় পর্যন্ত কাউন্টডাউন দেখায় আর রিলোড ছাড়াই, সরাসরি, নিজে থেকেই পাল্টে যায়।",
   "Can my airline be Airline of the Week?": "আমার এয়ারলাইন কি সপ্তাহের সেরা এয়ারলাইন হতে পারবে?",
-  "It is a board pick, not an application, so there is no form for it -- but being active in the alliance and visible on Discord is how a carrier ends up on the board's radar in the first place.":
-    "এটা বোর্ডের পছন্দ, আবেদন নয়, তাই এর জন্য কোনো ফর্ম নেই -- তবে অ্যালায়েন্সে সক্রিয় থাকা আর Discord-এ দৃশ্যমান থাকাই একটা এয়ারলাইনকে প্রথম থেকে বোর্ডের নজরে আনার উপায়।",
-
   "Can I search and book flights on this site?": "এই সাইটে কি ফ্লাইট খুঁজে বুক করা যায়?",
-  "Yes -- search the network from the home page, pick an itinerary, and book it. It is a simulated booking against the alliance's own network, not a real airline ticket.":
-    "হ্যাঁ -- হোম পেজ থেকে নেটওয়ার্ক খুঁজুন, একটা ইটিনারারি বেছে নিন, আর বুক করুন। এটা অ্যালায়েন্সের নিজস্ব নেটওয়ার্কের উপর একটা সিমুলেটেড বুকিং, আসল এয়ারলাইন টিকিট নয়।",
   "How do I find a booking I already made?": "আগে করা একটা বুকিং কীভাবে খুঁজে পাব?",
-  "Use Manage Booking on the Trips page: enter the six-character reference from your confirmation along with the surname of anyone travelling on it.":
-    "Trips পেজে Manage Booking ব্যবহার করুন: আপনার কনফার্মেশনের ছয়-অক্ষরের রেফারেন্স আর তাতে ভ্রমণকারী যে কারো পদবি দিন।",
   "What is the Round the World feature?": "Round the World ফিচারটা কী?",
-  "One fare, one direction: you build a route of stops around the alliance's network and it prices as a single round-the-world itinerary rather than separate one-way fares.":
-    "একটা ভাড়া, একটা দিক: আপনি অ্যালায়েন্সের নেটওয়ার্ক ঘিরে থামার একটা রুট তৈরি করেন, আর এটা আলাদা আলাদা ওয়ান-ওয়ে ভাড়া নয়, একটাই রাউন্ড-দ্য-ওয়ার্ল্ড ইটিনারারি হিসেবে দাম হয়।",
   "Is there a route map for the whole alliance?": "পুরো অ্যালায়েন্সের জন্য কোনো রুট ম্যাপ আছে কি?",
-  "Yes, on the Network page -- it draws every route across every division's carriers on one map, rather than one airline at a time.":
-    "হ্যাঁ, Network পেজে -- এটা প্রতিটা ডিভিশনের এয়ারলাইনগুলোর সব রুট একটাই ম্যাপে আঁকে, একবারে একটা এয়ারলাইনের বদলে।",
   "Where can I find a specific member airline?": "নির্দিষ্ট কোনো সদস্য এয়ারলাইন কোথায় খুঁজে পাব?",
-  "The Airlines directory lists every carrier in the alliance and can be filtered by division or country -- search it by name if you know roughly who you are looking for.":
-    "Airlines ডিরেক্টরিতে অ্যালায়েন্সের প্রতিটা এয়ারলাইন তালিকাভুক্ত আছে আর ডিভিশন বা দেশ অনুযায়ী ফিল্টার করা যায় -- কাকে খুঁজছেন মোটামুটি জানলে নাম দিয়ে খুঁজুন।",
   "Do I need an account to search or book?": "খুঁজতে বা বুক করতে কি অ্যাকাউন্ট লাগবে?",
-  "No -- searching and booking work for anyone. An account (Resonance) only comes in if you want to manage bookings under your profile or use the members-only tools.":
-    "না -- খোঁজা আর বুক করা যে কেউ করতে পারেন। শুধু প্রোফাইলে বুকিং সামলাতে বা সদস্যদের জন্য টুল ব্যবহার করতে চাইলেই অ্যাকাউন্ট (Resonance) লাগে।",
   "Are these real flight tickets?": "এগুলো কি আসল ফ্লাইট টিকিট?",
-  "No. Booking on this site is a simulation layered on the alliance's own network, built for The Airline Simulator community -- not a real-world travel agency.":
-    "না। এই সাইটে বুকিং অ্যালায়েন্সের নিজস্ব নেটওয়ার্কের উপর তৈরি একটা সিমুলেশন, The Airline Simulator কমিউনিটির জন্য বানানো -- আসল দুনিয়ার কোনো ট্রাভেল এজেন্সি নয়।",
   "Can I change or cancel a booking?": "বুকিং বদলানো বা বাতিল করা যায় কি?",
-  "Look it up first on the Trips page with your reference and surname -- what you can do with it from there depends on the booking itself, so start there rather than guessing.":
-    "প্রথমে Trips পেজে আপনার রেফারেন্স আর পদবি দিয়ে খুঁজে দেখুন -- সেখান থেকে কী করতে পারবেন তা বুকিংটার উপরেই নির্ভর করে, তাই আন্দাজ না করে সেখান থেকেই শুরু করুন।",
-
   "What is Resonance?": "Resonance কী?",
-  "The sign-in system for this site, using the Discord account you already use on the EUA server. Signed out, the link in the bar reads Resonance; signed in, it shows your name.":
-    "এই সাইটের সাইন-ইন সিস্টেম, আপনি EUA সার্ভারে যে Discord অ্যাকাউন্ট আগে থেকেই ব্যবহার করেন সেটা দিয়ে। সাইন আউট থাকলে বারের লিংকে লেখা থাকে Resonance; সাইন ইন করলে আপনার নাম দেখা যায়।",
   "What is Echo Live?": "Echo Live কী?",
-  "One of the members' tools on the Members page, open to everyone rather than gated to a sign-in.":
-    "Members পেজের একটা সদস্য টুল, সাইন ইনের দরকার ছাড়াই সবার জন্য খোলা।",
   "What is Echo Market and who can use it?": "Echo Market কী আর কারা এটা ব্যবহার করতে পারেন?",
-  "A members' tool for EUA airlines, signed in with the Discord account you use on the alliance's server -- unlike Echo Live, it is not open to everyone.":
-    "EUA এয়ারলাইনগুলোর জন্য একটা সদস্য টুল, অ্যালায়েন্সের সার্ভারে ব্যবহৃত Discord অ্যাকাউন্ট দিয়ে সাইন ইন করে -- Echo Live-এর মতো এটা সবার জন্য খোলা নয়।",
   "I am not in EUA yet -- can I still sign in?": "আমি এখনো EUA-তে নেই -- তাও কি সাইন ইন করতে পারব?",
-  "The Members page links straight to how to join if you are not in yet -- sign-in with Resonance uses your Discord account, so joining the alliance on Discord is the step that actually unlocks the members-only tools.":
-    "যোগ না দিয়ে থাকলে Members পেজ থেকে সরাসরি কীভাবে যোগ দেবেন তার লিংক পাওয়া যায় -- Resonance দিয়ে সাইন ইন আপনার Discord অ্যাকাউন্ট ব্যবহার করে, তাই Discord-এ অ্যালায়েন্সে যোগ দেওয়াটাই আসলে সদস্যদের টুলগুলো খুলে দেয়।",
   "How do I apply to help admin the alliance?": "অ্যালায়েন্স পরিচালনায় সাহায্য করতে কীভাবে আবেদন করব?",
-  "There is an apply option for admin roles once you are signed in -- ask on Discord if you cannot find it, since exactly where it appears can change as the site does.":
-    "সাইন ইন করার পর অ্যাডমিন ভূমিকার জন্য একটা আবেদনের অপশন থাকে -- খুঁজে না পেলে Discord-এ জিজ্ঞাসা করুন, কারণ ঠিক কোথায় এটা দেখা যায় তা সাইটের সাথে বদলাতে পারে।",
   "I forgot my booking reference -- what now?": "আমার বুকিং রেফারেন্স ভুলে গেছি -- এখন কী করব?",
-  "If you booked while signed in to Resonance, your trips are attached to your account rather than only to the reference -- sign in and check My Trips first before trying to recall the six characters.":
-    "Resonance-এ সাইন ইন করা অবস্থায় বুকিং করলে, আপনার ট্রিপগুলো শুধু রেফারেন্সে নয়, আপনার অ্যাকাউন্টেই যুক্ত থাকে -- ছয় অক্ষর মনে করার চেষ্টা করার আগে সাইন ইন করে My Trips দেখুন।",
-
   "Where does the news on this site come from?": "এই সাইটের খবর কোথা থেকে আসে?",
-  "The Newsroom is read live from a community newsroom run by one of our members, not stored on this site -- stories appear here as soon as they are published there, and if that source is briefly unreachable the page shows nothing rather than something stale.":
-    "Newsroom আমাদের একজন সদস্যের চালানো একটা কমিউনিটি নিউজরুম থেকে সরাসরি পড়া হয়, এই সাইটে জমা থাকে না -- সেখানে প্রকাশ হওয়ার সাথে সাথেই খবর এখানে আসে, আর সেই উৎস সাময়িকভাবে পাওয়া না গেলে পুরোনো কিছু দেখানোর বদলে পাতাটা খালি দেখায়।",
   "Why are some news stories only in English?": "কিছু খবর কেন শুধু ইংরেজিতে?",
-  "Stories are shown as their authors published them. If you are browsing in another language, that is a translation of the site around the story, not of the story itself.":
-    "খবরগুলো লেখক যেভাবে প্রকাশ করেছেন ঠিক সেভাবেই দেখানো হয়। আপনি অন্য ভাষায় দেখছেন মানে সেটা খবরের চারপাশের সাইটটার অনুবাদ, খবরটার নিজের নয়।",
   "Can I submit a story to the newsroom?": "নিউজরুমে কি একটা খবর জমা দিতে পারি?",
-  "That is run by the newsroom's own team, separately from this site -- ask on Discord who runs it if you want to pitch something.":
-    "সেটা এই সাইট থেকে আলাদাভাবে নিউজরুমের নিজস্ব টিম চালায় -- কিছু প্রস্তাব করতে চাইলে Discord-এ জিজ্ঞাসা করুন কে এটা চালান।",
-
   "When was Echo founded?": "Echo কবে প্রতিষ্ঠিত হয়েছিল?",
-  "On 24 March 2026, as Axian Alliance, with three founding members. It has grown a great deal since, entirely on the back of its members.":
-    "২৪ মার্চ ২০২৬-এ, Axian Alliance নামে, তিনজন প্রতিষ্ঠাতা সদস্য নিয়ে। তারপর থেকে এটা অনেক বড় হয়েছে, পুরোপুরি এর সদস্যদের কল্যাণে।",
   "What does \"Home of the Excellence\" mean?": "\"Home of the Excellence\"-এর অর্থ কী?",
-  "It is the alliance's slogan -- the standard it holds its members and its own running of the group to, across every division.":
-    "এটা অ্যালায়েন্সের স্লোগান -- যে মানদণ্ড এটা তার সদস্যদের আর নিজের গ্রুপ চালানোর ক্ষেত্রে, প্রতিটা ডিভিশন জুড়ে, বজায় রাখে।",
   "What game is Echo United Alliances for?": "Echo United Alliances কোন গেমের জন্য?",
-  "The Airline Simulator. Echo is a virtual airline alliance group built around it, not an airline or a real-world company.":
-    "The Airline Simulator। Echo হলো এটাকে ঘিরে তৈরি একটা ভার্চুয়াল এয়ারলাইন অ্যালায়েন্স গ্রুপ, কোনো এয়ারলাইন বা বাস্তব দুনিয়ার কোম্পানি নয়।",
   "Where do I find the Discord invite?": "Discord আমন্ত্রণ কোথায় পাব?",
-  "The Join Discord button in the site header and footer links straight to it, and it is set never to expire -- if it ever fails, that is worth reporting rather than assuming the alliance closed up.":
-    "সাইটের হেডার আর ফুটারের Join Discord বাটন সরাসরি সেখানে নিয়ে যায়, আর এটা কখনো মেয়াদ শেষ না হওয়ার মতো করে সেট করা -- কখনো কাজ না করলে, অ্যালায়েন্স বন্ধ হয়ে গেছে ভাবার বদলে সেটা জানানো ভালো।",
   "Where are the Terms of Service?": "Terms of Service কোথায় পাব?",
-  "Linked in the footer of every page, along with the Code of Conduct and the Privacy Policy.":
-    "প্রতিটা পেজের ফুটারে লিংক করা আছে, Code of Conduct আর Privacy Policy-র সাথে।",
   "What does the Privacy Policy cover, and can I check it?": "Privacy Policy কী কী কভার করে, আর আমি কি নিজে যাচাই করতে পারি?",
-  "What this site collects and why, including that this is a GitHub Pages site with a public source -- the Privacy page says that every claim on it can be checked, and links to where.":
-    "এই সাইট কী সংগ্রহ করে আর কেন করে, আর এটাও যে এটা একটা পাবলিক সোর্সসহ GitHub Pages সাইট -- Privacy পেজে বলা আছে এতে থাকা প্রতিটা দাবি যাচাই করা যায়, আর কোথায় করতে হবে তার লিংকও দেওয়া আছে।",
   "Is the source code for this site public?": "এই সাইটের সোর্স কোড কি পাবলিক?",
-  "Yes -- the whole site is open on GitHub, linked from the Privacy page. That is also how its figures, like the number of carriers and airports, stay honest: they are read live rather than typed in once and left to go stale.":
-    "হ্যাঁ -- পুরো সাইটটাই GitHub-এ খোলা আছে, Privacy পেজ থেকে লিংক করা। এটাই এর সংখ্যাগুলো, যেমন এয়ারলাইন আর বিমানবন্দরের সংখ্যা, সৎ রাখার উপায়ও: এগুলো একবার টাইপ করে পুরোনো হতে দেওয়ার বদলে সরাসরি পড়া হয়।",
-
   "Sneak Peek": "আগাম ঝলক",
   "Sneak peek": "আগাম ঝলক",
   "Sneak peek (unlocked)": "আগাম ঝলক (আনলক করা)",
@@ -848,18 +757,11 @@ const dict: Record<string, string> = {
   "That code did not work.": "ওই কোডটা কাজ করেনি।",
   "Unlocked for this browser": "এই ব্রাউজারের জন্য আনলক করা হয়েছে",
   "or": "অথবা",
-  "Sign in to Resonance with the Discord account you already use on the EUA server -- no separate password to set or remember.":
-    "EUA সার্ভারে আপনি আগে থেকেই যে Discord অ্যাকাউন্ট ব্যবহার করেন সেটা দিয়ে Resonance-এ সাইন ইন করুন -- আলাদা পাসওয়ার্ড তৈরি বা মনে রাখার দরকার নেই।",
   "Look for it on the Resonance sign-in page.": "Resonance সাইন-ইন পেজে এটা খুঁজে পাবেন।",
-
   "Your airline": "আপনার এয়ারলাইন",
   "Airline name or code": "এয়ারলাইনের নাম বা কোড",
   "Claim your airline": "আপনার এয়ারলাইন দাবি করুন",
-  "Link the airline you fly for to your Resonance account, self-reported, the same way you already set a home airport and division.":
-    "আপনি যে এয়ারলাইনের জন্য ওড়েন সেটা আপনার Resonance অ্যাকাউন্টের সাথে যুক্ত করুন, নিজে জানিয়ে, যেভাবে আপনি আগে হোম এয়ারপোর্ট আর ডিভিশন সেট করেছিলেন।",
   "Look for it under Your details on the Resonance page.": "Resonance পেজের Your details-এর নিচে এটা খুঁজে পাবেন।",
-  "That Discord account is not in the EUA server, so it was signed back out. Join the alliance on Discord first, then try again.":
-    "ওই Discord অ্যাকাউন্টটা EUA সার্ভারে নেই, তাই আবার সাইন আউট করা হয়েছে। আগে Discord-এ অ্যালায়েন্সে যোগ দিন, তারপর আবার চেষ্টা করুন।",
 }
 
 export default dict

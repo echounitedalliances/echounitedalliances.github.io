@@ -10,7 +10,8 @@ import { useT } from '../lib/i18n'
 
 /**
  * Every division, three across: nine of them since Eos opened on 2 October
- * 2026, which squares the grid that eight used to fill four across.
+ * 2026, which squares the grid that eight used to fill four across, and ten
+ * since Uzuri on 30 October, whose tile takes the last row to itself.
  *
  * They used to be full-width rows, which gave one of them room for a long
  * welcome message and the other seven a one-line summary — so the page read as

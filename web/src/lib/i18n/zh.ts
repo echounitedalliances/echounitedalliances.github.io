@@ -447,8 +447,7 @@ const dict: Record<string, string> = {
   "Who runs the alliance": "谁在运营联盟",
   "Read the source": "查看源代码",
   "The alliance, remembered": "记得你的联盟",
-  "A Resonance account is for Echo members -- sign in with the Discord account you use on the EUA server, and your trips stay together across all {n} carriers. You do not need one to search or book; it is the alliance’s own account, not a gate in front of booking.":
-    "Resonance 账户是给 Echo 成员的 -- 用你在 EUA 服务器上用的 Discord 账户登录，你的行程就会在全部 {n} 家航司之间保持在一起。搜索和预订都不需要账户；这是联盟自己的账户，不是预订前面的一道门槛。",
+  "A Resonance account keeps your trips together across all {n} carriers, and remembers where you fly from. It is optional: you can search and book without one.": "Resonance 账户把你在 {n} 家航司的行程都放在一起，还会记住你常从哪里出发。不注册也完全可以搜索和预订。",
   "Admin": "管理员",
   "Sign out": "退出登录",
   "Skip for now": "暂时跳过",
@@ -668,7 +667,26 @@ const dict: Record<string, string> = {
   "Its busiest sector, {from} to {to}, runs {n} times a week.": "最繁忙航段是 {from} 至 {to}，每周 {n} 班。",
   "Email {name}": "给 {name} 发邮件",
   "Contact details updated soon": "联系方式即将更新",
-
+  "Welcome, *Uzuri*": "欢迎 *Uzuri*",
+  "New division": "新分部",
+  "Echo United Alliances now has ten divisions. Uzuri is the newest, led by {leader}, and it is taking its first airlines right now: the perfect time to get in early and help shape it.": "Echo United Alliances 现在有十个分部了。Uzuri 是最新的一个，由 {leader} 带领，正在招募第一批航司：现在加入正好，可以一起打造它。",
+  "Meet Uzuri": "认识 Uzuri",
+  "Maybe later": "稍后再说",
+  "30 October 2026": "2026 年 10 月 30 日",
+  "Live from the schedule": "实时航班时刻",
+  "The whole alliance, *departing*": "整个联盟，*正在起飞*",
+  "What leaves next from any airport the alliance serves, across all {n} member carriers, in your own time zone.": "联盟所有机场接下来起飞的航班，覆盖全部 {n} 家成员航司，按你的时区显示。",
+  "A Resonance account remembers your home division and airport, and is how the alliance’s admins sign in to look after the site. It is optional: everything on the site is open without one.": "Resonance 账户会记住你的所属分部和常用机场，也是联盟管理员登录管理网站的方式。完全可选：不注册也能浏览网站的全部内容。",
+  "One account across all {n} carriers. Everything on the site is open without one.": "一个账户通用于全部 {n} 家航司。不注册也能浏览全部内容。",
+  "Every member carrier gets its own page here, with its routes, fleet and timetable drawn into the alliance network for everyone to see.": "每家成员航司在这里都有专属页面：航线、机队和时刻表都画进联盟网络，所有人都能看到。",
+  "A Resonance account is for Echo members: sign in with the Discord account you use on the EUA server to save your home division and airport and claim your airline. Admins sign in the same way to look after the site. Everything else here is open without one.": "Resonance 账户面向 Echo 成员：用你在 EUA 服务器上的 Discord 账户登录，保存所属分部和常用机场，并认领你的航司。管理员也用同样方式登录来管理网站。其他内容不注册也能浏览。",
+  "Ten at the moment, each with its own roster and leadership. Uzuri is the newest, opened on 30 October 2026. The exact count and every carrier in them is on the Divisions and Airlines pages, read live from the roster rather than fixed here.": "目前有十个分部，每个都有自己的成员名单和负责人。Uzuri 是最新的一个，于 2026 年 10 月 30 日成立。准确数量和所有航司都在“分部”和“航空公司”页面，实时读取名单，而不是写死在这里。",
+  "Can I book flights on this site?": "可以在这个网站订机票吗？",
+  "Not any more: booking was retired on 30 October 2026. Every route, timetable and the live departure board are still here, and an airline page links to that airline's own booking site when it has one.": "现在不行了：订票功能已于 2026 年 10 月 30 日停用。所有航线、时刻表和实时出发板都还在，航司页面也会链接到该航司自己的订票网站（如果有的话）。",
+  "Do I need an account to use the site?": "使用网站需要账户吗？",
+  "No -- everything on the site is open to anyone. An account (Resonance) is for members who want to save a profile or claim their airline, and for the admins who look after the site.": "不需要——网站上的所有内容都对所有人开放。账户（Resonance）是给想保存资料或认领自己航司的成员，以及管理网站的管理员用的。",
+  "Are these real flights?": "这些是真实航班吗？",
+  "No. Every schedule, fare and route here comes from airlines in The Airline Simulator, a game -- this is the alliance's own site, not a real-world airline or travel agency.": "不是。这里所有的时刻、票价和航线都来自游戏 The Airline Simulator 里的航司——这是联盟自己的网站，不是现实中的航空公司或旅行社。",
   "Activities": "活动",
   "Travel tools": "出行工具",
   "Your account": "你的账户",
@@ -680,165 +698,56 @@ const dict: Record<string, string> = {
   "Topics": "主题",
   "Questions": "问题",
   "Clear chat": "清空聊天",
-
   "How do I join Echo United Alliances?": "怎么加入 Echo United Alliances？",
-  "Two applications, not one: send a request from your airline in The Airline Simulator's alliance browser, and post an application with EUA on Discord (or use the form on the Join page). A division lead matches the two up -- an in-game request alone will not be actioned, and neither will a Discord application without the in-game one.":
-    "要交两份申请，不是一份：在 The Airline Simulator 的联盟浏览器里用你的航司发送请求，再到 Discord 上向 EUA 提交申请（或者用 Join 页面上的表单）。分部负责人会把两边对上 -- 只有游戏内请求不会被处理，只有 Discord 申请、没有游戏内请求同样不会。",
   "Which division should I apply to?": "应该申请哪个分部？",
-  "Whichever fits how you like to play. The Divisions page lists all of them with their badges -- Kyra is the main alliance, Elysium runs on realism rules, and the rest each have their own character. Pick one and apply there; you are not applying to Echo as a whole first.":
-    "看你喜欢怎么玩。Divisions 页面列出了所有分部和它们的标签 -- Kyra 是主联盟，Elysium 按写实规则运营，其余每个分部也各有特色。选一个申请就行；不用先申请加入整个 Echo。",
   "How long does an application take?": "申请要多久？",
-  "There is no fixed turnaround. Divisions are run separately and each reviews applications by hand, at its own pace, so allow a little time rather than expecting an instant answer.":
-    "没有固定时间。各分部独立运营，都是人工审核申请，节奏各不相同，所以要多留点耐心，别指望立刻就有答复。",
   "Do I have to use Discord?": "一定要用 Discord 吗？",
-  "Yes. Discord is where applications are matched to divisions, where activities like the FFA sales and the discount market actually run, and where division leads are reachable. The website is the front door; Discord is where membership happens.":
-    "是的。申请在 Discord 上与分部对接，FFA 甩卖、折扣市场这类活动也都在那里进行，分部负责人也只能在那里联系到。网站只是门面；真正的成员活动都发生在 Discord 上。",
   "Can I have more than one airline in the alliance?": "可以在联盟里拥有不止一家航司吗？",
-  "Several members do -- more than one of the division leaders themselves run multiple carriers. Each airline still needs its own in-game application to the division you want it in.":
-    "不少成员就是这样 -- 连好几位分部负责人自己都运营多家航司。不过每家航司仍然需要单独向想加入的分部提交游戏内申请。",
   "Is Echo good for beginners?": "Echo 适合新手吗？",
-  "That is who it was built around: most members joined early in their time with The Airline Simulator, and the alliance exists to make that growth faster and the market safer, not just to showcase airlines that have already arrived.":
-    "这正是 Echo 的初衷：大多数成员都是在刚接触 The Airline Simulator 不久时加入的，联盟存在的意义就是让这种成长更快、市场更安全，而不只是展示那些早已站稳脚跟的航司。",
   "Can I move my airline to a different division later?": "以后可以把航司转到别的分部吗？",
-  "Talk to the leads of your current and target divisions on Discord first -- this is not something the website handles, and it is a courtesy to the division you would be leaving as much as a request to the one you would be joining.":
-    "先在 Discord 上和现在及目标分部的负责人谈一谈 -- 这不是网站能处理的事，这既是对要加入的分部提出请求，也是对要离开的分部的一种礼貌。",
   "What if my application is turned down?": "申请被拒了怎么办？",
-  "Ask the division lead what to fix and try again, or try a different division -- each reviews on its own criteria, so a no from one is not a verdict on the airline itself.":
-    "问问分部负责人要改进哪些地方再重新申请，或者换一个分部试试 -- 每个分部的审核标准不同，被一个分部拒绝并不代表这家航司本身有问题。",
-
   "What is a division?": "什么是分部？",
-  "Echo United Alliances is a multi-alliance group: each division runs its own roster and its own leadership, and every member flies under one shared network regardless of which division they are in.":
-    "Echo United Alliances 是一个多联盟组成的团体：每个分部都有自己的团队和负责人，而所有成员无论属于哪个分部，都在同一张共享网络上飞行。",
   "Who leads each division?": "每个分部由谁带领？",
-  "The board is simply the division leaders, one or more per division. They are listed on the About page by their Discord handle, since that is how the group actually knows them -- several lead more than one division at once.":
-    "理事会其实就是各分部的负责人，每个分部一位或多位。他们在 About 页面上以 Discord 账号列出，因为大家平时就是这样认识他们的 -- 有几位同时带领不止一个分部。",
   "What is the difference between Kyra and Elysium?": "Kyra 和 Elysium 有什么区别？",
-  "Kyra is the main alliance; Elysium is the realism alliance, for members who want their operation held to realism rules. Both sit under the same group and the same shared network, just with different house rules.":
-    "Kyra 是主联盟；Elysium 是写实联盟，适合想让运营遵循写实规则的成员。两者都属于同一个团体、共用同一张网络，只是各自的规定不同。",
   "How many divisions does Echo have?": "Echo 有多少个分部？",
-  "Nine at the moment, each with its own roster and leadership. The exact count and every carrier in them is on the Divisions and Airlines pages, read live from the roster rather than fixed here.":
-    "目前是九个，每个都有自己的团队和负责人。确切数量以及其中的每家航司都在 Divisions 和 Airlines 页面，实时从名册读取，而不是写死在这里。",
   "How do I contact my division lead?": "怎么联系我的分部负责人？",
-  "By their Discord handle, listed on the About page. Where a lead has shared an email instead, it shows next to their name there too; until they do, it reads as contact details updated soon rather than guessing one.":
-    "通过他们的 Discord 账号，列在 About 页面上。如果负责人提供了邮箱，也会显示在名字旁边；在那之前会写着联系方式即将更新，而不是随便猜一个。",
   "Do divisions have their own rules?": "各分部有自己的规则吗？",
-  "Yes -- beyond the alliance-wide code of conduct, each division sets its own expectations for its roster. Ask your division lead what applies to yours.":
-    "有 -- 除了全联盟通用的行为准则，每个分部还会为自己的团队设定额外要求。具体适用哪些，问问你的分部负责人就知道。",
-
   "What is an FFA sale?": "什么是 FFA sale？",
-  "Free for all: a member with an aircraft to sell posts it in the FFA channel on Discord, and anyone in the group can buy it -- no queue, no seniority, no allocation. Buyers are expected to say why they want it; FFA works because people take what they can actually use.":
-    "Free for all（自由甩卖）：有飞机要卖的成员把它发到 Discord 的 FFA 频道，团体里任何人都能买 -- 不排队、不论资历、不分配。买家需要说明想要的理由；FFA 之所以好用，是因为大家只拿自己真正用得上的。",
   "How does the discount aircraft market work?": "折扣飞机市场是怎么运作的？",
-  "The other way round from a shop: you open a buy ticket naming the aircraft you want and the price you will pay, anywhere from 50% to 90% of the original price, and a veteran member who can fulfil it picks it up. It runs continuously, not on a schedule.":
-    "和普通商店正好相反：你开一张求购单，写明想要的飞机和愿意出的价格，一般是原价的 50% 到 90%，再由能满足的资深成员接单。这个市场一直在运作，没有固定时间表。",
   "Where do alliance activities actually happen?": "联盟的活动具体在哪里进行？",
-  "On Discord -- the sales channel, the buy tickets, the challenges and their results are all there. You need to be a member of a division to take part, so joining comes first.":
-    "在 Discord 上 -- 甩卖频道、求购单、挑战活动和结果都在那里。要参加就得先是某个分部的成员，所以得先加入才行。",
   "Are there challenges with prizes?": "有带奖品的挑战活动吗？",
-  "Occasionally, yes. They are not run to a fixed calendar -- watch Discord for when one is announced.":
-    "偶尔会有。没有固定日程 -- 留意 Discord 上的公告就知道什么时候开始。",
   "Who can take part in FFA and the market?": "谁可以参加 FFA 和市场？",
-  "Any member of any division. Neither is limited to one division's roster -- the whole group can buy and sell across both.":
-    "任何分部的任何成员都可以。两者都不局限于某一个分部的团队 -- 整个团体都能跨分部买卖。",
   "What price can I ask in the discount market?": "折扣市场里能开多少价？",
-  "Buyers post what they are willing to pay, between 50% and 90% of the aircraft's original price. A veteran member decides whether to fill the ticket at that price.":
-    "买家发布自己愿意出的价格，一般在飞机原价的 50% 到 90% 之间。至于要不要按这个价接单，由资深成员决定。",
   "Is there a queue for FFA sales?": "FFA sale 需要排队吗？",
-  "No. An FFA sale is open to the whole alliance the instant it is posted -- whoever buys first with a genuine reason gets it, not whoever asked first in some other sense.":
-    "不需要。FFA sale 一发布就对整个联盟开放 -- 谁先带着真实理由买下，就归谁，而不是看谁先用别的方式占位。",
   "How often do FFA sales happen?": "FFA sale 多久一次？",
-  "Whenever a member has something to sell -- there is no schedule. Keep an eye on the FFA channel rather than expecting them at set times.":
-    "只要有成员想卖东西就会有 -- 没有固定安排。多留意 FFA 频道，别指望在固定时间出现。",
-
   "What is Airline of the Week?": "什么是本周航空公司？",
-  "A regular feature on the home page that puts one member carrier in front of the whole group -- its livery, its name, and figures like fleet size, routes and destinations, read live from the roster.":
-    "主页上的固定栏目，每次把一家成员航司展示给整个团体 -- 它的涂装、名字，以及机队规模、航线和目的地等数据，都实时从名册读取。",
   "How is the airline chosen?": "航司是怎么被选中的？",
-  "By the board, each week. It is alliance policy rather than something generated automatically, which is also why the pick and its write-up live in the site's own code rather than the database.":
-    "由理事会每周挑选。这是联盟的决定，不是自动生成的，所以这个选择和介绍文字就直接写在网站代码里，而不是放在数据库中。",
   "Why does the home page show a countdown instead of this week's airline?": "为什么主页显示倒计时，而不是本周航司？",
-  "Reveals go out at an announced time, not the moment they are set up -- so the segment shows a countdown until that moment and switches itself over automatically, live, with no reload needed.":
-    "揭晓会在公布好的时间进行，而不是准备好就立刻公开 -- 所以这个栏目会显示倒计时，到点后自动切换、实时生效，不需要刷新页面。",
   "Can my airline be Airline of the Week?": "我的航司能成为本周航空公司吗？",
-  "It is a board pick, not an application, so there is no form for it -- but being active in the alliance and visible on Discord is how a carrier ends up on the board's radar in the first place.":
-    "这是理事会的选择，不是申请制，所以没有表单可填 -- 不过在联盟里保持活跃、在 Discord 上多露面，正是一家航司能进入理事会视野的办法。",
-
   "Can I search and book flights on this site?": "可以在这个网站搜索和预订航班吗？",
-  "Yes -- search the network from the home page, pick an itinerary, and book it. It is a simulated booking against the alliance's own network, not a real airline ticket.":
-    "可以 -- 从主页搜索整个网络，选一个行程，然后预订。这是基于联盟自身网络的模拟预订，不是真实的航空机票。",
   "How do I find a booking I already made?": "怎么找到已经订好的行程？",
-  "Use Manage Booking on the Trips page: enter the six-character reference from your confirmation along with the surname of anyone travelling on it.":
-    "在 Trips 页面使用 Manage Booking：输入确认信息里的六位预订编号，再加上任意一位同行乘客的姓氏。",
   "What is the Round the World feature?": "Round the World 功能是什么？",
-  "One fare, one direction: you build a route of stops around the alliance's network and it prices as a single round-the-world itinerary rather than separate one-way fares.":
-    "一个价格，一个方向：你在联盟网络里规划一串经停点，系统会把它当作一趟完整的环球行程计价，而不是拆成多段单程票价。",
   "Is there a route map for the whole alliance?": "有整个联盟的航线图吗？",
-  "Yes, on the Network page -- it draws every route across every division's carriers on one map, rather than one airline at a time.":
-    "有，在 Network 页面 -- 把每个分部所有航司的航线都画在同一张图上，而不是一次只看一家航司。",
   "Where can I find a specific member airline?": "怎么找到某一家成员航司？",
-  "The Airlines directory lists every carrier in the alliance and can be filtered by division or country -- search it by name if you know roughly who you are looking for.":
-    "Airlines 目录列出了联盟里的每一家航司，可以按分部或国家筛选 -- 如果大概知道要找谁，直接按名字搜索就行。",
   "Do I need an account to search or book?": "搜索或预订需要账户吗？",
-  "No -- searching and booking work for anyone. An account (Resonance) only comes in if you want to manage bookings under your profile or use the members-only tools.":
-    "不需要 -- 搜索和预订谁都可以用。只有想在自己的资料里管理预订，或者使用仅限成员的工具时，才需要账户（Resonance）。",
   "Are these real flight tickets?": "这些是真实的机票吗？",
-  "No. Booking on this site is a simulation layered on the alliance's own network, built for The Airline Simulator community -- not a real-world travel agency.":
-    "不是。这个网站上的预订是基于联盟自身网络的模拟系统，专为 The Airline Simulator 社区打造 -- 不是现实中的旅行社。",
   "Can I change or cancel a booking?": "可以修改或取消预订吗？",
-  "Look it up first on the Trips page with your reference and surname -- what you can do with it from there depends on the booking itself, so start there rather than guessing.":
-    "先在 Trips 页面用预订编号和姓氏查到它 -- 接下来能做什么取决于这笔预订本身，所以从那里开始查，而不是凭猜测。",
-
   "What is Resonance?": "Resonance 是什么？",
-  "The sign-in system for this site, using the Discord account you already use on the EUA server. Signed out, the link in the bar reads Resonance; signed in, it shows your name.":
-    "这个网站的登录系统，使用你在 EUA 服务器上已经在用的 Discord 账户。没登录时，顶栏的链接写着 Resonance；登录后会显示你的名字。",
   "What is Echo Live?": "Echo Live 是什么？",
-  "One of the members' tools on the Members page, open to everyone rather than gated to a sign-in.":
-    "Members 页面上的一个成员工具，对所有人开放，不需要登录才能用。",
   "What is Echo Market and who can use it?": "Echo Market 是什么？谁能用？",
-  "A members' tool for EUA airlines, signed in with the Discord account you use on the alliance's server -- unlike Echo Live, it is not open to everyone.":
-    "面向 EUA 航司的成员工具，需要用你在联盟服务器上的 Discord 账户登录 -- 和 Echo Live 不同，它并不对所有人开放。",
   "I am not in EUA yet -- can I still sign in?": "我还不是 EUA 成员，还能登录吗？",
-  "The Members page links straight to how to join if you are not in yet -- sign-in with Resonance uses your Discord account, so joining the alliance on Discord is the step that actually unlocks the members-only tools.":
-    "如果你还不是成员，Members 页面会直接链接到加入方法 -- Resonance 登录用的是你的 Discord 账户，所以在 Discord 上加入联盟才是真正解锁成员专属工具的那一步。",
   "How do I apply to help admin the alliance?": "怎么申请帮忙管理联盟？",
-  "There is an apply option for admin roles once you are signed in -- ask on Discord if you cannot find it, since exactly where it appears can change as the site does.":
-    "登录之后会有申请管理员角色的选项 -- 找不到的话就在 Discord 上问问，因为具体位置可能会随网站改版而变动。",
   "I forgot my booking reference -- what now?": "忘了预订编号怎么办？",
-  "If you booked while signed in to Resonance, your trips are attached to your account rather than only to the reference -- sign in and check My Trips first before trying to recall the six characters.":
-    "如果你是在登录 Resonance 的状态下预订的，行程会绑定在账户上，而不只是靠编号 -- 先登录查看 My Trips，不用非得想起那六位编号。",
-
   "Where does the news on this site come from?": "这个网站上的新闻是哪里来的？",
-  "The Newsroom is read live from a community newsroom run by one of our members, not stored on this site -- stories appear here as soon as they are published there, and if that source is briefly unreachable the page shows nothing rather than something stale.":
-    "Newsroom 实时读取自某位成员运营的社区新闻室，内容并不存储在本站 -- 稿件一旦在那边发布就会出现在这里，如果来源暂时访问不了，页面会显示为空，而不是显示过时的内容。",
   "Why are some news stories only in English?": "为什么有些新闻只有英文？",
-  "Stories are shown as their authors published them. If you are browsing in another language, that is a translation of the site around the story, not of the story itself.":
-    "稿件会按作者发布时的原样显示。如果你用其他语言浏览，被翻译的只是新闻周围的网站界面，而不是稿件本身的内容。",
   "Can I submit a story to the newsroom?": "可以向新闻室投稿吗？",
-  "That is run by the newsroom's own team, separately from this site -- ask on Discord who runs it if you want to pitch something.":
-    "这由新闻室自己的团队负责，和本站是分开的 -- 如果想投稿，可以在 Discord 上问问是谁在负责。",
-
   "When was Echo founded?": "Echo 是什么时候成立的？",
-  "On 24 March 2026, as Axian Alliance, with three founding members. It has grown a great deal since, entirely on the back of its members.":
-    "2026 年 3 月 24 日，当时名叫 Axian Alliance，只有三位创始成员。从那以后发展壮大，全都靠成员们自己。",
   "What does \"Home of the Excellence\" mean?": "“Home of the Excellence” 是什么意思？",
-  "It is the alliance's slogan -- the standard it holds its members and its own running of the group to, across every division.":
-    "这是联盟的口号 -- 代表着它对成员、也对自身运营所有分部的那个标准。",
   "What game is Echo United Alliances for?": "Echo United Alliances 是为哪款游戏服务的？",
-  "The Airline Simulator. Echo is a virtual airline alliance group built around it, not an airline or a real-world company.":
-    "The Airline Simulator。Echo 是围绕这款游戏建立的虚拟航空联盟团体，不是一家航空公司，也不是现实中的公司。",
   "Where do I find the Discord invite?": "在哪里找到 Discord 邀请链接？",
-  "The Join Discord button in the site header and footer links straight to it, and it is set never to expire -- if it ever fails, that is worth reporting rather than assuming the alliance closed up.":
-    "网站顶部和底部的 Join Discord 按钮直接链接过去，并且设置为永不过期 -- 要是哪天失效了，值得反馈一下，而不是以为联盟已经解散。",
   "Where are the Terms of Service?": "服务条款在哪里？",
-  "Linked in the footer of every page, along with the Code of Conduct and the Privacy Policy.":
-    "每个页面的底部都有链接，和行为准则、隐私政策放在一起。",
   "What does the Privacy Policy cover, and can I check it?": "隐私政策包含哪些内容？我能自己核实吗？",
-  "What this site collects and why, including that this is a GitHub Pages site with a public source -- the Privacy page says that every claim on it can be checked, and links to where.":
-    "说明了本站收集了哪些信息、为什么收集，包括这是一个源代码公开的 GitHub Pages 网站 -- Privacy 页面明确说其中每一条说法都可以核实，并附上了核实的地方。",
   "Is the source code for this site public?": "这个网站的源代码是公开的吗？",
-  "Yes -- the whole site is open on GitHub, linked from the Privacy page. That is also how its figures, like the number of carriers and airports, stay honest: they are read live rather than typed in once and left to go stale.":
-    "是的 -- 整个网站都在 GitHub 上公开，Privacy 页面有链接。这也是网站上的数字（比如航司数量和机场数量）能保持真实的原因：它们都是实时读取的，而不是写死一次就放着过时。",
-
   "Sneak Peek": "抢先看",
   "Sneak peek": "抢先看",
   "Sneak peek (unlocked)": "抢先看（已解锁）",
@@ -848,18 +757,11 @@ const dict: Record<string, string> = {
   "That code did not work.": "口令不对。",
   "Unlocked for this browser": "此浏览器已解锁",
   "or": "或",
-  "Sign in to Resonance with the Discord account you already use on the EUA server -- no separate password to set or remember.":
-    "用你在 EUA 服务器上已经在用的 Discord 账户登录 Resonance -- 不用再单独设置或记一个密码。",
   "Look for it on the Resonance sign-in page.": "在 Resonance 登录页面可以找到它。",
-
   "Your airline": "你的航司",
   "Airline name or code": "航司名称或代码",
   "Claim your airline": "认领你的航司",
-  "Link the airline you fly for to your Resonance account, self-reported, the same way you already set a home airport and division.":
-    "把你所飞的航司和你的 Resonance 账户关联起来，自行填写，就像你之前设置常驻机场和分部一样。",
   "Look for it under Your details on the Resonance page.": "在 Resonance 页面的 Your details 部分可以找到它。",
-  "That Discord account is not in the EUA server, so it was signed back out. Join the alliance on Discord first, then try again.":
-    "这个 Discord 账户不在 EUA 服务器里，所以已经被重新登出。请先在 Discord 上加入联盟，再试一次。",
 }
 
 export default dict

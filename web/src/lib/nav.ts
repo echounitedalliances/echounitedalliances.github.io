@@ -26,5 +26,4 @@ export const NAV: NavItem[] = [
   { to: '/airlines', label: 'Airlines' },
   { to: '/network', label: 'Network' },
   { to: '/news', label: 'News' },
-  { to: '/trips', label: 'My trips' },
 ]

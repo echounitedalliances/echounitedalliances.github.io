@@ -37,8 +37,8 @@ export type Policy = {
   sections: PolicySection[]
 }
 
-const UPDATED = '12 September 2026'
-const TERMS_UPDATED = '9 September 2026'
+const UPDATED = '30 October 2026'
+const TERMS_UPDATED = '30 October 2026'
 
 export const TERMS: Policy = {
   eyebrow: 'Terms of Service',
@@ -51,7 +51,7 @@ export const TERMS: Policy = {
       body: [
         'Echo United Alliances is a virtual airline group in The Airline Simulator, run by its members as a hobby. It is not a company, and this site is not operated on behalf of one.',
         'It is not affiliated with, endorsed by, or connected to The Airline Simulator, any real airline, or any company whose name a member has borrowed for a fictional carrier.',
-        'Nothing on this site involves real money, and no booking made here entitles anyone to real travel of any kind. Every schedule, fare, and reservation describes flights inside a game.',
+        'Nothing on this site involves real money or real travel of any kind. Every schedule, fare and route describes flights inside a game.',
       ],
     },
     {
@@ -69,14 +69,14 @@ export const TERMS: Policy = {
       list: [
         'Keep your password to yourself, and use one you do not reuse somewhere that actually matters.',
         'One account belongs to you. Do not create one to impersonate someone else, or to act on behalf of an airline that is not yours.',
-        'Anything entered under your account, including bookings and profile details, should be something you actually meant to submit.',
+        'Anything entered under your account, including profile details and admin requests, should be something you actually meant to submit.',
       ],
     },
     {
       heading: 'What an account is for',
       body: [
-        'Signed in, you can save a display name, a home division, and a home airport to your profile (all optional, and all editable any time) and book fictional flights that collect under "Your trips" instead of scattering across a browser\'s history. You choose, when you book, whether a trip is kept on your account; you can add one you booked as a guest with its reference and a traveller’s surname, see each in full, cancel it, or take it off your account again.',
-        'None of this is required to use the site. A guest can search the network and book a flight without ever signing in. An account only adds a place for that booking to be remembered.',
+        'Signed in, you can save a display name, a home division and a home airport to your profile, all optional and all editable any time. Admins sign in the same way to look after the site.',
+        'None of this is required to use the site. Everything on it is open to a guest.',
       ],
     },
     {
@@ -85,9 +85,9 @@ export const TERMS: Policy = {
         'The Code of Conduct governs how members treat each other, on this site or off it. Specific to the account system, do not:',
       ],
       list: [
-        'try to access another Resonant\'s account, bookings, or profile;',
+        'try to access another Resonant\'s account or profile;',
         'automate requests against this site or its database beyond what a person clicking around would generate;',
-        'use a booking, a profile field, or anything else on this site to harass, impersonate, or misrepresent yourself as someone else;',
+        'use a profile field, or anything else on this site, to harass, impersonate, or misrepresent yourself as someone else;',
         'try to exploit a bug in the site or its database for advantage.',
       ],
     },
@@ -101,7 +101,7 @@ export const TERMS: Policy = {
     {
       heading: 'No warranty',
       body: [
-        'This site is run by volunteers, for free, as a hobby project. It is provided as-is, with no guarantee it will be available, error-free, or that data in it, including your bookings, will never be lost. There is no service level to promise and no company standing behind one.',
+        'This site is run by volunteers, for free, as a hobby project. It is provided as-is, with no guarantee it will be available, error-free, or that data in it will never be lost. There is no service level to promise and no company standing behind one.',
         'If something breaks, tell us on Discord and we will do what a hobby project can, but we cannot offer more than that.',
       ],
     },
@@ -124,8 +124,8 @@ export const CONDUCT: Policy = {
       heading: 'What this site is',
       body: [
         'Echo United Alliances is a virtual airline group in The Airline Simulator. This website is made by members of the group, for members of the group and anyone curious about it.',
-        'It is not affiliated with, endorsed by or connected to The Airline Simulator, any real airline, or any company whose name a member has borrowed for their fictional carrier. Every schedule, fare and booking on this site describes flights inside a game.',
-        'Nothing here can be bought with real money, and no booking made here entitles anyone to real travel of any kind.',
+        'It is not affiliated with, endorsed by or connected to The Airline Simulator, any real airline, or any company whose name a member has borrowed for their fictional carrier. Every schedule, fare and route on this site describes flights inside a game.',
+        'Nothing here can be bought with real money.',
       ],
     },
     {
@@ -153,8 +153,8 @@ export const CONDUCT: Policy = {
     {
       heading: 'Using this website',
       body: [
-        'Read it, book fictional flights on it, link to it. What we ask you not to do is submit applications you do not mean, hammer the database with automated requests, or try to reach data that is not yours.',
-        'The booking data belongs to the members whose airlines it describes. It is published so travellers can plan a trip, not so it can be lifted wholesale.',
+        'Read it, browse it, link to it. What we ask you not to do is submit applications you do not mean, hammer the database with automated requests, or try to reach data that is not yours.',
+        'The schedule data belongs to the members whose airlines it describes. It is published so people can explore the network, not so it can be lifted wholesale.',
       ],
     },
     {
@@ -194,8 +194,8 @@ export const PRIVACY: Policy = {
     {
       heading: 'When you make a Resonance account',
       body: [
-        'A Resonance account is optional. Everything on this site except saving your own trips works without one.',
-        'If you create one, we hold your email address and the bookings you keep on it: the ones you choose to keep when you book signed in, and any you add later with a booking reference and a traveller’s surname. Taking a booking off your account does not cancel it. Your password is never seen by this site: it goes to Supabase, our database host, which stores it hashed and handles signing you in.',
+        'A Resonance account is optional. Everything on this site works without one.',
+        'If you create one, we hold your email address and the profile details you choose to save. Your password is never seen by this site: it goes to Supabase, our database host, which stores it hashed and handles signing you in.',
         'We do not send marketing email. The only mail an account can generate is a password reset you asked for.',
       ],
     },
@@ -245,9 +245,8 @@ export const PRIVACY: Policy = {
       ],
       list: [
         'Your application is visible to the division leaders and board members who read that Discord channel. That is the point of sending it, and it is not visible to the membership at large.',
-        'Your email address and your bookings are visible to nobody but you. No member, leader or board member can see another Resonance account from this site, and the database will not return one.',
+        'Your email address is visible to nobody but you. No member, leader or board member can see another Resonance account from this site, and the database will not return one.',
         'The one exception, and it only applies if you make it apply: if you ask to help administer the site, the admins reading that queue see the address on your account, your display name and your Discord handle. That is unavoidable, since the address is what the promotion is applied to, and it is why asking is a deliberate act rather than a setting.',
-        'Your name on a booking is visible to whoever holds the booking reference, because that is what retrieves it.',
       ],
     },
     {

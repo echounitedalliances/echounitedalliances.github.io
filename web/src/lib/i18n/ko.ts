@@ -447,8 +447,7 @@ const dict: Record<string, string> = {
   "Who runs the alliance": "얼라이언스를 운영하는 사람들",
   "Read the source": "소스 코드 보기",
   "The alliance, remembered": "당신을 기억하는 얼라이언스",
-  "A Resonance account is for Echo members -- sign in with the Discord account you use on the EUA server, and your trips stay together across all {n} carriers. You do not need one to search or book; it is the alliance’s own account, not a gate in front of booking.":
-    "Resonance 계정은 Echo 멤버를 위한 것이에요 -- EUA 서버에서 쓰는 Discord 계정으로 로그인하면, {n}곳의 모든 항공사에서 여행 기록이 하나로 모여요. 검색이나 예약에는 계정이 필요 없어요. 이건 얼라이언스 자체의 계정이지, 예약을 막는 장벽이 아니에요.",
+  "A Resonance account keeps your trips together across all {n} carriers, and remembers where you fly from. It is optional: you can search and book without one.": "Resonance 계정 하나면 항공사 {n}곳의 여행이 한곳에 모이고, 자주 출발하는 곳도 기억해요. 필수는 아니에요: 계정 없이도 검색하고 예약할 수 있어요.",
   "Admin": "관리자",
   "Sign out": "로그아웃",
   "Skip for now": "나중에 하기",
@@ -668,7 +667,26 @@ const dict: Record<string, string> = {
   "Its busiest sector, {from} to {to}, runs {n} times a week.": "가장 바쁜 구간은 {from}에서 {to}까지, 주 {n}회 운항해요.",
   "Email {name}": "{name}에게 이메일 보내기",
   "Contact details updated soon": "연락처는 곧 업데이트돼요",
-
+  "Welcome, *Uzuri*": "어서 와요, *Uzuri*",
+  "New division": "새 디비전",
+  "Echo United Alliances now has ten divisions. Uzuri is the newest, led by {leader}, and it is taking its first airlines right now: the perfect time to get in early and help shape it.": "Echo United Alliances의 디비전이 10개가 됐어요. 막내 Uzuri는 {leader}이(가) 이끌고, 지금 첫 항공사들을 받는 중이에요: 일찍 들어가서 함께 만들어 갈 절호의 기회예요.",
+  "Meet Uzuri": "Uzuri 둘러보기",
+  "Maybe later": "나중에",
+  "30 October 2026": "2026년 10월 30일",
+  "Live from the schedule": "운항 일정에서 실시간으로",
+  "The whole alliance, *departing*": "얼라이언스 전체가 *출발 중*",
+  "What leaves next from any airport the alliance serves, across all {n} member carriers, in your own time zone.": "얼라이언스가 취항하는 모든 공항의 다음 출발편, 멤버 항공사 {n}곳 전부를 내 시간대로 보여 줘요.",
+  "A Resonance account remembers your home division and airport, and is how the alliance’s admins sign in to look after the site. It is optional: everything on the site is open without one.": "Resonance 계정은 소속 디비전과 주 이용 공항을 기억하고, 얼라이언스 관리자들이 사이트를 관리하려고 로그인하는 계정이에요. 필수는 아니에요: 사이트의 모든 건 계정 없이 볼 수 있어요.",
+  "One account across all {n} carriers. Everything on the site is open without one.": "계정 하나로 항공사 {n}곳 전부. 계정 없이도 모든 걸 볼 수 있어요.",
+  "Every member carrier gets its own page here, with its routes, fleet and timetable drawn into the alliance network for everyone to see.": "멤버 항공사마다 전용 페이지가 있어요: 노선, 기단, 시간표가 얼라이언스 네트워크에 그려져 누구나 볼 수 있어요.",
+  "A Resonance account is for Echo members: sign in with the Discord account you use on the EUA server to save your home division and airport and claim your airline. Admins sign in the same way to look after the site. Everything else here is open without one.": "Resonance 계정은 Echo 멤버용이에요: EUA 서버에서 쓰는 Discord 계정으로 로그인해서 소속 디비전과 주 이용 공항을 저장하고 내 항공사를 등록하세요. 관리자도 같은 방식으로 로그인해 사이트를 관리해요. 그 밖의 모든 건 계정 없이 볼 수 있어요.",
+  "Ten at the moment, each with its own roster and leadership. Uzuri is the newest, opened on 30 October 2026. The exact count and every carrier in them is on the Divisions and Airlines pages, read live from the roster rather than fixed here.": "지금은 10개예요. 각자 명단과 리더가 있어요. 막내 Uzuri는 2026년 10월 30일에 생겼어요. 정확한 수와 소속 항공사는 디비전·항공사 페이지에 명단에서 실시간으로 나와요.",
+  "Can I book flights on this site?": "이 사이트에서 항공편을 예약할 수 있나요?",
+  "Not any more: booking was retired on 30 October 2026. Every route, timetable and the live departure board are still here, and an airline page links to that airline's own booking site when it has one.": "이제는 안 돼요: 예약 기능은 2026년 10월 30일에 종료됐어요. 모든 노선, 시간표, 실시간 출발 안내판은 그대로 있고, 항공사 페이지에서 그 항공사의 자체 예약 사이트로 이동할 수 있어요(있는 경우).",
+  "Do I need an account to use the site?": "사이트를 쓰려면 계정이 필요한가요?",
+  "No -- everything on the site is open to anyone. An account (Resonance) is for members who want to save a profile or claim their airline, and for the admins who look after the site.": "아니요 -- 사이트의 모든 건 누구에게나 열려 있어요. 계정(Resonance)은 프로필을 저장하거나 내 항공사를 등록하려는 멤버, 그리고 사이트를 관리하는 관리자를 위한 거예요.",
+  "Are these real flights?": "진짜 항공편인가요?",
+  "No. Every schedule, fare and route here comes from airlines in The Airline Simulator, a game -- this is the alliance's own site, not a real-world airline or travel agency.": "아니요. 여기 모든 일정, 운임, 노선은 게임 The Airline Simulator 속 항공사들 거예요 -- 얼라이언스 자체 사이트이고, 실제 항공사나 여행사가 아니에요.",
   "Activities": "활동",
   "Travel tools": "여행 도구",
   "Your account": "내 계정",
@@ -680,165 +698,56 @@ const dict: Record<string, string> = {
   "Topics": "주제",
   "Questions": "질문",
   "Clear chat": "채팅 지우기",
-
   "How do I join Echo United Alliances?": "Echo United Alliances에 어떻게 가입하나요?",
-  "Two applications, not one: send a request from your airline in The Airline Simulator's alliance browser, and post an application with EUA on Discord (or use the form on the Join page). A division lead matches the two up -- an in-game request alone will not be actioned, and neither will a Discord application without the in-game one.":
-    "신청은 한 번이 아니라 두 번이에요. The Airline Simulator의 얼라이언스 브라우저에서 항공사로 요청을 보내고, Discord에서 EUA에 신청서를 올려요 (또는 Join 페이지의 양식을 써도 돼요). 디비전 리더가 둘을 맞춰 줘요 -- 게임 내 요청만으로는 처리되지 않고, 게임 내 요청 없는 Discord 신청도 마찬가지예요.",
   "Which division should I apply to?": "어느 디비전에 신청해야 할까요?",
-  "Whichever fits how you like to play. The Divisions page lists all of them with their badges -- Kyra is the main alliance, Elysium runs on realism rules, and the rest each have their own character. Pick one and apply there; you are not applying to Echo as a whole first.":
-    "본인 플레이 스타일에 맞는 곳이면 돼요. Divisions 페이지에 뱃지와 함께 전부 나와 있어요 -- Kyra는 메인 얼라이언스, Elysium은 리얼리즘 규칙으로 운영되고, 나머지도 각자 개성이 있어요. 하나 골라서 거기에 신청하면 되고, 먼저 Echo 전체에 신청하는 건 아니에요.",
   "How long does an application take?": "신청은 얼마나 걸리나요?",
-  "There is no fixed turnaround. Divisions are run separately and each reviews applications by hand, at its own pace, so allow a little time rather than expecting an instant answer.":
-    "정해진 기간은 없어요. 디비전마다 따로 운영되고 각자 속도에 맞춰 직접 신청서를 검토하니까, 바로 답이 올 거라 기대하기보다 조금 기다려 주세요.",
   "Do I have to use Discord?": "Discord를 꼭 써야 하나요?",
-  "Yes. Discord is where applications are matched to divisions, where activities like the FFA sales and the discount market actually run, and where division leads are reachable. The website is the front door; Discord is where membership happens.":
-    "네. 신청서가 디비전과 연결되는 곳도, FFA 세일이나 할인 마켓 같은 활동이 실제로 돌아가는 곳도, 디비전 리더에게 연락할 수 있는 곳도 다 Discord예요. 웹사이트는 현관이고, 진짜 멤버십은 Discord에서 이루어져요.",
   "Can I have more than one airline in the alliance?": "얼라이언스에 항공사를 두 개 이상 둘 수 있나요?",
-  "Several members do -- more than one of the division leaders themselves run multiple carriers. Each airline still needs its own in-game application to the division you want it in.":
-    "여러 멤버가 그렇게 하고 있어요 -- 디비전 리더 중에도 항공사를 여러 개 운영하는 분들이 있어요. 다만 각 항공사마다 원하는 디비전에 게임 내 신청을 따로 해야 해요.",
   "Is Echo good for beginners?": "Echo는 초보자에게 좋은가요?",
-  "That is who it was built around: most members joined early in their time with The Airline Simulator, and the alliance exists to make that growth faster and the market safer, not just to showcase airlines that have already arrived.":
-    "바로 그런 분들을 위해 만들어졌어요. 대부분의 멤버가 The Airline Simulator를 막 시작했을 때 가입했고, 이 얼라이언스는 이미 자리 잡은 항공사를 보여주기 위해서가 아니라 그런 성장을 더 빠르고 안전하게 만들기 위해 존재해요.",
   "Can I move my airline to a different division later?": "나중에 항공사를 다른 디비전으로 옮길 수 있나요?",
-  "Talk to the leads of your current and target divisions on Discord first -- this is not something the website handles, and it is a courtesy to the division you would be leaving as much as a request to the one you would be joining.":
-    "먼저 Discord에서 현재 디비전과 옮기고 싶은 디비전의 리더와 이야기해 보세요 -- 이건 웹사이트가 처리하는 일이 아니고, 떠나는 디비전에 대한 예의이기도 하고 들어가는 디비전에 대한 요청이기도 해요.",
   "What if my application is turned down?": "신청이 거절되면 어떻게 하나요?",
-  "Ask the division lead what to fix and try again, or try a different division -- each reviews on its own criteria, so a no from one is not a verdict on the airline itself.":
-    "디비전 리더에게 뭘 고치면 좋을지 물어보고 다시 신청하거나, 다른 디비전에 도전해 보세요 -- 디비전마다 기준이 다르니까 한 곳에서 거절됐다고 그 항공사 자체에 문제가 있다는 뜻은 아니에요.",
-
   "What is a division?": "디비전이 뭔가요?",
-  "Echo United Alliances is a multi-alliance group: each division runs its own roster and its own leadership, and every member flies under one shared network regardless of which division they are in.":
-    "Echo United Alliances는 여러 얼라이언스로 이루어진 그룹이에요. 각 디비전마다 자기만의 팀과 리더십이 있고, 어느 디비전에 속해 있든 모든 멤버는 하나의 공유 네트워크로 함께 날아요.",
   "Who leads each division?": "각 디비전은 누가 이끄나요?",
-  "The board is simply the division leaders, one or more per division. They are listed on the About page by their Discord handle, since that is how the group actually knows them -- several lead more than one division at once.":
-    "이사회는 바로 디비전 리더들이에요. 디비전마다 한 명 또는 여러 명이 있어요. About 페이지에 Discord 핸들로 소개되어 있는데, 그룹이 실제로 그들을 알아보는 방식이 그거라서요 -- 몇 명은 동시에 여러 디비전을 이끌어요.",
   "What is the difference between Kyra and Elysium?": "Kyra와 Elysium의 차이는 뭔가요?",
-  "Kyra is the main alliance; Elysium is the realism alliance, for members who want their operation held to realism rules. Both sit under the same group and the same shared network, just with different house rules.":
-    "Kyra는 메인 얼라이언스고, Elysium은 리얼리즘 규칙에 맞춰 운영하고 싶은 멤버를 위한 리얼리즘 얼라이언스예요. 둘 다 같은 그룹, 같은 공유 네트워크 안에 있고, 자체 규칙만 다를 뿐이에요.",
   "How many divisions does Echo have?": "Echo에는 디비전이 몇 개 있나요?",
-  "Nine at the moment, each with its own roster and leadership. The exact count and every carrier in them is on the Divisions and Airlines pages, read live from the roster rather than fixed here.":
-    "현재 아홉 개이고, 각자 팀과 리더십을 갖고 있어요. 정확한 숫자와 소속 항공사는 Divisions와 Airlines 페이지에서 실시간으로 확인할 수 있고, 여기 고정된 숫자가 아니에요.",
   "How do I contact my division lead?": "내 디비전 리더에게 어떻게 연락하나요?",
-  "By their Discord handle, listed on the About page. Where a lead has shared an email instead, it shows next to their name there too; until they do, it reads as contact details updated soon rather than guessing one.":
-    "About 페이지에 있는 Discord 핸들로요. 리더가 이메일을 공유했다면 이름 옆에 같이 나와요. 아직 없다면 함부로 추측하는 대신 연락처는 곧 업데이트돼요라고 표시돼요.",
   "Do divisions have their own rules?": "디비전마다 자체 규칙이 있나요?",
-  "Yes -- beyond the alliance-wide code of conduct, each division sets its own expectations for its roster. Ask your division lead what applies to yours.":
-    "있어요 -- 얼라이언스 전체의 행동 강령 외에도 각 디비전이 자기 팀을 위한 기준을 따로 정해요. 어떤 규칙이 적용되는지는 디비전 리더에게 물어보세요.",
-
   "What is an FFA sale?": "FFA 세일이 뭔가요?",
-  "Free for all: a member with an aircraft to sell posts it in the FFA channel on Discord, and anyone in the group can buy it -- no queue, no seniority, no allocation. Buyers are expected to say why they want it; FFA works because people take what they can actually use.":
-    "Free for all, 말 그대로 누구나 참여예요. 팔 항공기가 있는 멤버가 Discord의 FFA 채널에 올리면 그룹의 누구든 살 수 있어요 -- 줄도, 서열도, 배정도 없어요. 구매자는 왜 그게 필요한지 말해야 하고, FFA가 잘 돌아가는 이유는 다들 정말 쓸 수 있는 것만 가져가기 때문이에요.",
   "How does the discount aircraft market work?": "할인 항공기 마켓은 어떻게 돌아가나요?",
-  "The other way round from a shop: you open a buy ticket naming the aircraft you want and the price you will pay, anywhere from 50% to 90% of the original price, and a veteran member who can fulfil it picks it up. It runs continuously, not on a schedule.":
-    "보통 가게랑 반대예요. 원하는 항공기와 지불할 가격을 적어서 구매 티켓을 올리는데, 가격은 원래 가격의 50%에서 90% 사이예요. 그걸 처리할 수 있는 베테랑 멤버가 가져가서 진행해요. 정해진 일정 없이 계속 돌아가요.",
   "Where do alliance activities actually happen?": "얼라이언스 활동은 실제로 어디서 이루어지나요?",
-  "On Discord -- the sales channel, the buy tickets, the challenges and their results are all there. You need to be a member of a division to take part, so joining comes first.":
-    "Discord에서요 -- 세일 채널, 구매 티켓, 챌린지와 결과까지 다 거기 있어요. 참여하려면 디비전 멤버여야 하니까 먼저 가입부터 해야 해요.",
   "Are there challenges with prizes?": "상품이 걸린 챌린지도 있나요?",
-  "Occasionally, yes. They are not run to a fixed calendar -- watch Discord for when one is announced.":
-    "가끔 있어요. 정해진 일정은 없으니 언제 공지되는지는 Discord를 지켜봐 주세요.",
   "Who can take part in FFA and the market?": "FFA와 마켓은 누가 참여할 수 있나요?",
-  "Any member of any division. Neither is limited to one division's roster -- the whole group can buy and sell across both.":
-    "어느 디비전의 멤버든 참여할 수 있어요. 둘 다 한 디비전 팀으로 제한되지 않고, 그룹 전체가 디비전을 넘나들며 사고팔 수 있어요.",
   "What price can I ask in the discount market?": "할인 마켓에서는 가격을 얼마로 제시할 수 있나요?",
-  "Buyers post what they are willing to pay, between 50% and 90% of the aircraft's original price. A veteran member decides whether to fill the ticket at that price.":
-    "구매자는 항공기 원래 가격의 50%에서 90% 사이에서 지불할 의향이 있는 가격을 올려요. 그 가격에 티켓을 처리할지는 베테랑 멤버가 결정해요.",
   "Is there a queue for FFA sales?": "FFA 세일에 줄이 있나요?",
-  "No. An FFA sale is open to the whole alliance the instant it is posted -- whoever buys first with a genuine reason gets it, not whoever asked first in some other sense.":
-    "없어요. FFA 세일은 올라오는 순간 얼라이언스 전체에 열려요 -- 다른 방식으로 먼저 말을 꺼낸 사람이 아니라, 진짜 이유를 갖고 먼저 산 사람이 가져가요.",
   "How often do FFA sales happen?": "FFA 세일은 얼마나 자주 열리나요?",
-  "Whenever a member has something to sell -- there is no schedule. Keep an eye on the FFA channel rather than expecting them at set times.":
-    "멤버가 팔 게 생길 때마다요 -- 정해진 일정은 없어요. 정해진 시간을 기대하기보다 FFA 채널을 계속 지켜봐 주세요.",
-
   "What is Airline of the Week?": "이번 주의 항공사가 뭔가요?",
-  "A regular feature on the home page that puts one member carrier in front of the whole group -- its livery, its name, and figures like fleet size, routes and destinations, read live from the roster.":
-    "홈페이지의 정기 코너로, 멤버 항공사 하나를 그룹 전체 앞에 소개해요 -- 도장, 이름, 그리고 기단 규모, 노선, 취항지 같은 수치까지 실시간으로 가져와요.",
   "How is the airline chosen?": "항공사는 어떻게 선정되나요?",
-  "By the board, each week. It is alliance policy rather than something generated automatically, which is also why the pick and its write-up live in the site's own code rather than the database.":
-    "매주 이사회가 골라요. 자동으로 생성되는 게 아니라 얼라이언스의 정책이라서, 선정 내용과 소개글도 데이터베이스가 아니라 사이트 코드 안에 직접 들어 있어요.",
   "Why does the home page show a countdown instead of this week's airline?": "왜 홈페이지에 이번 주 항공사 대신 카운트다운이 떠 있나요?",
-  "Reveals go out at an announced time, not the moment they are set up -- so the segment shows a countdown until that moment and switches itself over automatically, live, with no reload needed.":
-    "공개는 준비가 끝난 순간이 아니라 미리 공지된 시간에 이루어져요 -- 그래서 그 시간까지 카운트다운을 보여주다가 새로고침 없이 그 순간 자동으로, 실시간으로 바뀌어요.",
   "Can my airline be Airline of the Week?": "제 항공사도 이번 주의 항공사가 될 수 있나요?",
-  "It is a board pick, not an application, so there is no form for it -- but being active in the alliance and visible on Discord is how a carrier ends up on the board's radar in the first place.":
-    "이건 이사회가 고르는 거지 신청제가 아니라서 양식은 따로 없어요 -- 다만 얼라이언스에서 활발히 활동하고 Discord에서 눈에 띄는 게 이사회의 눈에 드는 방법이에요.",
-
   "Can I search and book flights on this site?": "이 사이트에서 항공편을 검색하고 예약할 수 있나요?",
-  "Yes -- search the network from the home page, pick an itinerary, and book it. It is a simulated booking against the alliance's own network, not a real airline ticket.":
-    "네 -- 홈페이지에서 네트워크를 검색하고 일정을 골라 예약하면 돼요. 얼라이언스 자체 네트워크를 기반으로 한 모의 예약이지, 실제 항공권은 아니에요.",
   "How do I find a booking I already made?": "이미 한 예약은 어떻게 찾나요?",
-  "Use Manage Booking on the Trips page: enter the six-character reference from your confirmation along with the surname of anyone travelling on it.":
-    "Trips 페이지의 Manage Booking을 이용하세요. 확인서에 있는 6자리 예약 번호와 동승객 중 아무나의 성을 입력하면 돼요.",
   "What is the Round the World feature?": "Round the World 기능이 뭔가요?",
-  "One fare, one direction: you build a route of stops around the alliance's network and it prices as a single round-the-world itinerary rather than separate one-way fares.":
-    "운임 하나, 방향 하나예요. 얼라이언스 네트워크를 따라 경유지 경로를 짜면 개별 편도 운임이 아니라 하나의 세계일주 일정으로 가격이 매겨져요.",
   "Is there a route map for the whole alliance?": "얼라이언스 전체 노선도가 있나요?",
-  "Yes, on the Network page -- it draws every route across every division's carriers on one map, rather than one airline at a time.":
-    "있어요, Network 페이지에서요 -- 항공사 하나씩 보는 게 아니라 모든 디비전 항공사의 모든 노선을 한 지도에 그려줘요.",
   "Where can I find a specific member airline?": "특정 멤버 항공사는 어디서 찾나요?",
-  "The Airlines directory lists every carrier in the alliance and can be filtered by division or country -- search it by name if you know roughly who you are looking for.":
-    "Airlines 디렉터리에 얼라이언스의 모든 항공사가 나와 있고 디비전이나 국가로 필터링할 수 있어요 -- 누굴 찾는지 대충 알면 이름으로 검색해 보세요.",
   "Do I need an account to search or book?": "검색이나 예약에 계정이 필요한가요?",
-  "No -- searching and booking work for anyone. An account (Resonance) only comes in if you want to manage bookings under your profile or use the members-only tools.":
-    "아니요 -- 검색과 예약은 누구나 할 수 있어요. 예약을 프로필에서 관리하거나 멤버 전용 도구를 쓰고 싶을 때만 계정(Resonance)이 필요해요.",
   "Are these real flight tickets?": "이게 실제 항공권인가요?",
-  "No. Booking on this site is a simulation layered on the alliance's own network, built for The Airline Simulator community -- not a real-world travel agency.":
-    "아니에요. 이 사이트의 예약은 얼라이언스 자체 네트워크 위에 만든 시뮬레이션으로, The Airline Simulator 커뮤니티를 위해 만든 거예요 -- 실제 여행사가 아니에요.",
   "Can I change or cancel a booking?": "예약을 변경하거나 취소할 수 있나요?",
-  "Look it up first on the Trips page with your reference and surname -- what you can do with it from there depends on the booking itself, so start there rather than guessing.":
-    "먼저 Trips 페이지에서 예약 번호와 성으로 조회해 보세요 -- 거기서 뭘 할 수 있는지는 예약 자체에 따라 다르니, 추측하지 말고 거기서부터 시작하세요.",
-
   "What is Resonance?": "Resonance가 뭔가요?",
-  "The sign-in system for this site, using the Discord account you already use on the EUA server. Signed out, the link in the bar reads Resonance; signed in, it shows your name.":
-    "이 사이트의 로그인 시스템으로, EUA 서버에서 이미 쓰고 있는 Discord 계정을 그대로 사용해요. 로그아웃 상태에서는 메뉴바 링크에 Resonance라고 나오고, 로그인하면 이름이 표시돼요.",
   "What is Echo Live?": "Echo Live가 뭔가요?",
-  "One of the members' tools on the Members page, open to everyone rather than gated to a sign-in.":
-    "Members 페이지에 있는 멤버 도구 중 하나로, 로그인 없이 누구나 이용할 수 있어요.",
   "What is Echo Market and who can use it?": "Echo Market이 뭐고 누가 쓸 수 있나요?",
-  "A members' tool for EUA airlines, signed in with the Discord account you use on the alliance's server -- unlike Echo Live, it is not open to everyone.":
-    "EUA 항공사를 위한 멤버 도구로, 얼라이언스 서버에서 쓰는 Discord 계정으로 로그인해야 해요 -- Echo Live와 달리 누구에게나 열려 있지는 않아요.",
   "I am not in EUA yet -- can I still sign in?": "아직 EUA 멤버가 아닌데 로그인할 수 있나요?",
-  "The Members page links straight to how to join if you are not in yet -- sign-in with Resonance uses your Discord account, so joining the alliance on Discord is the step that actually unlocks the members-only tools.":
-    "아직 멤버가 아니라면 Members 페이지에서 가입 방법으로 바로 연결돼요 -- Resonance 로그인은 Discord 계정을 쓰니까, Discord에서 얼라이언스에 가입하는 게 실제로 멤버 전용 도구를 여는 단계예요.",
   "How do I apply to help admin the alliance?": "얼라이언스 운영을 도우려면 어떻게 신청하나요?",
-  "There is an apply option for admin roles once you are signed in -- ask on Discord if you cannot find it, since exactly where it appears can change as the site does.":
-    "로그인하면 관리자 역할에 신청할 수 있는 옵션이 있어요 -- 못 찾겠으면 Discord에서 물어보세요, 사이트가 바뀌면서 정확한 위치도 바뀔 수 있거든요.",
   "I forgot my booking reference -- what now?": "예약 번호를 잊어버렸어요, 이제 어떻게 하죠?",
-  "If you booked while signed in to Resonance, your trips are attached to your account rather than only to the reference -- sign in and check My Trips first before trying to recall the six characters.":
-    "Resonance에 로그인한 상태로 예약했다면, 일정이 예약 번호뿐 아니라 계정에도 연결되어 있어요 -- 6자리를 기억해내려 애쓰기 전에 먼저 로그인해서 My Trips를 확인해 보세요.",
-
   "Where does the news on this site come from?": "이 사이트의 뉴스는 어디서 오는 건가요?",
-  "The Newsroom is read live from a community newsroom run by one of our members, not stored on this site -- stories appear here as soon as they are published there, and if that source is briefly unreachable the page shows nothing rather than something stale.":
-    "Newsroom은 저희 멤버 중 한 명이 운영하는 커뮤니티 뉴스룸에서 실시간으로 가져와요, 이 사이트에 저장돼 있지 않아요 -- 거기서 발행되는 즉시 여기에 나타나고, 그 소스가 잠깐 접속이 안 되면 오래된 내용을 보여주는 대신 그냥 아무것도 안 보여줘요.",
   "Why are some news stories only in English?": "왜 일부 뉴스는 영어로만 있나요?",
-  "Stories are shown as their authors published them. If you are browsing in another language, that is a translation of the site around the story, not of the story itself.":
-    "기사는 작성자가 발행한 그대로 보여줘요. 다른 언어로 보고 있다면 번역된 건 기사 주변의 사이트 부분이지 기사 내용 자체가 아니에요.",
   "Can I submit a story to the newsroom?": "뉴스룸에 기사를 제출할 수 있나요?",
-  "That is run by the newsroom's own team, separately from this site -- ask on Discord who runs it if you want to pitch something.":
-    "그건 이 사이트와는 별도로 뉴스룸 자체 팀이 운영해요 -- 뭔가 제안하고 싶다면 Discord에서 누가 운영하는지 물어보세요.",
-
   "When was Echo founded?": "Echo는 언제 설립됐나요?",
-  "On 24 March 2026, as Axian Alliance, with three founding members. It has grown a great deal since, entirely on the back of its members.":
-    "2026년 3월 24일, Axian Alliance라는 이름으로 창립 멤버 세 명과 함께 시작했어요. 그 이후로 멤버들 덕분에 크게 성장했어요.",
   "What does \"Home of the Excellence\" mean?": "\"Home of the Excellence\"는 무슨 뜻인가요?",
-  "It is the alliance's slogan -- the standard it holds its members and its own running of the group to, across every division.":
-    "얼라이언스의 슬로건이에요 -- 모든 디비전에 걸쳐 멤버들과 그룹 운영 자체에 적용하는 기준을 뜻해요.",
   "What game is Echo United Alliances for?": "Echo United Alliances는 어떤 게임을 위한 건가요?",
-  "The Airline Simulator. Echo is a virtual airline alliance group built around it, not an airline or a real-world company.":
-    "The Airline Simulator예요. Echo는 그 게임을 중심으로 만들어진 가상 항공 얼라이언스 그룹이지, 실제 항공사나 현실의 회사가 아니에요.",
   "Where do I find the Discord invite?": "Discord 초대 링크는 어디서 찾나요?",
-  "The Join Discord button in the site header and footer links straight to it, and it is set never to expire -- if it ever fails, that is worth reporting rather than assuming the alliance closed up.":
-    "사이트 상단과 하단의 Join Discord 버튼이 바로 연결되고, 절대 만료되지 않도록 설정돼 있어요 -- 혹시 안 되면 얼라이언스가 없어졌다고 생각하지 말고 알려주세요.",
   "Where are the Terms of Service?": "이용 약관은 어디 있나요?",
-  "Linked in the footer of every page, along with the Code of Conduct and the Privacy Policy.":
-    "모든 페이지 하단에 행동 강령, 개인정보 보호정책과 함께 링크돼 있어요.",
   "What does the Privacy Policy cover, and can I check it?": "개인정보 보호정책은 뭘 다루고, 직접 확인할 수 있나요?",
-  "What this site collects and why, including that this is a GitHub Pages site with a public source -- the Privacy page says that every claim on it can be checked, and links to where.":
-    "이 사이트가 뭘 수집하고 왜 수집하는지, 그리고 이게 소스가 공개된 GitHub Pages 사이트라는 것까지 다뤄요 -- Privacy 페이지에는 그 안의 모든 내용을 확인할 수 있다고 적혀 있고, 어디서 확인하는지 링크도 있어요.",
   "Is the source code for this site public?": "이 사이트의 소스 코드는 공개돼 있나요?",
-  "Yes -- the whole site is open on GitHub, linked from the Privacy page. That is also how its figures, like the number of carriers and airports, stay honest: they are read live rather than typed in once and left to go stale.":
-    "네 -- 사이트 전체가 GitHub에 공개돼 있고, Privacy 페이지에 링크가 있어요. 항공사 수나 공항 수 같은 수치가 정직하게 유지되는 것도 같은 이유예요. 한 번 입력하고 방치하는 게 아니라 실시간으로 가져오거든요.",
-
   "Sneak Peek": "미리보기",
   "Sneak peek": "미리보기",
   "Sneak peek (unlocked)": "미리보기 (잠금 해제됨)",
@@ -848,18 +757,11 @@ const dict: Record<string, string> = {
   "That code did not work.": "코드가 맞지 않아요.",
   "Unlocked for this browser": "이 브라우저에서는 잠금 해제됨",
   "or": "또는",
-  "Sign in to Resonance with the Discord account you already use on the EUA server -- no separate password to set or remember.":
-    "EUA 서버에서 이미 쓰고 있는 Discord 계정으로 Resonance에 로그인하세요 -- 따로 비밀번호를 만들거나 기억할 필요 없어요.",
   "Look for it on the Resonance sign-in page.": "Resonance 로그인 페이지에서 찾을 수 있어요.",
-
   "Your airline": "내 항공사",
   "Airline name or code": "항공사 이름 또는 코드",
   "Claim your airline": "내 항공사 연결하기",
-  "Link the airline you fly for to your Resonance account, self-reported, the same way you already set a home airport and division.":
-    "당신이 운항하는 항공사를 Resonance 계정에 연결하세요. 홈 공항과 디비전을 설정했던 것처럼 직접 입력하는 방식이에요.",
   "Look for it under Your details on the Resonance page.": "Resonance 페이지의 Your details에서 찾을 수 있어요.",
-  "That Discord account is not in the EUA server, so it was signed back out. Join the alliance on Discord first, then try again.":
-    "그 Discord 계정은 EUA 서버에 없어서 다시 로그아웃됐어요. 먼저 Discord에서 얼라이언스에 가입한 다음 다시 시도해 주세요.",
 }
 
 export default dict

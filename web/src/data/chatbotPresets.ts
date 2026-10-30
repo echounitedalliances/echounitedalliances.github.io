@@ -113,7 +113,7 @@ export const CHATBOT_PRESETS: ChatPreset[] = [
     category: 'Divisions',
     question: 'How many divisions does Echo have?',
     answer:
-      'Nine at the moment, each with its own roster and leadership. The exact count and every carrier in them is on the Divisions and Airlines pages, read live from the roster rather than fixed here.',
+      'Ten at the moment, each with its own roster and leadership. Uzuri is the newest, opened on 30 October 2026. The exact count and every carrier in them is on the Divisions and Airlines pages, read live from the roster rather than fixed here.',
   },
   {
     id: 'div-contact-lead',
@@ -222,23 +222,9 @@ export const CHATBOT_PRESETS: ChatPreset[] = [
   {
     id: 'tools-search',
     category: 'Travel tools',
-    question: 'Can I search and book flights on this site?',
+    question: 'Can I book flights on this site?',
     answer:
-      'Yes -- search the network from the home page, pick an itinerary, and book it. It is a simulated booking against the alliance\'s own network, not a real airline ticket.',
-  },
-  {
-    id: 'tools-manage',
-    category: 'Travel tools',
-    question: 'How do I find a booking I already made?',
-    answer:
-      'Use Manage Booking on the Trips page: enter the six-character reference from your confirmation along with the surname of anyone travelling on it.',
-  },
-  {
-    id: 'tools-rtw',
-    category: 'Travel tools',
-    question: 'What is the Round the World feature?',
-    answer:
-      'One fare, one direction: you build a route of stops around the alliance\'s network and it prices as a single round-the-world itinerary rather than separate one-way fares.',
+      'Not any more: booking was retired on 30 October 2026. Every route, timetable and the live departure board are still here, and an airline page links to that airline\'s own booking site when it has one.',
   },
   {
     id: 'tools-network-map',
@@ -257,23 +243,16 @@ export const CHATBOT_PRESETS: ChatPreset[] = [
   {
     id: 'tools-sign-in-needed',
     category: 'Travel tools',
-    question: 'Do I need an account to search or book?',
+    question: 'Do I need an account to use the site?',
     answer:
-      'No -- searching and booking work for anyone. An account (Resonance) only comes in if you want to manage bookings under your profile or use the members-only tools.',
+      'No -- everything on the site is open to anyone. An account (Resonance) is for members who want to save a profile or claim their airline, and for the admins who look after the site.',
   },
   {
     id: 'tools-real-tickets',
     category: 'Travel tools',
-    question: 'Are these real flight tickets?',
+    question: 'Are these real flights?',
     answer:
-      'No. Booking on this site is a simulation layered on the alliance\'s own network, built for The Airline Simulator community -- not a real-world travel agency.',
-  },
-  {
-    id: 'tools-change-booking',
-    category: 'Travel tools',
-    question: 'Can I change or cancel a booking?',
-    answer:
-      'Look it up first on the Trips page with your reference and surname -- what you can do with it from there depends on the booking itself, so start there rather than guessing.',
+      'No. Every schedule, fare and route here comes from airlines in The Airline Simulator, a game -- this is the alliance\'s own site, not a real-world airline or travel agency.',
   },
 
   // Your account ------------------------------------------------------------
@@ -311,13 +290,6 @@ export const CHATBOT_PRESETS: ChatPreset[] = [
     question: 'How do I apply to help admin the alliance?',
     answer:
       'There is an apply option for admin roles once you are signed in -- ask on Discord if you cannot find it, since exactly where it appears can change as the site does.',
-  },
-  {
-    id: 'acct-forgot-booking',
-    category: 'Your account',
-    question: 'I forgot my booking reference -- what now?',
-    answer:
-      'If you booked while signed in to Resonance, your trips are attached to your account rather than only to the reference -- sign in and check My Trips first before trying to recall the six characters.',
   },
 
   // News --------------------------------------------------------------------

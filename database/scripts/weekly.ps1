@@ -94,7 +94,7 @@ Use-EchoCredentials
 
 # Eos opened 2 October 2026. A new division also needs a migration of its own
 # (36_division_eos.sql was the first), or the merge refuses the scrape.
-$divisions = @('aegis', 'aura', 'elion', 'elysium', 'eos', 'kyra', 'proxima', 'rhea', 'vilis')
+$divisions = @('aegis', 'aura', 'elion', 'elysium', 'eos', 'kyra', 'proxima', 'rhea', 'uzuri', 'vilis')
 
 # Windows PowerShell turns anything a native program writes to stderr into a
 # terminating error under ErrorActionPreference Stop -- and the scraper writes

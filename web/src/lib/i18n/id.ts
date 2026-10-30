@@ -442,8 +442,7 @@ const dict: Record<string, string> = {
   "Who runs the alliance": "Siapa yang menjalankan aliansi",
   "Read the source": "Baca kode sumbernya",
   "The alliance, remembered": "Aliansi yang ingat kamu",
-  "A Resonance account is for Echo members -- sign in with the Discord account you use on the EUA server, and your trips stay together across all {n} carriers. You do not need one to search or book; it is the alliance’s own account, not a gate in front of booking.":
-    "Akun Resonance ini untuk anggota Echo -- masuk dengan akun Discord yang kamu pakai di server EUA, dan perjalananmu tetap terkumpul di semua {n} maskapai. Kamu tidak perlu akun untuk mencari atau memesan; ini akun milik aliansi sendiri, bukan penghalang untuk pemesanan.",
+  "A Resonance account keeps your trips together across all {n} carriers, and remembers where you fly from. It is optional: you can search and book without one.": "Akun Resonance ngumpulin semua perjalananmu di {n} maskapai, dan ingat kamu biasa terbang dari mana. Opsional kok: tanpa akun pun tetap bisa cari dan pesan.",
   "Sign out": "Keluar",
   "Skip for now": "Lewati dulu",
   "Your details": "Detail kamu",
@@ -660,7 +659,26 @@ const dict: Record<string, string> = {
   "Its busiest sector, {from} to {to}, runs {n} times a week.": "Rute tersibuknya, {from} ke {to}, terbang {n} kali seminggu.",
   "Email {name}": "Kirim email ke {name}",
   "Contact details updated soon": "Kontak segera diperbarui",
-
+  "Welcome, *Uzuri*": "Selamat datang, *Uzuri*",
+  "New division": "Divisi baru",
+  "Echo United Alliances now has ten divisions. Uzuri is the newest, led by {leader}, and it is taking its first airlines right now: the perfect time to get in early and help shape it.": "Echo United Alliances sekarang punya sepuluh divisi. Uzuri yang paling baru, dipimpin {leader}, dan lagi buka buat maskapai pertamanya: waktu yang pas buat masuk duluan dan ikut membentuknya.",
+  "Meet Uzuri": "Kenalan sama Uzuri",
+  "Maybe later": "Nanti aja",
+  "30 October 2026": "30 Oktober 2026",
+  "Live from the schedule": "Langsung dari jadwal",
+  "The whole alliance, *departing*": "Seluruh aliansi, *berangkat*",
+  "What leaves next from any airport the alliance serves, across all {n} member carriers, in your own time zone.": "Apa yang berangkat berikutnya dari bandara mana pun di jaringan aliansi, di semua {n} maskapai anggota, sesuai zona waktumu.",
+  "A Resonance account remembers your home division and airport, and is how the alliance’s admins sign in to look after the site. It is optional: everything on the site is open without one.": "Akun Resonance mengingat divisi dan bandara asalmu, dan dipakai admin aliansi untuk masuk dan mengurus situs. Opsional kok: semua isi situs bisa dibuka tanpa akun.",
+  "One account across all {n} carriers. Everything on the site is open without one.": "Satu akun untuk semua {n} maskapai. Semua isi situs bisa dibuka tanpa akun.",
+  "Every member carrier gets its own page here, with its routes, fleet and timetable drawn into the alliance network for everyone to see.": "Tiap maskapai anggota punya halaman sendiri di sini: rute, armada, dan jadwalnya tergambar di jaringan aliansi buat dilihat semua orang.",
+  "A Resonance account is for Echo members: sign in with the Discord account you use on the EUA server to save your home division and airport and claim your airline. Admins sign in the same way to look after the site. Everything else here is open without one.": "Akun Resonance untuk anggota Echo: masuk pakai akun Discord yang kamu pakai di server EUA untuk menyimpan divisi dan bandara asalmu, serta mengklaim maskapaimu. Admin juga masuk dengan cara yang sama untuk mengurus situs. Selebihnya bisa dibuka tanpa akun.",
+  "Ten at the moment, each with its own roster and leadership. Uzuri is the newest, opened on 30 October 2026. The exact count and every carrier in them is on the Divisions and Airlines pages, read live from the roster rather than fixed here.": "Sepuluh saat ini, masing-masing dengan tim dan leader sendiri. Uzuri yang paling baru, dibuka 30 Oktober 2026. Jumlah pastinya dan semua maskapainya ada di halaman Divisi dan Maskapai, dibaca langsung dari daftar anggota, bukan ditulis tetap di sini.",
+  "Can I book flights on this site?": "Bisa pesan penerbangan di situs ini?",
+  "Not any more: booking was retired on 30 October 2026. Every route, timetable and the live departure board are still here, and an airline page links to that airline's own booking site when it has one.": "Sekarang sudah nggak: fitur pemesanan dihentikan 30 Oktober 2026. Semua rute, jadwal, dan papan keberangkatan live masih ada, dan halaman maskapai menautkan ke situs pemesanan maskapai itu sendiri kalau ada.",
+  "Do I need an account to use the site?": "Perlu akun buat pakai situs ini?",
+  "No -- everything on the site is open to anyone. An account (Resonance) is for members who want to save a profile or claim their airline, and for the admins who look after the site.": "Nggak -- semua isi situs terbuka untuk siapa saja. Akun (Resonance) buat anggota yang mau menyimpan profil atau mengklaim maskapainya, dan buat admin yang mengurus situs.",
+  "Are these real flights?": "Ini penerbangan sungguhan?",
+  "No. Every schedule, fare and route here comes from airlines in The Airline Simulator, a game -- this is the alliance's own site, not a real-world airline or travel agency.": "Bukan. Semua jadwal, tarif, dan rute di sini berasal dari maskapai di The Airline Simulator, sebuah game -- ini situs aliansi, bukan maskapai atau agen perjalanan sungguhan.",
   "Activities": "Aktivitas",
   "Travel tools": "Alat perjalanan",
   "Your account": "Akunmu",
@@ -672,165 +690,56 @@ const dict: Record<string, string> = {
   "Topics": "Topik",
   "Questions": "Pertanyaan",
   "Clear chat": "Hapus chat",
-
   "How do I join Echo United Alliances?": "Gimana cara gabung Echo United Alliances?",
-  "Two applications, not one: send a request from your airline in The Airline Simulator's alliance browser, and post an application with EUA on Discord (or use the form on the Join page). A division lead matches the two up -- an in-game request alone will not be actioned, and neither will a Discord application without the in-game one.":
-    "Dua aplikasi, bukan satu: kirim permintaan dari maskapaimu di alliance browser The Airline Simulator, lalu kirim aplikasi ke EUA di Discord (atau pakai formulir di halaman Join). Pemimpin divisi akan mencocokkan keduanya -- permintaan di dalam game saja tidak akan diproses, begitu juga aplikasi Discord tanpa permintaan di dalam game.",
   "Which division should I apply to?": "Divisi mana yang sebaiknya aku lamar?",
-  "Whichever fits how you like to play. The Divisions page lists all of them with their badges -- Kyra is the main alliance, Elysium runs on realism rules, and the rest each have their own character. Pick one and apply there; you are not applying to Echo as a whole first.":
-    "Yang paling cocok sama gaya mainmu. Halaman Divisions menampilkan semuanya lengkap dengan badge-nya -- Kyra adalah aliansi utama, Elysium menjalankan aturan realism, dan sisanya punya karakter masing-masing. Pilih satu dan lamar ke sana; kamu tidak melamar ke Echo secara keseluruhan dulu.",
   "How long does an application take?": "Berapa lama proses aplikasi?",
-  "There is no fixed turnaround. Divisions are run separately and each reviews applications by hand, at its own pace, so allow a little time rather than expecting an instant answer.":
-    "Tidak ada waktu pasti. Setiap divisi dijalankan terpisah dan meninjau aplikasi secara manual dengan kecepatannya sendiri, jadi beri waktu sedikit alih-alih mengharapkan jawaban instan.",
   "Do I have to use Discord?": "Apa aku harus pakai Discord?",
-  "Yes. Discord is where applications are matched to divisions, where activities like the FFA sales and the discount market actually run, and where division leads are reachable. The website is the front door; Discord is where membership happens.":
-    "Ya. Discord adalah tempat aplikasi dicocokkan ke divisi, tempat aktivitas seperti FFA sales dan discount market benar-benar berjalan, dan tempat pemimpin divisi bisa dihubungi. Situs ini adalah pintu depannya; keanggotaan sebenarnya terjadi di Discord.",
   "Can I have more than one airline in the alliance?": "Bisa nggak punya lebih dari satu maskapai di aliansi?",
-  "Several members do -- more than one of the division leaders themselves run multiple carriers. Each airline still needs its own in-game application to the division you want it in.":
-    "Beberapa anggota begitu -- bahkan sejumlah pemimpin divisi sendiri menjalankan beberapa maskapai. Setiap maskapai tetap butuh aplikasi di dalam game sendiri-sendiri ke divisi yang kamu inginkan.",
   "Is Echo good for beginners?": "Apa Echo cocok untuk pemula?",
-  "That is who it was built around: most members joined early in their time with The Airline Simulator, and the alliance exists to make that growth faster and the market safer, not just to showcase airlines that have already arrived.":
-    "Memang itu intinya: sebagian besar anggota bergabung di awal masa bermain The Airline Simulator, dan aliansi ini ada untuk mempercepat pertumbuhan itu dan membuat market lebih aman, bukan cuma memamerkan maskapai yang sudah mapan.",
   "Can I move my airline to a different division later?": "Bisa nggak memindahkan maskapaiku ke divisi lain nanti?",
-  "Talk to the leads of your current and target divisions on Discord first -- this is not something the website handles, and it is a courtesy to the division you would be leaving as much as a request to the one you would be joining.":
-    "Bicarakan dulu dengan pemimpin divisi saat ini dan divisi tujuan di Discord -- ini bukan hal yang ditangani situs, dan ini soal sopan santun ke divisi yang kamu tinggalkan, sama pentingnya dengan permintaan ke divisi yang kamu tuju.",
   "What if my application is turned down?": "Bagaimana kalau aplikasiku ditolak?",
-  "Ask the division lead what to fix and try again, or try a different division -- each reviews on its own criteria, so a no from one is not a verdict on the airline itself.":
-    "Tanyakan ke pemimpin divisi apa yang perlu diperbaiki dan coba lagi, atau coba divisi lain -- setiap divisi meninjau dengan kriterianya sendiri, jadi penolakan dari satu divisi bukan vonis untuk maskapaimu.",
-
   "What is a division?": "Apa itu divisi?",
-  "Echo United Alliances is a multi-alliance group: each division runs its own roster and its own leadership, and every member flies under one shared network regardless of which division they are in.":
-    "Echo United Alliances adalah grup multi-alliance: setiap divisi menjalankan roster dan kepemimpinannya sendiri, dan semua anggota terbang di bawah satu jaringan bersama, apa pun divisinya.",
   "Who leads each division?": "Siapa yang memimpin tiap divisi?",
-  "The board is simply the division leaders, one or more per division. They are listed on the About page by their Discord handle, since that is how the group actually knows them -- several lead more than one division at once.":
-    "Dewan pengurus itu ya para pemimpin divisi, satu atau lebih per divisi. Mereka tercantum di halaman About dengan handle Discord-nya, karena begitulah grup ini sebenarnya mengenal mereka -- beberapa orang memimpin lebih dari satu divisi sekaligus.",
   "What is the difference between Kyra and Elysium?": "Apa bedanya Kyra dan Elysium?",
-  "Kyra is the main alliance; Elysium is the realism alliance, for members who want their operation held to realism rules. Both sit under the same group and the same shared network, just with different house rules.":
-    "Kyra adalah aliansi utama; Elysium adalah aliansi realism, untuk anggota yang ingin operasinya mengikuti aturan realism. Keduanya tetap berada di bawah grup dan jaringan bersama yang sama, hanya beda aturan mainnya.",
   "How many divisions does Echo have?": "Echo punya berapa divisi?",
-  "Nine at the moment, each with its own roster and leadership. The exact count and every carrier in them is on the Divisions and Airlines pages, read live from the roster rather than fixed here.":
-    "Saat ini sembilan, masing-masing dengan roster dan kepemimpinan sendiri. Jumlah pastinya dan semua maskapai di dalamnya ada di halaman Divisions dan Airlines, dibaca langsung dari roster, bukan angka tetap di sini.",
   "How do I contact my division lead?": "Gimana cara menghubungi pemimpin divisiku?",
-  "By their Discord handle, listed on the About page. Where a lead has shared an email instead, it shows next to their name there too; until they do, it reads as contact details updated soon rather than guessing one.":
-    "Lewat handle Discord-nya, tercantum di halaman About. Kalau pemimpin divisi sudah membagikan email, itu juga akan muncul di samping namanya; sebelum itu, tulisannya kontak segera diperbarui daripada menebak-nebak.",
   "Do divisions have their own rules?": "Apakah tiap divisi punya aturan sendiri?",
-  "Yes -- beyond the alliance-wide code of conduct, each division sets its own expectations for its roster. Ask your division lead what applies to yours.":
-    "Ya -- selain kode etik yang berlaku untuk seluruh aliansi, tiap divisi menetapkan ekspektasinya sendiri untuk rosternya. Tanyakan ke pemimpin divisimu apa yang berlaku di divisimu.",
-
   "What is an FFA sale?": "Apa itu FFA sale?",
-  "Free for all: a member with an aircraft to sell posts it in the FFA channel on Discord, and anyone in the group can buy it -- no queue, no seniority, no allocation. Buyers are expected to say why they want it; FFA works because people take what they can actually use.":
-    "Free for all: anggota yang punya pesawat untuk dijual memostingnya di channel FFA di Discord, dan siapa pun di grup bisa membelinya -- tanpa antrean, tanpa senioritas, tanpa alokasi. Pembeli diharapkan menyebutkan alasan ingin membelinya; FFA berjalan baik karena orang mengambil yang benar-benar mereka butuhkan.",
   "How does the discount aircraft market work?": "Gimana cara kerja discount aircraft market?",
-  "The other way round from a shop: you open a buy ticket naming the aircraft you want and the price you will pay, anywhere from 50% to 90% of the original price, and a veteran member who can fulfil it picks it up. It runs continuously, not on a schedule.":
-    "Kebalikan dari toko biasa: kamu membuka buy ticket yang menyebutkan pesawat yang kamu mau dan harga yang bersedia kamu bayar, mulai dari 50% sampai 90% dari harga asli, lalu anggota veteran yang bisa memenuhinya akan mengambil tiket itu. Berjalan terus-menerus, tanpa jadwal tetap.",
   "Where do alliance activities actually happen?": "Sebenarnya di mana aktivitas aliansi berlangsung?",
-  "On Discord -- the sales channel, the buy tickets, the challenges and their results are all there. You need to be a member of a division to take part, so joining comes first.":
-    "Di Discord -- channel sales, buy ticket, challenge, dan hasil-hasilnya semua ada di sana. Kamu harus jadi anggota salah satu divisi untuk ikut serta, jadi bergabung dulu adalah syaratnya.",
   "Are there challenges with prizes?": "Apakah ada challenge berhadiah?",
-  "Occasionally, yes. They are not run to a fixed calendar -- watch Discord for when one is announced.":
-    "Kadang-kadang, ya. Tidak dijalankan sesuai kalender tetap -- pantau Discord untuk tahu kapan diumumkan.",
   "Who can take part in FFA and the market?": "Siapa yang bisa ikut FFA dan market?",
-  "Any member of any division. Neither is limited to one division's roster -- the whole group can buy and sell across both.":
-    "Anggota dari divisi mana pun. Keduanya tidak terbatas pada roster satu divisi saja -- seluruh grup bisa jual beli lintas divisi.",
   "What price can I ask in the discount market?": "Harga berapa yang bisa aku minta di discount market?",
-  "Buyers post what they are willing to pay, between 50% and 90% of the aircraft's original price. A veteran member decides whether to fill the ticket at that price.":
-    "Pembeli memposting harga yang bersedia mereka bayar, antara 50% sampai 90% dari harga asli pesawat. Anggota veteran yang memutuskan apakah mau memenuhi tiket itu dengan harga tersebut.",
   "Is there a queue for FFA sales?": "Apakah ada antrean untuk FFA sale?",
-  "No. An FFA sale is open to the whole alliance the instant it is posted -- whoever buys first with a genuine reason gets it, not whoever asked first in some other sense.":
-    "Tidak. FFA sale terbuka untuk seluruh aliansi begitu diposting -- siapa pun yang membeli lebih dulu dengan alasan yang jelas, dialah yang dapat, bukan siapa yang bertanya duluan dalam arti lain.",
   "How often do FFA sales happen?": "Seberapa sering FFA sale berlangsung?",
-  "Whenever a member has something to sell -- there is no schedule. Keep an eye on the FFA channel rather than expecting them at set times.":
-    "Kapan pun ada anggota yang punya sesuatu untuk dijual -- tidak ada jadwal tetap. Pantau terus channel FFA daripada mengharapkan waktu yang pasti.",
-
   "What is Airline of the Week?": "Apa itu Airline of the Week?",
-  "A regular feature on the home page that puts one member carrier in front of the whole group -- its livery, its name, and figures like fleet size, routes and destinations, read live from the roster.":
-    "Fitur rutin di halaman utama yang menampilkan satu maskapai anggota di depan seluruh grup -- livery-nya, namanya, dan data seperti jumlah armada, rute, dan destinasi, dibaca langsung dari roster.",
   "How is the airline chosen?": "Gimana cara maskapainya dipilih?",
-  "By the board, each week. It is alliance policy rather than something generated automatically, which is also why the pick and its write-up live in the site's own code rather than the database.":
-    "Oleh dewan pengurus, setiap minggu. Ini kebijakan aliansi, bukan sesuatu yang dihasilkan otomatis, makanya pilihannya dan tulisannya ada langsung di kode situs ini, bukan di database.",
   "Why does the home page show a countdown instead of this week's airline?": "Kenapa halaman utama menampilkan hitung mundur, bukan maskapai minggu ini?",
-  "Reveals go out at an announced time, not the moment they are set up -- so the segment shows a countdown until that moment and switches itself over automatically, live, with no reload needed.":
-    "Pengungkapannya terjadi pada waktu yang sudah diumumkan, bukan saat disiapkan -- jadi segmen ini menampilkan hitung mundur sampai waktu itu dan berganti sendiri secara otomatis, langsung, tanpa perlu reload.",
   "Can my airline be Airline of the Week?": "Bisa nggak maskapaiku jadi Airline of the Week?",
-  "It is a board pick, not an application, so there is no form for it -- but being active in the alliance and visible on Discord is how a carrier ends up on the board's radar in the first place.":
-    "Ini pilihan dewan pengurus, bukan aplikasi, jadi tidak ada formulirnya -- tapi aktif di aliansi dan terlihat di Discord adalah cara sebuah maskapai masuk ke radar dewan pengurus sejak awal.",
-
   "Can I search and book flights on this site?": "Bisa nggak cari dan pesan penerbangan di situs ini?",
-  "Yes -- search the network from the home page, pick an itinerary, and book it. It is a simulated booking against the alliance's own network, not a real airline ticket.":
-    "Bisa -- cari di jaringan dari halaman utama, pilih itinerary, lalu pesan. Ini pemesanan simulasi di jaringan aliansi sendiri, bukan tiket maskapai sungguhan.",
   "How do I find a booking I already made?": "Gimana cara menemukan pemesanan yang sudah aku buat?",
-  "Use Manage Booking on the Trips page: enter the six-character reference from your confirmation along with the surname of anyone travelling on it.":
-    "Pakai Manage Booking di halaman Trips: masukkan kode referensi enam karakter dari konfirmasimu beserta nama keluarga salah satu penumpangnya.",
   "What is the Round the World feature?": "Apa itu fitur Round the World?",
-  "One fare, one direction: you build a route of stops around the alliance's network and it prices as a single round-the-world itinerary rather than separate one-way fares.":
-    "Satu tarif, satu arah: kamu menyusun rute pemberhentian di jaringan aliansi dan harganya dihitung sebagai satu itinerary keliling dunia, bukan tarif sekali jalan terpisah-pisah.",
   "Is there a route map for the whole alliance?": "Apakah ada peta rute untuk seluruh aliansi?",
-  "Yes, on the Network page -- it draws every route across every division's carriers on one map, rather than one airline at a time.":
-    "Ada, di halaman Network -- menggambar semua rute dari semua maskapai di semua divisi dalam satu peta, bukan satu maskapai per satu peta.",
   "Where can I find a specific member airline?": "Di mana aku bisa menemukan maskapai anggota tertentu?",
-  "The Airlines directory lists every carrier in the alliance and can be filtered by division or country -- search it by name if you know roughly who you are looking for.":
-    "Direktori Airlines mencantumkan semua maskapai di aliansi dan bisa difilter berdasarkan divisi atau negara -- cari berdasarkan nama kalau kamu sudah punya gambaran siapa yang kamu cari.",
   "Do I need an account to search or book?": "Apa aku butuh akun untuk mencari atau memesan?",
-  "No -- searching and booking work for anyone. An account (Resonance) only comes in if you want to manage bookings under your profile or use the members-only tools.":
-    "Tidak -- mencari dan memesan bisa dilakukan siapa saja. Akun (Resonance) baru diperlukan kalau kamu ingin mengelola pemesanan di profilmu atau memakai alat khusus anggota.",
   "Are these real flight tickets?": "Apakah ini tiket penerbangan sungguhan?",
-  "No. Booking on this site is a simulation layered on the alliance's own network, built for The Airline Simulator community -- not a real-world travel agency.":
-    "Bukan. Pemesanan di situs ini adalah simulasi di atas jaringan aliansi sendiri, dibuat untuk komunitas The Airline Simulator -- bukan agen perjalanan dunia nyata.",
   "Can I change or cancel a booking?": "Bisa nggak mengubah atau membatalkan pemesanan?",
-  "Look it up first on the Trips page with your reference and surname -- what you can do with it from there depends on the booking itself, so start there rather than guessing.":
-    "Cari dulu di halaman Trips dengan kode referensi dan nama keluargamu -- apa yang bisa kamu lakukan selanjutnya tergantung pemesanannya sendiri, jadi mulai dari sana daripada menebak-nebak.",
-
   "What is Resonance?": "Apa itu Resonance?",
-  "The sign-in system for this site, using the Discord account you already use on the EUA server. Signed out, the link in the bar reads Resonance; signed in, it shows your name.":
-    "Sistem masuk untuk situs ini, memakai akun Discord yang sudah kamu pakai di server EUA. Saat belum masuk, tautan di bar bertuliskan Resonance; setelah masuk, akan menampilkan namamu.",
   "What is Echo Live?": "Apa itu Echo Live?",
-  "One of the members' tools on the Members page, open to everyone rather than gated to a sign-in.":
-    "Salah satu alat anggota di halaman Members, terbuka untuk semua orang, tidak dibatasi hanya untuk yang sudah masuk.",
   "What is Echo Market and who can use it?": "Apa itu Echo Market dan siapa yang bisa memakainya?",
-  "A members' tool for EUA airlines, signed in with the Discord account you use on the alliance's server -- unlike Echo Live, it is not open to everyone.":
-    "Alat anggota untuk maskapai EUA, masuk dengan akun Discord yang kamu pakai di server aliansi -- tidak seperti Echo Live, ini tidak terbuka untuk semua orang.",
   "I am not in EUA yet -- can I still sign in?": "Aku belum jadi anggota EUA -- apa masih bisa masuk?",
-  "The Members page links straight to how to join if you are not in yet -- sign-in with Resonance uses your Discord account, so joining the alliance on Discord is the step that actually unlocks the members-only tools.":
-    "Halaman Members langsung menautkan ke cara bergabung kalau kamu belum jadi anggota -- masuk dengan Resonance memakai akun Discord-mu, jadi bergabung ke aliansi di Discord adalah langkah yang sebenarnya membuka alat khusus anggota.",
   "How do I apply to help admin the alliance?": "Gimana cara melamar untuk membantu admin aliansi?",
-  "There is an apply option for admin roles once you are signed in -- ask on Discord if you cannot find it, since exactly where it appears can change as the site does.":
-    "Ada opsi melamar untuk peran admin setelah kamu masuk -- tanya di Discord kalau tidak menemukannya, karena posisi persisnya bisa berubah seiring perubahan situs.",
   "I forgot my booking reference -- what now?": "Aku lupa kode referensi pemesananku -- terus gimana?",
-  "If you booked while signed in to Resonance, your trips are attached to your account rather than only to the reference -- sign in and check My Trips first before trying to recall the six characters.":
-    "Kalau kamu memesan saat sudah masuk ke Resonance, perjalananmu tersimpan di akunmu, bukan cuma di kode referensi -- masuk dulu dan cek My Trips sebelum berusaha mengingat enam karakternya.",
-
   "Where does the news on this site come from?": "Dari mana berita di situs ini berasal?",
-  "The Newsroom is read live from a community newsroom run by one of our members, not stored on this site -- stories appear here as soon as they are published there, and if that source is briefly unreachable the page shows nothing rather than something stale.":
-    "Newsroom dibaca langsung dari newsroom komunitas yang dijalankan salah satu anggota kami, tidak disimpan di situs ini -- berita muncul di sini begitu diterbitkan di sana, dan kalau sumbernya sempat tidak bisa diakses, halaman ini menampilkan kosong daripada sesuatu yang basi.",
   "Why are some news stories only in English?": "Kenapa sebagian berita cuma ada dalam bahasa Inggris?",
-  "Stories are shown as their authors published them. If you are browsing in another language, that is a translation of the site around the story, not of the story itself.":
-    "Berita ditampilkan persis seperti saat diterbitkan penulisnya. Kalau kamu menjelajah dalam bahasa lain, yang diterjemahkan adalah bagian situs di sekitar berita itu, bukan isi beritanya sendiri.",
   "Can I submit a story to the newsroom?": "Bisa nggak mengirim berita ke newsroom?",
-  "That is run by the newsroom's own team, separately from this site -- ask on Discord who runs it if you want to pitch something.":
-    "Itu dikelola tim newsroom sendiri, terpisah dari situs ini -- tanya di Discord siapa yang mengelolanya kalau kamu ingin mengajukan sesuatu.",
-
   "When was Echo founded?": "Kapan Echo didirikan?",
-  "On 24 March 2026, as Axian Alliance, with three founding members. It has grown a great deal since, entirely on the back of its members.":
-    "Pada 24 Maret 2026, dengan nama Axian Alliance, bersama tiga anggota pendiri. Sejak itu berkembang pesat, sepenuhnya berkat para anggotanya.",
   "What does \"Home of the Excellence\" mean?": "Apa arti \"Home of the Excellence\"?",
-  "It is the alliance's slogan -- the standard it holds its members and its own running of the group to, across every division.":
-    "Itu slogan aliansi ini -- standar yang dipegang untuk para anggotanya dan caranya menjalankan grup ini, di semua divisi.",
   "What game is Echo United Alliances for?": "Echo United Alliances itu untuk game apa?",
-  "The Airline Simulator. Echo is a virtual airline alliance group built around it, not an airline or a real-world company.":
-    "The Airline Simulator. Echo adalah grup aliansi maskapai virtual yang dibangun di sekitarnya, bukan maskapai atau perusahaan dunia nyata.",
   "Where do I find the Discord invite?": "Di mana aku bisa menemukan undangan Discord?",
-  "The Join Discord button in the site header and footer links straight to it, and it is set never to expire -- if it ever fails, that is worth reporting rather than assuming the alliance closed up.":
-    "Tombol Join Discord di header dan footer situs langsung menautkan ke sana, dan diatur agar tidak pernah kedaluwarsa -- kalau suatu saat gagal, lebih baik laporkan daripada menganggap aliansi ini sudah tutup.",
   "Where are the Terms of Service?": "Di mana Terms of Service?",
-  "Linked in the footer of every page, along with the Code of Conduct and the Privacy Policy.":
-    "Ditautkan di footer setiap halaman, bersama Code of Conduct dan Privacy Policy.",
   "What does the Privacy Policy cover, and can I check it?": "Apa yang dicakup Privacy Policy, dan bisa nggak aku periksa sendiri?",
-  "What this site collects and why, including that this is a GitHub Pages site with a public source -- the Privacy page says that every claim on it can be checked, and links to where.":
-    "Apa yang dikumpulkan situs ini dan kenapa, termasuk fakta bahwa ini adalah situs GitHub Pages dengan source code publik -- halaman Privacy menyebutkan bahwa semua klaim di dalamnya bisa diperiksa, dan menautkan ke tempat memeriksanya.",
   "Is the source code for this site public?": "Apakah source code situs ini publik?",
-  "Yes -- the whole site is open on GitHub, linked from the Privacy page. That is also how its figures, like the number of carriers and airports, stay honest: they are read live rather than typed in once and left to go stale.":
-    "Ya -- seluruh situs ini terbuka di GitHub, ditautkan dari halaman Privacy. Begitu juga caranya angka-angka di situs ini, seperti jumlah maskapai dan bandara, tetap jujur: dibaca langsung, bukan diketik sekali lalu dibiarkan basi.",
-
   "Sneak Peek": "Intip Duluan",
   "Sneak peek": "Intip duluan",
   "Sneak peek (unlocked)": "Intip duluan (terbuka)",
@@ -840,18 +749,11 @@ const dict: Record<string, string> = {
   "That code did not work.": "Kode itu tidak berhasil.",
   "Unlocked for this browser": "Terbuka untuk browser ini",
   "or": "atau",
-  "Sign in to Resonance with the Discord account you already use on the EUA server -- no separate password to set or remember.":
-    "Masuk ke Resonance dengan akun Discord yang sudah kamu pakai di server EUA -- tidak perlu kata sandi terpisah untuk dibuat atau diingat.",
   "Look for it on the Resonance sign-in page.": "Cari ini di halaman masuk Resonance.",
-
   "Your airline": "Maskapaimu",
   "Airline name or code": "Nama atau kode maskapai",
   "Claim your airline": "Klaim Maskapaimu",
-  "Link the airline you fly for to your Resonance account, self-reported, the same way you already set a home airport and division.":
-    "Tautkan maskapai yang kamu terbangkan ke akun Resonance-mu, dilaporkan sendiri, sama seperti saat kamu mengatur bandara asal dan divisi.",
   "Look for it under Your details on the Resonance page.": "Cari ini di bagian Detailmu di halaman Resonance.",
-  "That Discord account is not in the EUA server, so it was signed back out. Join the alliance on Discord first, then try again.":
-    "Akun Discord itu tidak ada di server EUA, jadi langsung di-sign out lagi. Gabung dulu ke aliansi di Discord, lalu coba lagi.",
 }
 
 export default dict

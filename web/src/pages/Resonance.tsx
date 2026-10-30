@@ -7,7 +7,6 @@ import { PasswordCard, SignIn } from '../components/ResonanceAuth'
 import AdminApplyModal from '../components/AdminApplyModal'
 import AdminApplications from '../components/AdminApplications'
 import AdminMemberSites from '../components/AdminMemberSites'
-import AccountTrips from '../components/AccountTrips'
 import type { AirportRow, Airline, Division } from '../lib/types'
 import { num } from '../lib/format'
 import { useCarrierCount } from '../lib/carriers'
@@ -135,7 +134,7 @@ export default function Resonance() {
           {tr('The alliance, remembered')}
         </h1>
         <p className="mt-4 max-w-[58ch] text-lg text-ink-dim">
-          {tr('A Resonance account is for Echo members -- sign in with the Discord account you use on the EUA server, and your trips stay together across all {n} carriers. You do not need one to search or book; it is the alliance’s own account, not a gate in front of booking.', { n: num(carrierCount) })}
+          {tr('A Resonance account is for Echo members: sign in with the Discord account you use on the EUA server to save your home division and airport and claim your airline. Admins sign in the same way to look after the site. Everything else here is open without one.', { n: num(carrierCount) })}
         </p>
 
         <SignIn />
@@ -330,8 +329,6 @@ export default function Resonance() {
             </section>
           )}
 
-          {/* Every booking kept on this account, and managing them. */}
-          <AccountTrips />
         </>
       )}
 

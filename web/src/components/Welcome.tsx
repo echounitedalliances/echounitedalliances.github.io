@@ -35,19 +35,20 @@ type Roster = [string, number][] // [division colour, airlines]
 
 /**
  * Stand-in until the real roster arrives: the divisions' colours and sizes
- * from the 22 October 2026 data. Only seen if the database is slow to answer
+ * from the 30 October 2026 data. Only seen if the database is slow to answer
  * or unreachable.
  */
 const FALLBACK: Roster = [
   ['#7B35FF', 80], // Kyra
-  ['#D0FF4D', 79], // Aegis
-  ['#E46EFF', 62], // Elysium
-  ['#81FBFE', 80], // Proxima
-  ['#5DFE95', 80], // Rhea
+  ['#FF456A', 80], // Aegis
+  ['#E46EFF', 66], // Elysium
+  ['#81FBFE', 80], // Lior
+  ['#5DFE95', 79], // Rhea
   ['#FF7E42', 80], // Vilis
   ['#7EA0F4', 80], // Elion
-  ['#EF9D9E', 78], // Aura
-  ['#FDECD8', 57], // Eos
+  ['#EF9D9E', 80], // Aura
+  ['#FDECD8', 80], // Eos
+  ['#FAE246', 3], // Uzuri
 ]
 
 /**

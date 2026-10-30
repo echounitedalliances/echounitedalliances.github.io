@@ -444,8 +444,7 @@ const dict: Record<string, string> = {
   "Who runs the alliance": "Ai đang điều hành liên minh",
   "Read the source": "Xem mã nguồn",
   "The alliance, remembered": "Liên minh nhớ bạn",
-  "A Resonance account is for Echo members -- sign in with the Discord account you use on the EUA server, and your trips stay together across all {n} carriers. You do not need one to search or book; it is the alliance’s own account, not a gate in front of booking.":
-    "Tài khoản Resonance là dành cho thành viên Echo -- đăng nhập bằng tài khoản Discord bạn dùng trên server EUA, và chuyến đi của bạn vẫn gom lại trên cả {n} hãng bay. Bạn không cần tài khoản để tìm hoặc đặt vé; đây là tài khoản của riêng liên minh, không phải rào cản trước việc đặt vé.",
+  "A Resonance account keeps your trips together across all {n} carriers, and remembers where you fly from. It is optional: you can search and book without one.": "Tài khoản Resonance gom hết chuyến đi của bạn trên cả {n} hãng bay, và nhớ luôn bạn hay bay từ đâu. Không bắt buộc đâu: không có tài khoản vẫn tìm và đặt vé thoải mái.",
   "Sign out": "Đăng xuất",
   "Skip for now": "Để sau",
   "Your details": "Thông tin của bạn",
@@ -664,7 +663,26 @@ const dict: Record<string, string> = {
   "Its busiest sector, {from} to {to}, runs {n} times a week.": "Chặng đông nhất là {from} đến {to}, chạy {n} chuyến mỗi tuần.",
   "Email {name}": "Gửi email cho {name}",
   "Contact details updated soon": "Thông tin liên hệ sẽ sớm được cập nhật",
-
+  "Welcome, *Uzuri*": "Chào mừng *Uzuri*",
+  "New division": "Division mới",
+  "Echo United Alliances now has ten divisions. Uzuri is the newest, led by {leader}, and it is taking its first airlines right now: the perfect time to get in early and help shape it.": "Echo United Alliances giờ đã có 10 division. Uzuri là division mới nhất, do {leader} dẫn dắt, và đang nhận những hãng bay đầu tiên: thời điểm vàng để vào sớm và cùng xây dựng nó.",
+  "Meet Uzuri": "Xem Uzuri",
+  "Maybe later": "Để sau",
+  "30 October 2026": "30/10/2026",
+  "Live from the schedule": "Trực tiếp từ lịch bay",
+  "The whole alliance, *departing*": "Cả liên minh *cất cánh*",
+  "What leaves next from any airport the alliance serves, across all {n} member carriers, in your own time zone.": "Chuyến nào sắp bay ở mọi sân bay trong mạng lưới, trên cả {n} hãng bay thành viên, theo đúng múi giờ của bạn.",
+  "A Resonance account remembers your home division and airport, and is how the alliance’s admins sign in to look after the site. It is optional: everything on the site is open without one.": "Tài khoản Resonance nhớ division và sân bay quen của bạn, và là cách admin của liên minh đăng nhập để quản lý web. Không bắt buộc đâu: mọi thứ trên web đều xem được mà không cần tài khoản.",
+  "One account across all {n} carriers. Everything on the site is open without one.": "Một tài khoản dùng cho cả {n} hãng bay. Không cần tài khoản vẫn xem được mọi thứ.",
+  "Every member carrier gets its own page here, with its routes, fleet and timetable drawn into the alliance network for everyone to see.": "Hãng nào trong liên minh cũng có trang riêng ở đây: đường bay, đội bay, lịch bay đều được vẽ lên mạng lưới cho mọi người cùng xem.",
+  "A Resonance account is for Echo members: sign in with the Discord account you use on the EUA server to save your home division and airport and claim your airline. Admins sign in the same way to look after the site. Everything else here is open without one.": "Tài khoản Resonance dành cho thành viên Echo: đăng nhập bằng tài khoản Discord bạn dùng trong server EUA để lưu division, sân bay quen và nhận hãng bay của mình. Admin cũng đăng nhập như vậy để quản lý web. Mọi thứ khác ở đây đều xem được mà không cần tài khoản.",
+  "Ten at the moment, each with its own roster and leadership. Uzuri is the newest, opened on 30 October 2026. The exact count and every carrier in them is on the Divisions and Airlines pages, read live from the roster rather than fixed here.": "Hiện có 10 division, mỗi division có đội hình và leader riêng. Uzuri là division mới nhất, mở ngày 30/10/2026. Số lượng chính xác và mọi hãng bay đều có trên trang Division và Hãng bay, lấy trực tiếp từ danh sách chứ không ghi cứng ở đây.",
+  "Can I book flights on this site?": "Mình có đặt vé máy bay trên web này được không?",
+  "Not any more: booking was retired on 30 October 2026. Every route, timetable and the live departure board are still here, and an airline page links to that airline's own booking site when it has one.": "Giờ thì không nữa: tính năng đặt vé đã dừng từ ngày 30/10/2026. Mọi đường bay, lịch bay và bảng giờ cất cánh trực tiếp vẫn còn đây, và trang của mỗi hãng sẽ dẫn tới web đặt vé riêng của hãng nếu có.",
+  "Do I need an account to use the site?": "Có cần tài khoản để dùng web không?",
+  "No -- everything on the site is open to anyone. An account (Resonance) is for members who want to save a profile or claim their airline, and for the admins who look after the site.": "Không -- mọi thứ trên web đều mở cho tất cả. Tài khoản (Resonance) dành cho thành viên muốn lưu hồ sơ hoặc nhận hãng bay của mình, và cho admin quản lý web.",
+  "Are these real flights?": "Đây có phải chuyến bay thật không?",
+  "No. Every schedule, fare and route here comes from airlines in The Airline Simulator, a game -- this is the alliance's own site, not a real-world airline or travel agency.": "Không. Mọi lịch bay, giá vé và đường bay ở đây đều đến từ các hãng trong The Airline Simulator, một trò chơi -- đây là web của liên minh, không phải hãng bay hay đại lý du lịch ngoài đời thật.",
   "Activities": "Hoạt động",
   "Travel tools": "Công cụ di chuyển",
   "Your account": "Tài khoản của bạn",
@@ -676,165 +694,56 @@ const dict: Record<string, string> = {
   "Topics": "Chủ đề",
   "Questions": "Câu hỏi",
   "Clear chat": "Xoá chat",
-
   "How do I join Echo United Alliances?": "Làm sao để gia nhập Echo United Alliances?",
-  "Two applications, not one: send a request from your airline in The Airline Simulator's alliance browser, and post an application with EUA on Discord (or use the form on the Join page). A division lead matches the two up -- an in-game request alone will not be actioned, and neither will a Discord application without the in-game one.":
-    "Hai đơn, không phải một: gửi yêu cầu từ hãng bay của bạn trong alliance browser của The Airline Simulator, rồi nộp đơn với EUA trên Discord (hoặc dùng form ở trang Join). Leader division sẽ khớp hai đơn đó lại -- chỉ gửi yêu cầu trong game thôi thì chưa được xử lý, và đơn Discord mà thiếu yêu cầu trong game cũng vậy.",
   "Which division should I apply to?": "Nên nộp đơn vào division nào?",
-  "Whichever fits how you like to play. The Divisions page lists all of them with their badges -- Kyra is the main alliance, Elysium runs on realism rules, and the rest each have their own character. Pick one and apply there; you are not applying to Echo as a whole first.":
-    "Division nào hợp với cách bạn chơi. Trang Divisions liệt kê hết kèm badge -- Kyra là liên minh chính, Elysium chơi theo luật realism, còn lại mỗi division có màu sắc riêng. Chọn một cái rồi nộp đơn vào đó; bạn không nộp vào Echo nói chung trước đâu.",
   "How long does an application take?": "Nộp đơn mất bao lâu?",
-  "There is no fixed turnaround. Divisions are run separately and each reviews applications by hand, at its own pace, so allow a little time rather than expecting an instant answer.":
-    "Không có thời gian cố định. Mỗi division hoạt động riêng và tự tay xét đơn theo tốc độ của mình, nên hãy chờ một chút thay vì mong có câu trả lời ngay lập tức.",
   "Do I have to use Discord?": "Có bắt buộc dùng Discord không?",
-  "Yes. Discord is where applications are matched to divisions, where activities like the FFA sales and the discount market actually run, and where division leads are reachable. The website is the front door; Discord is where membership happens.":
-    "Có. Discord là nơi đơn được khớp với division, nơi các hoạt động như FFA sale và discount market thật sự diễn ra, và nơi liên hệ được leader division. Trang web chỉ là cửa trước; mọi chuyện thành viên thật sự xảy ra trên Discord.",
   "Can I have more than one airline in the alliance?": "Có thể có nhiều hơn một hãng bay trong liên minh không?",
-  "Several members do -- more than one of the division leaders themselves run multiple carriers. Each airline still needs its own in-game application to the division you want it in.":
-    "Nhiều thành viên vẫn vậy -- ngay cả vài leader division cũng điều hành nhiều hãng bay. Mỗi hãng bay vẫn cần tự nộp đơn trong game riêng vào division bạn muốn gia nhập.",
   "Is Echo good for beginners?": "Echo có hợp với người mới không?",
-  "That is who it was built around: most members joined early in their time with The Airline Simulator, and the alliance exists to make that growth faster and the market safer, not just to showcase airlines that have already arrived.":
-    "Chính là đối tượng Echo hướng tới: phần lớn thành viên gia nhập từ sớm khi mới chơi The Airline Simulator, và liên minh tồn tại để giúp họ phát triển nhanh hơn và market an toàn hơn, chứ không chỉ để khoe những hãng bay đã thành công.",
   "Can I move my airline to a different division later?": "Sau này có thể chuyển hãng bay sang division khác không?",
-  "Talk to the leads of your current and target divisions on Discord first -- this is not something the website handles, and it is a courtesy to the division you would be leaving as much as a request to the one you would be joining.":
-    "Nói chuyện trước với leader của division hiện tại và division muốn chuyển đến trên Discord -- trang web không xử lý việc này, và đó cũng là phép lịch sự với division bạn sắp rời đi, không kém gì yêu cầu với division bạn muốn vào.",
   "What if my application is turned down?": "Nếu đơn bị từ chối thì sao?",
-  "Ask the division lead what to fix and try again, or try a different division -- each reviews on its own criteria, so a no from one is not a verdict on the airline itself.":
-    "Hỏi leader division xem cần sửa gì rồi nộp lại, hoặc thử division khác -- mỗi division xét theo tiêu chí riêng, nên bị từ chối ở một nơi không có nghĩa là hãng bay của bạn có vấn đề.",
-
   "What is a division?": "Division là gì?",
-  "Echo United Alliances is a multi-alliance group: each division runs its own roster and its own leadership, and every member flies under one shared network regardless of which division they are in.":
-    "Echo United Alliances là nhóm nhiều liên minh: mỗi division có đội hình và leader riêng, còn mọi thành viên đều bay chung một mạng lưới, bất kể thuộc division nào.",
   "Who leads each division?": "Ai lãnh đạo từng division?",
-  "The board is simply the division leaders, one or more per division. They are listed on the About page by their Discord handle, since that is how the group actually knows them -- several lead more than one division at once.":
-    "Hội đồng chính là các leader division, mỗi division có một hoặc nhiều người. Họ được liệt kê ở trang About theo handle Discord, vì đó mới là cách cả nhóm thật sự biết đến họ -- vài người lãnh đạo cùng lúc hơn một division.",
   "What is the difference between Kyra and Elysium?": "Kyra và Elysium khác nhau chỗ nào?",
-  "Kyra is the main alliance; Elysium is the realism alliance, for members who want their operation held to realism rules. Both sit under the same group and the same shared network, just with different house rules.":
-    "Kyra là liên minh chính; Elysium là liên minh realism, dành cho thành viên muốn hoạt động theo luật realism. Cả hai đều thuộc cùng một nhóm và cùng mạng lưới, chỉ khác luật riêng thôi.",
   "How many divisions does Echo have?": "Echo có bao nhiêu division?",
-  "Nine at the moment, each with its own roster and leadership. The exact count and every carrier in them is on the Divisions and Airlines pages, read live from the roster rather than fixed here.":
-    "Hiện tại là chín, mỗi division có đội hình và leader riêng. Số lượng chính xác và mọi hãng bay trong đó đều có ở trang Divisions và Airlines, lấy trực tiếp từ đội hình chứ không cố định ở đây.",
   "How do I contact my division lead?": "Liên hệ leader division của mình bằng cách nào?",
-  "By their Discord handle, listed on the About page. Where a lead has shared an email instead, it shows next to their name there too; until they do, it reads as contact details updated soon rather than guessing one.":
-    "Qua handle Discord, có ở trang About. Nếu leader nào chia sẻ email, nó cũng hiện bên cạnh tên họ ở đó; nếu chưa, chỗ đó sẽ ghi thông tin liên hệ sẽ sớm được cập nhật thay vì đoán mò.",
   "Do divisions have their own rules?": "Mỗi division có luật riêng không?",
-  "Yes -- beyond the alliance-wide code of conduct, each division sets its own expectations for its roster. Ask your division lead what applies to yours.":
-    "Có -- ngoài quy tắc chung của cả liên minh, mỗi division còn đặt thêm yêu cầu riêng cho đội hình của mình. Hỏi leader division của bạn xem áp dụng luật gì.",
-
   "What is an FFA sale?": "FFA sale là gì?",
-  "Free for all: a member with an aircraft to sell posts it in the FFA channel on Discord, and anyone in the group can buy it -- no queue, no seniority, no allocation. Buyers are expected to say why they want it; FFA works because people take what they can actually use.":
-    "Free for all: thành viên có máy bay muốn bán sẽ đăng lên kênh FFA trên Discord, và ai trong nhóm cũng mua được -- không xếp hàng, không ưu tiên thâm niên, không chia phần. Người mua nên nói lý do muốn mua; FFA hiệu quả vì mọi người chỉ lấy những gì mình thật sự cần dùng.",
   "How does the discount aircraft market work?": "Discount aircraft market hoạt động thế nào?",
-  "The other way round from a shop: you open a buy ticket naming the aircraft you want and the price you will pay, anywhere from 50% to 90% of the original price, and a veteran member who can fulfil it picks it up. It runs continuously, not on a schedule.":
-    "Ngược lại với một cửa hàng bình thường: bạn mở buy ticket ghi rõ máy bay muốn mua và giá sẵn sàng trả, từ 50% đến 90% giá gốc, rồi một thành viên kỳ cựu đủ khả năng sẽ nhận và thực hiện. Hoạt động liên tục, không theo lịch cố định.",
   "Where do alliance activities actually happen?": "Hoạt động của liên minh thật sự diễn ra ở đâu?",
-  "On Discord -- the sales channel, the buy tickets, the challenges and their results are all there. You need to be a member of a division to take part, so joining comes first.":
-    "Trên Discord -- kênh bán hàng, buy ticket, thử thách và kết quả đều ở đó. Bạn cần là thành viên của một division mới tham gia được, nên việc gia nhập phải đến trước.",
   "Are there challenges with prizes?": "Có thử thách kèm giải thưởng không?",
-  "Occasionally, yes. They are not run to a fixed calendar -- watch Discord for when one is announced.":
-    "Thỉnh thoảng có. Không theo lịch cố định -- theo dõi Discord để biết khi nào có thông báo.",
   "Who can take part in FFA and the market?": "Ai được tham gia FFA và market?",
-  "Any member of any division. Neither is limited to one division's roster -- the whole group can buy and sell across both.":
-    "Thành viên của bất kỳ division nào. Cả hai đều không giới hạn trong đội hình một division -- cả nhóm có thể mua bán xuyên suốt cả hai.",
   "What price can I ask in the discount market?": "Có thể ra giá bao nhiêu ở discount market?",
-  "Buyers post what they are willing to pay, between 50% and 90% of the aircraft's original price. A veteran member decides whether to fill the ticket at that price.":
-    "Người mua đăng mức giá sẵn sàng trả, từ 50% đến 90% giá gốc máy bay. Thành viên kỳ cựu sẽ quyết định có nhận ticket với giá đó hay không.",
   "Is there a queue for FFA sales?": "FFA sale có xếp hàng không?",
-  "No. An FFA sale is open to the whole alliance the instant it is posted -- whoever buys first with a genuine reason gets it, not whoever asked first in some other sense.":
-    "Không. FFA sale mở cho cả liên minh ngay khi vừa đăng -- ai mua trước với lý do thật sự thì được, không phải ai lên tiếng trước theo nghĩa nào khác.",
   "How often do FFA sales happen?": "FFA sale diễn ra thường xuyên không?",
-  "Whenever a member has something to sell -- there is no schedule. Keep an eye on the FFA channel rather than expecting them at set times.":
-    "Bất cứ khi nào có thành viên muốn bán gì đó -- không có lịch cố định. Cứ để ý kênh FFA thay vì mong đợi vào giờ giấc nhất định.",
-
   "What is Airline of the Week?": "Airline of the Week là gì?",
-  "A regular feature on the home page that puts one member carrier in front of the whole group -- its livery, its name, and figures like fleet size, routes and destinations, read live from the roster.":
-    "Mục thường xuyên trên trang chủ, đưa một hãng bay thành viên ra trước cả nhóm -- livery, tên, và các số liệu như quy mô đội bay, đường bay và điểm đến, lấy trực tiếp từ đội hình.",
   "How is the airline chosen?": "Hãng bay được chọn thế nào?",
-  "By the board, each week. It is alliance policy rather than something generated automatically, which is also why the pick and its write-up live in the site's own code rather than the database.":
-    "Do hội đồng chọn, mỗi tuần một lần. Đây là chính sách của liên minh chứ không phải thứ tự động sinh ra, đó cũng là lý do lựa chọn và bài viết về nó nằm ngay trong code của trang web chứ không phải database.",
   "Why does the home page show a countdown instead of this week's airline?": "Vì sao trang chủ hiện đồng hồ đếm ngược thay vì hãng bay tuần này?",
-  "Reveals go out at an announced time, not the moment they are set up -- so the segment shows a countdown until that moment and switches itself over automatically, live, with no reload needed.":
-    "Công bố diễn ra vào giờ đã thông báo, không phải ngay khi được chuẩn bị xong -- nên mục này hiện đồng hồ đếm ngược đến lúc đó rồi tự chuyển sang, trực tiếp, không cần tải lại trang.",
   "Can my airline be Airline of the Week?": "Hãng bay của mình có thể thành Airline of the Week không?",
-  "It is a board pick, not an application, so there is no form for it -- but being active in the alliance and visible on Discord is how a carrier ends up on the board's radar in the first place.":
-    "Đây là lựa chọn của hội đồng, không phải đơn xin, nên không có form nào cả -- nhưng tích cực hoạt động trong liên minh và nổi bật trên Discord chính là cách một hãng bay lọt vào mắt hội đồng ngay từ đầu.",
-
   "Can I search and book flights on this site?": "Có thể tìm và đặt chuyến bay trên trang này không?",
-  "Yes -- search the network from the home page, pick an itinerary, and book it. It is a simulated booking against the alliance's own network, not a real airline ticket.":
-    "Được -- tìm trong mạng lưới từ trang chủ, chọn hành trình, rồi đặt. Đây là đặt chỗ mô phỏng trên mạng lưới của liên minh, không phải vé máy bay thật.",
   "How do I find a booking I already made?": "Tìm lại chỗ đã đặt trước đó bằng cách nào?",
-  "Use Manage Booking on the Trips page: enter the six-character reference from your confirmation along with the surname of anyone travelling on it.":
-    "Dùng Manage Booking ở trang Trips: nhập mã đặt chỗ 6 ký tự trong email xác nhận cùng với họ của một hành khách bất kỳ trong đó.",
   "What is the Round the World feature?": "Tính năng Round the World là gì?",
-  "One fare, one direction: you build a route of stops around the alliance's network and it prices as a single round-the-world itinerary rather than separate one-way fares.":
-    "Một giá vé, một chiều: bạn tự dựng tuyến dừng chân quanh mạng lưới của liên minh và nó được tính giá như một hành trình vòng quanh thế giới duy nhất, thay vì từng chặng một chiều riêng lẻ.",
   "Is there a route map for the whole alliance?": "Có bản đồ đường bay cho cả liên minh không?",
-  "Yes, on the Network page -- it draws every route across every division's carriers on one map, rather than one airline at a time.":
-    "Có, ở trang Network -- vẽ mọi đường bay của tất cả hãng bay ở mọi division trên cùng một bản đồ, thay vì từng hãng bay một.",
   "Where can I find a specific member airline?": "Tìm một hãng bay thành viên cụ thể ở đâu?",
-  "The Airlines directory lists every carrier in the alliance and can be filtered by division or country -- search it by name if you know roughly who you are looking for.":
-    "Danh bạ Airlines liệt kê mọi hãng bay trong liên minh và có thể lọc theo division hoặc quốc gia -- tìm theo tên nếu bạn đã biết đại khái đang tìm ai.",
   "Do I need an account to search or book?": "Có cần tài khoản để tìm hoặc đặt chỗ không?",
-  "No -- searching and booking work for anyone. An account (Resonance) only comes in if you want to manage bookings under your profile or use the members-only tools.":
-    "Không -- ai cũng tìm và đặt chỗ được. Tài khoản (Resonance) chỉ cần khi bạn muốn quản lý chỗ đã đặt trong hồ sơ của mình hoặc dùng các công cụ dành riêng cho thành viên.",
   "Are these real flight tickets?": "Đây có phải vé máy bay thật không?",
-  "No. Booking on this site is a simulation layered on the alliance's own network, built for The Airline Simulator community -- not a real-world travel agency.":
-    "Không. Đặt chỗ trên trang này là mô phỏng dựa trên mạng lưới của liên minh, dựng riêng cho cộng đồng The Airline Simulator -- không phải đại lý du lịch ngoài đời thật.",
   "Can I change or cancel a booking?": "Có thể đổi hoặc huỷ chỗ đã đặt không?",
-  "Look it up first on the Trips page with your reference and surname -- what you can do with it from there depends on the booking itself, so start there rather than guessing.":
-    "Tra cứu trước ở trang Trips bằng mã đặt chỗ và họ của bạn -- bạn làm được gì tiếp theo tuỳ vào chỗ đặt đó, nên hãy bắt đầu từ đó thay vì đoán mò.",
-
   "What is Resonance?": "Resonance là gì?",
-  "The sign-in system for this site, using the Discord account you already use on the EUA server. Signed out, the link in the bar reads Resonance; signed in, it shows your name.":
-    "Hệ thống đăng nhập của trang này, dùng chính tài khoản Discord bạn đã dùng trên server EUA. Khi chưa đăng nhập, liên kết trên thanh menu ghi Resonance; khi đã đăng nhập, nó hiện tên bạn.",
   "What is Echo Live?": "Echo Live là gì?",
-  "One of the members' tools on the Members page, open to everyone rather than gated to a sign-in.":
-    "Một trong các công cụ thành viên ở trang Members, mở cho tất cả mọi người chứ không bị khoá sau đăng nhập.",
   "What is Echo Market and who can use it?": "Echo Market là gì và ai dùng được?",
-  "A members' tool for EUA airlines, signed in with the Discord account you use on the alliance's server -- unlike Echo Live, it is not open to everyone.":
-    "Công cụ thành viên dành cho các hãng bay EUA, đăng nhập bằng tài khoản Discord bạn dùng trên server của liên minh -- khác với Echo Live, cái này không mở cho tất cả mọi người.",
   "I am not in EUA yet -- can I still sign in?": "Mình chưa là thành viên EUA -- vẫn đăng nhập được không?",
-  "The Members page links straight to how to join if you are not in yet -- sign-in with Resonance uses your Discord account, so joining the alliance on Discord is the step that actually unlocks the members-only tools.":
-    "Trang Members dẫn thẳng đến cách gia nhập nếu bạn chưa là thành viên -- đăng nhập bằng Resonance dùng tài khoản Discord của bạn, nên gia nhập liên minh trên Discord mới là bước thật sự mở khoá các công cụ dành riêng cho thành viên.",
   "How do I apply to help admin the alliance?": "Làm sao để xin giúp quản trị liên minh?",
-  "There is an apply option for admin roles once you are signed in -- ask on Discord if you cannot find it, since exactly where it appears can change as the site does.":
-    "Có tuỳ chọn nộp đơn cho vai trò admin sau khi bạn đăng nhập -- hỏi trên Discord nếu không tìm thấy, vì vị trí chính xác có thể thay đổi theo trang web.",
   "I forgot my booking reference -- what now?": "Mình quên mã đặt chỗ rồi -- giờ sao?",
-  "If you booked while signed in to Resonance, your trips are attached to your account rather than only to the reference -- sign in and check My Trips first before trying to recall the six characters.":
-    "Nếu bạn đặt chỗ lúc đã đăng nhập Resonance, chuyến đi của bạn được gắn với tài khoản chứ không chỉ với mã đặt chỗ -- cứ đăng nhập rồi kiểm tra My Trips trước khi cố nhớ lại 6 ký tự đó.",
-
   "Where does the news on this site come from?": "Tin tức trên trang này lấy từ đâu?",
-  "The Newsroom is read live from a community newsroom run by one of our members, not stored on this site -- stories appear here as soon as they are published there, and if that source is briefly unreachable the page shows nothing rather than something stale.":
-    "Newsroom được đọc trực tiếp từ một newsroom cộng đồng do một thành viên của chúng tôi điều hành, không lưu trên trang này -- tin xuất hiện ở đây ngay khi được đăng ở đó, và nếu nguồn tạm thời không truy cập được, trang sẽ không hiện gì thay vì hiện tin cũ.",
   "Why are some news stories only in English?": "Vì sao vài tin chỉ có tiếng Anh?",
-  "Stories are shown as their authors published them. If you are browsing in another language, that is a translation of the site around the story, not of the story itself.":
-    "Tin được hiển thị đúng như tác giả đã đăng. Nếu bạn đang xem bằng ngôn ngữ khác, đó là bản dịch phần giao diện quanh bài viết, không phải dịch nội dung bài viết.",
   "Can I submit a story to the newsroom?": "Có thể gửi bài cho newsroom không?",
-  "That is run by the newsroom's own team, separately from this site -- ask on Discord who runs it if you want to pitch something.":
-    "Việc đó do chính đội ngũ newsroom quản lý, tách biệt với trang này -- hỏi trên Discord xem ai phụ trách nếu bạn muốn đề xuất gì đó.",
-
   "When was Echo founded?": "Echo được thành lập khi nào?",
-  "On 24 March 2026, as Axian Alliance, with three founding members. It has grown a great deal since, entirely on the back of its members.":
-    "Vào 24 tháng 3 năm 2026, với tên Axian Alliance và ba thành viên sáng lập. Từ đó đến nay đã phát triển rất nhiều, hoàn toàn nhờ vào các thành viên của mình.",
   "What does \"Home of the Excellence\" mean?": "\"Home of the Excellence\" nghĩa là gì?",
-  "It is the alliance's slogan -- the standard it holds its members and its own running of the group to, across every division.":
-    "Đó là khẩu hiệu của liên minh -- tiêu chuẩn mà liên minh đặt ra cho thành viên và cho cách vận hành cả nhóm, ở mọi division.",
   "What game is Echo United Alliances for?": "Echo United Alliances dành cho game nào?",
-  "The Airline Simulator. Echo is a virtual airline alliance group built around it, not an airline or a real-world company.":
-    "The Airline Simulator. Echo là nhóm liên minh hãng bay ảo được xây dựng quanh game đó, không phải một hãng hàng không hay công ty ngoài đời thật.",
   "Where do I find the Discord invite?": "Tìm link mời Discord ở đâu?",
-  "The Join Discord button in the site header and footer links straight to it, and it is set never to expire -- if it ever fails, that is worth reporting rather than assuming the alliance closed up.":
-    "Nút Join Discord ở đầu trang và chân trang dẫn thẳng đến đó, và được đặt là không bao giờ hết hạn -- nếu có lúc nào không vào được, hãy báo lại thay vì nghĩ rằng liên minh đã đóng cửa.",
   "Where are the Terms of Service?": "Terms of Service ở đâu?",
-  "Linked in the footer of every page, along with the Code of Conduct and the Privacy Policy.":
-    "Có liên kết ở chân mỗi trang, cùng với Code of Conduct và Privacy Policy.",
   "What does the Privacy Policy cover, and can I check it?": "Privacy Policy bao gồm những gì, và có kiểm tra được không?",
-  "What this site collects and why, including that this is a GitHub Pages site with a public source -- the Privacy page says that every claim on it can be checked, and links to where.":
-    "Những gì trang này thu thập và vì sao, kể cả việc đây là trang GitHub Pages với mã nguồn công khai -- trang Privacy nói rõ mọi điều khẳng định trong đó đều kiểm tra được, và dẫn link đến nơi kiểm tra.",
   "Is the source code for this site public?": "Mã nguồn của trang này có công khai không?",
-  "Yes -- the whole site is open on GitHub, linked from the Privacy page. That is also how its figures, like the number of carriers and airports, stay honest: they are read live rather than typed in once and left to go stale.":
-    "Có -- cả trang web đều mở trên GitHub, có liên kết từ trang Privacy. Đó cũng là cách các con số trên trang, như số hãng bay và sân bay, luôn trung thực: chúng được lấy trực tiếp chứ không gõ một lần rồi để cũ đi.",
-
   "Sneak Peek": "Xem Trước",
   "Sneak peek": "Xem trước",
   "Sneak peek (unlocked)": "Xem trước (đã mở khoá)",
@@ -844,18 +753,11 @@ const dict: Record<string, string> = {
   "That code did not work.": "Mã đó không đúng rồi.",
   "Unlocked for this browser": "Đã mở khoá cho trình duyệt này",
   "or": "hoặc",
-  "Sign in to Resonance with the Discord account you already use on the EUA server -- no separate password to set or remember.":
-    "Đăng nhập Resonance bằng tài khoản Discord bạn đã dùng trên server EUA -- khỏi cần đặt hay nhớ thêm mật khẩu riêng.",
   "Look for it on the Resonance sign-in page.": "Tìm nó ở trang đăng nhập Resonance.",
-
   "Your airline": "Hãng bay của bạn",
   "Airline name or code": "Tên hoặc mã hãng bay",
   "Claim your airline": "Nhận Hãng Bay Của Bạn",
-  "Link the airline you fly for to your Resonance account, self-reported, the same way you already set a home airport and division.":
-    "Liên kết hãng bay bạn đang lái với tài khoản Resonance, tự khai báo, giống như cách bạn đã đặt sân bay và division.",
   "Look for it under Your details on the Resonance page.": "Tìm nó ở mục Thông tin của bạn trên trang Resonance.",
-  "That Discord account is not in the EUA server, so it was signed back out. Join the alliance on Discord first, then try again.":
-    "Tài khoản Discord đó không có trong server EUA, nên đã bị đăng xuất lại. Hãy gia nhập liên minh trên Discord trước, rồi thử lại.",
 }
 
 export default dict

@@ -11,7 +11,7 @@
  * Leaders are recorded by DISCORD identity, not by airline. Several of them
  * own more than one carrier, so an airline is not a stable way to name a
  * person; the Discord handle is how the group actually knows them. The
- * database does carry a leader_uid, but only Proxima's roster export ever
+ * database does carry a leader_uid, but only Lior's (then Proxima's) roster export ever
  * filled it in, and it points at a carrier rather than a person.
  *
  * division_code keys into the divisions table, so names, ordering and accent
@@ -33,7 +33,8 @@ export type Leader = {
  * One row per leader, not per division, because the two do not match one to
  * one in either direction: a division can be led by more than one person, and
  * one person can lead more than one division -- Ahnaf currently leads
- * Aura, Elion and Proxima (Proxima since October 2026, after Rust). That is
+ * Aura, Elion, Lior (since October 2026, after Rust, when it was still called
+ * Proxima) and Uzuri, the tenth division, opened 30 October 2026. That is
  * why nothing here counts the leaders and calls it the number of divisions;
  * the About page groups by division_code instead.
  */
@@ -41,12 +42,15 @@ export const LEADERS: Leader[] = [
   { division_code: 'kyra', name: 'Naofum', discord: 'w4leste' },
   { division_code: 'aegis', name: 'DCC', discord: 'creativator_2001' },
   { division_code: 'elysium', name: 'Top G', discord: 'jet_gooning' },
+  // Lior. Its code is still 'proxima': renamed 30 October 2026, the code is
+  // the URL and the roster folder, so only the displayed name changed.
   { division_code: 'proxima', name: 'Ahnaf', discord: '_ahnafabrar_' },
   { division_code: 'rhea', name: 'Reiner', discord: '_erwinsmith' },
   { division_code: 'vilis', name: 'Yukai', discord: 'ykw_1009' },
   { division_code: 'elion', name: 'Ahnaf', discord: '_ahnafabrar_' },
   { division_code: 'aura', name: 'Ahnaf', discord: '_ahnafabrar_' },
   { division_code: 'eos', name: 'Falcco', discord: '.fyxd' },
+  { division_code: 'uzuri', name: 'Ahnaf', discord: '_ahnafabrar_' },
 ]
 
 /**
@@ -62,7 +66,7 @@ export const LEADER_EMAILS: Record<string, string> = {
   w4leste: '', // Naofum, Kyra
   creativator_2001: '', // DCC, Aegis
   jet_gooning: '', // Top G, Elysium
-  _ahnafabrar_: '', // Ahnaf, Proxima, Elion and Aura
+  _ahnafabrar_: '', // Ahnaf, Lior, Elion, Aura and Uzuri
   _erwinsmith: '', // Reiner, Rhea
   ykw_1009: '', // Yukai, Vilis
   '.fyxd': '', // Falcco, Eos

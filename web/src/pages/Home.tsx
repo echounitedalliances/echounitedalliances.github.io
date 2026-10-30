@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Advisory from '../components/Advisory'
+import Announcement from '../components/Announcement'
 import DepartureBoard from '../components/DepartureBoard'
-import SearchPanel from '../components/SearchPanel'
 import { AirlineCard, NotConfigured } from '../components/ui'
 import DivisionTile from '../components/DivisionTile'
 import RouteCanvas from '../components/home/RouteCanvas'
@@ -65,7 +65,7 @@ const BENEFITS: { title: string; body: string }[] = [
   },
   {
     title: 'Your airline, on the map',
-    body: 'Every member carrier gets its own page here, with its routes, fleet and timetable drawn into the alliance network, and bookable by passengers.',
+    body: 'Every member carrier gets its own page here, with its routes, fleet and timetable drawn into the alliance network for everyone to see.',
   },
   {
     title: 'Free-for-all sales',
@@ -137,6 +137,8 @@ export default function Home() {
     <div className="home">
       {/* Renders nothing unless something is actually disrupting travel. */}
       <Advisory />
+      {/* A one-off welcome for something new; see components/Announcement.tsx. */}
+      <Announcement />
 
       {/* ---------- the opening screen ---------- */}
       <section className="home-hero" aria-label="Echo United Alliances">
@@ -394,21 +396,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------- travellers ---------- */}
+      {/* ---------- the live board ---------- */}
       <section className="home-section" id="fly" aria-labelledby="fly-h">
         <div className="home-wrap">
           <Reveal>
-            <p className="eyebrow text-ink-faint">{t('Just here to fly?')}</p>
+            <p className="eyebrow text-ink-faint">{t('Live from the schedule')}</p>
             <h2 className="display home-h2" id="fly-h">
-              {emph(t('Book a seat *on* any EUA airline'))}
+              {emph(t('The whole alliance, *departing*'))}
             </h2>
             <p className="mt-4 max-w-[60ch] text-ink-dim">
-              {t('One search across all {n} member carriers. Connect between divisions on a single booking reference, and keep your trips in one place.', { n: num(carriers) })}
+              {t('What leaves next from any airport the alliance serves, across all {n} member carriers, in your own time zone.', { n: num(carriers) })}
             </p>
           </Reveal>
-          <div className="mt-8">
-            <SearchPanel />
-          </div>
           <div className="mt-10">
             <DepartureBoard />
           </div>
