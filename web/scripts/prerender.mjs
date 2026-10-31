@@ -42,6 +42,23 @@ const DIVISION_URL = Object.fromEntries(
     (m) => [m[1], m[2]],
   ),
 )
+// The Discord invite, from lib/site.ts, for the organisation details below.
+const DISCORD = readFileSync(join(webDir, 'src/lib/site.ts'), 'utf8').match(/discordInvite:\s*'([^']+)'/)?.[1]
+const ORGANISATION = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: SITE,
+    alternateName: ['Echo', 'EUA', 'Echo Alliances'],
+    url: `${ORIGIN}/`,
+    logo: `${ORIGIN}/brand/echo-icon-512.png`,
+    description: 'An alliance of player-run airlines in The Airline Simulator.',
+    foundingDate: '2026-03-24',
+    ...(DISCORD && !DISCORD.includes('REPLACE-ME') ? { sameAs: [DISCORD] } : {}),
+  },
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: SITE, url: `${ORIGIN}/` },
+]
+
 const divisionPath = (code, slug) => `/d/${DIVISION_URL[code] ?? code}${slug ? `/${slug}` : ''}`
 
 // The same wording as src/lib/pageMeta.ts; change both together.
@@ -124,6 +141,9 @@ function render(template, p) {
     .replace(/<meta name="description" content="[^"]*"\s*\/?>/, `<meta name="description" content="${esc(p.description)}" />`)
     .replace('</head>', `    ${tags.join('\n    ')}\n  </head>`)
     .replace('<div id="root"></div>', `<div id="root">${p.body}</div>`)
+  // Who the site belongs to, in the form search engines read for their
+  // knowledge panel: the alliance, its logo, and its Discord as its channel.
+  if (p.path === '/') html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(ORGANISATION)}</script>\n  </head>`)
   // Discord colours the edge of an embed with the page's theme colour.
   if (p.color) html = html.replace(/<meta name="theme-color" content="[^"]*"/, `<meta name="theme-color" content="${esc(p.color)}"`)
   if (!html.includes(`<link rel="canonical" href="${url}"`)) throw new Error(`could not fill in ${p.path}`)
@@ -229,6 +249,17 @@ export async function prerender() {
     written.push(rel)
   }
   writeFileSync(LIST, written.join('\n') + '\n')
+
+  // Every page, for search engines to find without following links.
+  const today = new Date().toISOString().slice(0, 10)
+  const loc = (path) => `${ORIGIN}${path === '/' ? '/' : `${encodeURI(path)}/`}`
+  writeFileSync(
+    join(repoRoot, 'sitemap.xml'),
+    '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+      pages.map((p) => `  <url><loc>${esc(loc(p.path))}</loc><lastmod>${today}</lastmod></url>`).join('\n') +
+      '\n</urlset>\n',
+  )
+  writeFileSync(join(repoRoot, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}/sitemap.xml\n`)
   return { pages, counts }
 }
 
