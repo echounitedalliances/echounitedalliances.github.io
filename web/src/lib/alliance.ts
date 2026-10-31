@@ -129,20 +129,16 @@ export const AIRLINE_OF_THE_WEEK: {
   blurb: string
   liveries: Livery[]
 } = {
-  division_code: 'aura',
-  // Best guess from the site's own slugify rule (lowercase, non-alphanumerics
-  // to underscores): "FlyNarita Express" -> "flynarita_express". Not
-  // verified against the live database -- if it is wrong, this segment will
-  // show the teaser's countdown reach zero and then go blank rather than
-  // erroring, since useAirlineOfTheWeek() just gets no row back.
-  airline_slug: 'flynarita_express',
+  // Aegis's Tsuki Airways (TKAG), not the Uzuri carrier of the same name
+  // (TKUZ): same name and slug, so the division is what picks it.
+  division_code: 'aegis',
+  airline_slug: 'tsuki_airways',
   blurb:
-    'Flying the Japanese flag from Narita, FlyNarita Express (FNE) is one of the carriers building Echo Aura, with a 310-aircraft fleet spanning the A321neo and the A330-900.',
+    'Flying the Japanese flag from Haneda and Kansai, Tsuki Airways (TKAG) is Aegis’s long-haul specialist: 121 aircraft, 102 of them widebodies, led by 68 Boeing 787-9s across 92 routes to 35 countries.',
   liveries: [
     {
-      src: 'brand/liveries/flynarita-express-a321neo.webp',
-      aircraft: 'Airbus A321neo',
-      registration: 'JAA00N',
+      src: 'brand/liveries/tsuki-airways-787.webp',
+      aircraft: 'Boeing 787 Dreamliner',
     },
   ],
 }
