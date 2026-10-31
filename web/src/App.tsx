@@ -27,6 +27,7 @@ import { NAV } from './lib/nav'
 import MobileMenu from './components/MobileMenu'
 import EchoMark from './components/EchoMark'
 import Welcome from './components/Welcome'
+import Announcement from './components/Announcement'
 import MaintenanceLock from './components/MaintenanceLock'
 import EchoAssistant from './components/EchoAssistant'
 import { SneakPeekProvider } from './lib/sneakPeek'
@@ -423,6 +424,8 @@ export default function App() {
       <Welcome />
       <HashRouter>
         <Shell>
+        {/* News worth one interruption per visit, on whatever page it lands. */}
+        <Announcement />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />

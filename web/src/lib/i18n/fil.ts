@@ -632,6 +632,7 @@ const dict: Record<string, string> = {
   "Are these real flights?": "Totoong flight ba ang mga ito?",
   "No. Every schedule, fare and route here comes from airlines in The Airline Simulator, a game -- this is the alliance's own site, not a real-world airline or travel agency.": "Hindi. Lahat ng schedule, pamasahe at ruta dito ay galing sa mga airline sa The Airline Simulator, isang game -- ito ang sariling site ng alliance, hindi totoong airline o travel agency.",
   "Flying the Japanese flag from Haneda and Kansai, Tsuki Airways (TKAG) is Aegis’s long-haul specialist: 121 aircraft, 102 of them widebodies, led by 68 Boeing 787-9s across 92 routes to 35 countries.": "Dala ang watawat ng Japan mula Haneda at Kansai, ang Tsuki Airways (TKAG) ang long-haul specialist ng Aegis: 121 aircraft, 102 dito ay widebody, pinangungunahan ng 68 Boeing 787-9 sa 92 ruta papunta sa 35 bansa.",
+  "Congratulations, *{airline}*": "Congrats, *{airline}*",
   "No -- everything on the site is open to anyone. An account (Resonance) is for members who want to save a profile or claim their airline, and for the admins who look after the site.": "Hindi -- bukas sa lahat ang buong site. Ang account (Resonance) ay para sa mga member na gustong mag-save ng profile o mag-claim ng airline nila, at para sa mga admin na nag-aalaga sa site.",
   "Activities": "Mga Aktibidad",
   "Travel tools": "Mga Travel Tool",

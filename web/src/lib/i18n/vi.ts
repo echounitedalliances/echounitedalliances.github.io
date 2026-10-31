@@ -684,6 +684,7 @@ const dict: Record<string, string> = {
   "Are these real flights?": "Đây có phải chuyến bay thật không?",
   "No. Every schedule, fare and route here comes from airlines in The Airline Simulator, a game -- this is the alliance's own site, not a real-world airline or travel agency.": "Không. Mọi lịch bay, giá vé và đường bay ở đây đều đến từ các hãng trong The Airline Simulator, một trò chơi -- đây là web của liên minh, không phải hãng bay hay đại lý du lịch ngoài đời thật.",
   "Flying the Japanese flag from Haneda and Kansai, Tsuki Airways (TKAG) is Aegis’s long-haul specialist: 121 aircraft, 102 of them widebodies, led by 68 Boeing 787-9s across 92 routes to 35 countries.": "Mang cờ Nhật Bản từ Haneda và Kansai, Tsuki Airways (TKAG) là “chuyên gia” bay đường dài của Aegis: 121 máy bay, 102 chiếc thân rộng, dẫn đầu là 68 chiếc Boeing 787-9 trên 92 đường bay tới 35 quốc gia.",
+  "Congratulations, *{airline}*": "Chúc mừng *{airline}*",
   "No -- everything on the site is open to anyone. An account (Resonance) is for members who want to save a profile or claim their airline, and for the admins who look after the site.": "Không -- mọi thứ trên web đều mở cho tất cả. Tài khoản (Resonance) dành cho thành viên muốn lưu hồ sơ hoặc nhận hãng bay của mình, và cho admin quản lý web.",
   "Activities": "Hoạt động",
   "Travel tools": "Công cụ di chuyển",

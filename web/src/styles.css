@@ -960,3 +960,6 @@ html[lang="vi"] .home-offer-big, html[lang="vi"] .aotw-name { line-height: 1.15 
 .announce-cta { background: var(--c); color: #050505; border-color: var(--c); }
 .announce-cta:hover { box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 30%, transparent); }
 #announcement-title .serif { color: var(--c, #FAE246); }
+
+/* The Airline of the Week pop-up shows the livery above its blurb. */
+.announce-livery { display: block; width: 100%; height: auto; margin: 0 0 16px; }

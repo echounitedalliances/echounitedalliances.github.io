@@ -688,6 +688,7 @@ const dict: Record<string, string> = {
   "Are these real flights?": "क्या ये असली फ़्लाइट हैं?",
   "No. Every schedule, fare and route here comes from airlines in The Airline Simulator, a game -- this is the alliance's own site, not a real-world airline or travel agency.": "नहीं। यहाँ के सारे शेड्यूल, किराए और रूट The Airline Simulator नाम के गेम की एयरलाइंस से आते हैं -- यह अलायंस की अपनी साइट है, कोई असली एयरलाइन या ट्रैवल एजेंसी नहीं।",
   "Flying the Japanese flag from Haneda and Kansai, Tsuki Airways (TKAG) is Aegis’s long-haul specialist: 121 aircraft, 102 of them widebodies, led by 68 Boeing 787-9s across 92 routes to 35 countries.": "हानेडा और कंसाई से जापान का झंडा लेकर उड़ने वाली Tsuki Airways (TKAG) Aegis की लॉन्ग-हॉल स्पेशलिस्ट है: 121 विमान, जिनमें 102 वाइडबॉडी, अगुवाई 68 Boeing 787-9 की, 92 रूट पर 35 देशों तक।",
+  "Congratulations, *{airline}*": "बधाई हो, *{airline}*",
   "No -- everything on the site is open to anyone. An account (Resonance) is for members who want to save a profile or claim their airline, and for the admins who look after the site.": "नहीं -- साइट पर सब कुछ सबके लिए खुला है। खाता (Resonance) उन मेंबर्स के लिए है जो प्रोफ़ाइल सेव करना या अपनी एयरलाइन क्लेम करना चाहते हैं, और साइट सँभालने वाले एडमिन के लिए।",
   "Activities": "गतिविधियाँ",
   "Travel tools": "यात्रा टूल्स",

@@ -688,6 +688,7 @@ const dict: Record<string, string> = {
   "Are these real flights?": "这些是真实航班吗？",
   "No. Every schedule, fare and route here comes from airlines in The Airline Simulator, a game -- this is the alliance's own site, not a real-world airline or travel agency.": "不是。这里所有的时刻、票价和航线都来自游戏 The Airline Simulator 里的航司——这是联盟自己的网站，不是现实中的航空公司或旅行社。",
   "Flying the Japanese flag from Haneda and Kansai, Tsuki Airways (TKAG) is Aegis’s long-haul specialist: 121 aircraft, 102 of them widebodies, led by 68 Boeing 787-9s across 92 routes to 35 countries.": "Tsuki Airways（TKAG）以羽田和关西为基地，飞扬日本国旗，是 Aegis 的远程航线专家：121 架飞机，其中 102 架宽体机，主力是 68 架波音 787-9，航线 92 条，通达 35 个国家。",
+  "Congratulations, *{airline}*": "恭喜 *{airline}*",
   "No -- everything on the site is open to anyone. An account (Resonance) is for members who want to save a profile or claim their airline, and for the admins who look after the site.": "不需要——网站上的所有内容都对所有人开放。账户（Resonance）是给想保存资料或认领自己航司的成员，以及管理网站的管理员用的。",
   "Activities": "活动",
   "Travel tools": "出行工具",

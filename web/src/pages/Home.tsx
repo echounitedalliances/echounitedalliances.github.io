@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Advisory from '../components/Advisory'
-import Announcement from '../components/Announcement'
 import DepartureBoard from '../components/DepartureBoard'
 import { AirlineCard, NotConfigured } from '../components/ui'
 import DivisionTile from '../components/DivisionTile'
@@ -137,8 +136,6 @@ export default function Home() {
     <div className="home">
       {/* Renders nothing unless something is actually disrupting travel. */}
       <Advisory />
-      {/* A one-off welcome for something new; see components/Announcement.tsx. */}
-      <Announcement />
 
       {/* ---------- the opening screen ---------- */}
       <section className="home-hero" aria-label="Echo United Alliances">
