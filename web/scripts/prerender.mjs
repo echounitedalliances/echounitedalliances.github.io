@@ -91,18 +91,41 @@ const country = (cc) => {
 }
 const list = (xs) => (xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`)
 
-/** One page: its address, words, and the plain HTML that stands in for the app. */
-function page(path, title, description, body) {
-  return { path, title: pageTitle(title), description, body }
+/**
+ * One page: its address, words, the plain HTML that stands in for the app,
+ * and its link preview -- a card image (web/scripts/make_cards.py) and the
+ * colour Discord draws down the side of the embed.
+ */
+function page(path, title, description, body, preview = {}) {
+  return { path, title: pageTitle(title), description, body, card: preview.card ?? 'echo.jpg', color: preview.color }
 }
+
+const cardFor = (divisionCode) =>
+  existsSync(join(webDir, 'public/brand/cards', `${divisionCode}.png`)) ? `${divisionCode}.png` : 'echo.jpg'
 
 function render(template, p) {
   const url = `${ORIGIN}${p.path === '/' ? '/' : `${p.path}/`}`
+  const image = `${ORIGIN}/brand/cards/${p.card}`
+  const tags = [
+    `<link rel="canonical" href="${url}" />`,
+    `<meta property="og:type" content="website" />`,
+    `<meta property="og:site_name" content="${esc(SITE)}" />`,
+    `<meta property="og:title" content="${esc(p.title)}" />`,
+    `<meta property="og:description" content="${esc(p.description)}" />`,
+    `<meta property="og:url" content="${url}" />`,
+    `<meta property="og:image" content="${image}" />`,
+    `<meta property="og:image:width" content="1200" />`,
+    `<meta property="og:image:height" content="630" />`,
+    `<meta property="og:image:alt" content="${esc(p.title)}" />`,
+    `<meta name="twitter:card" content="summary_large_image" />`,
+  ]
   let html = template
     .replace(/<title>[^<]*<\/title>/, `<title>${esc(p.title)}</title>`)
     .replace(/<meta name="description" content="[^"]*"\s*\/?>/, `<meta name="description" content="${esc(p.description)}" />`)
-    .replace('</head>', `    <link rel="canonical" href="${url}" />\n  </head>`)
+    .replace('</head>', `    ${tags.join('\n    ')}\n  </head>`)
     .replace('<div id="root"></div>', `<div id="root">${p.body}</div>`)
+  // Discord colours the edge of an embed with the page's theme colour.
+  if (p.color) html = html.replace(/<meta name="theme-color" content="[^"]*"/, `<meta name="theme-color" content="${esc(p.color)}"`)
   if (!html.includes(`<link rel="canonical" href="${url}"`)) throw new Error(`could not fill in ${p.path}`)
   return html
 }
@@ -127,10 +150,10 @@ function removePrevious() {
 export async function prerender() {
   const template = readFileSync(join(repoRoot, 'index.html'), 'utf8')
   const [divisions, airlines, airports] = await Promise.all([
-    rows('v_division_summary', 'select=division_code,division_name,carriers,aircraft,routes,destinations,top_hubs&order=sort_order'),
+    rows('v_division_summary', 'select=division_code,division_name,accent_color,carriers,aircraft,routes,destinations,top_hubs&order=sort_order'),
     rows(
       'mv_airline_directory',
-      'select=division_code,division_name,airline_slug,carrier_code,airline_name,airline_country,fleet_size,routes,destinations,hubs&order=division_code,airline_slug',
+      'select=division_code,division_name,accent_color,airline_slug,carrier_code,airline_name,airline_country,fleet_size,routes,destinations,hubs&order=division_code,airline_slug',
     ),
     rows(
       'mv_airport_directory',
@@ -158,7 +181,12 @@ export async function prerender() {
       `${d.division_name} is one of the ${counts.divisions} divisions of Echo United Alliances in The Airline Simulator: ` +
       `${num(d.carriers)} airlines flying ${num(d.aircraft)} aircraft on ${num(d.routes)} routes to ${num(d.destinations)} destinations.`
     const extra = `<ul>${members.map((a) => `<li>${link(divisionPath(a.division_code, a.airline_slug), a.airline_name ?? a.carrier_code)}</li>`).join('')}</ul>`
-    pages.push(page(divisionPath(d.division_code), divisionTitle(d.division_name), description, main(divisionTitle(d.division_name), description, extra)))
+    pages.push(
+      page(divisionPath(d.division_code), divisionTitle(d.division_name), description, main(divisionTitle(d.division_name), description, extra), {
+        card: cardFor(d.division_code),
+        color: d.accent_color,
+      }),
+    )
   }
 
   for (const a of airlines) {
@@ -170,7 +198,12 @@ export async function prerender() {
       (a.fleet_size ? `, flying ${num(a.fleet_size)} aircraft on ${num(a.routes)} routes to ${num(a.destinations)} destinations` : '') +
       (hubs.length ? ` from ${list(hubs)}.` : '.')
     const extra = `<p>${link(divisionPath(a.division_code), divisionTitle(a.division_name))}</p>`
-    pages.push(page(divisionPath(a.division_code, a.airline_slug), airlineTitle(name, a.carrier_code, a.division_name), description, main(name, description, extra)))
+    pages.push(
+      page(divisionPath(a.division_code, a.airline_slug), airlineTitle(name, a.carrier_code, a.division_name), description, main(name, description, extra), {
+        card: cardFor(a.division_code),
+        color: a.accent_color,
+      }),
+    )
   }
 
   // Windows will not create a folder named after an old device (PRN, CON,
