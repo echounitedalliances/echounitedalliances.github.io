@@ -36,8 +36,8 @@ export const supabase = createClient(
       autoRefreshToken: true,
       // The default ("implicit") flow comes back from an OAuth or email
       // link with the session itself stuffed into the URL's hash fragment
-      // (#access_token=...). This site is a HashRouter, which reads that
-      // same fragment as a ROUTE (#/resonance) -- the two collide into one
+      // (#access_token=...). This site was a HashRouter then, and read that
+      // same fragment as a ROUTE (#/resonance) -- the two collided into one
       // unparseable mess, and a Discord sign-in can complete at Discord's
       // end and still land back here looking signed out, because the
       // session never actually gets read out of it. PKCE instead comes

@@ -124,7 +124,11 @@ type AuthState = {
 
 const Ctx = createContext<AuthState | null>(null)
 
-/** Where a reset link comes back to. HashRouter, so the route is in the hash. */
+/**
+ * Where a sign-in or reset link comes back to. Still the old #/resonance
+ * form, because that is the address Supabase's redirect allow-list holds;
+ * index.html turns it into /resonance (keeping ?code=) before the app reads it.
+ */
 function redirectTo() {
   const base = import.meta.env.BASE_URL || '/'
   return `${window.location.origin}${base}#/resonance`

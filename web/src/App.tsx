@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { HashRouter, Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
+import { BrowserRouter, Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import About from './pages/About'
 import Activities from './pages/Activities'
@@ -28,6 +28,7 @@ import MobileMenu from './components/MobileMenu'
 import EchoMark from './components/EchoMark'
 import Welcome from './components/Welcome'
 import Announcement from './components/Announcement'
+import { useFixedPageTitle } from './lib/pageMeta'
 import MaintenanceLock from './components/MaintenanceLock'
 import EchoAssistant from './components/EchoAssistant'
 import { SneakPeekProvider } from './lib/sneakPeek'
@@ -35,9 +36,14 @@ import LangMenu from './components/LangMenu'
 import { I18nProvider, rich, useI18n, useT } from './lib/i18n'
 
 /**
- * HashRouter, not BrowserRouter. GitHub Pages has no server to rewrite unknown
- * paths back to index.html, so a deep link like /d/kyra/emirates would 404 on
- * refresh. The hash keeps every route client-side.
+ * BrowserRouter: every page has a real address (/d/aegis/tsuki_airways), so
+ * search engines and link previews can tell the pages apart -- behind a
+ * hash, all of them were one page. GitHub Pages has no server to send unknown
+ * paths back to the app, so the publish step writes an index.html for every
+ * page it knows (scripts/prerender.mjs), each with its own title and preview,
+ * and 404.html catches the rest (an airline newer than the last publish).
+ * Old #/ addresses are rewritten to real ones before the app starts; see the
+ * inline script in index.html.
  */
 
 
@@ -133,6 +139,7 @@ function Shell({ children }: { children: React.ReactNode }) {
   const airportCount = useAirportCount()
   const divisionCount = useDivisionCount()
   const { pathname } = useLocation()
+  useFixedPageTitle(pathname)
   // Following a link should close the menu, or the next page opens behind it.
   useEffect(() => setOpen(false), [pathname])
 
@@ -422,7 +429,7 @@ export default function App() {
     <SneakPeekProvider>
     <AuthProvider>
       <Welcome />
-      <HashRouter>
+      <BrowserRouter>
         <Shell>
         {/* News worth one interruption per visit, on whatever page it lands. */}
         <Announcement />
@@ -454,7 +461,7 @@ export default function App() {
           />
         </Routes>
         </Shell>
-      </HashRouter>
+      </BrowserRouter>
     </AuthProvider>
     </SneakPeekProvider>
     </I18nProvider>

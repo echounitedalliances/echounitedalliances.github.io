@@ -20,12 +20,14 @@ import { accentOf, duration, flag, num, usd, weekdayInitials } from '../lib/form
 import { rich, useI18n } from '../lib/i18n'
 import { composeProfile, type ProfileFacts } from '../lib/profile'
 import { divisionFromUrl, divisionPath } from '../lib/alliance'
+import { airlineTitle, usePageTitle } from '../lib/pageMeta'
 
 export default function AirlinePage() {
   const { code: name = '', slug = '' } = useParams()
   const code = divisionFromUrl(name)
   const { lang, t } = useI18n()
   const [a, setA] = useState<Airline | null>(null)
+  usePageTitle(a && airlineTitle(a.airline_name ?? a.carrier_code, a.carrier_code, a.division_name))
   const [fleet, setFleet] = useState<FleetRow[]>([])
   const [routes, setRoutes] = useState<RoutePairRow[]>([])
   // City pairs it holds with nothing to sell: opened in the game with no

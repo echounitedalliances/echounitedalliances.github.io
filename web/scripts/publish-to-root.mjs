@@ -22,6 +22,7 @@ import { execSync } from 'node:child_process'
 import { cpSync, existsSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { prerender } from './prerender.mjs'
 
 const webDir = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const repoRoot = resolve(webDir, '..')
@@ -57,11 +58,17 @@ for (const entry of readdirSync(dist)) {
 // Stop Jekyll touching any of it.
 writeFileSync(join(repoRoot, '.nojekyll'), '')
 
-// HashRouter keeps every route in the hash, so a deep link never asks the
-// server for a path it does not have. This is belt and braces for anyone who
-// types a path directly.
+// 404.html is the app itself, so an address with no page of its own (an
+// airline newer than this publish) still opens the right page.
 const indexHtml = join(repoRoot, 'index.html')
 cpSync(indexHtml, join(repoRoot, '404.html'))
+
+// Then a real page at every address the site knows, each with its own title
+// and description (scripts/prerender.mjs). After 404.html, which stays the
+// plain app: it answers for any address without a page of its own.
+console.log('writing a page for every address…')
+const { pages } = await prerender()
+console.log(`  ${pages.length} pages, listed in published-pages.txt`)
 
 const files = readdirSync(join(repoRoot, 'assets'))
 console.log(`\npublished: index.html, 404.html, .nojekyll, assets/ (${files.length} files)`)

@@ -58,7 +58,7 @@ export function AudienceSwitch() {
 }
 
 // Whether this visit opened on the home page, read once as the bundle loads.
-let landedHome = ['', '#', '#/'].includes(window.location.hash)
+let landedHome = window.location.pathname === (import.meta.env.BASE_URL || '/')
 
 /**
  * A member who comes back to the home page lands in the members' area, the

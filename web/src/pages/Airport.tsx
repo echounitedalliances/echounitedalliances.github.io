@@ -7,6 +7,7 @@ import { isConfigured, supabase } from '../lib/supabase'
 import type { AirportRow } from '../lib/types'
 import { flag, num } from '../lib/format'
 import { divisionPath } from '../lib/alliance'
+import { airportTitle, usePageTitle } from '../lib/pageMeta'
 
 type Carrier = {
   uid: string
@@ -26,6 +27,7 @@ export default function AirportPage() {
   const t = useT()
   const [airport, setAirport] = useState<AirportRow | null>(null)
   const [carriers, setCarriers] = useState<Carrier[] | null>(null)
+  usePageTitle(airport && airportTitle(airport.iata_code, airport.city_name))
   // Above the early return below: a hook after it runs on some renders
   // and not others, which crashes the page.
   const carrierPage = usePaged(carriers ?? [])

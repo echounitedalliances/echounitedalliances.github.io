@@ -8,6 +8,7 @@ import type { Airline, Arc, Division, NetworkNode } from '../lib/types'
 import { accentOf, num } from '../lib/format'
 import { useT } from '../lib/i18n'
 import { divisionFromUrl } from '../lib/alliance'
+import { divisionTitle, usePageTitle } from '../lib/pageMeta'
 
 export default function DivisionPage() {
   const code = divisionFromUrl(useParams().code ?? '')
@@ -17,6 +18,7 @@ export default function DivisionPage() {
   const [arcs, setArcs] = useState<Arc[]>([])
   const [nodes, setNodes] = useState<NetworkNode[]>([])
   const [sort, setSort] = useState<'prominence' | 'name' | 'fleet'>('prominence')
+  usePageTitle(division && divisionTitle(division.division_name))
 
   useEffect(() => {
     if (!isConfigured) return

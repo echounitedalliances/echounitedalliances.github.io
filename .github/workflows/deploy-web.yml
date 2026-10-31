@@ -27,6 +27,13 @@ on:
       - 'brand/**'
       - 'favicon.ico'
       - 'preview/**'
+      # A page for every address (web/scripts/prerender.mjs): the list
+      # changes whenever a page is added or removed, and every page sits
+      # in a folder named for its address.
+      - 'published-pages.txt'
+      - '**/index.html'
+      - 'sitemap.xml'
+      - 'robots.txt'
       - '.github/workflows/deploy-web.yml'
   workflow_dispatch:
 
@@ -67,6 +74,17 @@ jobs:
           fi
           # Search engines ask for /favicon.ico before reading any <link>.
           cp -f favicon.ico _site/ 2>/dev/null || true
+          # A page for every address the site knows, listed by the publish
+          # step. Some sit in source folders (divisions/index.html), so only
+          # the listed files are copied, never whole folders.
+          if [ -f published-pages.txt ]; then
+            while IFS= read -r page; do
+              [ -n "$page" ] || continue
+              mkdir -p "_site/$(dirname "$page")"
+              cp "$page" "_site/$page"
+            done < published-pages.txt
+          fi
+          for f in sitemap.xml robots.txt; do [ -f "$f" ] && cp "$f" _site/; done
           # preview/ is a staged build of a branch, served at /preview/ for
           # review before it replaces the site. Absent most of the time.
           if [ -d preview ]; then cp -r preview _site/; fi
