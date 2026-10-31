@@ -1,6 +1,7 @@
 index.html
 about/index.html
 activities/index.html
+join/index.html
 divisions/index.html
 airlines/index.html
 network/index.html

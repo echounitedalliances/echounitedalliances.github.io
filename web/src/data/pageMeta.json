@@ -4,7 +4,7 @@
   "pages": {
     "/": {
       "title": "Echo United Alliances · The Airline Simulator alliance",
-      "description": "{divisions} divisions, {airlines} airlines, one network. Echo United Alliances is an alliance in The Airline Simulator: browse every member carrier, route and departure, and join us on Discord."
+      "description": "{divisions} divisions, {airlines} airlines, one network. Echo United Alliances is an alliance in The Airline Simulator (TAS): browse every member carrier, route and departure, and join us on Discord."
     },
     "/about": {
       "title": "About Echo",
@@ -13,6 +13,10 @@
     "/activities": {
       "title": "Activities",
       "description": "Airline of the Week, prized challenges and the other things Echo United Alliances does together in The Airline Simulator."
+    },
+    "/join": {
+      "title": "Join an alliance in The Airline Simulator",
+      "description": "New to The Airline Simulator (TAS)? Here is what an alliance gives you, and how to join Echo United Alliances: {airlines} airlines in {divisions} divisions, beginners welcome."
     },
     "/divisions": {
       "title": "Divisions",

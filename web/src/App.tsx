@@ -3,6 +3,7 @@ import { BrowserRouter, Link, NavLink, Route, Routes, useLocation } from 'react-
 import Home from './pages/Home'
 import About from './pages/About'
 import Activities from './pages/Activities'
+import Join from './pages/Join'
 import Divisions from './pages/Divisions'
 import DivisionPage from './pages/Division'
 import AirlinePage from './pages/Airline'
@@ -357,6 +358,9 @@ function Shell({ children }: { children: React.ReactNode }) {
                 airports: num(airportCount),
               })}
             </span>
+            <Link to="/join" className="hover:text-ink-dim">
+              {t('How to join')}
+            </Link>
             <Link to="/terms" className="hover:text-ink-dim">
               {t('Terms')}
             </Link>
@@ -437,6 +441,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/activities" element={<Activities />} />
+          <Route path="/join" element={<Join />} />
           <Route path="/divisions" element={<Divisions />} />
           <Route path="/d/:code" element={<DivisionPage />} />
           <Route path="/d/:code/:slug" element={<AirlinePage />} />
