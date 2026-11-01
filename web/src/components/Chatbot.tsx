@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import EchoMark from './EchoMark'
+import { tapLight, tapMedium } from '../lib/haptics'
 import { useT } from '../lib/i18n'
 import { CHATBOT_CATEGORIES, CHATBOT_PRESETS } from '../data/chatbotPresets'
 
@@ -42,6 +43,7 @@ export default function Chatbot({ onClose }: { onClose: () => void }) {
   const ask = (id: string) => {
     const preset = CHATBOT_PRESETS.find((p) => p.id === id)
     if (!preset) return
+    tapMedium()
     setThread((prev) => [...prev, { id, question: preset.question, answer: preset.answer, time: now() }])
   }
 
@@ -61,7 +63,10 @@ export default function Chatbot({ onClose }: { onClose: () => void }) {
         </div>
         <button
           type="button"
-          onClick={onClose}
+          onClick={() => {
+            tapLight()
+            onClose()
+          }}
           aria-label={t('Close chat')}
           className="shrink-0 px-1.5 py-1 text-lg leading-none text-ink-faint transition-colors hover:text-ink"
         >
@@ -101,7 +106,10 @@ export default function Chatbot({ onClose }: { onClose: () => void }) {
             <button
               key={c}
               type="button"
-              onClick={() => setCategory(c)}
+              onClick={() => {
+                if (c !== category) tapLight()
+                setCategory(c)
+              }}
               className={`chip ${category === c ? 'chip-on' : ''}`}
             >
               {t(c)}

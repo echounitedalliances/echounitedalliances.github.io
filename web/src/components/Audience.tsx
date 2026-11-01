@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { MEMBER_ROUTES } from '../lib/apps'
 import { setAudience, useAudience, type Audience } from '../lib/audience'
+import { tapLight } from '../lib/haptics'
 import { useT } from '../lib/i18n'
 
 /**
@@ -28,7 +29,10 @@ export function AudienceSwitch() {
   const tab = (to: string, label: string, a: Audience, active: boolean) => (
     <Link
       to={to}
-      onClick={() => setAudience(a)}
+      onClick={() => {
+        setAudience(a)
+        if (!active) tapLight()
+      }}
       aria-current={active ? 'page' : undefined}
       className={`mono relative px-3 py-1.5 text-[10.5px] uppercase tracking-[0.14em] transition-colors ${
         active ? 'text-ink' : 'text-ink-faint hover:text-ink-dim'

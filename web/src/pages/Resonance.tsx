@@ -9,6 +9,7 @@ import AdminApplications from '../components/AdminApplications'
 import AdminMemberSites from '../components/AdminMemberSites'
 import type { AirportRow, Airline, Division } from '../lib/types'
 import { useSneakPeek } from '../lib/sneakPeek'
+import { tapError, tapSuccess } from '../lib/haptics'
 import { useT } from '../lib/i18n'
 
 /**
@@ -111,10 +112,12 @@ export default function Resonance() {
       .update(patch)
       .eq('resonant_id', resonant.resonant_id)
     if (!error) {
+      tapSuccess()
       await refreshResonant()
       setSaved(true)
       setTimeout(() => setSaved(false), 2500)
     } else {
+      tapError()
       setError(tr(error.message))
     }
   }

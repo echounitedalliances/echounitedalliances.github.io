@@ -35,6 +35,7 @@ import EchoAssistant from './components/EchoAssistant'
 import { SneakPeekProvider } from './lib/sneakPeek'
 import LangMenu from './components/LangMenu'
 import { I18nProvider, rich, useI18n, useT } from './lib/i18n'
+import { tapLight } from './lib/haptics'
 
 /**
  * BrowserRouter: every page has a real address (/d/aegis/tsuki_airways), so
@@ -317,7 +318,14 @@ function Shell({ children }: { children: React.ReactNode }) {
                 Discord
               </a>
             )}
-            <MenuButton open={open} onToggle={() => setOpen((o) => !o)} always={folded} />
+            <MenuButton
+              open={open}
+              onToggle={() => {
+                tapLight()
+                setOpen((o) => !o)
+              }}
+              always={folded}
+            />
           </div>
         </div>
 

@@ -4,6 +4,7 @@ import { useAuth } from '../lib/auth'
 import { useCarrierCount } from '../lib/carriers'
 import { num } from '../lib/format'
 import { useSneakPeek } from '../lib/sneakPeek'
+import { tapError, tapSuccess } from '../lib/haptics'
 import AdminApplyModal from './AdminApplyModal'
 import DiscordGlyph from './DiscordGlyph'
 import { rich, translate, useT } from '../lib/i18n'
@@ -143,6 +144,7 @@ export function SignIn() {
     // (e.g. the provider is not enabled yet) comes back to this component.
     if (error) {
       setDiscordBusy(false)
+      tapError()
       setError(explain(error))
     }
   }
@@ -174,11 +176,14 @@ export function SignIn() {
       setBusy(false)
       setPassword('')
       if (error) {
+        tapError()
         setError(
           error.code === 'invalid_credentials'
             ? t('That email and password do not match. If you joined before passwords existed you will not have one yet, so use Forgot password to set your first.')
             : explain(error),
         )
+      } else {
+        tapSuccess()
       }
       return
     }
@@ -187,11 +192,16 @@ export function SignIn() {
       const { error, needsConfirmation } = await signUp(email, password)
       setBusy(false)
       setPassword('')
-      if (error) setError(explain(error))
-      else if (needsConfirmation)
-        setNote(
-          t('Account created. Confirm {email} from the email we just sent, then sign in with your password.', { email }),
-        )
+      if (error) {
+        tapError()
+        setError(explain(error))
+      } else {
+        tapSuccess()
+        if (needsConfirmation)
+          setNote(
+            t('Account created. Confirm {email} from the email we just sent, then sign in with your password.', { email }),
+          )
+      }
       // With confirmation off there is already a session, and the page has
       // re-rendered as the account by the time this line runs.
       return
@@ -199,11 +209,15 @@ export function SignIn() {
 
     const { error } = await sendPasswordReset(email)
     setBusy(false)
-    if (error) setError(explain(error))
-    else
+    if (error) {
+      tapError()
+      setError(explain(error))
+    } else {
+      tapSuccess()
       setNote(
         t('If {email} has an account, a reset link is on its way. Opening it brings you back here to choose a new password.', { email }),
       )
+    }
   }
 
   const heading =
@@ -406,8 +420,11 @@ export function PasswordCard({ highlight = false }: { highlight?: boolean }) {
     setBusy(false)
     setPassword('')
     setConfirm('')
-    if (error) setError(explain(error))
-    else {
+    if (error) {
+      tapError()
+      setError(explain(error))
+    } else {
+      tapSuccess()
       setDone(true)
       setTimeout(() => setDone(false), 6000)
     }

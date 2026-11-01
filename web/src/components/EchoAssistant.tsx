@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Chatbot from './Chatbot'
+import { tapLight } from '../lib/haptics'
 import { useT } from '../lib/i18n'
 
 function ChatGlyph() {
@@ -33,7 +34,10 @@ export default function EchoAssistant() {
       <button
         type="button"
         className="chat-bubble"
-        onClick={() => setOpen((o) => !o)}
+        onClick={() => {
+          tapLight()
+          setOpen((o) => !o)
+        }}
         aria-label={open ? t('Close chat') : t('Open Echo Assistant chat')}
       >
         <ChatGlyph />

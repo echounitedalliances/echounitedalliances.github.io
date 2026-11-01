@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { LANGS, useI18n } from '../lib/i18n'
+import { tapLight } from '../lib/haptics'
 
 /**
  * The language picker: a small chip in the top bar showing the current
@@ -56,6 +57,7 @@ export default function LangMenu() {
                 lang={l.code}
                 className={l.code === lang ? 'is-on' : ''}
                 onClick={() => {
+                  if (l.code !== lang) tapLight()
                   setLang(l.code)
                   setOpen(false)
                 }}
