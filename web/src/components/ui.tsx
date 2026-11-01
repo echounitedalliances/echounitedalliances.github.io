@@ -3,6 +3,7 @@ import type { Airline } from '../lib/types'
 import { accentOf, flag, initials, num } from '../lib/format'
 import EchoMark from './EchoMark'
 import { useT } from '../lib/i18n'
+import { divisionPath } from '../lib/alliance'
 
 /** A carrier's stand-in identity: its code on its division's accent. */
 export function Mark({
@@ -66,7 +67,7 @@ export function DivisionChip({
 }) {
   return (
     <Link
-      to={`/d/${code}`}
+      to={divisionPath(code)}
       className="mono inline-flex items-center gap-1.5 border px-2 py-0.5 text-[10px] uppercase tracking-[0.12em] transition-colors"
       style={{ color: accent, borderColor: `${accent}55` }}
     >
@@ -85,7 +86,7 @@ export function AirlineCard({ a }: { a: Airline }) {
   const accent = accentOf(a)
   return (
     <Link
-      to={`/d/${a.division_code}/${a.airline_slug}`}
+      to={divisionPath(a.division_code, a.airline_slug)}
       className="panel lift group flex items-start gap-3 p-4"
       style={{ ['--card-accent' as string]: accent }}
     >

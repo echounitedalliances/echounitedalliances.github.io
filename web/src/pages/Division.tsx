@@ -7,15 +7,18 @@ import { isConfigured, supabase } from '../lib/supabase'
 import type { Airline, Arc, Division, NetworkNode } from '../lib/types'
 import { accentOf, num } from '../lib/format'
 import { useT } from '../lib/i18n'
+import { divisionFromUrl } from '../lib/alliance'
+import { divisionTitle, usePageTitle } from '../lib/pageMeta'
 
 export default function DivisionPage() {
-  const { code = '' } = useParams()
+  const code = divisionFromUrl(useParams().code ?? '')
   const t = useT()
   const [division, setDivision] = useState<Division | null>(null)
   const [members, setMembers] = useState<Airline[] | null>(null)
   const [arcs, setArcs] = useState<Arc[]>([])
   const [nodes, setNodes] = useState<NetworkNode[]>([])
   const [sort, setSort] = useState<'prominence' | 'name' | 'fleet'>('prominence')
+  usePageTitle(division && divisionTitle(division.division_name))
 
   useEffect(() => {
     if (!isConfigured) return

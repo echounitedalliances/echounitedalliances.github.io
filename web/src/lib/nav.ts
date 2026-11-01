@@ -20,11 +20,14 @@ export const NAV: NavItem[] = [
     // Seven items across was crowding the counters and the account chip off
     // the end of the bar. Activities is about the alliance rather than about
     // the network, so it belongs here rather than beside Airlines.
-    children: [{ to: '/activities', label: 'Our activities' }],
+    children: [
+      { to: '/activities', label: 'Our activities' },
+      // For a new player arriving from a search: what an alliance is, and how to get in.
+      { to: '/join', label: 'How to join' },
+    ],
   },
   { to: '/divisions', label: 'Divisions' },
   { to: '/airlines', label: 'Airlines' },
   { to: '/network', label: 'Network' },
   { to: '/news', label: 'News' },
-  { to: '/trips', label: 'My trips' },
 ]

@@ -1,16 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
-import { HashRouter, Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
+import { BrowserRouter, Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import About from './pages/About'
 import Activities from './pages/Activities'
+import Join from './pages/Join'
 import Divisions from './pages/Divisions'
 import DivisionPage from './pages/Division'
 import AirlinePage from './pages/Airline'
 import Directory from './pages/Directory'
 import AirportPage from './pages/Airport'
-import SearchResults from './pages/SearchResults'
-import Book from './pages/Book'
-import Trips from './pages/Trips'
 import NetworkPage from './pages/Network'
 import { MAINTENANCE_LOCK_UNTIL, SITE, discordConfigured } from './lib/site'
 import { useOnlineCount } from './lib/discordWidget'
@@ -20,7 +18,6 @@ import { useAirportCount, useCarrierCount, useDivisionCount } from './lib/carrie
 import Resonance from './pages/Resonance'
 import { Conduct, Privacy, Terms } from './pages/Policy'
 import News from './pages/News'
-import RoundTheWorld from './pages/RoundTheWorld'
 import Members from './pages/Members'
 import { LivePreview, MarketPreview } from './pages/AppPreview'
 import { AudienceSwitch } from './components/Audience'
@@ -31,6 +28,8 @@ import { NAV } from './lib/nav'
 import MobileMenu from './components/MobileMenu'
 import EchoMark from './components/EchoMark'
 import Welcome from './components/Welcome'
+import Announcement from './components/Announcement'
+import { useFixedPageTitle } from './lib/pageMeta'
 import MaintenanceLock from './components/MaintenanceLock'
 import EchoAssistant from './components/EchoAssistant'
 import { SneakPeekProvider } from './lib/sneakPeek'
@@ -38,9 +37,14 @@ import LangMenu from './components/LangMenu'
 import { I18nProvider, rich, useI18n, useT } from './lib/i18n'
 
 /**
- * HashRouter, not BrowserRouter. GitHub Pages has no server to rewrite unknown
- * paths back to index.html, so a deep link like /d/kyra/emirates would 404 on
- * refresh. The hash keeps every route client-side.
+ * BrowserRouter: every page has a real address (/d/aegis/tsuki_airways), so
+ * search engines and link previews can tell the pages apart -- behind a
+ * hash, all of them were one page. GitHub Pages has no server to send unknown
+ * paths back to the app, so the publish step writes an index.html for every
+ * page it knows (scripts/prerender.mjs), each with its own title and preview,
+ * and 404.html catches the rest (an airline newer than the last publish).
+ * Old #/ addresses are rewritten to real ones before the app starts; see the
+ * inline script in index.html.
  */
 
 
@@ -136,6 +140,7 @@ function Shell({ children }: { children: React.ReactNode }) {
   const airportCount = useAirportCount()
   const divisionCount = useDivisionCount()
   const { pathname } = useLocation()
+  useFixedPageTitle(pathname)
   // Following a link should close the menu, or the next page opens behind it.
   useEffect(() => setOpen(false), [pathname])
 
@@ -353,6 +358,9 @@ function Shell({ children }: { children: React.ReactNode }) {
                 airports: num(airportCount),
               })}
             </span>
+            <Link to="/join" className="hover:text-ink-dim">
+              {t('How to join')}
+            </Link>
             <Link to="/terms" className="hover:text-ink-dim">
               {t('Terms')}
             </Link>
@@ -425,24 +433,23 @@ export default function App() {
     <SneakPeekProvider>
     <AuthProvider>
       <Welcome />
-      <HashRouter>
+      <BrowserRouter>
         <Shell>
+        {/* News worth one interruption per visit, on whatever page it lands. */}
+        <Announcement />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/activities" element={<Activities />} />
+          <Route path="/join" element={<Join />} />
           <Route path="/divisions" element={<Divisions />} />
           <Route path="/d/:code" element={<DivisionPage />} />
           <Route path="/d/:code/:slug" element={<AirlinePage />} />
           <Route path="/airlines" element={<Directory />} />
           <Route path="/airports/:iata" element={<AirportPage />} />
           <Route path="/network" element={<NetworkPage />} />
-          <Route path="/search" element={<SearchResults />} />
-          <Route path="/book" element={<Book />} />
-          <Route path="/trips" element={<Trips />} />
           <Route path="/resonance" element={<Resonance />} />
           <Route path="/news" element={<News />} />
-          <Route path="/rtw" element={<RoundTheWorld />} />
           <Route path="/members" element={<Members />} />
           <Route path="/live" element={<LivePreview />} />
           <Route path="/market" element={<MarketPreview />} />
@@ -459,7 +466,7 @@ export default function App() {
           />
         </Routes>
         </Shell>
-      </HashRouter>
+      </BrowserRouter>
     </AuthProvider>
     </SneakPeekProvider>
     </I18nProvider>

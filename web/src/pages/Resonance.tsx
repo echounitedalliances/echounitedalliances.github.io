@@ -7,10 +7,7 @@ import { PasswordCard, SignIn } from '../components/ResonanceAuth'
 import AdminApplyModal from '../components/AdminApplyModal'
 import AdminApplications from '../components/AdminApplications'
 import AdminMemberSites from '../components/AdminMemberSites'
-import AccountTrips from '../components/AccountTrips'
 import type { AirportRow, Airline, Division } from '../lib/types'
-import { num } from '../lib/format'
-import { useCarrierCount } from '../lib/carriers'
 import { useSneakPeek } from '../lib/sneakPeek'
 import { useT } from '../lib/i18n'
 
@@ -23,7 +20,6 @@ import { useT } from '../lib/i18n'
  * components/ResonanceAuth; the site only ever holds the session.
  */
 export default function Resonance() {
-  const carrierCount = useCarrierCount()
   const { ready, user, resonant, recovering, endRecovery, signOut, refreshResonant } = useAuth()
   const { unlocked: claimAirlineUnlocked } = useSneakPeek()
   const [error, setError] = useState<string | null>(null)
@@ -135,7 +131,7 @@ export default function Resonance() {
           {tr('The alliance, remembered')}
         </h1>
         <p className="mt-4 max-w-[58ch] text-lg text-ink-dim">
-          {tr('A Resonance account is for Echo members -- sign in with the Discord account you use on the EUA server, and your trips stay together across all {n} carriers. You do not need one to search or book; it is the alliance’s own account, not a gate in front of booking.', { n: num(carrierCount) })}
+          {tr('A Resonance account remembers your home division and airport, and is how the alliance’s admins sign in to look after the site. It is optional: everything on the site is open without one.')}
         </p>
 
         <SignIn />
@@ -330,8 +326,6 @@ export default function Resonance() {
             </section>
           )}
 
-          {/* Every booking kept on this account, and managing them. */}
-          <AccountTrips />
         </>
       )}
 

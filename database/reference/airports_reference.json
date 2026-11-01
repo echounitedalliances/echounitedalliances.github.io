@@ -3509,6 +3509,16 @@
   "tz": "Europe/Rome",
   "tz_source": "dataset"
  },
+ "CJA": {
+  "city": "Cajamarca",
+  "country": "PE",
+  "iata": "CJA",
+  "lat": -7.13918,
+  "lon": -78.489403,
+  "name": "Mayor General FAP Armando Revoredo Iglesias Airport",
+  "tz": "America/Lima",
+  "tz_source": "dataset"
+ },
  "CJB": {
   "city": "Coimbatore",
   "country": "IN",
@@ -4948,6 +4958,16 @@
   "name": "Dresden Airport",
   "tz": "Europe/Berlin",
   "tz_source": "dataset"
+ },
+ "DRV": {
+  "city": "Baa Atoll",
+  "country": "MV",
+  "iata": "DRV",
+  "lat": 5.1561,
+  "lon": 73.1302,
+  "name": "Dharavandhoo Airport",
+  "tz": "Indian/Maldives",
+  "tz_source": "country_default"
  },
  "DRW": {
   "city": "Darwin",
@@ -6477,6 +6497,16 @@
   "lon": -108.529387,
   "name": "Grand Junction Regional Airport",
   "tz": "America/Denver",
+  "tz_source": "dataset"
+ },
+ "GKK": {
+  "city": "Huvadhu Atoll",
+  "country": "MV",
+  "iata": "GKK",
+  "lat": 0.7324,
+  "lon": 73.4336,
+  "name": "Kooddoo Airport",
+  "tz": "Indian/Maldives",
   "tz_source": "dataset"
  },
  "GLA": {
@@ -8709,6 +8739,16 @@
   "tz": "America/Denver",
   "tz_source": "dataset"
  },
+ "JAE": {
+  "city": "Jaén",
+  "country": "PE",
+  "iata": "JAE",
+  "lat": -5.59248,
+  "lon": -78.774002,
+  "name": "Shumba Airport",
+  "tz": "America/Lima",
+  "tz_source": "dataset"
+ },
  "JAF": {
   "city": "Jaffna",
   "country": "LK",
@@ -9459,6 +9499,16 @@
   "tz": "Asia/Makassar",
   "tz_source": "dataset"
  },
+ "KDM": {
+  "city": "Huvadhu Atoll",
+  "country": "MV",
+  "iata": "KDM",
+  "lat": 0.488131,
+  "lon": 72.996902,
+  "name": "Kaadedhdhoo Airport",
+  "tz": "Indian/Maldives",
+  "tz_source": "dataset"
+ },
  "KDU": {
   "city": "Skardu",
   "country": "PK",
@@ -9617,6 +9667,16 @@
   "lon": 115.90271,
   "name": "Nanchang Changbei International Airport",
   "tz": "Asia/Shanghai",
+  "tz_source": "dataset"
+ },
+ "KHS": {
+  "city": "Khasab",
+  "country": "OM",
+  "iata": "KHS",
+  "lat": 26.171,
+  "lon": 56.240601,
+  "name": "Khasab Airport",
+  "tz": "Asia/Muscat",
   "tz_source": "dataset"
  },
  "KHV": {
@@ -11087,6 +11147,16 @@
   "lon": 12.6181,
   "name": "Lampedusa Airport",
   "tz": "Europe/Rome",
+  "tz_source": "dataset"
+ },
+ "LMV": {
+  "city": "Naifaru",
+  "country": "MV",
+  "iata": "LMV",
+  "lat": 5.457545,
+  "lon": 73.370261,
+  "name": "Madivaru Airport",
+  "tz": "Indian/Maldives",
   "tz_source": "dataset"
  },
  "LNJ": {
@@ -15609,16 +15679,6 @@
   "tz": "Asia/Ho_Chi_Minh",
   "tz_source": "dataset"
  },
- "PZB": {
-  "city": "Pietermaritzburg",
-  "country": "ZA",
-  "iata": "PZB",
-  "lat": -29.649000167799997,
-  "lon": 30.3987007141,
-  "name": "Pietermaritzburg Airport",
-  "tz": "Africa/Johannesburg",
-  "tz_source": "dataset"
- },
  "PZI": {
   "city": "Panzhihua (Renhe)",
   "country": "CN",
@@ -15726,6 +15786,16 @@
   "lat": 30.906600952148438,
   "lon": 41.13819885253906,
   "name": "Arar Domestic Airport",
+  "tz": "Asia/Riyadh",
+  "tz_source": "dataset"
+ },
+ "RAH": {
+  "city": "Rafha",
+  "country": "SA",
+  "iata": "RAH",
+  "lat": 29.626399993896484,
+  "lon": 43.4906005859375,
+  "name": "Rafha Domestic Airport",
   "tz": "Asia/Riyadh",
   "tz_source": "dataset"
  },

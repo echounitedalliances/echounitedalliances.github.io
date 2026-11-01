@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { AIRLINE_OF_THE_WEEK, AIRLINE_OF_THE_WEEK_LOCK_UNTIL } from '../../lib/alliance'
+import { AIRLINE_OF_THE_WEEK, AIRLINE_OF_THE_WEEK_LOCK_UNTIL, divisionPath } from '../../lib/alliance'
 import { isConfigured, supabase } from '../../lib/supabase'
 import { flag, num, countryName } from '../../lib/format'
 import { useT } from '../../lib/i18n'
@@ -161,7 +161,7 @@ export function AirlineOfTheWeekCard() {
           </dl>
         )}
         {row && (
-          <Link to={`/d/${row.division_code}/${row.airline_slug}`} className="btn btn-ghost">
+          <Link to={divisionPath(row.division_code, row.airline_slug)} className="btn btn-ghost">
             {t('Visit {airline}', { airline: row.airline_name })} →
           </Link>
         )}
@@ -283,7 +283,7 @@ export default function AirlineOfTheWeek() {
             </dl>
           )}
           {row && (
-            <Link to={`/d/${row.division_code}/${row.airline_slug}`} className="btn btn-ghost">
+            <Link to={divisionPath(row.division_code, row.airline_slug)} className="btn btn-ghost">
               {t('Fly {airline}', { airline: row.airline_name })} →
             </Link>
           )}

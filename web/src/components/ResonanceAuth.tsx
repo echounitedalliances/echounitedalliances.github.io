@@ -233,7 +233,7 @@ export function SignIn() {
 
         {mode === 'signup' && (
           <p className="-mt-2 text-sm text-ink-dim">
-            {t('One account across all {n} carriers. You can also book without one.', { n: num(carrierCount) })}
+            {t('One account across all {n} carriers. Everything on the site is open without one.', { n: num(carrierCount) })}
           </p>
         )}
         {mode === 'forgot' && (
@@ -365,16 +365,6 @@ export function SignIn() {
           </p>
         )}
       </form>
-
-      <p className="mono mt-6 text-[11px] text-ink-faint">
-        {rich(t('Already booked without an account? Retrieve it with your reference on {link}.'), {
-          link: (
-            <Link to="/trips" className="text-cyan">
-              {t('manage booking')}
-            </Link>
-          ),
-        })}
-      </p>
 
       {showAdminModal && (
         <AdminApplyModal

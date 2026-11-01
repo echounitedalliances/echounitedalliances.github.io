@@ -79,10 +79,7 @@ $calls = @(
     @{ name = 'search_places';      sql = "select count(*) from public.search_places('paris', 5)";                min = 1 },
     @{ name = 'search_airlines';    sql = "select count(*) from public.search_airlines(null, null, null, 5, 0)";  min = 1 },
     @{ name = 'division_arcs';      sql = "select count(*) from public.division_arcs('kyra', 50)";                min = 1 },
-    @{ name = 'airline_countries';  sql = "select count(*) from public.airline_countries(null, null)";            min = 1 },
-    @{ name = 'search_itineraries'; sql = "select count(*) from public.search_itineraries('SGN','SIN', current_date + 7, 'ECONOMY', 1, 0, 60)"; min = 1 },
-    @{ name = 'fare_calendar';      sql = "select count(*) from public.fare_calendar('SGN','SIN', current_date + 7, 3, 'ECONOMY', 1)"; min = 1 },
-    @{ name = 'rtw_quote';          sql = "select count(*) from public.rtw_quote(array['LHR','DXB','SIN','SYD','LAX'], 'ECONOMY')"; min = 1 }
+    @{ name = 'airline_countries';  sql = "select count(*) from public.airline_countries(null, null)";            min = 1 }
 )
 
 # Returns the last line psql printed, or $null if the query failed at all.
@@ -223,11 +220,7 @@ foreach ($d in @(
     @{ name = 'moving a carrier, signed in but not admin'; sql = "set role authenticated; select count(*) from public.admin_move_airline('00000000-0000-0000-0000-000000000000'::uuid, 'kyra')" },
     @{ name = 'the network rebuild, signed in';           sql = "set role authenticated; select public.echo_refresh_division_network()" },
     @{ name = 'the member-site editor, signed in but not admin'; sql = "set role authenticated; select count(*) from public.admin_member_sites()" },
-    @{ name = 'relinking a carrier''s website, signed in but not admin'; sql = "set role authenticated; select count(*) from public.admin_set_airline_site('00000000-0000-0000-0000-000000000000'::uuid, null)" },
-    # The account functions act on the caller's own account and nothing else.
-    # With no account behind the session they must refuse outright.
-    @{ name = 'cancelling a booking with no account'; sql = "set role authenticated; select count(*) from public.cancel_my_booking('00000000-0000-0000-0000-000000000000'::uuid)" },
-    @{ name = 'claiming a booking with no account'; sql = "set role authenticated; select count(*) from public.add_booking_to_account('AAAAAA', 'x')" }
+    @{ name = 'relinking a carrier''s website, signed in but not admin'; sql = "set role authenticated; select count(*) from public.admin_set_airline_site('00000000-0000-0000-0000-000000000000'::uuid, null)" }
 )) {
     $n = Invoke-Scalar $d.sql
     if ($null -ne $n) {
@@ -247,8 +240,7 @@ select count(*) from pg_proc p join pg_namespace n on n.oid = p.pronamespace
                      'admin_applications_list','decide_admin_application',
                      'admin_move_airline','admin_update_airline','echo_refresh_division_network',
                      'admin_member_sites','admin_save_member_site','admin_set_airline_site',
-                     'admin_delete_member_site',
-                     'add_booking_to_account','remove_booking_from_account','cancel_my_booking')
+                     'admin_delete_member_site')
    and has_function_privilege('anon', p.oid, 'execute')
 "@
 if ($null -eq $anonExec -or [int64]$anonExec -ne 0) {

@@ -30,7 +30,10 @@ REPORT = os.path.join(ROOT, "database", "reports", "build_report.md")
 # Fixed order and two-letter tags. "Elion" and "Elysium" both start "EL", so the
 # tags are assigned by hand rather than derived.
 DIVISIONS = [
-    ("proxima", "Proxima", "PX"),
+    # Renamed Lior on 30 October 2026. The code stays "proxima" -- it is the
+    # URL, the roster folder and part of every carrier code -- and only the
+    # name people read changed.
+    ("proxima", "Lior",    "PX"),
     ("aegis",   "Aegis",   "AG"),
     ("aura",    "Aura",    "AU"),
     ("elion",   "Elion",   "EN"),
@@ -43,12 +46,14 @@ DIVISIONS = [
     # shared carrier code. EO keeps the rule 2_merge.sql relies on -- every
     # tag holds a letter that is not a hex digit (O).
     ("eos",     "Eos",     "EO"),
+    # Opened 30 October 2026, the tenth. UZ holds non-hex letters (U, Z).
+    ("uzuri",   "Uzuri",   "UZ"),
 ]
 # The order the divisions are LISTED in, which is group policy and has nothing
 # to do with the order above -- that one is the scrape order, and reordering it
 # would change which airline wins a shared carrier code in resolve_identity().
 # Kept in step with database/sql/16_division_policy.sql; change both together.
-DISPLAY_ORDER = ["kyra", "aegis", "elysium", "proxima", "rhea", "vilis", "elion", "aura", "eos"]
+DISPLAY_ORDER = ["kyra", "aegis", "elysium", "proxima", "rhea", "vilis", "elion", "aura", "eos", "uzuri"]
 assert sorted(DISPLAY_ORDER) == sorted(d for d, _, _ in DIVISIONS),     "DISPLAY_ORDER and DIVISIONS name different divisions"
 
 DIV_TAG = {d: tag for d, _, tag in DIVISIONS}

@@ -27,7 +27,8 @@ update public.divisions d
         ('vilis',   6),
         ('elion',   7),
         ('aura',    8),
-        ('eos',     9)    -- opened 2 October 2026
+        ('eos',     9),   -- opened 2 October 2026
+        ('uzuri',  10)    -- opened 30 October 2026
        ) as v(code, rank)
  where d.division_code = v.code;
 

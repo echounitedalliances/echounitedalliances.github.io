@@ -1,12 +1,17 @@
 {
+  "id": "/",
   "name": "Echo United Alliances",
   "short_name": "EUA",
+  "description": "Every carrier, route and departure in Echo United Alliances.",
   "start_url": "/",
-  "display": "browser",
+  "scope": "/",
+  "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#050505",
   "icons": [
-    { "src": "/brand/echo-icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/brand/echo-icon-512.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "/brand/echo-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/brand/echo-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/brand/echo-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/brand/echo-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }

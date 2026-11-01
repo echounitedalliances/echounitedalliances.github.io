@@ -107,23 +107,19 @@ create temp table departing_aircraft on commit drop as
 select p.aircraft_id from public.aircraft p
  where not exists (select 1 from echo_stage.aircraft s where s.aircraft_id = p.aircraft_id);
 
+-- Until 30 October 2026 a departing flight, aircraft or airline that a
+-- booking still named was kept, retired, so the booking kept reading. Flight
+-- booking was withdrawn that day (45_drop_booking_and_search.sql), so nothing
+-- is held back any more: the three tables stay, empty, so everything below
+-- that reads them is unchanged.
 create temp table kept_flights on commit drop as
-select distinct bs.flight_id from public.booking_segments bs
-  join departing_flights d using (flight_id);
+select flight_id from departing_flights where false;
 
 create temp table kept_aircraft on commit drop as
-select distinct bs.aircraft_id from public.booking_segments bs
-  join departing_aircraft d using (aircraft_id);
+select aircraft_id from departing_aircraft where false;
 
--- A departing airline is kept if a booking names it, or owns a flight or an
--- aircraft that is being kept -- deleting it would cascade to those.
 create temp table kept_airlines on commit drop as
-select distinct x.uid from (
-    select bs.operating_airline_uid as uid from public.booking_segments bs
-    union select f.airline_uid from public.flights  f join kept_flights  k using (flight_id)
-    union select a.airline_uid from public.aircraft a join kept_aircraft k using (aircraft_id)
-) x
- where x.uid in (select uid from departing_airlines);
+select uid from departing_airlines where false;
 
 -- Where each carrier sat before, for its colour below.
 create temp table prior_airlines on commit drop as
@@ -174,7 +170,7 @@ on conflict (aircraft_model) do update set manufacturer = excluded.manufacturer;
 -- ---------------------------------------------------------------------
 --  The value they move to has to satisfy carrier_code's own check,
 --  ^[A-Z0-9]{2,6}$, so it cannot simply be marked with a symbol. It does not
---  need to be: every division tag (PX AG AU EN EY KY VH VS EO) contains a letter
+--  need to be: every division tag (PX AG AU EN EY KY VH VS EO UZ) contains a letter
 --  that is not a hex digit, and a real code of four or more characters always
 --  has its tag in positions 3-4. So a code with DIGITS there is one the
 --  assigner can never produce, and two series of them are free to use:
@@ -455,8 +451,6 @@ union all select 'aircraft now (rows that fly)',   count(*) from public.aircraft
 union all select 'idle aircraft now (counted)',    coalesce(sum(idle_count), 0) from public.aircraft_idle
 union all select 'routes opened, no flights',      count(*) from public.airline_unflown_routes
 union all select 'resonants (must be unchanged)',  count(*) from public.resonants
-union all select 'bookings (must be unchanged)',   count(*) from public.bookings
-union all select 'booking_segments (must be unchanged)', count(*) from public.booking_segments
 -- Admins set these links now, so there is no fixed number to expect. It may
 -- drop only by carriers that left above: deleting one takes its link with it.
 union all select 'member-site links (drop only if a linked carrier left)', count(*) from public.member_site_airlines;

@@ -14,6 +14,7 @@ import { Loading } from './ui'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../lib/auth'
 import type { AdminMemberSite, Airline } from '../lib/types'
+import { divisionPath } from '../lib/alliance'
 
 /**
  * Every member website in one list, for admins.
@@ -233,7 +234,7 @@ export default function AdminMemberSites() {
                         <span key={c.uid}>
                           {i > 0 && ', '}
                           <Link
-                            to={`/d/${c.division_code}/${c.airline_slug}`}
+                            to={divisionPath(c.division_code, c.airline_slug)}
                             className="text-ink-dim underline-offset-2 hover:underline"
                           >
                             {carrierLabel(c)}

@@ -274,14 +274,15 @@ h1.display .serif, h2.display .serif { color: var(--color-heading-serif); }
    both together. */
 :root {
   --division-kyra:    #7B35FF;
-  --division-aegis:   #D0FF4D;
+  --division-aegis:   #FF456A; /* coral since 30 October 2026; lime before */
   --division-elysium: #E46EFF;
-  --division-proxima: #81FBFE;
+  --division-proxima: #81FBFE; /* Lior since 30 October 2026; code unchanged */
   --division-rhea:    #5DFE95;
   --division-vilis:   #FF7E42;
   --division-elion:   #7EA0F4;
   --division-aura:    #EF9D9E;
   --division-eos:     #FDECD8;
+  --division-uzuri:   #FAE246;
 }
 
 /* The Echo wing ------------------------------------------------------
@@ -321,12 +322,13 @@ h1.display .serif, h2.display .serif { color: var(--color-heading-serif); }
     #fff, var(--division-elion),
     #fff, var(--division-aura),
     #fff, var(--division-eos),
+    #fff, var(--division-uzuri),
     #fff
   );
-  /* Ten widths and 3.4s since Eos made nine colours: the same band per
+  /* Eleven widths and 3.8s since Uzuri made ten colours: the same band per
      mark-width, passing at the same pace, as nine widths over 3s had. */
-  background-size: 1000% 100%;
-  animation: echo-loader-sweep 3.4s linear infinite;
+  background-size: 1100% 100%;
+  animation: echo-loader-sweep 3.8s linear infinite;
 }
 
 /* The wing is a mask over the gradient; the text is the gradient clipped to
@@ -665,7 +667,11 @@ h1.display .serif, h2.display .serif { color: var(--color-heading-serif); }
 /* Division tiles ----------------------------------------------------
    Black until pointed at, then flooded with the division's own colour a
    pixel at a time (components/DivisionTile.tsx). Home page and /divisions. */
-.div-grid { margin-top: clamp(32px, 5vw, 56px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--color-edge); border: 1px solid var(--color-edge); }
+/* The rules between tiles are each tile's own outline, not the grid's
+   background showing through the gaps -- so an unfilled slot in the last
+   row stays black instead of reading as a grey block. */
+.div-grid { margin-top: clamp(32px, 5vw, 56px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; padding: 1px; }
+.div-grid > .div-tile { outline: 1px solid var(--color-edge); }
 .div-tile {
   --tile-ink: var(--c);
   position: relative; overflow: hidden; isolation: isolate;
@@ -943,3 +949,17 @@ html[lang="vi"] .home-offer-big, html[lang="vi"] .aotw-name { line-height: 1.15 
 .leader-mail.is-off, .leader-mail.is-off:hover {
   opacity: .32; cursor: not-allowed; background: transparent; color: inherit; border-color: currentColor;
 }
+
+/* The home page's one-off welcome (components/Announcement.tsx), in the
+   colour of whatever it announces. */
+.announce-band { display: flex; align-items: center; gap: 12px; margin: -2px 0 14px; color: var(--c); }
+.announce-band .eyebrow { color: var(--c); }
+.announce-facts { margin: 18px 0 0; display: flex; flex-wrap: wrap; gap: 14px 28px; border-top: 1px solid var(--color-edge); padding-top: 14px; }
+.announce-facts dt { color: var(--color-ink-faint); }
+.announce-facts dd { margin: 4px 0 0; font: 400 22px/1 var(--font-display); color: var(--color-ink); }
+.announce-cta { background: var(--c); color: #050505; border-color: var(--c); }
+.announce-cta:hover { box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 30%, transparent); }
+#announcement-title .serif { color: var(--c, #FAE246); }
+
+/* The Airline of the Week pop-up shows the livery above its blurb. */
+.announce-livery { display: block; width: 100%; height: auto; margin: 0 0 16px; }

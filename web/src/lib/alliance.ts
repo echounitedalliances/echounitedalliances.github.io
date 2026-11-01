@@ -11,7 +11,7 @@
  * Leaders are recorded by DISCORD identity, not by airline. Several of them
  * own more than one carrier, so an airline is not a stable way to name a
  * person; the Discord handle is how the group actually knows them. The
- * database does carry a leader_uid, but only Proxima's roster export ever
+ * database does carry a leader_uid, but only Lior's (then Proxima's) roster export ever
  * filled it in, and it points at a carrier rather than a person.
  *
  * division_code keys into the divisions table, so names, ordering and accent
@@ -33,7 +33,8 @@ export type Leader = {
  * One row per leader, not per division, because the two do not match one to
  * one in either direction: a division can be led by more than one person, and
  * one person can lead more than one division -- Ahnaf currently leads
- * Aura, Elion and Proxima (Proxima since October 2026, after Rust). That is
+ * Aura, Elion, Lior (since October 2026, after Rust, when it was still called
+ * Proxima) and Uzuri, the tenth division, opened 30 October 2026. That is
  * why nothing here counts the leaders and calls it the number of divisions;
  * the About page groups by division_code instead.
  */
@@ -41,12 +42,15 @@ export const LEADERS: Leader[] = [
   { division_code: 'kyra', name: 'Naofum', discord: 'w4leste' },
   { division_code: 'aegis', name: 'DCC', discord: 'creativator_2001' },
   { division_code: 'elysium', name: 'Top G', discord: 'jet_gooning' },
+  // Lior. Its code is still 'proxima': renamed 30 October 2026, the code is
+  // the URL and the roster folder, so only the displayed name changed.
   { division_code: 'proxima', name: 'Ahnaf', discord: '_ahnafabrar_' },
   { division_code: 'rhea', name: 'Reiner', discord: '_erwinsmith' },
   { division_code: 'vilis', name: 'Yukai', discord: 'ykw_1009' },
   { division_code: 'elion', name: 'Ahnaf', discord: '_ahnafabrar_' },
   { division_code: 'aura', name: 'Ahnaf', discord: '_ahnafabrar_' },
   { division_code: 'eos', name: 'Falcco', discord: '.fyxd' },
+  { division_code: 'uzuri', name: 'Ahnaf', discord: '_ahnafabrar_' },
 ]
 
 /**
@@ -62,13 +66,35 @@ export const LEADER_EMAILS: Record<string, string> = {
   w4leste: '', // Naofum, Kyra
   creativator_2001: '', // DCC, Aegis
   jet_gooning: '', // Top G, Elysium
-  _ahnafabrar_: '', // Ahnaf, Proxima, Elion and Aura
+  _ahnafabrar_: '', // Ahnaf, Lior, Elion, Aura and Uzuri
   _erwinsmith: '', // Reiner, Rhea
   ykw_1009: '', // Yukai, Vilis
   '.fyxd': '', // Falcco, Eos
 }
 
 export const SLOGAN = 'Home of the Excellence'
+
+/**
+ * Divisions renamed in the game after their code was fixed. The database
+ * keeps the old code (Lior is still "proxima" there), but the address
+ * follows the name: links go to /d/lior, and /d/proxima keeps working for
+ * anyone who saved it.
+ */
+const DIVISION_URL: Record<string, string> = { proxima: 'lior' }
+const DIVISION_FROM_URL: Record<string, string> = Object.fromEntries(
+  Object.entries(DIVISION_URL).map(([code, url]) => [url, code]),
+)
+
+/** The page for a division, or for one of its airlines. */
+export function divisionPath(code: string, slug?: string) {
+  const base = `/d/${DIVISION_URL[code] ?? code}`
+  return slug ? `${base}/${slug}` : base
+}
+
+/** The division code behind a /d/<name> address. */
+export function divisionFromUrl(name: string) {
+  return DIVISION_FROM_URL[name] ?? name
+}
 
 /**
  * Airline of the Week, on the home page.
@@ -103,20 +129,16 @@ export const AIRLINE_OF_THE_WEEK: {
   blurb: string
   liveries: Livery[]
 } = {
-  division_code: 'aura',
-  // Best guess from the site's own slugify rule (lowercase, non-alphanumerics
-  // to underscores): "FlyNarita Express" -> "flynarita_express". Not
-  // verified against the live database -- if it is wrong, this segment will
-  // show the teaser's countdown reach zero and then go blank rather than
-  // erroring, since useAirlineOfTheWeek() just gets no row back.
-  airline_slug: 'flynarita_express',
+  // Aegis's Tsuki Airways (TKAG), not the Uzuri carrier of the same name
+  // (TKUZ): same name and slug, so the division is what picks it.
+  division_code: 'aegis',
+  airline_slug: 'tsuki_airways',
   blurb:
-    'Flying the Japanese flag from Narita, FlyNarita Express (FNE) is one of the carriers building Echo Aura, with a 310-aircraft fleet spanning the A321neo and the A330-900.',
+    'Flying the Japanese flag from Haneda and Kansai, Tsuki Airways (TKAG) is Aegis’s long-haul specialist: 121 aircraft, 102 of them widebodies, led by 68 Boeing 787-9s across 92 routes to 35 countries.',
   liveries: [
     {
-      src: 'brand/liveries/flynarita-express-a321neo.webp',
-      aircraft: 'Airbus A321neo',
-      registration: 'JAA00N',
+      src: 'brand/liveries/tsuki-airways-787.webp',
+      aircraft: 'Boeing 787 Dreamliner',
     },
   ],
 }

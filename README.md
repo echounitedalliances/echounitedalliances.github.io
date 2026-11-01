@@ -1,7 +1,7 @@
 # Echo United Alliances
 
 The website for Echo United Alliances, a virtual airline group in
-**The Airline Simulator** — nine divisions, 639 member carriers, one network.
+**The Airline Simulator** — ten divisions, 700-odd member carriers, one network.
 
 Live at **https://echoalliances.com**
 Check out our 2nd testing site **https://lacnka.github.io/echotesting/**
@@ -25,9 +25,10 @@ on Discord — the page says so once rather than in every section.
 **Home.** The headline figures, then a live departure board, then the nine
 divisions, the network drawn flat, and a carrier spotlight.
 
-**Divisions** (`/divisions`). Nine cards, three across, in group order: Kyra,
-Aegis, Elysium, Proxima, Rhea, Vilis, Elion, Aura, Eos. Kyra is badged
-*Main division* and Elysium *Realism alliance*. Each opens a division page with
+**Divisions** (`/divisions`). Ten cards, three across, in group order: Kyra,
+Aegis, Elysium, Lior (code `proxima`, renamed 30 October 2026), Rhea, Vilis,
+Elion, Aura, Eos and Uzuri, which takes the last row to itself. Kyra is badged
+*Main Alliance* and Elysium *Realism Alliance*. Each opens a division page with
 its roster — sortable by prominence, name or fleet size — and a map of what the
 division flies.
 
@@ -58,39 +59,20 @@ It is DOM and CSS, not WebGL: the flaps animate while they settle and then stop
 completely. This replaced a spinning globe that never fully loaded and made a
 laptop stutter.
 
-### Booking, across every carrier at once
+### Booking (withdrawn)
 
-**Search.** Origin and destination by typeahead over 2,180 airports, a date, one
-of four cabins, one to six travellers, and a stop limit.
-
-**One query, every airline.** `search_itineraries()` returns nonstop through
-two-stop journeys across the whole group, so a trip no single member flies end
-to end is still one search, one booking and one reference. Typically 44–73 ms.
-Results sort by price, duration, stops, departure or arrival — arrival
-reckons with the date, so a flight landing after midnight sorts after one
-landing at 22:55 the same evening rather than first.
-
-**Real inventory.** Seats are tracked per departure and cabin, against a
-deliberately gentle background demand simulation — enough that a
-341,710-flight network does not look untouched, never enough to sell out. A
-real booking always takes simulated seats back before it refuses anyone.
-
-**A real PNR.** Passenger details, a mock checkout, and a reference that works.
-The whole reservation goes through one security-definer function, because the
-three writes it makes have to succeed together.
-
-**Manage a booking** (`/trips`) with the PNR and a passenger surname — no
-account, the way every airline does it — and cancel it from there. On a
-Resonance account the trips list sorts by first departure, last arrival, or
-booking date.
+Until 30 October 2026 the site searched and booked trips across every carrier
+at once, with seat inventory and a PNR. It was withdrawn that day to keep the
+database inside the free plan as the alliance grew: the network, the departure
+board, timetables, maps and every airline and airport page remain, and
+`database/sql/45_drop_booking_and_search.sql` records what was taken out.
 
 ### Resonance
 
 Sign in with an email and password, held by Supabase Auth and never by this
-project. Forgotten passwords are reset over email — the one place email still
-appears, and the only way back into an account nobody can sign into. A Resonant
-gets a profile — display name, home airport, home division — and every trip on
-the account in one place. Booking without an account still works.
+project. A Resonant can save a display name, home division and home airport;
+admins sign in the same way to look after the site. Nothing on the site needs
+an account.
 
 ### Underneath
 

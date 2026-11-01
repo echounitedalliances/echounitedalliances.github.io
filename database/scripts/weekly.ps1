@@ -94,7 +94,7 @@ Use-EchoCredentials
 
 # Eos opened 2 October 2026. A new division also needs a migration of its own
 # (36_division_eos.sql was the first), or the merge refuses the scrape.
-$divisions = @('aegis', 'aura', 'elion', 'elysium', 'eos', 'kyra', 'proxima', 'rhea', 'vilis')
+$divisions = @('aegis', 'aura', 'elion', 'elysium', 'eos', 'kyra', 'proxima', 'rhea', 'uzuri', 'vilis')
 
 # Windows PowerShell turns anything a native program writes to stderr into a
 # terminating error under ErrorActionPreference Stop -- and the scraper writes
@@ -201,5 +201,10 @@ if ($LASTEXITCODE -ne 0) { throw "The data is loaded but verification failed -- 
 Write-Host ""
 Write-Host "Done. To publish the site with this week's figures:" -ForegroundColor Green
 Write-Host "    npm --prefix web run publish"
-Write-Host "    git add index.html 404.html assets web/index.html database/reference/carrier_codes.json"
+# Publishing also rewrites the page for every division, airline and airport
+# (web/scripts/prerender.mjs): -A on d/ and airports/ stages the pages of
+# carriers and airports that have left, and the list adds the new ones.
+Write-Host "    git add -A index.html 404.html assets brand sitemap.xml robots.txt published-pages.txt d airports"
+Write-Host "    git add --pathspec-from-file=published-pages.txt"
+Write-Host "    git add web/index.html database/reference/carrier_codes.json"
 Write-Host "    git commit -m 'Weekly scrape'   and push"
