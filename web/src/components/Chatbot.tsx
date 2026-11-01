@@ -109,7 +109,7 @@ export default function Chatbot({ onClose }: { onClose: () => void }) {
           ))}
         </div>
         <p className="eyebrow mb-1.5 mt-3 text-ink-faint">{t('Questions')}</p>
-        <div className="flex max-h-28 flex-col gap-1.5 overflow-y-auto">
+        <div className="flex max-h-40 flex-col gap-1.5 overflow-y-auto">
           {visible.map((p) => (
             <button
               key={p.id}
