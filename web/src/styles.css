@@ -803,8 +803,8 @@ h1.display .serif, h2.display .serif { color: var(--color-heading-serif); }
   right: max(18px, calc(env(safe-area-inset-right, 0px) + 12px));
   bottom: calc(132px + env(safe-area-inset-bottom, 0px));
   z-index: 60;
-  width: min(380px, calc(100vw - 32px));
-  height: min(600px, 72vh);
+  width: min(440px, calc(100vw - 32px));
+  height: min(680px, 78vh);
   display: flex;
   flex-direction: column;
   background: var(--color-surface);
