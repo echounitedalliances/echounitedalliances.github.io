@@ -16,6 +16,8 @@ import { useSiteVisitorCount } from './lib/presence'
 import { num } from './lib/format'
 import { useAirportCount, useCarrierCount, useDivisionCount } from './lib/carriers'
 import Resonance from './pages/Resonance'
+import Support from './pages/Support'
+import AdminDashboard from './pages/AdminDashboard'
 import { Conduct, Privacy, Terms } from './pages/Policy'
 import News from './pages/News'
 import Members from './pages/Members'
@@ -378,6 +380,9 @@ function Shell({ children }: { children: React.ReactNode }) {
             <Link to="/privacy" className="hover:text-ink-dim">
               {t('Privacy')}
             </Link>
+            <Link to="/support" className="hover:text-ink-dim">
+              {t('Support')}
+            </Link>
             {discordConfigured && (
               <a
                 href={SITE.discordInvite}
@@ -457,6 +462,8 @@ export default function App() {
           <Route path="/airports/:iata" element={<AirportPage />} />
           <Route path="/network" element={<NetworkPage />} />
           <Route path="/resonance" element={<Resonance />} />
+          <Route path="/support" element={<Support />} />
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/news" element={<News />} />
           <Route path="/members" element={<Members />} />
           <Route path="/live" element={<LivePreview />} />

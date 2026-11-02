@@ -294,3 +294,55 @@ export type AdminMemberSite = Omit<MemberSiteRow, 'also_serves'> & {
   updated_at: string | null
   carriers: MemberSiteCarrier[]
 }
+
+export type TicketCategory = 'bug' | 'suggestion' | 'account' | 'other'
+export type TicketStatus = 'open' | 'in_progress' | 'resolved' | 'closed'
+
+/** A signed-in Resonant's own support ticket -- my_support_tickets(). */
+export type MyTicket = {
+  ticket_id: number
+  category: TicketCategory
+  subject: string
+  status: TicketStatus
+  submitted_at: string
+  resolved_at: string | null
+  reply: string | null
+}
+
+/** A support ticket as the admin inbox sees it -- admin_support_tickets_list(). */
+export type AdminTicket = {
+  ticket_id: number
+  category: TicketCategory
+  subject: string
+  message: string
+  page_url: string | null
+  browser_info: string | null
+  email: string | null
+  display_name: string | null
+  status: TicketStatus
+  submitted_at: string
+  resolved_at: string | null
+  resolved_by: string | null
+  admin_note: string | null
+  reply: string | null
+}
+
+/** One Resonance account as the admin dashboard's member list sees it. */
+export type AdminResonant = {
+  resonant_id: string
+  email: string
+  display_name: string | null
+  home_airport: string | null
+  home_division: string | null
+  is_admin: boolean
+  joined_at: string
+}
+
+/** admin_dashboard_stats(): signups and ticket volume for the dashboard. */
+export type DashboardStats = {
+  total_resonants: number
+  total_admins: number
+  signups_last_30d: { day: string; count: number }[]
+  tickets_by_status: Partial<Record<TicketStatus, number>>
+  tickets_by_category: Partial<Record<TicketCategory, number>>
+}

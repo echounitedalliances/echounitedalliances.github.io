@@ -50,6 +50,10 @@
       "title": "Resonance account",
       "description": "Sign in to Resonance, the Echo United Alliances account for members and admins."
     },
+    "/support": {
+      "title": "Support",
+      "description": "Report a bug, suggest something, or get in touch with the people running the Echo United Alliances website."
+    },
     "/terms": {
       "title": "Terms of use",
       "description": "The terms for using the Echo United Alliances website."

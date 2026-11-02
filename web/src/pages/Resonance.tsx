@@ -5,8 +5,7 @@ import { isConfigured, supabase } from '../lib/supabase'
 import { useAuth } from '../lib/auth'
 import { PasswordCard, SignIn } from '../components/ResonanceAuth'
 import AdminApplyModal from '../components/AdminApplyModal'
-import AdminApplications from '../components/AdminApplications'
-import AdminMemberSites from '../components/AdminMemberSites'
+import MySupportTickets from '../components/MySupportTickets'
 import type { AirportRow, Airline, Division } from '../lib/types'
 import { useSneakPeek } from '../lib/sneakPeek'
 import { tapError, tapSuccess } from '../lib/haptics'
@@ -302,9 +301,23 @@ export default function Resonance() {
             )}
           </section>
 
-          {/* Both render nothing at all unless this account is an admin. */}
-          <AdminApplications />
-          <AdminMemberSites />
+          <MySupportTickets />
+
+          {resonant.is_admin && (
+            <section className="panel mt-4 flex flex-wrap items-center justify-between gap-3 p-5">
+              <div>
+                <h2 className="mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">
+                  {tr('Admin dashboard')}
+                </h2>
+                <p className="mt-2 max-w-[54ch] text-sm text-ink-dim">
+                  {tr('Admin applications, member websites, support tickets, and the rest of what an admin can do, all moved to their own page.')}
+                </p>
+              </div>
+              <Link to="/admin" className="btn btn-ghost">
+                {tr('Open the dashboard')}
+              </Link>
+            </section>
+          )}
 
           {/* Not shown twice: while recovering it is already at the top. */}
           {!recovering && <PasswordCard />}
