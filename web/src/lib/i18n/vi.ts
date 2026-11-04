@@ -849,6 +849,16 @@ const dict: Record<string, string> = {
   "{name} ({code}) is an airline in the {division} division of Echo United Alliances in The Airline Simulator.": "{name} ({code}) là hãng bay thuộc division {division} của Echo United Alliances trong The Airline Simulator.",
   "It flies {aircraft} aircraft on {routes} routes to {destinations} destinations.": "Hãng khai thác {aircraft} máy bay trên {routes} đường bay tới {destinations} điểm đến.",
   "It flies {aircraft} aircraft on {routes} routes to {destinations} destinations from {hubs}.": "Hãng khai thác {aircraft} máy bay trên {routes} đường bay tới {destinations} điểm đến từ {hubs}.",
+  // The 404 page (pages/NotFound.tsx).
+  "Page not found": "Không tìm thấy trang",
+  "Error 404": "Lỗi 404",
+  "Off the *route map*": "Ngoài *bản đồ đường bay*",
+  "There are no departures to that page from here. We have rebooked you onto the next flights out.": "Từ đây không có chuyến nào tới trang đó. Chúng tôi đã đổi vé cho bạn sang những chuyến tiếp theo.",
+  "Rebooking options": "Các chuyến đổi vé",
+  "Go to {page}": "Đi tới {page}",
+  "Followed a link on this site to get here?": "Bạn đến đây từ một liên kết trên trang này?",
+  "Tell us, and we will fix it.": "Hãy báo cho chúng tôi để sửa.",
+  "Home": "Trang chủ",
 }
 
 export default dict

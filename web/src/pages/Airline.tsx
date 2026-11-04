@@ -21,6 +21,7 @@ import { rich, useI18n } from '../lib/i18n'
 import { composeProfile, type ProfileFacts } from '../lib/profile'
 import { divisionFromUrl, divisionPath } from '../lib/alliance'
 import { airlineTitle, usePageTitle } from '../lib/pageMeta'
+import NotFound from './NotFound'
 
 export default function AirlinePage() {
   const { code: name = '', slug = '' } = useParams()
@@ -250,16 +251,7 @@ export default function AirlinePage() {
     }
   }, [mapMode, divArcs, a])
 
-  if (missing) {
-    return (
-      <div className="mx-auto max-w-[1180px] px-5 py-24 text-center">
-        <h1 className="display text-4xl">{t('No such carrier')}</h1>
-        <Link to="/airlines" className="mono mt-6 inline-block text-cyan">
-          ← {t('All carriers')}
-        </Link>
-      </div>
-    )
-  }
+  if (missing) return <NotFound />
   if (!a) return <Loading label="Loading carrier" />
 
   const accent = accentOf(a)

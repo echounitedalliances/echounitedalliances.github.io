@@ -9,6 +9,7 @@ import { accentOf, num } from '../lib/format'
 import { useT } from '../lib/i18n'
 import { divisionFromUrl } from '../lib/alliance'
 import { divisionTitle, usePageTitle } from '../lib/pageMeta'
+import NotFound from './NotFound'
 
 export default function DivisionPage() {
   const code = divisionFromUrl(useParams().code ?? '')
@@ -50,6 +51,8 @@ export default function DivisionPage() {
   }, [members, sort])
 
   if (!isConfigured) return <NotConfigured />
+  // Everything has loaded and there is no such division: a mistyped address.
+  if (!division && members) return <NotFound />
   if (!division) return <Loading label="Loading division" />
 
   const accent = accentOf(division)

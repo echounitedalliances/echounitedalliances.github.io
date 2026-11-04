@@ -30,6 +30,7 @@ import { NAV } from './lib/nav'
 import MobileMenu from './components/MobileMenu'
 import EchoMark from './components/EchoMark'
 import Welcome from './components/Welcome'
+import NotFound from './pages/NotFound'
 import Announcement from './components/Announcement'
 import { useFixedPageTitle } from './lib/pageMeta'
 import MaintenanceLock from './components/MaintenanceLock'
@@ -418,19 +419,6 @@ function Shell({ children }: { children: React.ReactNode }) {
   )
 }
 
-function NotFound() {
-  const t = useT()
-  return (
-    <>
-      <h1 className="display text-4xl">{t('Off the route map')}</h1>
-      <p className="mt-3 text-ink-dim">{t('That page is not in the network.')}</p>
-      <Link to="/" className="mono mt-6 inline-block text-cyan">
-        ← {t('Back to the alliance')}
-      </Link>
-    </>
-  )
-}
-
 /**
  * The router, under the language's address prefix (/vi, /id...; none for
  * English). A switch of language moves the address first (lib/i18n.tsx), and
@@ -485,14 +473,7 @@ export default function App() {
           <Route path="/terms" element={<Terms />} />
           <Route path="/conduct" element={<Conduct />} />
           <Route path="/privacy" element={<Privacy />} />
-          <Route
-            path="*"
-            element={
-              <div className="mx-auto max-w-[1180px] px-5 py-24 text-center">
-                <NotFound />
-              </div>
-            }
-          />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         </Shell>
       </LangRouter>

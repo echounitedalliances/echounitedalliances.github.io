@@ -853,6 +853,16 @@ const dict: Record<string, string> = {
   "{name} ({code}) is an airline in the {division} division of Echo United Alliances in The Airline Simulator.": "{name}（{code}）是 The Airline Simulator 中 Echo United Alliances {division} 分部的航空公司。",
   "It flies {aircraft} aircraft on {routes} routes to {destinations} destinations.": "它以 {aircraft} 架飞机飞行 {routes} 条航线，通往 {destinations} 个目的地。",
   "It flies {aircraft} aircraft on {routes} routes to {destinations} destinations from {hubs}.": "它以 {aircraft} 架飞机从 {hubs} 出发，飞行 {routes} 条航线，通往 {destinations} 个目的地。",
+  // The 404 page (pages/NotFound.tsx).
+  "Page not found": "找不到页面",
+  "Error 404": "错误 404",
+  "Off the *route map*": "不在*航线图*上",
+  "There are no departures to that page from here. We have rebooked you onto the next flights out.": "从这里没有飞往那个页面的航班。我们已为你改签到接下来的航班。",
+  "Rebooking options": "改签选项",
+  "Go to {page}": "前往{page}",
+  "Followed a link on this site to get here?": "是本站的链接把你带到这里的吗？",
+  "Tell us, and we will fix it.": "告诉我们，我们会修好它。",
+  "Home": "首页",
 }
 
 export default dict

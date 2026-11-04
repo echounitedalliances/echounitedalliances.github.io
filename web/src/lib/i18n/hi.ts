@@ -853,6 +853,16 @@ const dict: Record<string, string> = {
   "{name} ({code}) is an airline in the {division} division of Echo United Alliances in The Airline Simulator.": "{name} ({code}), The Airline Simulator में Echo United Alliances के {division} डिवीज़न की एक एयरलाइन है।",
   "It flies {aircraft} aircraft on {routes} routes to {destinations} destinations.": "यह {aircraft} विमानों के साथ {routes} रूट पर {destinations} गंतव्यों तक उड़ती है।",
   "It flies {aircraft} aircraft on {routes} routes to {destinations} destinations from {hubs}.": "यह {hubs} से {aircraft} विमानों के साथ {routes} रूट पर {destinations} गंतव्यों तक उड़ती है।",
+  // The 404 page (pages/NotFound.tsx).
+  "Page not found": "पेज नहीं मिला",
+  "Error 404": "त्रुटि 404",
+  "Off the *route map*": "*रूट मैप* से बाहर",
+  "There are no departures to that page from here. We have rebooked you onto the next flights out.": "यहाँ से उस पेज के लिए कोई उड़ान नहीं है। हमने आपको अगली उड़ानों पर रीबुक कर दिया है।",
+  "Rebooking options": "रीबुकिंग के विकल्प",
+  "Go to {page}": "{page} पर जाएँ",
+  "Followed a link on this site to get here?": "क्या इस साइट के किसी लिंक से यहाँ पहुँचे?",
+  "Tell us, and we will fix it.": "हमें बताइए, हम ठीक कर देंगे।",
+  "Home": "होम",
 }
 
 export default dict

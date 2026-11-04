@@ -853,6 +853,16 @@ const dict: Record<string, string> = {
   "{name} ({code}) is an airline in the {division} division of Echo United Alliances in The Airline Simulator.": "{name}({code})은(는) The Airline Simulator 속 Echo United Alliances {division} 디비전의 항공사입니다.",
   "It flies {aircraft} aircraft on {routes} routes to {destinations} destinations.": "항공기 {aircraft}대로 {routes}개 노선에서 목적지 {destinations}곳을 운항합니다.",
   "It flies {aircraft} aircraft on {routes} routes to {destinations} destinations from {hubs}.": "{hubs}에서 항공기 {aircraft}대로 {routes}개 노선, 목적지 {destinations}곳을 운항합니다.",
+  // The 404 page (pages/NotFound.tsx).
+  "Page not found": "페이지를 찾을 수 없어요",
+  "Error 404": "오류 404",
+  "Off the *route map*": "*노선도* 밖",
+  "There are no departures to that page from here. We have rebooked you onto the next flights out.": "여기서 그 페이지로 가는 항공편은 없어요. 다음 항공편으로 재예약해 드렸어요.",
+  "Rebooking options": "재예약 옵션",
+  "Go to {page}": "{page}(으)로 이동",
+  "Followed a link on this site to get here?": "이 사이트의 링크를 따라 여기 오셨나요?",
+  "Tell us, and we will fix it.": "알려 주시면 고칠게요.",
+  "Home": "홈",
 }
 
 export default dict

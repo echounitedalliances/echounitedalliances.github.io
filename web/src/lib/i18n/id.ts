@@ -845,6 +845,17 @@ const dict: Record<string, string> = {
   "{name} ({code}) is an airline in the {division} division of Echo United Alliances in The Airline Simulator.": "{name} ({code}) adalah maskapai di divisi {division} Echo United Alliances di The Airline Simulator.",
   "It flies {aircraft} aircraft on {routes} routes to {destinations} destinations.": "Maskapai ini menerbangkan {aircraft} pesawat di {routes} rute ke {destinations} tujuan.",
   "It flies {aircraft} aircraft on {routes} routes to {destinations} destinations from {hubs}.": "Maskapai ini menerbangkan {aircraft} pesawat di {routes} rute ke {destinations} tujuan dari {hubs}.",
+  // The 404 page (pages/NotFound.tsx).
+  "Page not found": "Halaman tidak ditemukan",
+  "Error 404": "Galat 404",
+  "Off the *route map*": "Di luar *peta rute*",
+  "There are no departures to that page from here. We have rebooked you onto the next flights out.": "Tidak ada keberangkatan ke halaman itu dari sini. Kami sudah memesankan Anda ulang ke penerbangan berikutnya.",
+  "Rebooking options": "Pilihan pemesanan ulang",
+  "Go to {page}": "Buka {page}",
+  "Followed a link on this site to get here?": "Sampai di sini lewat tautan di situs ini?",
+  "Tell us, and we will fix it.": "Beri tahu kami, dan akan kami perbaiki.",
+  "Home": "Beranda",
+  "Status": "Status",
 }
 
 export default dict
