@@ -431,6 +431,20 @@ function NotFound() {
   )
 }
 
+/**
+ * The router, under the language's address prefix (/vi, /id...; none for
+ * English). A switch of language moves the address first (lib/i18n.tsx), and
+ * the new key mounts a fresh router that reads it.
+ */
+function LangRouter({ children }: { children: React.ReactNode }) {
+  const { base } = useI18n()
+  return (
+    <BrowserRouter key={base} basename={base || undefined}>
+      {children}
+    </BrowserRouter>
+  )
+}
+
 const lockUntil = MAINTENANCE_LOCK_UNTIL ? new Date(MAINTENANCE_LOCK_UNTIL) : null
 
 export default function App() {
@@ -446,7 +460,7 @@ export default function App() {
     <SneakPeekProvider>
     <AuthProvider>
       <Welcome />
-      <BrowserRouter>
+      <LangRouter>
         <Shell>
         {/* News worth one interruption per visit, on whatever page it lands. */}
         <Announcement />
@@ -481,7 +495,7 @@ export default function App() {
           />
         </Routes>
         </Shell>
-      </BrowserRouter>
+      </LangRouter>
     </AuthProvider>
     </SneakPeekProvider>
     </I18nProvider>
