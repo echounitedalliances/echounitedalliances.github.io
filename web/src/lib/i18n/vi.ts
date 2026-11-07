@@ -859,6 +859,8 @@ const dict: Record<string, string> = {
   "Followed a link on this site to get here?": "Bạn đến đây từ một liên kết trên trang này?",
   "Tell us, and we will fix it.": "Hãy báo cho chúng tôi để sửa.",
   "Home": "Trang chủ",
+  // Airline of the Week, 7 November 2026 (lib/alliance.ts).
+  "From its hubs at Sapporo, Haneda and Narita, StarBorne Pacific (SPVH) flies an all-Airbus fleet of 340: 240 widebodies, led by 170 A350-1000s, across 597 routes to 62 countries.": "Từ các trung tâm Sapporo, Haneda và Narita, StarBorne Pacific (SPVH) khai thác đội bay toàn Airbus gồm 340 chiếc: 240 chiếc thân rộng, dẫn đầu là 170 chiếc A350-1000, trên 597 đường bay tới 62 quốc gia.",
 }
 
 export default dict

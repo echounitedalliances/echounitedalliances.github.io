@@ -863,6 +863,8 @@ const dict: Record<string, string> = {
   "Followed a link on this site to get here?": "क्या इस साइट के किसी लिंक से यहाँ पहुँचे?",
   "Tell us, and we will fix it.": "हमें बताइए, हम ठीक कर देंगे।",
   "Home": "होम",
+  // Airline of the Week, 7 November 2026 (lib/alliance.ts).
+  "From its hubs at Sapporo, Haneda and Narita, StarBorne Pacific (SPVH) flies an all-Airbus fleet of 340: 240 widebodies, led by 170 A350-1000s, across 597 routes to 62 countries.": "सप्पोरो, हानेडा और नारिता के अपने हब से StarBorne Pacific (SPVH) 340 विमानों का पूरी तरह एयरबस बेड़ा उड़ाती है: 240 वाइडबॉडी, जिनमें सबसे आगे 170 A350-1000 हैं, 597 रूट पर 62 देशों तक।",
 }
 
 export default dict

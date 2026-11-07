@@ -863,6 +863,8 @@ const dict: Record<string, string> = {
   "Followed a link on this site to get here?": "是本站的链接把你带到这里的吗？",
   "Tell us, and we will fix it.": "告诉我们，我们会修好它。",
   "Home": "首页",
+  // Airline of the Week, 7 November 2026 (lib/alliance.ts).
+  "From its hubs at Sapporo, Haneda and Narita, StarBorne Pacific (SPVH) flies an all-Airbus fleet of 340: 240 widebodies, led by 170 A350-1000s, across 597 routes to 62 countries.": "StarBorne Pacific（SPVH）以札幌、羽田和成田为枢纽，运营一支由 340 架空客飞机组成的机队：其中 240 架宽体机，以 170 架 A350-1000 为主力，飞行 597 条航线，通往 62 个国家。",
 }
 
 export default dict
