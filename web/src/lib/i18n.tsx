@@ -62,6 +62,50 @@ function storedLang(): Lang {
 }
 
 /**
+ * Every language but English has its own addresses -- /vi/d/aegis for
+ * /d/aegis -- so search engines index each translation as a page of its own
+ * (scripts/prerender.mjs writes them, with hreflang links between them).
+ * The router runs under this prefix as its basename, so links inside the app
+ * need no change.
+ */
+export const langBase = (lang: Lang) => (lang === 'en' ? '' : `/${lang}`)
+
+/** The language an address is in, from its first segment; null for English. */
+export function langFromPath(pathname: string): Lang | null {
+  const first = pathname.split('/')[1]
+  return first !== 'en' && isLang(first) ? first : null
+}
+
+/** The same page under another language's prefix. */
+function swapLangInUrl(lang: Lang) {
+  const { pathname, search, hash } = window.location
+  const from = langFromPath(pathname)
+  const rest = from ? pathname.slice(from.length + 1) || '/' : pathname
+  const next = langBase(lang) + (rest === '/' && lang !== 'en' ? '/' : rest)
+  if (next !== pathname) window.history.replaceState(window.history.state, '', next + search + hash)
+}
+
+/**
+ * The language to start in: the address's, else the one picked last time --
+ * and then the address is moved under that language's prefix before the
+ * router first reads it, so what the bar shows is always shareable as is.
+ */
+function initialLang(): Lang {
+  const fromUrl = langFromPath(window.location.pathname)
+  if (fromUrl) {
+    try {
+      localStorage.setItem(KEY, fromUrl)
+    } catch {
+      /* not remembered */
+    }
+    return fromUrl
+  }
+  const saved = storedLang()
+  if (saved !== 'en') swapLangInUrl(saved)
+  return saved
+}
+
+/**
  * The language in force, readable outside React -- by the formatters in
  * format.ts, which have no hook to call. It changes before the re-render
  * that follows, so anything rendered after a switch reads the new one.
@@ -94,14 +138,19 @@ function loadFont(lang: Lang) {
 
 type Ctx = {
   lang: Lang
+  /** The router's basename for the language in force: '' or '/vi'. */
+  base: string
   setLang: (l: Lang) => void
   t: typeof translate
 }
 
-const I18n = createContext<Ctx>({ lang: 'en', setLang: () => {}, t: translate })
+const I18n = createContext<Ctx>({ lang: 'en', base: '', setLang: () => {}, t: translate })
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<{ lang: Lang; dict: Dict }>({ lang: 'en', dict: {} })
+  // The language (and so the router's prefix) is settled before the first
+  // render; only its dictionary arrives later, English showing until then.
+  const [start] = useState(initialLang)
+  const [state, setState] = useState<{ lang: Lang; dict: Dict }>({ lang: start, dict: {} })
 
   const apply = useCallback(async (lang: Lang) => {
     let dict: Dict = {}
@@ -116,13 +165,15 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     current = lang
     currentDict = dict
     document.documentElement.lang = lang
+    // The address first: the router remounts on the new prefix and reads it.
+    swapLangInUrl(lang)
     setState({ lang, dict })
   }, [])
 
   useEffect(() => {
-    const saved = storedLang()
-    if (saved !== 'en') void apply(saved)
-  }, [apply])
+    current = start
+    if (start !== 'en') void apply(start)
+  }, [apply, start])
 
   const setLang = useCallback(
     (l: Lang) => {
@@ -139,6 +190,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   const value = useMemo<Ctx>(
     () => ({
       lang: state.lang,
+      base: langBase(state.lang),
       setLang,
       // A new function per language, so memoised children see the change.
       t: (en, vars) => fill((state.lang !== 'en' && state.dict[en]) || en, vars),

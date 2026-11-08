@@ -247,6 +247,14 @@ h1.display .serif, h2.display .serif { color: var(--color-heading-serif); }
   background: rgba(0,0,0,.5);
 }
 .flap-live .flap { color: var(--color-good); }
+.flap-warn .flap { color: var(--color-warn); }
+/* A board row that is a link (the 404 page's rebookings). */
+.board-link { color: inherit; text-decoration: none; }
+.board-link:hover .flap,
+.board-link:focus-visible .flap { background: linear-gradient(#262626 0 49%, #1A1A1A 51% 100%); }
+.board-link:focus-visible { outline: 1px solid var(--color-ink-faint); outline-offset: 2px; }
+/* Columns a narrow board drops (plain CSS: .flap-run's display would win over a utility). */
+@media (max-width: 639px) { .board .board-wide { display: none; } }
 
 @media (max-width: 720px) {
   .board { --flap-w: 10px; padding: 10px 12px 12px; }

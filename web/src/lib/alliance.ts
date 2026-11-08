@@ -129,16 +129,14 @@ export const AIRLINE_OF_THE_WEEK: {
   blurb: string
   liveries: Livery[]
 } = {
-  // Aegis's Tsuki Airways (TKAG), not the Uzuri carrier of the same name
-  // (TKUZ): same name and slug, so the division is what picks it.
-  division_code: 'aegis',
-  airline_slug: 'tsuki_airways',
+  division_code: 'rhea',
+  airline_slug: 'starborne_pacific',
   blurb:
-    'Flying the Japanese flag from Haneda and Kansai, Tsuki Airways (TKAG) is Aegis’s long-haul specialist: 121 aircraft, 102 of them widebodies, led by 68 Boeing 787-9s across 92 routes to 35 countries.',
+    'From its hubs at Sapporo, Haneda and Narita, StarBorne Pacific (SPVH) flies an all-Airbus fleet of 340: 240 widebodies, led by 170 A350-1000s, across 597 routes to 62 countries.',
   liveries: [
     {
-      src: 'brand/liveries/tsuki-airways-787.webp',
-      aircraft: 'Boeing 787 Dreamliner',
+      src: 'brand/liveries/starborne-pacific-a350.webp',
+      aircraft: 'Airbus A350-1000',
     },
   ],
 }

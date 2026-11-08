@@ -61,8 +61,9 @@ export function AudienceSwitch() {
   )
 }
 
-// Whether this visit opened on the home page, read once as the bundle loads.
-let landedHome = window.location.pathname === (import.meta.env.BASE_URL || '/')
+// Whether this visit opened on the home page, read once as the bundle loads:
+// / or a language's home, /vi/.
+let landedHome = /^\/(?:(?:id|vi|fil|zh|ko|bn|hi)\/?)?$/.test(window.location.pathname)
 
 /**
  * A member who comes back to the home page lands in the members' area, the

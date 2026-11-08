@@ -8,6 +8,7 @@ import type { AirportRow } from '../lib/types'
 import { flag, num } from '../lib/format'
 import { divisionPath } from '../lib/alliance'
 import { airportTitle, usePageTitle } from '../lib/pageMeta'
+import NotFound from './NotFound'
 
 type Carrier = {
   uid: string
@@ -47,6 +48,8 @@ export default function AirportPage() {
   }, [iata])
 
   if (!isConfigured) return <NotConfigured />
+  // Everything has loaded and there is no such airport: a mistyped address.
+  if (!airport && carriers) return <NotFound />
   if (!airport) return <Loading label="Loading airport" />
 
   const hubs = (carriers ?? []).filter((c) => c.is_hub)

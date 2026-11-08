@@ -61,9 +61,51 @@ const ORGANISATION = [
 
 const divisionPath = (code, slug) => `/d/${DIVISION_URL[code] ?? code}${slug ? `/${slug}` : ''}`
 
+/**
+ * The languages, each with its own addresses (/vi/d/aegis), as the app reads
+ * them (src/lib/i18n.tsx). Every page but the airports' is written in each:
+ * 2,200 airports in eight languages would be 15,000 more files rewritten at
+ * every publish, for pages that are mostly codes and numbers.
+ *
+ * hreflang is the language tag search engines match to a reader; the
+ * Chinese is simplified. locale is what numbers and country names use, the
+ * same as src/lib/format.ts.
+ */
+const LANGS = [
+  { code: 'en', hreflang: 'en', locale: 'en-GB', og: 'en_GB' },
+  { code: 'id', hreflang: 'id', locale: 'id-ID', og: 'id_ID' },
+  { code: 'vi', hreflang: 'vi', locale: 'vi-VN', og: 'vi_VN' },
+  { code: 'fil', hreflang: 'fil', locale: 'fil-PH', og: 'fil_PH' },
+  { code: 'zh', hreflang: 'zh-Hans', locale: 'zh-CN', og: 'zh_CN' },
+  { code: 'ko', hreflang: 'ko', locale: 'ko-KR', og: 'ko_KR' },
+  { code: 'bn', hreflang: 'bn', locale: 'bn-BD', og: 'bn_BD' },
+  { code: 'hi', hreflang: 'hi', locale: 'hi-IN', og: 'hi_IN' },
+]
+const prefix = (lang) => (lang === 'en' ? '' : `/${lang}`)
+
+// The app's own dictionaries (src/lib/i18n/<lang>.ts), English text as the
+// key: one object literal of quoted strings, read as JSON once its comment
+// lines are dropped.
+const DICTS = Object.fromEntries(
+  LANGS.filter((l) => l.code !== 'en').map((l) => {
+    const src = readFileSync(join(webDir, `src/lib/i18n/${l.code}.ts`), 'utf8')
+    const body = src
+      .slice(src.indexOf('{', src.search(/=\s*\{/)), src.lastIndexOf('}') + 1)
+      .replace(/^\s*\/\/.*$/gm, '')
+      .replace(/,(\s*)\}$/, '$1}')
+    return [l.code, JSON.parse(body)]
+  }),
+)
+
+/** A translator for one language: t('{n} airlines', { n }), English when a string has no translation. */
+function translator(lang) {
+  const dict = DICTS[lang] ?? {}
+  return (en, vars = {}) => (dict[en] || en).replace(/\{(\w+)\}/g, (m, k) => (k in vars ? String(vars[k]) : m))
+}
+
 // The same wording as src/lib/pageMeta.ts; change both together.
 const pageTitle = (t) => (t.includes(SITE) ? t : `${t} · ${SITE}`)
-const divisionTitle = (name) => `${name} division`
+const divisionTitle = (t, name) => t('{name} division', { name })
 const airlineTitle = (name, code, division) => `${name} (${code}) · ${division}`
 const airportTitle = (iata, city) => `${city ? `${city} (${iata})` : iata} flights`
 
@@ -97,16 +139,23 @@ async function rows(table, query) {
 
 const esc = (s) =>
   String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c])
-const num = (n) => Number(n ?? 0).toLocaleString('en-GB')
-const countries = new Intl.DisplayNames(['en'], { type: 'region' })
-const country = (cc) => {
-  try {
-    return cc ? countries.of(cc) : null
-  } catch {
-    return null
+/** Numbers, country names and lists the way a language writes them. */
+function formats(locale) {
+  const countries = new Intl.DisplayNames([locale], { type: 'region' })
+  const lists = new Intl.ListFormat(locale, { type: 'conjunction' })
+  return {
+    num: (n) => Number(n ?? 0).toLocaleString(locale),
+    country: (cc) => {
+      try {
+        return cc ? countries.of(cc) : null
+      } catch {
+        return null
+      }
+    },
+    list: (xs) => lists.format(xs),
   }
 }
-const list = (xs) => (xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`)
+const { num, country, list } = formats('en-GB')
 
 /**
  * One page: its address, words, the plain HTML that stands in for the app,
@@ -114,14 +163,40 @@ const list = (xs) => (xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', '
  * colour Discord draws down the side of the embed.
  */
 function page(path, title, description, body, preview = {}) {
-  return { path, title: pageTitle(title), description, body, card: preview.card ?? 'echo.jpg', color: preview.color }
+  return {
+    path,
+    title: pageTitle(title),
+    description,
+    body,
+    card: preview.card ?? 'echo.jpg',
+    color: preview.color,
+    lang: preview.lang ?? LANGS[0],
+    // The page's own path without a language prefix, which its translations
+    // share; null for a page written in English only.
+    alternates: preview.alternates ?? null,
+    crumbs: preview.crumbs ?? null,
+  }
 }
 
 const cardFor = (divisionCode) =>
   existsSync(join(webDir, 'public/brand/cards', `${divisionCode}.png`)) ? `${divisionCode}.png` : 'echo.jpg'
 
+const urlOf = (path) => `${ORIGIN}${path === '/' ? '/' : `${encodeURI(path)}/`}`
+
+/**
+ * The trail search results show above a page's title -- Echo United
+ * Alliances > Aegis division > Tsuki Airways -- as schema.org breadcrumbs.
+ */
+function breadcrumbs(crumbs) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: crumbs.map(([name, path], i) => ({ '@type': 'ListItem', position: i + 1, name, item: urlOf(path) })),
+  }
+}
+
 function render(template, p) {
-  const url = `${ORIGIN}${p.path === '/' ? '/' : `${p.path}/`}`
+  const url = urlOf(p.path)
   const image = `${ORIGIN}/brand/cards/${p.card}`
   const tags = [
     `<link rel="canonical" href="${url}" />`,
@@ -135,22 +210,32 @@ function render(template, p) {
     `<meta property="og:image:height" content="630" />`,
     `<meta property="og:image:alt" content="${esc(p.title)}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
+    `<meta property="og:locale" content="${p.lang.og}" />`,
   ]
+  // Each translation names all the others, and English as the default, so a
+  // search engine shows a reader the one in their language.
+  if (p.alternates != null) {
+    for (const l of LANGS)
+      tags.push(`<link rel="alternate" hreflang="${l.hreflang}" href="${urlOf(prefix(l.code) + (p.alternates === '/' && l.code !== 'en' ? '' : p.alternates) || '/')}" />`)
+    tags.push(`<link rel="alternate" hreflang="x-default" href="${urlOf(p.alternates)}" />`)
+  }
+  if (p.crumbs) tags.push(`<script type="application/ld+json">${JSON.stringify(breadcrumbs(p.crumbs))}</script>`)
   let html = template
+    .replace('<html lang="en">', `<html lang="${p.lang.code}">`)
     .replace(/<title>[^<]*<\/title>/, `<title>${esc(p.title)}</title>`)
     .replace(/<meta name="description" content="[^"]*"\s*\/?>/, `<meta name="description" content="${esc(p.description)}" />`)
     .replace('</head>', `    ${tags.join('\n    ')}\n  </head>`)
     .replace('<div id="root"></div>', `<div id="root">${p.body}</div>`)
   // Who the site belongs to, in the form search engines read for their
   // knowledge panel: the alliance, its logo, and its Discord as its channel.
-  if (p.path === '/') html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(ORGANISATION)}</script>\n  </head>`)
+  if (p.path === '/' || p.path === `/${p.lang.code}`) html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(ORGANISATION)}</script>\n  </head>`)
   // Discord colours the edge of an embed with the page's theme colour.
   if (p.color) html = html.replace(/<meta name="theme-color" content="[^"]*"/, `<meta name="theme-color" content="${esc(p.color)}"`)
   if (!html.includes(`<link rel="canonical" href="${url}"`)) throw new Error(`could not fill in ${p.path}`)
   return html
 }
 
-const link = (href, text) => `<a href="${href}">${esc(text)}</a>`
+const link = (href, text) => `<a href="${encodeURI(href === '' ? '/' : `${href}/`)}">${esc(text)}</a>`
 const main = (h1, description, extra = '') => `<main><h1>${esc(h1)}</h1><p>${esc(description)}</p>${extra}</main>`
 
 function removePrevious() {
@@ -180,50 +265,93 @@ export async function prerender() {
       'select=iata_code,airport_name,city_name,country_code,weekly_departures,carriers&weekly_departures=gt.0&order=iata_code',
     ),
   ])
-  const counts = { divisions: num(divisions.length), airlines: num(airlines.length) }
-  const fill = (s) => s.replace(/\{(\w+)\}/g, (m, k) => counts[k] ?? m)
+  const counts = { divisions: divisions.length, airlines: airlines.length }
   const byDivision = Object.groupBy(airlines, (a) => a.division_code)
 
   const pages = []
 
-  for (const [path, m] of Object.entries(meta.pages)) {
-    let extra = ''
-    if (path === '/' || path === '/divisions')
-      extra = `<ul>${divisions.map((d) => `<li>${link(divisionPath(d.division_code), divisionTitle(d.division_name))}</li>`).join('')}</ul>`
-    if (path === '/airlines')
-      extra = `<ul>${airlines.map((a) => `<li>${link(divisionPath(a.division_code, a.airline_slug), a.airline_name ?? a.carrier_code)}</li>`).join('')}</ul>`
-    pages.push(page(path, m.title, fill(m.description), main(path === '/' ? SITE : m.title, fill(m.description), extra)))
-  }
+  // Every page but the airports', once per language.
+  for (const lang of LANGS) {
+    const t = translator(lang.code)
+    const f = formats(lang.locale)
+    const at = (path) => prefix(lang.code) + (path === '/' && lang.code !== 'en' ? '' : path) || '/'
+    const fill = (s) => t(s).replace(/\{(\w+)\}/g, (m, k) => (k in counts ? f.num(counts[k]) : m))
+    const home = [SITE, at('/')]
+    const options = (path, extra = {}) => ({ lang, alternates: path, ...extra })
 
-  for (const d of divisions) {
-    const members = byDivision[d.division_code] ?? []
-    const description =
-      `${d.division_name} is one of the ${counts.divisions} divisions of Echo United Alliances in The Airline Simulator: ` +
-      `${num(d.carriers)} airlines flying ${num(d.aircraft)} aircraft on ${num(d.routes)} routes to ${num(d.destinations)} destinations.`
-    const extra = `<ul>${members.map((a) => `<li>${link(divisionPath(a.division_code, a.airline_slug), a.airline_name ?? a.carrier_code)}</li>`).join('')}</ul>`
-    pages.push(
-      page(divisionPath(d.division_code), divisionTitle(d.division_name), description, main(divisionTitle(d.division_name), description, extra), {
-        card: cardFor(d.division_code),
-        color: d.accent_color,
-      }),
-    )
-  }
+    for (const [path, m] of Object.entries(meta.pages)) {
+      let extra = ''
+      if (path === '/' || path === '/divisions')
+        extra = `<ul>${divisions.map((d) => `<li>${link(at(divisionPath(d.division_code)), divisionTitle(t, d.division_name))}</li>`).join('')}</ul>`
+      if (path === '/airlines')
+        extra = `<ul>${airlines.map((a) => `<li>${link(at(divisionPath(a.division_code, a.airline_slug)), a.airline_name ?? a.carrier_code)}</li>`).join('')}</ul>`
+      const title = t(m.title)
+      pages.push(
+        page(at(path), title, fill(m.description), main(path === '/' ? SITE : title, fill(m.description), extra), options(path, {
+          crumbs: path === '/' ? null : [home, [title, at(path)]],
+        })),
+      )
+    }
 
-  for (const a of airlines) {
-    const name = a.airline_name ?? a.carrier_code
-    const from = country(a.airline_country)
-    const hubs = (a.hubs ?? []).slice(0, 4)
-    const description =
-      `${name} (${a.carrier_code}) is ${from ? `an airline from ${from}` : 'an airline'} in the ${a.division_name} division of Echo United Alliances in The Airline Simulator` +
-      (a.fleet_size ? `, flying ${num(a.fleet_size)} aircraft on ${num(a.routes)} routes to ${num(a.destinations)} destinations` : '') +
-      (hubs.length ? ` from ${list(hubs)}.` : '.')
-    const extra = `<p>${link(divisionPath(a.division_code), divisionTitle(a.division_name))}</p>`
-    pages.push(
-      page(divisionPath(a.division_code, a.airline_slug), airlineTitle(name, a.carrier_code, a.division_name), description, main(name, description, extra), {
-        card: cardFor(a.division_code),
-        color: a.accent_color,
-      }),
-    )
+    for (const d of divisions) {
+      const members = byDivision[d.division_code] ?? []
+      const path = divisionPath(d.division_code)
+      const title = divisionTitle(t, d.division_name)
+      const description = t(
+        '{name} is one of the {divisions} divisions of Echo United Alliances in The Airline Simulator: {carriers} airlines flying {aircraft} aircraft on {routes} routes to {destinations} destinations.',
+        {
+          name: d.division_name,
+          divisions: f.num(counts.divisions),
+          carriers: f.num(d.carriers),
+          aircraft: f.num(d.aircraft),
+          routes: f.num(d.routes),
+          destinations: f.num(d.destinations),
+        },
+      )
+      const extra = `<ul>${members.map((a) => `<li>${link(at(divisionPath(a.division_code, a.airline_slug)), a.airline_name ?? a.carrier_code)}</li>`).join('')}</ul>`
+      pages.push(
+        page(at(path), title, description, main(title, description, extra), options(path, {
+          card: cardFor(d.division_code),
+          color: d.accent_color,
+          crumbs: [home, [title, at(path)]],
+        })),
+      )
+    }
+
+    for (const a of airlines) {
+      const name = a.airline_name ?? a.carrier_code
+      const from = f.country(a.airline_country)
+      const hubs = (a.hubs ?? []).slice(0, 4)
+      const path = divisionPath(a.division_code, a.airline_slug)
+      const vars = { name, code: a.carrier_code, division: a.division_name, country: from }
+      const flies = {
+        aircraft: f.num(a.fleet_size),
+        routes: f.num(a.routes),
+        destinations: f.num(a.destinations),
+        hubs: f.list(hubs),
+      }
+      const description = [
+        from
+          ? t('{name} ({code}) is an airline from {country} in the {division} division of Echo United Alliances in The Airline Simulator.', vars)
+          : t('{name} ({code}) is an airline in the {division} division of Echo United Alliances in The Airline Simulator.', vars),
+        a.fleet_size
+          ? hubs.length
+            ? t('It flies {aircraft} aircraft on {routes} routes to {destinations} destinations from {hubs}.', flies)
+            : t('It flies {aircraft} aircraft on {routes} routes to {destinations} destinations.', flies)
+          : '',
+      ]
+        .filter(Boolean)
+        .join(' ')
+      const division = divisionTitle(t, a.division_name)
+      const extra = `<p>${link(at(divisionPath(a.division_code)), division)}</p>`
+      pages.push(
+        page(at(path), airlineTitle(name, a.carrier_code, a.division_name), description, main(name, description, extra), options(path, {
+          card: cardFor(a.division_code),
+          color: a.accent_color,
+          crumbs: [home, [division, at(divisionPath(a.division_code))], [name, at(path)]],
+        })),
+      )
+    }
   }
 
   // Windows will not create a folder named after an old device (PRN, CON,
@@ -236,7 +364,8 @@ export async function prerender() {
       `Flights from ${ap.airport_name ?? ap.iata_code} (${ap.iata_code})${place ? `, ${place}` : ''}, in The Airline Simulator: ` +
       `${num(ap.weekly_departures)} departures a week by ${num(ap.carriers)} Echo United Alliances airline${ap.carriers === 1 ? '' : 's'}.`
     const title = airportTitle(ap.iata_code, ap.city_name)
-    pages.push(page(`/airports/${ap.iata_code}`, title, description, main(title, description)))
+    const path = `/airports/${ap.iata_code}`
+    pages.push(page(path, title, description, main(title, description), { crumbs: [[SITE, '/'], ['Network', '/network'], [title, path]] }))
   }
 
   removePrevious()
@@ -252,11 +381,10 @@ export async function prerender() {
 
   // Every page, for search engines to find without following links.
   const today = new Date().toISOString().slice(0, 10)
-  const loc = (path) => `${ORIGIN}${path === '/' ? '/' : `${encodeURI(path)}/`}`
   writeFileSync(
     join(repoRoot, 'sitemap.xml'),
     '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-      pages.map((p) => `  <url><loc>${esc(loc(p.path))}</loc><lastmod>${today}</lastmod></url>`).join('\n') +
+      pages.map((p) => `  <url><loc>${esc(urlOf(p.path))}</loc><lastmod>${today}</lastmod></url>`).join('\n') +
       '\n</urlset>\n',
   )
   writeFileSync(join(repoRoot, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}/sitemap.xml\n`)
