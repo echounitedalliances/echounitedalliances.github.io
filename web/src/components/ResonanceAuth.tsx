@@ -268,7 +268,7 @@ export function SignIn() {
             </button>
             {discordGuildError && (
               <p className="border-l-2 border-l-[color:var(--color-danger)] bg-surface-2 p-3 text-sm text-ink-dim">
-                {t('That Discord account is not in the EUA server, so it was signed back out. Join the alliance on Discord first, then try again.')}
+                {t('That Discord account does not have the Resonant role on the EUA server, so it was signed back out. Ask an admin for it, then try again.')}
               </p>
             )}
             <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.12em] text-ink-faint">

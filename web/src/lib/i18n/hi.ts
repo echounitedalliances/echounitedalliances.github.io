@@ -820,6 +820,7 @@ const dict: Record<string, string> = {
   "Admin dashboard": "एडमिन डैशबोर्ड",
   "Admin applications, member websites, support tickets, and the rest of what an admin can do, all moved to their own page.": "एडमिन आवेदन, मेंबर वेबसाइट, सहायता टिकट, और एडमिन जो भी कर सकता है, वह सब अब अपने अलग पेज पर है।",
   "Open the dashboard": "डैशबोर्ड खोलें",
+  "That Discord account does not have the Resonant role on the EUA server, so it was signed back out. Ask an admin for it, then try again.": "उस Discord खाते के पास EUA सर्वर पर Resonant रोल नहीं है, इसलिए इसे फिर साइन आउट कर दिया गया। एडमिन से यह रोल मांगें, फिर फिर से कोशिश करें।",
 }
 
 export default dict

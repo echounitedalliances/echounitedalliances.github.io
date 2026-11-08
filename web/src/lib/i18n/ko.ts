@@ -820,6 +820,7 @@ const dict: Record<string, string> = {
   "Admin dashboard": "관리자 대시보드",
   "Admin applications, member websites, support tickets, and the rest of what an admin can do, all moved to their own page.": "관리자 신청, 멤버 웹사이트, 지원 요청, 그리고 관리자가 할 수 있는 나머지 모든 일이 전용 페이지로 옮겨졌어요.",
   "Open the dashboard": "대시보드 열기",
+  "That Discord account does not have the Resonant role on the EUA server, so it was signed back out. Ask an admin for it, then try again.": "그 Discord 계정은 EUA 서버에서 Resonant 역할이 없어서 다시 로그아웃됐어요. 관리자에게 역할을 요청한 뒤 다시 시도해주세요.",
 }
 
 export default dict

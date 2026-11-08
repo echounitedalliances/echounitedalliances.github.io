@@ -4,38 +4,48 @@ import { isConfigured, supabase } from './supabase'
 
 /**
  * The EUA Discord server, same id the online-count widget reads
- * (lib/discordWidget.ts). Used only to check that a Discord sign-in is
- * actually a member here, not to read anything else about the server.
+ * (lib/discordWidget.ts), and the role on it that actually means something
+ * here: Resonant, given out to vetted alliance members. Used only to check
+ * a Discord sign-in holds that role, not to read anything else about the
+ * server.
+ *
+ * Checking the role rather than plain membership was a deliberate tightening
+ * (November 2026): the server itself is open to join, so "is a member"
+ * let in anyone who had clicked the invite link, never mind whether they
+ * had actually been vetted into the alliance. Resonant is the role real
+ * members are given after that, so it is the one that is actually supposed
+ * to gate the site account.
  */
 const EUA_GUILD_ID = '1485632790035955722'
+const EUA_RESONANT_ROLE_ID = '1485741662851567616'
 
 /**
- * Whether the Discord account behind this OAuth access token is in the EUA
- * server. Returns null, not false, when the check itself failed (network,
- * CORS, Discord outage) -- a failure to verify is not the same as a
- * confirmed "not a member", and must never be treated as one, or a Discord
- * hiccup would lock out real members.
+ * Whether the Discord account behind this OAuth access token holds the
+ * Resonant role in the EUA server. Returns null, not false, when the check
+ * itself failed (network, CORS, Discord outage, or the site's Discord
+ * application not being installed as a bot in the server, which this
+ * endpoint requires) -- a failure to verify is not the same as a confirmed
+ * "does not hold it", and must never be treated as one, or a Discord hiccup
+ * would lock out real members.
  *
- * Paginated: Discord caps /users/@me/guilds at 200 per request, and someone
- * in more than 200 servers would otherwise come back false -- a false
- * rejection for the single busiest Discord users, who are exactly the kind
- * likely to run an alliance.
+ * GET /users/@me/guilds/{guild.id}/member needs the guilds.members.read
+ * scope (requested in signInWithDiscord below) rather than the broader
+ * guilds scope this used to ask for, which listed every server the person
+ * is in just to check membership in one of them -- more than this ever
+ * needed to see.
  */
-async function isInEuaDiscord(providerToken: string): Promise<boolean | null> {
-  const PAGE_SIZE = 200
-  let after: string | undefined
+async function hasEuaResonantRole(providerToken: string): Promise<boolean | null> {
   try {
-    for (;;) {
-      const url = new URL('https://discord.com/api/users/@me/guilds')
-      url.searchParams.set('limit', String(PAGE_SIZE))
-      if (after) url.searchParams.set('after', after)
-      const res = await fetch(url, { headers: { Authorization: `Bearer ${providerToken}` } })
-      if (!res.ok) return null
-      const guilds = (await res.json()) as { id: string }[]
-      if (guilds.some((g) => g.id === EUA_GUILD_ID)) return true
-      if (guilds.length < PAGE_SIZE) return false
-      after = guilds[guilds.length - 1].id
-    }
+    const res = await fetch(
+      `https://discord.com/api/users/@me/guilds/${EUA_GUILD_ID}/member`,
+      { headers: { Authorization: `Bearer ${providerToken}` } },
+    )
+    // Not a member of the server at all reads as a plain "no", same as
+    // holding the wrong role -- both mean the account does not qualify.
+    if (res.status === 404) return false
+    if (!res.ok) return null
+    const member = (await res.json()) as { roles?: string[] }
+    return (member.roles ?? []).includes(EUA_RESONANT_ROLE_ID)
   } catch {
     return null
   }
@@ -201,15 +211,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         next?.user?.app_metadata?.provider === 'discord' || providers.includes('discord')
       if (next?.provider_token && isDiscordSignIn) {
         const token = next.provider_token
-        void isInEuaDiscord(token).then((inGuild) => {
+        void hasEuaResonantRole(token).then((hasRole) => {
           // null means the check itself failed (network, CORS, Discord
-          // outage), not that they are confirmed absent -- never sign
-          // someone out over a failure to verify.
-          if (inGuild === null) {
-            console.warn('EUA Discord guild check did not complete (network/CORS/Discord outage); letting the sign-in stand rather than guessing.')
+          // outage, or the bot not being in the server), not that the role
+          // is confirmed absent -- never sign someone out over a failure to
+          // verify.
+          if (hasRole === null) {
+            console.warn('EUA Discord role check did not complete (network/CORS/Discord outage, or the bot is not in the server); letting the sign-in stand rather than guessing.')
             return
           }
-          if (!inGuild) {
+          if (!hasRole) {
             setDiscordGuildError(true)
             void supabase.auth.signOut()
           }
@@ -247,10 +258,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setDiscordGuildError(false)
         const { error } = await supabase.auth.signInWithOAuth({
           provider: 'discord',
-          // The default scope covers identify + email; guilds is added on
-          // top of that (not instead of it) so the EUA-membership check
-          // still has a Discord profile and address to work with.
-          options: { redirectTo: redirectTo(), scopes: 'identify email guilds' },
+          // The default scope covers identify + email; guilds.members.read
+          // is added on top of that (not instead of it) so the Resonant-role
+          // check still has a Discord profile and address to work with. Not
+          // the broader guilds scope this used to ask for: that would list
+          // every server the person is in just to look at one of them.
+          options: { redirectTo: redirectTo(), scopes: 'identify email guilds.members.read' },
         })
         return { error }
       },

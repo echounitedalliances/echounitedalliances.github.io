@@ -812,6 +812,7 @@ const dict: Record<string, string> = {
   "Admin dashboard": "Dashboard admin",
   "Admin applications, member websites, support tickets, and the rest of what an admin can do, all moved to their own page.": "Permohonan admin, situs anggota, tiket dukungan, dan hal lain yang bisa dilakukan admin, semuanya kini punya halaman sendiri.",
   "Open the dashboard": "Buka dashboard",
+  "That Discord account does not have the Resonant role on the EUA server, so it was signed back out. Ask an admin for it, then try again.": "Akun Discord itu tidak punya role Resonant di server EUA, jadi kamu di-sign out lagi. Minta role itu ke admin, lalu coba lagi.",
 }
 
 export default dict
