@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { SITE, discordConfigured } from '../lib/site'
+import GameIntro from '../components/GameIntro'
 import { useAirportCount, useCarrierCount, useDivisionCount } from '../lib/carriers'
 import { num } from '../lib/format'
 import { emph, useT } from '../lib/i18n'
@@ -78,6 +79,8 @@ export default function Join() {
           {t('Browse the divisions')} →
         </Link>
       </div>
+
+      <GameIntro className="mt-16 border-t border-edge-soft pt-8" />
 
       <section className="mt-16 border-t border-edge-soft pt-8" aria-labelledby="join-why">
         <h2 id="join-why" className="display text-[clamp(26px,3.4vw,38px)]">

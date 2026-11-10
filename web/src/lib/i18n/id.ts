@@ -858,6 +858,19 @@ const dict: Record<string, string> = {
   "Status": "Status",
   // Airline of the Week, 7 November 2026 (lib/alliance.ts).
   "From its hubs at Sapporo, Haneda and Narita, StarBorne Pacific (SPVH) flies an all-Airbus fleet of 340: 240 widebodies, led by 170 A350-1000s, across 597 routes to 62 countries.": "Dari hub-nya di Sapporo, Haneda, dan Narita, StarBorne Pacific (SPVH) menerbangkan armada serba-Airbus sebanyak 340 pesawat: 240 berbadan lebar, dipimpin 170 A350-1000, di 597 rute ke 62 negara.",
+  // What is The Airline Simulator? (components/GameIntro.tsx), and the footer socials.
+  "New to the game?": "Baru mengenal gamenya?",
+  "What is *The Airline Simulator*?": "Apa itu *The Airline Simulator*?",
+  "The Airline Simulator is an airline management game for iOS and Android phones. You build an airline of your own, choose its aircraft, paint its livery, and open routes between real airports, with passenger demand based on real-world data.": "The Airline Simulator adalah game manajemen maskapai untuk ponsel iOS dan Android. Anda membangun maskapai sendiri, memilih pesawatnya, mendesain liverinya, dan membuka rute antarbandara sungguhan, dengan permintaan penumpang berdasarkan data dunia nyata.",
+  "Every other airline in the game is run by another player. Alliances like Echo are how they fly together.": "Setiap maskapai lain di dalam game dijalankan oleh pemain lain. Aliansi seperti Echo adalah cara mereka terbang bersama.",
+  "airliners from Airbus, Boeing, Bombardier and Embraer": "pesawat dari Airbus, Boeing, Bombardier, dan Embraer",
+  "airports around the world": "bandara di seluruh dunia",
+  "livery types to paint your fleet in": "jenis liveri untuk armada Anda",
+  "Download on the App Store": "Unduh di App Store",
+  "Get it on Google Play": "Dapatkan di Google Play",
+  "Visit the game’s website": "Kunjungi situs web game ini",
+  "Echo is a player-run alliance, not affiliated with the game’s developers.": "Echo adalah aliansi yang dijalankan pemain, tidak berafiliasi dengan pengembang game.",
+  "Follow Echo": "Ikuti Echo",
 }
 
 export default dict

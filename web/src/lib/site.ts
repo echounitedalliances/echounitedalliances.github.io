@@ -78,3 +78,30 @@ export const DIVISION_NOTES: Record<string, string> = {
 }
 
 export const discordConfigured = !SITE.discordInvite.includes('REPLACE-ME')
+
+/**
+ * The game itself, for the "What is The Airline Simulator?" section
+ * (components/GameIntro.tsx). The store links are the developer's own
+ * redirects, as their website uses them, so they keep working if a store
+ * listing moves. The figures are theirs too, as their site states them.
+ */
+export const GAME = {
+  name: 'The Airline Simulator',
+  website: 'https://airline-simulator.com',
+  ios: 'https://link.airline-simulator.com/ios',
+  android: 'https://link.airline-simulator.com/android',
+} as const
+
+/**
+ * In-game phone screenshots for the GameIntro phone frame, paths under
+ * public/. Empty, the section simply has no picture.
+ */
+export const GAME_SCREENSHOTS: string[] = []
+
+/** The alliance's own accounts, shown in the footer and named to search engines. */
+export const SOCIALS = [
+  { id: 'youtube', name: 'YouTube', url: 'https://www.youtube.com/@eccchoforlife' },
+  { id: 'tiktok', name: 'TikTok', url: 'https://www.tiktok.com/@eccchoforlife' },
+  { id: 'instagram', name: 'Instagram', url: 'https://www.instagram.com/eccchoforlife/' },
+  { id: 'reddit', name: 'Reddit', url: 'https://www.reddit.com/user/echo__alliances/' },
+] as const

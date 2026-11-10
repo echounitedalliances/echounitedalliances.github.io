@@ -865,6 +865,19 @@ const dict: Record<string, string> = {
   "Home": "홈",
   // Airline of the Week, 7 November 2026 (lib/alliance.ts).
   "From its hubs at Sapporo, Haneda and Narita, StarBorne Pacific (SPVH) flies an all-Airbus fleet of 340: 240 widebodies, led by 170 A350-1000s, across 597 routes to 62 countries.": "삿포로, 하네다, 나리타를 허브로 하는 StarBorne Pacific(SPVH)은 340대 전부 에어버스로 이루어진 기단을 운항합니다. 광동체 240대, 그중 A350-1000이 170대이며, 597개 노선으로 62개국을 잇습니다.",
+  // What is The Airline Simulator? (components/GameIntro.tsx), and the footer socials.
+  "New to the game?": "게임이 처음이신가요?",
+  "What is *The Airline Simulator*?": "*The Airline Simulator*란?",
+  "The Airline Simulator is an airline management game for iOS and Android phones. You build an airline of your own, choose its aircraft, paint its livery, and open routes between real airports, with passenger demand based on real-world data.": "The Airline Simulator는 iOS와 Android 휴대폰용 항공사 경영 게임입니다. 나만의 항공사를 세우고, 항공기를 고르고, 도장을 칠하고, 실제 공항 사이에 노선을 엽니다. 승객 수요는 실제 데이터를 바탕으로 합니다.",
+  "Every other airline in the game is run by another player. Alliances like Echo are how they fly together.": "게임 속 다른 항공사는 모두 다른 플레이어가 운영합니다. Echo 같은 얼라이언스는 그들이 함께 비행하는 방법입니다.",
+  "airliners from Airbus, Boeing, Bombardier and Embraer": "종의 에어버스, 보잉, 봄바디어, 엠브라에르 여객기",
+  "airports around the world": "곳의 전 세계 공항",
+  "livery types to paint your fleet in": "가지 기단 도장 유형",
+  "Download on the App Store": "App Store에서 다운로드",
+  "Get it on Google Play": "Google Play에서 받기",
+  "Visit the game’s website": "게임 공식 웹사이트 방문",
+  "Echo is a player-run alliance, not affiliated with the game’s developers.": "Echo는 플레이어가 운영하는 얼라이언스이며, 게임 개발사와는 관련이 없습니다.",
+  "Follow Echo": "Echo 팔로우",
 }
 
 export default dict

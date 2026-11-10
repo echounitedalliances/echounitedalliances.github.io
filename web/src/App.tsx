@@ -31,6 +31,7 @@ import MobileMenu from './components/MobileMenu'
 import EchoMark from './components/EchoMark'
 import Welcome from './components/Welcome'
 import NotFound from './pages/NotFound'
+import SocialLinks from './components/SocialLinks'
 import Announcement from './components/Announcement'
 import { useFixedPageTitle } from './lib/pageMeta'
 import MaintenanceLock from './components/MaintenanceLock'
@@ -395,6 +396,10 @@ function Shell({ children }: { children: React.ReactNode }) {
               </a>
             )}
           </div>
+        </div>
+        <div className="mx-auto flex max-w-[1180px] flex-wrap items-center gap-x-5 gap-y-3 px-5 pb-8 text-[12px] text-ink-faint">
+          <span>{t('Follow Echo')}</span>
+          <SocialLinks />
         </div>
       </footer>
 

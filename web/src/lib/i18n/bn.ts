@@ -865,6 +865,19 @@ const dict: Record<string, string> = {
   "Home": "হোম",
   // Airline of the Week, 7 November 2026 (lib/alliance.ts).
   "From its hubs at Sapporo, Haneda and Narita, StarBorne Pacific (SPVH) flies an all-Airbus fleet of 340: 240 widebodies, led by 170 A350-1000s, across 597 routes to 62 countries.": "সাপ্পোরো, হানেদা ও নারিতার হাব থেকে StarBorne Pacific (SPVH) ৩৪০টি বিমানের পুরোপুরি এয়ারবাস বহর চালায়: ২৪০টি ওয়াইডবডি, যার শীর্ষে ১৭০টি A350-1000, ৫৯৭টি রুটে ৬২টি দেশে।",
+  // What is The Airline Simulator? (components/GameIntro.tsx), and the footer socials.
+  "New to the game?": "গেমটিতে নতুন?",
+  "What is *The Airline Simulator*?": "*The Airline Simulator* কী?",
+  "The Airline Simulator is an airline management game for iOS and Android phones. You build an airline of your own, choose its aircraft, paint its livery, and open routes between real airports, with passenger demand based on real-world data.": "The Airline Simulator হলো iOS ও Android ফোনের জন্য একটি এয়ারলাইন ব্যবস্থাপনা গেম। আপনি নিজের এয়ারলাইন গড়বেন, বিমান বাছবেন, লিভারি রাঙাবেন, আর আসল বিমানবন্দরগুলোর মধ্যে রুট খুলবেন, যেখানে যাত্রীর চাহিদা বাস্তব তথ্যের ওপর ভিত্তি করে।",
+  "Every other airline in the game is run by another player. Alliances like Echo are how they fly together.": "গেমের অন্য প্রতিটি এয়ারলাইন চালান অন্য কোনো খেলোয়াড়। Echo-র মতো অ্যালায়েন্সের মাধ্যমেই তারা একসাথে ওড়েন।",
+  "airliners from Airbus, Boeing, Bombardier and Embraer": "এয়ারবাস, বোয়িং, বোম্বার্ডিয়ার ও এমব্রেয়ারের বিমান",
+  "airports around the world": "বিশ্বজুড়ে বিমানবন্দর",
+  "livery types to paint your fleet in": "আপনার বহরের জন্য লিভারির ধরন",
+  "Download on the App Store": "App Store থেকে ডাউনলোড করুন",
+  "Get it on Google Play": "Google Play থেকে পান",
+  "Visit the game’s website": "গেমের ওয়েবসাইট দেখুন",
+  "Echo is a player-run alliance, not affiliated with the game’s developers.": "Echo খেলোয়াড়দের চালানো একটি অ্যালায়েন্স, গেমের নির্মাতাদের সাথে এর কোনো সম্পর্ক নেই।",
+  "Follow Echo": "Echo-কে ফলো করুন",
 }
 
 export default dict

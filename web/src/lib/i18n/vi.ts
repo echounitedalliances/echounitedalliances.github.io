@@ -861,6 +861,19 @@ const dict: Record<string, string> = {
   "Home": "Trang chủ",
   // Airline of the Week, 7 November 2026 (lib/alliance.ts).
   "From its hubs at Sapporo, Haneda and Narita, StarBorne Pacific (SPVH) flies an all-Airbus fleet of 340: 240 widebodies, led by 170 A350-1000s, across 597 routes to 62 countries.": "Từ các trung tâm Sapporo, Haneda và Narita, StarBorne Pacific (SPVH) khai thác đội bay toàn Airbus gồm 340 chiếc: 240 chiếc thân rộng, dẫn đầu là 170 chiếc A350-1000, trên 597 đường bay tới 62 quốc gia.",
+  // What is The Airline Simulator? (components/GameIntro.tsx), and the footer socials.
+  "New to the game?": "Mới biết đến game?",
+  "What is *The Airline Simulator*?": "*The Airline Simulator* là gì?",
+  "The Airline Simulator is an airline management game for iOS and Android phones. You build an airline of your own, choose its aircraft, paint its livery, and open routes between real airports, with passenger demand based on real-world data.": "The Airline Simulator là game quản lý hãng bay trên điện thoại iOS và Android. Bạn tự xây dựng hãng bay của mình, chọn máy bay, sơn livery và mở đường bay giữa các sân bay có thật, với nhu cầu hành khách dựa trên dữ liệu thực tế.",
+  "Every other airline in the game is run by another player. Alliances like Echo are how they fly together.": "Mọi hãng bay khác trong game đều do người chơi khác điều hành. Các liên minh như Echo là cách họ cùng bay với nhau.",
+  "airliners from Airbus, Boeing, Bombardier and Embraer": "mẫu máy bay của Airbus, Boeing, Bombardier và Embraer",
+  "airports around the world": "sân bay trên khắp thế giới",
+  "livery types to paint your fleet in": "kiểu livery cho đội bay của bạn",
+  "Download on the App Store": "Tải về trên App Store",
+  "Get it on Google Play": "Tải trên Google Play",
+  "Visit the game’s website": "Xem trang web của game",
+  "Echo is a player-run alliance, not affiliated with the game’s developers.": "Echo là liên minh do người chơi điều hành, không liên kết với nhà phát triển game.",
+  "Follow Echo": "Theo dõi Echo",
 }
 
 export default dict
