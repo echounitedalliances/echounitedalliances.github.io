@@ -816,6 +816,7 @@ const dict: Record<string, string> = {
   "Admin dashboard": "Bảng điều khiển admin",
   "Admin applications, member websites, support tickets, and the rest of what an admin can do, all moved to their own page.": "Đơn xin làm admin, trang web thành viên, yêu cầu hỗ trợ, và những việc khác admin có thể làm, tất cả đã có trang riêng.",
   "Open the dashboard": "Mở bảng điều khiển",
+  "That Discord account does not have the Resonant role on the EUA server, so it was signed back out. Ask an admin for it, then try again.": "Tài khoản Discord đó không có vai trò Resonant trên server EUA, nên đã bị đăng xuất lại. Hãy xin admin cấp vai trò đó, rồi thử lại.",
   // Page titles and search descriptions (data/pageMeta.json, scripts/prerender.mjs).
   "Echo United Alliances · The Airline Simulator alliance": "Echo United Alliances · Liên minh trong The Airline Simulator",
   "{divisions} divisions, {airlines} airlines, one network. Echo United Alliances is an alliance in The Airline Simulator (TAS): browse every member carrier, route and departure, and join us on Discord.": "{divisions} division, {airlines} hãng bay, một mạng lưới. Echo United Alliances là một liên minh trong The Airline Simulator (TAS): xem mọi hãng bay thành viên, đường bay và chuyến bay, và tham gia cùng chúng tôi trên Discord.",

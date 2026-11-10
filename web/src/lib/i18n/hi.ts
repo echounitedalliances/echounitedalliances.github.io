@@ -820,6 +820,7 @@ const dict: Record<string, string> = {
   "Admin dashboard": "एडमिन डैशबोर्ड",
   "Admin applications, member websites, support tickets, and the rest of what an admin can do, all moved to their own page.": "एडमिन आवेदन, मेंबर वेबसाइट, सहायता टिकट, और एडमिन जो भी कर सकता है, वह सब अब अपने अलग पेज पर है।",
   "Open the dashboard": "डैशबोर्ड खोलें",
+  "That Discord account does not have the Resonant role on the EUA server, so it was signed back out. Ask an admin for it, then try again.": "उस Discord खाते के पास EUA सर्वर पर Resonant रोल नहीं है, इसलिए इसे फिर साइन आउट कर दिया गया। एडमिन से यह रोल मांगें, फिर फिर से कोशिश करें।",
   // Page titles and search descriptions (data/pageMeta.json, scripts/prerender.mjs).
   "Echo United Alliances · The Airline Simulator alliance": "Echo United Alliances · The Airline Simulator का एलायंस",
   "{divisions} divisions, {airlines} airlines, one network. Echo United Alliances is an alliance in The Airline Simulator (TAS): browse every member carrier, route and departure, and join us on Discord.": "{divisions} डिवीज़न, {airlines} एयरलाइंस, एक नेटवर्क। Echo United Alliances, The Airline Simulator (TAS) का एक एलायंस है: हर सदस्य एयरलाइन, रूट और प्रस्थान देखें, और Discord पर हमसे जुड़ें।",

@@ -764,6 +764,7 @@ const dict: Record<string, string> = {
   "Admin dashboard": "Admin dashboard",
   "Admin applications, member websites, support tickets, and the rest of what an admin can do, all moved to their own page.": "Mga admin application, member website, support ticket, at ang lahat ng pwedeng gawin ng admin, lahat na sa sariling pahina.",
   "Open the dashboard": "Buksan ang dashboard",
+  "That Discord account does not have the Resonant role on the EUA server, so it was signed back out. Ask an admin for it, then try again.": "Walang Resonant role ang Discord account na iyon sa EUA server, kaya na-sign out ulit ito. Hingi ng role sa admin, tapos subukan ulit.",
   // Page titles and search descriptions (data/pageMeta.json, scripts/prerender.mjs).
   "Echo United Alliances · The Airline Simulator alliance": "Echo United Alliances · Alyansa sa The Airline Simulator",
   "{divisions} divisions, {airlines} airlines, one network. Echo United Alliances is an alliance in The Airline Simulator (TAS): browse every member carrier, route and departure, and join us on Discord.": "{divisions} division, {airlines} airline, iisang network. Ang Echo United Alliances ay isang alyansa sa The Airline Simulator (TAS): tingnan ang bawat miyembrong airline, ruta at alis, at sumali sa amin sa Discord.",
