@@ -129,14 +129,14 @@ export const AIRLINE_OF_THE_WEEK: {
   blurb: string
   liveries: Livery[]
 } = {
-  division_code: 'rhea',
-  airline_slug: 'starborne_pacific',
+  division_code: 'uzuri',
+  airline_slug: 'altura',
   blurb:
-    'From its hubs at Sapporo, Haneda and Narita, StarBorne Pacific (SPVH) flies an all-Airbus fleet of 340: 240 widebodies, led by 170 A350-1000s, across 597 routes to 62 countries.',
+    'Flying out of Brazil for Echo Uzuri, Altura (AT) runs a 211-aircraft widebody fleet built around 91 Airbus A380-800s, the largest passenger jet flying, alongside 90 A350-1000ULRs.',
   liveries: [
     {
-      src: 'brand/liveries/starborne-pacific-a350.webp',
-      aircraft: 'Airbus A350-1000',
+      src: 'brand/liveries/altura-a380.webp',
+      aircraft: 'Airbus A380-800',
     },
   ],
 }

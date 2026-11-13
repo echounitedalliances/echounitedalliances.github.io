@@ -814,6 +814,7 @@ const dict: Record<string, string> = {
   "Status": "Status",
   // Airline of the Week, 7 November 2026 (lib/alliance.ts).
   "From its hubs at Sapporo, Haneda and Narita, StarBorne Pacific (SPVH) flies an all-Airbus fleet of 340: 240 widebodies, led by 170 A350-1000s, across 597 routes to 62 countries.": "Mula sa mga hub nito sa Sapporo, Haneda at Narita, nagpapalipad ang StarBorne Pacific (SPVH) ng purong Airbus na fleet na 340: 240 widebody, pinangungunahan ng 170 A350-1000, sa 597 ruta papunta sa 62 bansa.",
+  "Flying out of Brazil for Echo Uzuri, Altura (AT) runs a 211-aircraft widebody fleet built around 91 Airbus A380-800s, the largest passenger jet flying, alongside 90 A350-1000ULRs.": "Lumilipad mula Brazil para sa Echo Uzuri, pinapatakbo ng Altura (AT) ang 211 widebody na eroplano, pangunahan ng 91 Airbus A380-800, ang pinakamalaking passenger jet na lumilipad, kasama ang 90 A350-1000ULR.",
 }
 
 export default dict
