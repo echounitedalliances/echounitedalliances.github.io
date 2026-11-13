@@ -42,8 +42,13 @@ const DIVISION_URL = Object.fromEntries(
     (m) => [m[1], m[2]],
   ),
 )
-// The Discord invite, from lib/site.ts, for the organisation details below.
-const DISCORD = readFileSync(join(webDir, 'src/lib/site.ts'), 'utf8').match(/discordInvite:\s*'([^']+)'/)?.[1]
+// The Discord invite, the alliance's other accounts and the game's links, from
+// lib/site.ts, for the organisation details below.
+const siteTs = readFileSync(join(webDir, 'src/lib/site.ts'), 'utf8')
+const DISCORD = siteTs.match(/discordInvite:\s*'([^']+)'/)?.[1]
+const SOCIAL_URLS = [...(siteTs.match(/export const SOCIALS = \[([\s\S]*?)\]/)?.[1] ?? '').matchAll(/url:\s*'([^']+)'/g)].map((m) => m[1])
+const GAME_BLOCK = siteTs.match(/export const GAME = \{([\s\S]*?)\}/)?.[1] ?? ''
+const gameLink = (key) => GAME_BLOCK.match(new RegExp(`${key}:\\s*'([^']+)'`))?.[1]
 const ORGANISATION = [
   {
     '@context': 'https://schema.org',
@@ -54,9 +59,20 @@ const ORGANISATION = [
     logo: `${ORIGIN}/brand/echo-icon-512.png`,
     description: 'An alliance of player-run airlines in The Airline Simulator.',
     foundingDate: '2026-03-24',
-    ...(DISCORD && !DISCORD.includes('REPLACE-ME') ? { sameAs: [DISCORD] } : {}),
+    sameAs: [...(DISCORD && !DISCORD.includes('REPLACE-ME') ? [DISCORD] : []), ...SOCIAL_URLS],
   },
   { '@context': 'https://schema.org', '@type': 'WebSite', name: SITE, url: `${ORIGIN}/` },
+  // The game the alliance plays, as the home page's "What is The Airline
+  // Simulator?" section introduces it, with its store links.
+  {
+    '@context': 'https://schema.org',
+    '@type': 'VideoGame',
+    name: 'The Airline Simulator',
+    url: gameLink('website'),
+    gamePlatform: ['iOS', 'Android'],
+    applicationCategory: 'GameApplication',
+    sameAs: [gameLink('ios'), gameLink('android')].filter(Boolean),
+  },
 ]
 
 const divisionPath = (code, slug) => `/d/${DIVISION_URL[code] ?? code}${slug ? `/${slug}` : ''}`

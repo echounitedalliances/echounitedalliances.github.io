@@ -6,6 +6,7 @@ import { AirlineCard, NotConfigured } from '../components/ui'
 import DivisionTile from '../components/DivisionTile'
 import RouteCanvas from '../components/home/RouteCanvas'
 import AirlineOfTheWeek from '../components/home/AirlineOfTheWeek'
+import GameIntro from '../components/GameIntro'
 import { useMemberLanding } from '../components/Audience'
 import { isConfigured, supabase } from '../lib/supabase'
 import type { Airline, Arc, Division } from '../lib/types'
@@ -190,6 +191,13 @@ export default function Home() {
           <span>{t('Every timezone')}</span><i>·</i>
           <span>{SLOGAN}</span><i>·</i>
         </Marquee>
+      </div>
+
+      {/* ---------- the game, for anyone who has never played it ---------- */}
+      <div className="home-section">
+        <div className="home-wrap">
+          <GameIntro />
+        </div>
       </div>
 
       {/* ---------- the headline benefit ---------- */}

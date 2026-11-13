@@ -867,6 +867,19 @@ const dict: Record<string, string> = {
   // Airline of the Week, 7 November 2026 (lib/alliance.ts).
   "From its hubs at Sapporo, Haneda and Narita, StarBorne Pacific (SPVH) flies an all-Airbus fleet of 340: 240 widebodies, led by 170 A350-1000s, across 597 routes to 62 countries.": "StarBorne Pacific（SPVH）以札幌、羽田和成田为枢纽，运营一支由 340 架空客飞机组成的机队：其中 240 架宽体机，以 170 架 A350-1000 为主力，飞行 597 条航线，通往 62 个国家。",
   "Flying out of Brazil for Echo Uzuri, Altura (AT) runs a 211-aircraft widebody fleet built around 91 Airbus A380-800s, the largest passenger jet flying, alongside 90 A350-1000ULRs.": "Altura(AT)代表 Echo Uzuri 从巴西出发,运营着由 211 架宽体机组成的机队,以 91 架目前在役最大的客机——空客 A380-800 为主力,再加上 90 架 A350-1000ULR。",
+  // What is The Airline Simulator? (components/GameIntro.tsx), and the footer socials.
+  "New to the game?": "刚接触这款游戏？",
+  "What is *The Airline Simulator*?": "什么是 *The Airline Simulator*？",
+  "The Airline Simulator is an airline management game for iOS and Android phones. You build an airline of your own, choose its aircraft, paint its livery, and open routes between real airports, with passenger demand based on real-world data.": "The Airline Simulator 是一款适用于 iOS 和 Android 手机的航空公司经营游戏。你可以创建自己的航空公司，挑选机型，设计涂装，在真实机场之间开通航线，旅客需求基于真实世界的数据。",
+  "Every other airline in the game is run by another player. Alliances like Echo are how they fly together.": "游戏中的其他每一家航空公司都由另一位玩家经营。像 Echo 这样的联盟，就是大家一起飞行的方式。",
+  "airliners from Airbus, Boeing, Bombardier and Embraer": "款来自空客、波音、庞巴迪和巴西航空工业的客机",
+  "airports around the world": "个遍布全球的机场",
+  "livery types to paint your fleet in": "种涂装样式供你装扮机队",
+  "Download on the App Store": "在 App Store 下载",
+  "Get it on Google Play": "在 Google Play 上获取",
+  "Visit the game’s website": "访问游戏官网",
+  "Echo is a player-run alliance, not affiliated with the game’s developers.": "Echo 是由玩家运营的联盟，与游戏开发者没有隶属关系。",
+  "Follow Echo": "关注 Echo",
 }
 
 export default dict

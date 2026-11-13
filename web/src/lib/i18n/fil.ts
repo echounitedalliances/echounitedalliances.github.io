@@ -815,6 +815,19 @@ const dict: Record<string, string> = {
   // Airline of the Week, 7 November 2026 (lib/alliance.ts).
   "From its hubs at Sapporo, Haneda and Narita, StarBorne Pacific (SPVH) flies an all-Airbus fleet of 340: 240 widebodies, led by 170 A350-1000s, across 597 routes to 62 countries.": "Mula sa mga hub nito sa Sapporo, Haneda at Narita, nagpapalipad ang StarBorne Pacific (SPVH) ng purong Airbus na fleet na 340: 240 widebody, pinangungunahan ng 170 A350-1000, sa 597 ruta papunta sa 62 bansa.",
   "Flying out of Brazil for Echo Uzuri, Altura (AT) runs a 211-aircraft widebody fleet built around 91 Airbus A380-800s, the largest passenger jet flying, alongside 90 A350-1000ULRs.": "Lumilipad mula Brazil para sa Echo Uzuri, pinapatakbo ng Altura (AT) ang 211 widebody na eroplano, pangunahan ng 91 Airbus A380-800, ang pinakamalaking passenger jet na lumilipad, kasama ang 90 A350-1000ULR.",
+  // What is The Airline Simulator? (components/GameIntro.tsx), and the footer socials.
+  "New to the game?": "Bago sa laro?",
+  "What is *The Airline Simulator*?": "Ano ang *The Airline Simulator*?",
+  "The Airline Simulator is an airline management game for iOS and Android phones. You build an airline of your own, choose its aircraft, paint its livery, and open routes between real airports, with passenger demand based on real-world data.": "Ang The Airline Simulator ay isang airline management game para sa mga iOS at Android phone. Bubuo ka ng sarili mong airline, pipili ng mga eroplano nito, magdidisenyo ng livery, at magbubukas ng mga ruta sa pagitan ng mga totoong paliparan, na may demand ng pasahero batay sa totoong datos.",
+  "Every other airline in the game is run by another player. Alliances like Echo are how they fly together.": "Ang bawat ibang airline sa laro ay pinapatakbo ng ibang manlalaro. Ang mga alyansa gaya ng Echo ang paraan nila para lumipad nang magkakasama.",
+  "airliners from Airbus, Boeing, Bombardier and Embraer": "eroplano mula sa Airbus, Boeing, Bombardier at Embraer",
+  "airports around the world": "paliparan sa buong mundo",
+  "livery types to paint your fleet in": "uri ng livery para sa iyong fleet",
+  "Download on the App Store": "I-download sa App Store",
+  "Get it on Google Play": "Kunin ito sa Google Play",
+  "Visit the game’s website": "Bisitahin ang website ng laro",
+  "Echo is a player-run alliance, not affiliated with the game’s developers.": "Ang Echo ay alyansang pinapatakbo ng mga manlalaro, at hindi kaanib ng mga developer ng laro.",
+  "Follow Echo": "Sundan ang Echo",
 }
 
 export default dict
