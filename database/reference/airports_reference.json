@@ -899,6 +899,16 @@
   "tz": "America/Lima",
   "tz_source": "dataset"
  },
+ "ARK": {
+  "city": "Arusha",
+  "country": "TZ",
+  "iata": "ARK",
+  "lat": -3.3677899837493896,
+  "lon": 36.63330078125,
+  "name": "Arusha Airport",
+  "tz": "Africa/Dar_es_Salaam",
+  "tz_source": "dataset"
+ },
  "ARM": {
   "city": "Armidale",
   "country": "AU",
@@ -4979,6 +4989,16 @@
   "tz": "Australia/Darwin",
   "tz_source": "dataset"
  },
+ "DSE": {
+  "city": "Dessie",
+  "country": "ET",
+  "iata": "DSE",
+  "lat": 11.10975,
+  "lon": 39.725911,
+  "name": "Kombolcha Airport",
+  "tz": "Africa/Addis_Ababa",
+  "tz_source": "dataset"
+ },
  "DSM": {
   "city": "Des Moines",
   "country": "US",
@@ -5547,16 +5567,6 @@
   "lon": 35.014116,
   "name": "Ramon International Airport",
   "tz": "Asia/Amman",
-  "tz_source": "dataset"
- },
- "ETR": {
-  "city": "Santa Rosa",
-  "country": "EC",
-  "iata": "ETR",
-  "lat": -3.441986,
-  "lon": -79.996957,
-  "name": "Santa Rosa - Artillery Colonel Victor Larrea International Airport",
-  "tz": "America/Guayaquil",
   "tz_source": "dataset"
  },
  "EUG": {
@@ -8739,16 +8749,6 @@
   "tz": "America/Denver",
   "tz_source": "dataset"
  },
- "JAE": {
-  "city": "Jaén",
-  "country": "PE",
-  "iata": "JAE",
-  "lat": -5.59248,
-  "lon": -78.774002,
-  "name": "Shumba Airport",
-  "tz": "America/Lima",
-  "tz_source": "dataset"
- },
  "JAF": {
   "city": "Jaffna",
   "country": "LK",
@@ -11209,16 +11209,6 @@
   "tz": "Asia/Bangkok",
   "tz_source": "dataset"
  },
- "LOH": {
-  "city": "La Toma (Catamayo)",
-  "country": "EC",
-  "iata": "LOH",
-  "lat": -3.995606,
-  "lon": -79.371902,
-  "name": "Ciudad de Catamayo Airport",
-  "tz": "America/Guayaquil",
-  "tz_source": "dataset"
- },
  "LOP": {
   "city": "Mataram (Pujut, Lombok Tengah)",
   "country": "ID",
@@ -12927,6 +12917,16 @@
   "lon": 116.097857,
   "name": "Meizhou Meixian Changgangji International Airport",
   "tz": "Asia/Shanghai",
+  "tz_source": "dataset"
+ },
+ "MYD": {
+  "city": "Malindi",
+  "country": "KE",
+  "iata": "MYD",
+  "lat": -3.22931,
+  "lon": 40.1017,
+  "name": "Malindi International Airport",
+  "tz": "Africa/Nairobi",
   "tz_source": "dataset"
  },
  "MYJ": {
@@ -15369,6 +15369,16 @@
   "tz": "Europe/Prague",
   "tz_source": "dataset"
  },
+ "PRI": {
+  "city": "Praslin Island",
+  "country": "SC",
+  "iata": "PRI",
+  "lat": -4.319256,
+  "lon": 55.691561,
+  "name": "Praslin Island Airport",
+  "tz": "Indian/Mahe",
+  "tz_source": "dataset"
+ },
  "PRN": {
   "city": "Prishtina",
   "country": "XK",
@@ -15677,6 +15687,16 @@
   "lon": 108.01699829101562,
   "name": "Pleiku Airport",
   "tz": "Asia/Ho_Chi_Minh",
+  "tz_source": "dataset"
+ },
+ "PZB": {
+  "city": "Pietermaritzburg",
+  "country": "ZA",
+  "iata": "PZB",
+  "lat": -29.649000167799997,
+  "lon": 30.3987007141,
+  "name": "Pietermaritzburg Airport",
+  "tz": "Africa/Johannesburg",
   "tz_source": "dataset"
  },
  "PZI": {
@@ -18759,6 +18779,16 @@
   "tz": "America/Mexico_City",
   "tz_source": "dataset"
  },
+ "TLE": {
+  "city": "Toliara",
+  "country": "MG",
+  "iata": "TLE",
+  "lat": -23.3834,
+  "lon": 43.7285,
+  "name": "Toliara Airport",
+  "tz": "Indian/Antananarivo",
+  "tz_source": "dataset"
+ },
  "TLH": {
   "city": "Tallahassee",
   "country": "US",
@@ -19297,6 +19327,16 @@
   "lon": 121.733150482,
   "name": "Tuguegarao Airport",
   "tz": "Asia/Manila",
+  "tz_source": "dataset"
+ },
+ "TUI": {
+  "city": "Turaif",
+  "country": "SA",
+  "iata": "TUI",
+  "lat": 31.692188,
+  "lon": 38.731544,
+  "name": "Turaif Domestic Airport",
+  "tz": "Asia/Riyadh",
   "tz_source": "dataset"
  },
  "TUL": {

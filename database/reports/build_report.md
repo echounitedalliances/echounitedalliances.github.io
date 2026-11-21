@@ -1,37 +1,31 @@
 # Echo United Alliances -- build report
 
-Generated 2026-10-30 13:48 UTC by `database/scripts/build_database.py`.
+Generated 2026-11-21 08:33 UTC by `database/scripts/build_database.py`.
 
 ## Row counts
 
 | table | rows |
 |---|---:|
-| airlines | 708 |
-| airports | 2,215 |
+| airlines | 762 |
+| airports | 2,219 |
 | aircraft_models | 79 |
-| aircraft | 269,763 |
-| flights | 466,276 |
-| flight_assignments | 631,652 |
-| airline_hubs | 4,127 |
-| airline_stats | 44 |
+| aircraft | 275,885 |
+| flights | 519,427 |
+| flight_assignments | 700,607 |
+| airline_hubs | 4,479 |
+| airline_stats | 42 |
 
 ## Data conditions handled
 
-- 7,507 flights depart outside the 0-86399s day and were split into a time of day plus a signed day offset (the raw value is `departure_day_offset * 86400 + departure_daily_seconds`).
-- 35 aircraft have cabin ratios that do not sum to 1.0; they are loaded as exported and flagged by `v_aircraft_ratio_anomalies`.
-- 4 individual cabin ratios carried float noise just outside [0,1] (worst: -1.37e-17) and were snapped to the boundary.
+- 8,777 flights depart outside the 0-86399s day and were split into a time of day plus a signed day offset (the raw value is `departure_day_offset * 86400 + departure_daily_seconds`).
+- 0 aircraft have cabin ratios that do not sum to 1.0; they are loaded as exported and flagged by `v_aircraft_ratio_anomalies`.
+- 0 individual cabin ratios carried float noise just outside [0,1] (worst: -1.37e-17) and were snapped to the boundary.
 
 ### fleet
 
 - proxima/baja_signature: duplicate registration N667BS inside one fleet
 - proxima/baja_signature: duplicate registration N444BS inside one fleet
 - proxima/baja_signature: duplicate registration N761BS inside one fleet
-- proxima/flylux_arabia: duplicate registration A7-KLA inside one fleet
-- proxima/flylux_arabia: duplicate registration A7-KLA inside one fleet
-- proxima/flylux_arabia: duplicate registration A7-KLB inside one fleet
-- proxima/flylux_arabia: duplicate registration A7-KLA inside one fleet
-- proxima/flylux_arabia: duplicate registration A7-KLB inside one fleet
-- proxima/flylux_arabia: duplicate registration A7-KLB inside one fleet
 - proxima/forza: duplicate registration VN-A287 inside one fleet
 - proxima/skyline_west: duplicate registration N244SW inside one fleet
 - proxima/skyline_west: duplicate registration N279SW inside one fleet
@@ -63,20 +57,26 @@ Generated 2026-10-30 13:48 UTC by `database/scripts/build_database.py`.
 - aegis/nouvelleair: duplicate registration N383NA inside one fleet
 - aegis/nouvelleair: duplicate registration N976NA inside one fleet
 - aegis/nouvelleair: duplicate registration N482NA inside one fleet
-- ... and 243 more
+- aegis/nouvelleair: duplicate registration N594NA inside one fleet
+- aegis/nouvelleair: duplicate registration N747NA inside one fleet
+- aegis/nouvelleair: duplicate registration N419NA inside one fleet
+- aegis/nouvelleair: duplicate registration N813NA inside one fleet
+- aegis/nouvelleair: duplicate registration N740NA inside one fleet
+- aegis/nouvelleair: duplicate registration N454NA inside one fleet
+- ... and 248 more
 
 ### hubs
 
-- 699 airlines had no hubAirports in their roster; their hubs were derived from the base airports of their fleet
+- 750 airlines had no hubAirports in their roster; their hubs were derived from the base airports of their fleet
 
 ### identity
 
-- 624 airlines kept their carrier_code, 84 were assigned one; 490 of 708 carry a division-qualified code because the game code is shared or was once
+- 647 airlines kept their carrier_code, 115 were assigned one; 524 of 762 carry a division-qualified code because the game code is shared or was once
 - proxima/unknown_81846bbb: airline has no name in the export (uid 81846bbb-d6db-4c13-a507-7a1fd8df0cf8)
 
 ### livery
 
-- 626 of 708 liveries yield a brand colour; the rest fly white and fall back to the division accent
+- 676 of 762 liveries yield a brand colour; the rest fly white and fall back to the division accent
 
 ### roster
 
@@ -93,10 +93,10 @@ Generated 2026-10-30 13:48 UTC by `database/scripts/build_database.py`.
 
 ### schedule
 
-- 57 (airline, flight number, origin, destination) combinations appear on more than one flight_id - players may file the same number twice, so that tuple is indexed but not unique
-- all 14884 stopover children resolve to a known flight
-- 8,714 routes are opened in the game with no flight on them (airline_unflown_routes); they count as routes, nothing sells
+- 68 (airline, flight number, origin, destination) combinations appear on more than one flight_id - players may file the same number twice, so that tuple is indexed but not unique
+- all 16681 stopover children resolve to a known flight
+- 8,967 routes are opened in the game with no flight on them (airline_unflown_routes); they count as routes, nothing sells
 
 ### stats
 
-- member stats exist for 44 of 708 airlines (only Aegis exported members_stats.json)
+- member stats exist for 42 of 762 airlines (only Aegis exported members_stats.json)

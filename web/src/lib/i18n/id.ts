@@ -873,6 +873,8 @@ const dict: Record<string, string> = {
   "Visit the game’s website": "Kunjungi situs web game ini",
   "Echo is a player-run alliance, not affiliated with the game’s developers.": "Echo adalah aliansi yang dijalankan pemain, tidak berafiliasi dengan pengembang game.",
   "Follow Echo": "Ikuti Echo",
+  // Airline of the Week, 21 November 2026 (lib/alliance.ts).
+  "From its hub at Taipei Taoyuan, Formosa (FM) of Echo Lior flies a 278-aircraft fleet, led by Airbus A350s and Boeing 777-9s, across 157 routes to 158 destinations.": "Dari hub-nya di Taipei Taoyuan, Formosa (FM) dari Echo Lior menerbangkan armada 278 pesawat, dipimpin Airbus A350 dan Boeing 777-9, di 157 rute ke 158 destinasi.",
 }
 
 export default dict

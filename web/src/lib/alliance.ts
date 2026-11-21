@@ -129,14 +129,14 @@ export const AIRLINE_OF_THE_WEEK: {
   blurb: string
   liveries: Livery[]
 } = {
-  division_code: 'uzuri',
-  airline_slug: 'altura',
+  division_code: 'proxima',
+  airline_slug: 'formosa',
   blurb:
-    'Flying out of Brazil for Echo Uzuri, Altura (AT) runs a 211-aircraft widebody fleet built around 91 Airbus A380-800s, the largest passenger jet flying, alongside 90 A350-1000ULRs.',
+    'From its hub at Taipei Taoyuan, Formosa (FM) of Echo Lior flies a 278-aircraft fleet, led by Airbus A350s and Boeing 777-9s, across 157 routes to 158 destinations.',
   liveries: [
     {
-      src: 'brand/liveries/altura-a380.webp',
-      aircraft: 'Airbus A380-800',
+      src: 'brand/liveries/formosa-a350.webp',
+      aircraft: 'Airbus A350-1000',
     },
   ],
 }

@@ -880,6 +880,8 @@ const dict: Record<string, string> = {
   "Visit the game’s website": "게임 공식 웹사이트 방문",
   "Echo is a player-run alliance, not affiliated with the game’s developers.": "Echo는 플레이어가 운영하는 얼라이언스이며, 게임 개발사와는 관련이 없습니다.",
   "Follow Echo": "Echo 팔로우",
+  // Airline of the Week, 21 November 2026 (lib/alliance.ts).
+  "From its hub at Taipei Taoyuan, Formosa (FM) of Echo Lior flies a 278-aircraft fleet, led by Airbus A350s and Boeing 777-9s, across 157 routes to 158 destinations.": "Echo Lior 소속 Formosa(FM)는 타이베이 타오위안을 허브로 278대의 기단을 운항하며, 에어버스 A350과 보잉 777-9를 주력으로 157개 노선에서 158개 목적지를 잇습니다.",
 }
 
 export default dict
