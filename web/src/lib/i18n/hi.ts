@@ -882,6 +882,8 @@ const dict: Record<string, string> = {
   "Follow Echo": "Echo को फ़ॉलो करें",
   // Airline of the Week, 21 November 2026 (lib/alliance.ts).
   "From its hub at Taipei Taoyuan, Formosa (FM) of Echo Lior flies a 278-aircraft fleet, led by Airbus A350s and Boeing 777-9s, across 157 routes to 158 destinations.": "ताइपे ताओयुआन के अपने हब से Echo Lior की Formosa (FM) 278 विमानों का बेड़ा उड़ाती है, जिनमें सबसे आगे Airbus A350 और Boeing 777-9 हैं, 157 रूट पर 158 गंतव्यों तक।",
+  // Trainee division leaders, 21 November 2026 (lib/alliance.ts).
+  "Trainee leader": "प्रशिक्षु लीडर",
 }
 
 export default dict

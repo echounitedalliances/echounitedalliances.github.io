@@ -878,6 +878,8 @@ const dict: Record<string, string> = {
   "Follow Echo": "Theo dõi Echo",
   // Airline of the Week, 21 November 2026 (lib/alliance.ts).
   "From its hub at Taipei Taoyuan, Formosa (FM) of Echo Lior flies a 278-aircraft fleet, led by Airbus A350s and Boeing 777-9s, across 157 routes to 158 destinations.": "Từ trung tâm Đào Viên (Đài Bắc), Formosa (FM) của Echo Lior khai thác đội bay 278 chiếc, dẫn đầu là Airbus A350 và Boeing 777-9, trên 157 đường bay tới 158 điểm đến.",
+  // Trainee division leaders, 21 November 2026 (lib/alliance.ts).
+  "Trainee leader": "Leader tập sự",
 }
 
 export default dict

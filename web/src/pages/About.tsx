@@ -162,7 +162,9 @@ export default function About() {
                           {leader.name}
                           <LeaderMail leader={leader} />
                         </p>
-                        <p className="mono mt-1 text-[12px] text-ink-faint">@{leader.discord}</p>
+                        <p className="mono mt-1 text-[12px] text-ink-faint">
+                          {leader.trainee && <>{t('Trainee leader')} · </>}@{leader.discord}
+                        </p>
                       </div>
                     ))}
                   </div>

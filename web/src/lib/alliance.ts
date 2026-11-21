@@ -24,6 +24,8 @@ export type Leader = {
   name: string
   /** Discord handle, verbatim — some legitimately begin with a dot. */
   discord: string
+  /** A trainee leader, learning the role; shown as such beside the name. */
+  trainee?: boolean
 }
 
 /**
@@ -32,25 +34,25 @@ export type Leader = {
  *
  * One row per leader, not per division, because the two do not match one to
  * one in either direction: a division can be led by more than one person, and
- * one person can lead more than one division -- Ahnaf currently leads
- * Aura, Elion, Lior (since October 2026, after Rust, when it was still called
- * Proxima) and Uzuri, the tenth division, opened 30 October 2026. That is
+ * one person can lead more than one division -- since 21 November 2026 Ahnaf
+ * leads Eos and Lior, and Naofum leads Kyra and Aegis, while Uzuri, Aura and
+ * Elion are run by trainee leaders. That is
  * why nothing here counts the leaders and calls it the number of divisions;
  * the About page groups by division_code instead.
  */
 export const LEADERS: Leader[] = [
   { division_code: 'kyra', name: 'Naofum', discord: 'w4leste' },
-  { division_code: 'aegis', name: 'DCC', discord: 'creativator_2001' },
+  { division_code: 'aegis', name: 'Naofum', discord: 'w4leste' },
   { division_code: 'elysium', name: 'Top G', discord: 'jet_gooning' },
   // Lior. Its code is still 'proxima': renamed 30 October 2026, the code is
   // the URL and the roster folder, so only the displayed name changed.
   { division_code: 'proxima', name: 'Ahnaf', discord: '_ahnafabrar_' },
   { division_code: 'rhea', name: 'Reiner', discord: '_erwinsmith' },
   { division_code: 'vilis', name: 'Yukai', discord: 'ykw_1009' },
-  { division_code: 'elion', name: 'Ahnaf', discord: '_ahnafabrar_' },
-  { division_code: 'aura', name: 'Ahnaf', discord: '_ahnafabrar_' },
-  { division_code: 'eos', name: 'Falcco', discord: '.fyxd' },
-  { division_code: 'uzuri', name: 'Ahnaf', discord: '_ahnafabrar_' },
+  { division_code: 'elion', name: 'Cancho', discord: 'dpd_613', trainee: true },
+  { division_code: 'aura', name: 'PitStopVelocity', discord: 'pitstopvelocity', trainee: true },
+  { division_code: 'eos', name: 'Ahnaf', discord: '_ahnafabrar_' },
+  { division_code: 'uzuri', name: 'May', discord: 'maybeeezz_', trainee: true },
 ]
 
 /**
@@ -63,13 +65,14 @@ export const LEADERS: Leader[] = [
  * line here behaves the same way.
  */
 export const LEADER_EMAILS: Record<string, string> = {
-  w4leste: '', // Naofum, Kyra
-  creativator_2001: '', // DCC, Aegis
+  w4leste: 'naofum@echoalliances.com', // Naofum, Kyra and Aegis
   jet_gooning: '', // Top G, Elysium
-  _ahnafabrar_: '', // Ahnaf, Lior, Elion, Aura and Uzuri
+  _ahnafabrar_: '', // Ahnaf, Eos and Lior
   _erwinsmith: '', // Reiner, Rhea
   ykw_1009: '', // Yukai, Vilis
-  '.fyxd': '', // Falcco, Eos
+  maybeeezz_: '', // May, Uzuri (trainee)
+  pitstopvelocity: '', // PitStopVelocity, Aura (trainee)
+  dpd_613: '', // Cancho, Elion (trainee)
 }
 
 export const SLOGAN = 'Home of the Excellence'

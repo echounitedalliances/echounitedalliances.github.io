@@ -54,7 +54,7 @@ export default function DivisionTile({
           <span className="div-name">{d.division_name}</span>
           {leaders.length > 0 && (
             <span className="div-lead">
-              <small>{t('Led by')}</small>{' '}
+              <small>{leaders.every((l) => l.trainee) ? t('Trainee leader') : t('Led by')}</small>{' '}
               {leaders.map((l, i) => (
                 <span key={l.discord}>
                   {i > 0 && ' & '}
