@@ -56,8 +56,11 @@ Use-EchoCredentials
 # Relations the site reads, with the smallest row count that means "populated".
 # A matview that exists but holds nothing is the same outage as a missing one.
 $relations = @(
-    @{ name = 'mv_leg_departures';       min = 100000 },  # a view over mv_legs since 2 Oct 2026
-    @{ name = 'mv_legs';                 min = 100000 },
+    # mv_legs is empty between weekly builds since 21 Nov 2026 (51): the
+    # boards and timetables are files in Storage, checked further down, and
+    # what else the site read from the legs is in these.
+    @{ name = 'route_pairs';             min = 10000  },
+    @{ name = 'airline_leg_facts';       min = 500    },
     @{ name = 'aircraft_idle';           min = 100    },  # idle airframes, counted per airline and type
     @{ name = 'mv_route_adjacency';      min = 10000  },
     @{ name = 'mv_airport_connectivity'; min = 1000   },
@@ -74,7 +77,6 @@ $relations = @(
 
 # One representative call per RPC the site makes, and the least it may return.
 $calls = @(
-    @{ name = 'board_departures';   sql = "select count(*) from public.board_departures('SGN', 8, 'UTC', now())"; min = 1 },
     @{ name = 'search_airports';    sql = "select count(*) from public.search_airports('lon', 5)";                min = 1 },
     @{ name = 'search_places';      sql = "select count(*) from public.search_places('paris', 5)";                min = 1 },
     @{ name = 'search_airlines';    sql = "select count(*) from public.search_airlines(null, null, null, 5, 0)";  min = 1 },
@@ -138,6 +140,35 @@ foreach ($c in $calls) {
 # turnaround, and re-running it on its own puts that back without an error:
 # every return leg over 1,500 km goes back to being published 30 to 90 minutes
 # early. 31_turnaround_by_distance.sql is what puts it right.
+# The departure boards, timetables and airport carrier lists, as the site
+# fetches them: public files in Storage, written by export_schedule.py.
+Write-Output "schedule files"
+$scheduleBase = 'https://ehthjudmsptplumafglo.supabase.co/storage/v1/object/public/schedule/'
+try {
+    $manifest = Invoke-RestMethod -UseBasicParsing -Uri ($scheduleBase + 'manifest.json')
+    $age = (Get-Date).ToUniversalTime() - [datetime]::Parse($manifest.built_at).ToUniversalTime()
+    if ($manifest.airports -lt 1000 -or $manifest.airlines -lt 500) {
+        Write-Output ("  EMPTY    manifest  {0} airports, {1} airlines" -f $manifest.airports, $manifest.airlines)
+        $failures.Add("the schedule files cover only $($manifest.airports) airports and $($manifest.airlines) airlines")
+    } elseif ($age.TotalDays -gt 8) {
+        Write-Output ("  STALE    manifest  built {0}" -f $manifest.built_at)
+        $failures.Add("the schedule files were built $($manifest.built_at) -- run export_schedule.py")
+    } else {
+        Write-Output ("  ok       manifest  {0} airports, {1} airlines, built {2}" -f $manifest.airports, $manifest.airlines, $manifest.built_at)
+    }
+    $busiest = Invoke-Scalar "select iata_code from public.mv_airport_directory order by weekly_departures desc limit 1"
+    $board = Invoke-RestMethod -UseBasicParsing -Uri ($scheduleBase + "airports/$busiest/board.json")
+    if ($board.slots.Count -lt 100) {
+        Write-Output ("  EMPTY    board at {0}  {1} slots" -f $busiest, $board.slots.Count)
+        $failures.Add("the board file at $busiest holds $($board.slots.Count) slots")
+    } else {
+        Write-Output ("  ok       board at {0}  {1} slots" -f $busiest, $board.slots.Count)
+    }
+} catch {
+    Write-Output "  FAILED   schedule files  $($_.Exception.Message)"
+    $failures.Add("the schedule files could not be read: $($_.Exception.Message)")
+}
+
 Write-Output "timetable rule"
 $ground = Invoke-Scalar "select public.echo_ground_minutes(22, 12043.0)::int"
 $uses = Invoke-Scalar @"

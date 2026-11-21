@@ -36,6 +36,12 @@
          follows immediately, because until it has run the site is reading
          last week's views over this week's tables.
 
+      7b. Writes the departure boards, timetables and airport carrier lists
+         to Supabase Storage (export_schedule.py; the S3 keys are in .env),
+         then empties the 209 MB of legs they came from (4_finish.sql). Since
+         21 November 2026 the free plan only holds the legs, and
+         flight_assignments, while this script runs.
+
       8. Writes the new carrier count into web/index.html, the one place the
          figure cannot be read live: it is what a link preview shows.
 
@@ -171,6 +177,17 @@ if ((Invoke-Native 'resolving new airports' { & $python database/scripts/backfil
 Invoke-Sql 'staging the scrape (nothing live changes)' 'database/weekly/1_stage.sql'
 Invoke-Sql 'merging into the live tables'              'database/weekly/2_merge.sql'
 Invoke-Sql 'rebuilding what the site reads'            'database/weekly/3_refresh.sql'
+
+# The departure boards, timetables and airport carrier lists go to Storage as
+# files, and only once they are there is mv_legs emptied: until then it is
+# what they are written from (51_schedule_summaries.sql). A failed upload
+# leaves the site on last week's files and the database 209 MB fuller than
+# usual, never with a board that has nothing to read.
+if ((Invoke-Native 'writing the boards and timetables to Storage' { & $python database/scripts/export_schedule.py }) -ne 0) {
+    throw ("The upload failed, so mv_legs was left populated. Fix it (the keys are in .env), then run: " +
+           "python database/scripts/export_schedule.py --reuse ; and then database/weekly/4_finish.sql")
+}
+Invoke-Sql 'emptying the legs'                         'database/weekly/4_finish.sql'
 
 # ------------------------------------------------------------ link preview
 $previous = $ErrorActionPreference

@@ -148,7 +148,11 @@ $files += @('04_views.sql', '05_reservations.sql', '06_inventory.sql',
             # Idle-routes view rewritten to work without the index 45 dropped.
             '47_idle_routes_without_pair_index.sql',
             # flight_assignments emptied between weekly builds, for space.
-            '50_assignments_weekly_only.sql')
+            '50_assignments_weekly_only.sql',
+            # Route pairs, idle routes and sector facts kept as small tables.
+            '51_schedule_summaries.sql',
+            # Boards and timetables move to Storage files; mv_legs emptied.
+            '52_legs_out_of_the_database.sql')
 
 # Refuse the truncating reload against a database people are using.
 #

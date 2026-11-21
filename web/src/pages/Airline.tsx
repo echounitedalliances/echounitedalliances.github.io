@@ -7,6 +7,7 @@ import RouteMap from '../components/RouteMap'
 import { Loading, Mark, NotConfigured } from '../components/ui'
 import Pager, { usePaged } from '../components/Pager'
 import { isConfigured, supabase } from '../lib/supabase'
+import { airlineTimetable } from '../lib/schedule'
 import type {
   Airline,
   Arc,
@@ -202,15 +203,12 @@ export default function AirlinePage() {
     let cancelled = false
     setTimetable(null)
     void (async () => {
-      const { data } = await supabase.rpc('airline_timetable', {
-        p_uid: a.uid,
-        p_airport: ttRoute ? ttRoute.a : ttAirport || null,
-        p_pair_with: ttRoute ? ttRoute.b : null,
-      })
+      // From Storage, written by the weekly build (lib/schedule.ts): the
+      // whole timetable in one file, so no scope is cut short any more.
+      const rows = await airlineTimetable(a.uid, ttRoute ? ttRoute.a : ttAirport || null, ttRoute ? ttRoute.b : null)
       if (cancelled) return
-      const rows = (data as TimetableRow[]) ?? []
       setTimetable(rows)
-      setTtCapped(!ttAirport && !ttRoute && rows.length === 1000)
+      setTtCapped(false)
     })()
     return () => {
       cancelled = true

@@ -77,6 +77,11 @@ $$;
 
 -- The legs' rows: mv_leg_departures is a view over them (37_slim_storage.sql).
 refresh materialized view              public.mv_legs;
+-- What the site reads from the legs between weekly builds, while they are
+-- here to read: route_pairs (and so v_route_pairs and mv_division_arcs below),
+-- the idle routes, and each carrier's longest and busiest sector
+-- (51_schedule_summaries.sql).
+select public.echo_build_schedule_summaries();
 -- Plain, not concurrent. Concurrent builds a diff and leaves the replaced rows
 -- behind as dead space -- 7 MB of it on 16 September -- on a disk that has
 -- already run out once. A plain rebuild is packed and takes a few seconds.

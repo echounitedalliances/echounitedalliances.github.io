@@ -6,6 +6,7 @@ import SplitFlap, { toFlap } from './SplitFlap'
 import { Loading } from './ui'
 import type { BoardRow } from './SplitFlap'
 import { isConfigured, supabase } from '../lib/supabase'
+import { boardDepartures } from '../lib/schedule'
 import type { BoardDeparture } from '../lib/types'
 
 /**
@@ -18,7 +19,7 @@ import type { BoardDeparture } from '../lib/types'
  * zone, so a viewer in Ho Chi Minh City and a viewer in Boston were both shown
  * a number that meant nothing to either of them.
  *
- * board_departures returns departs_at as a real instant, so rendering it is
+ * Each departure carries departs_at as a real instant, so rendering it is
  * Intl's problem. It is rendered in the AIRPORT's zone, not the viewer's,
  * because that is what a departure board is: the times on the screen at
  * Changi are Singapore's, whoever is reading them. Showing a Frankfurt board
@@ -30,8 +31,12 @@ import type { BoardDeparture } from '../lib/types'
  * opens at the alliance's busiest airport and lets anyone choose any other --
  * not just the six biggest, which was the other half of the same complaint.
  *
+ * The week's board for an airport is one small file in Storage (lib/schedule.ts,
+ * since the departures left the database on 21 November 2026), fetched once;
+ * the next departures are worked out from it here, on the airport's clock.
+ *
  * Three clocks, on purpose, because they cost different amounts:
- *   - the flights are refetched once a minute (a network round trip),
+ *   - the next flights are re-read from the file once a minute,
  *   - the countdowns are recomputed every fifteen seconds (a re-render),
  *   - the wall clock ticks every second (one isolated component).
  * Keeping the seconds hand in its own component is what stops the board's 376
@@ -124,20 +129,18 @@ export default function DepartureBoard({ origin }: { origin?: string }) {
   /** What has been typed into the "any airport" box. */
   const [typed, setTyped] = useState('')
 
+  // No pick means the alliance's busiest airport: the first of the hubs below,
+  // which are ordered by weekly departures. Never the viewer's own location.
+  const boardAt = pick ?? hubs[0]?.iata_code ?? null
+
   const load = useCallback(async () => {
-    if (!isConfigured) return
-    const { data, error } = await supabase.rpc('board_departures', {
-      p_origin: pick,
-      p_limit: 8,
-      // Deliberately null. This used to be the browser's timezone, which the
-      // database used to guess which airport the viewer was standing in --
-      // a location inference for a board nobody had asked to personalise.
-      p_viewer_tz: null,
-    })
-    if (!error) setDepartures((data as BoardDeparture[]) ?? [])
+    if (!isConfigured || !boardAt) return
+    const at = Date.now()
+    const rows = await boardDepartures(boardAt, at, 8)
+    setDepartures(rows ?? [])
     setLoaded(true)
-    setNow(Date.now())
-  }, [pick])
+    setNow(at)
+  }, [boardAt])
 
   // New flights once a minute, and immediately on returning to the tab: a
   // backgrounded tab has its timers throttled, so without this the board would

@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom'
 import { Loading, NotConfigured } from '../components/ui'
 import Pager, { usePaged } from '../components/Pager'
 import { isConfigured, supabase } from '../lib/supabase'
+import { airportCarriers } from '../lib/schedule'
 import type { AirportRow } from '../lib/types'
 import { flag, num } from '../lib/format'
 import { divisionPath } from '../lib/alliance'
@@ -40,10 +41,11 @@ export default function AirportPage() {
     void (async () => {
       const [a, c] = await Promise.all([
         supabase.from('mv_airport_directory').select('*').eq('iata_code', iata.toUpperCase()).maybeSingle(),
-        supabase.rpc('airport_carriers', { p_iata: iata.toUpperCase() }),
+        // From Storage, written by the weekly build (lib/schedule.ts).
+        airportCarriers(iata),
       ])
       setAirport((a.data as AirportRow) ?? null)
-      setCarriers((c.data as Carrier[]) ?? [])
+      setCarriers(c)
     })()
   }, [iata])
 
