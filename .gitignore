@@ -30,6 +30,11 @@ divisions/.token
 divisions/.previous/
 divisions/*/members/.token
 web/.env.local
+# Local tools' keys (Supabase Storage S3 and whatever comes later). Only the
+# example, with every value empty, is tracked.
+.env
+.env.*
+!.env.example
 
 # ---------------------------------------------------------------------
 # Build output
