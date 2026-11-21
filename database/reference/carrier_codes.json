@@ -17,6 +17,12 @@
   "carrier_code": "CAEO",
   "division": "eos"
  },
+ "01acd831-4f18-49b5-a710-2e6c78fe73ab": {
+  "airline_code": "LX",
+  "airline_name": "Lartux",
+  "carrier_code": "LXEN",
+  "division": "elion"
+ },
  "01e8ed2c-981b-4438-b215-4f64cd016009": {
   "airline_code": "AN",
   "airline_name": "中国东方航空",
@@ -98,8 +104,8 @@
  "0557abdc-8f8e-4601-bca6-1a49443bcf5a": {
   "airline_code": "DN",
   "airline_name": "Konkordat DNL",
-  "carrier_code": "DNAG",
-  "division": "aegis"
+  "carrier_code": "DNPX",
+  "division": "proxima"
  },
  "05933783-4c34-4e6e-ab62-a285e66ebfd7": {
   "airline_code": "MN",
@@ -150,9 +156,9 @@
   "division": "elion"
  },
  "08a5103a-2494-4d86-8eb4-d8a5b84837fc": {
-  "airline_code": "7H",
-  "airline_name": "HighLight Airways",
-  "carrier_code": "7H",
+  "airline_code": "A9",
+  "airline_name": "Value Air Cargo",
+  "carrier_code": "A9",
   "division": "aegis"
  },
  "08c02869-2f60-482f-bfc5-37d65623c57f": {
@@ -172,6 +178,12 @@
   "airline_name": "Egypt Airlines",
   "carrier_code": "EAAG",
   "division": "aegis"
+ },
+ "09857beb-d038-48e4-adc4-245907ad6fe5": {
+  "airline_code": "FA",
+  "airline_name": "FreonAir",
+  "carrier_code": "FAEN",
+  "division": "elion"
  },
  "09cbdd1a-2c0c-4fb2-941a-821d3f6eea1c": {
   "airline_code": "CE",
@@ -203,6 +215,12 @@
   "carrier_code": "FT",
   "division": "rhea"
  },
+ "0af167cd-3a42-41b6-84c7-df6849b3690f": {
+  "airline_code": "SZ",
+  "airline_name": "SUNBLOOM.KZ",
+  "carrier_code": "SZUZ",
+  "division": "uzuri"
+ },
  "0b645a94-0b6d-45de-b141-ea4234f98230": {
   "airline_code": "NA",
   "airline_name": "NASA",
@@ -217,9 +235,9 @@
  },
  "0c3c756d-e770-4bda-b043-1e7af907beee": {
   "airline_code": "RF",
-  "airline_name": "ONE Proxima",
-  "carrier_code": "RFPX",
-  "division": "proxima"
+  "airline_name": "ONE Elion",
+  "carrier_code": "RFEN",
+  "division": "elion"
  },
  "0c452f18-ba7d-4ce9-97ae-2f7183b9ce57": {
   "airline_code": "RX",
@@ -232,6 +250,12 @@
   "airline_name": "Philippine Airline",
   "carrier_code": "PRPX",
   "division": "proxima"
+ },
+ "0c7897f4-0950-40b8-8ac2-3efaeeff7dc5": {
+  "airline_code": "VG",
+  "airline_name": "AeroVista Madgscar",
+  "carrier_code": "VGUZ",
+  "division": "uzuri"
  },
  "0c7953c6-efe6-48e5-bb4b-dd948c7fdd28": {
   "airline_code": "NJ",
@@ -250,6 +274,12 @@
   "airline_name": "Qantas",
   "carrier_code": "QF",
   "division": "elysium"
+ },
+ "0d5faba0-4f6e-47b7-9995-865935b8552d": {
+  "airline_code": "FB",
+  "airline_name": "Bulgaria air",
+  "carrier_code": "FBUZ",
+  "division": "uzuri"
  },
  "0d9d2a66-19fe-4666-a293-684a851ac415": {
   "airline_code": "LN",
@@ -342,9 +372,9 @@
   "division": "aegis"
  },
  "111d57c9-82d6-433e-b440-093387c52041": {
-  "airline_code": "AB",
-  "airline_name": "Ameriblue",
-  "carrier_code": "ABEO1",
+  "airline_code": "AM",
+  "airline_name": "Aerometro",
+  "carrier_code": "AMEO",
   "division": "eos"
  },
  "11d26ebe-721b-455d-820f-b86c56b6d61e": {
@@ -399,6 +429,12 @@
   "airline_code": "FA",
   "airline_name": "Floridan-Caribbean",
   "carrier_code": "FAUZ",
+  "division": "uzuri"
+ },
+ "1428a3c0-831a-441c-890e-2af14e4e408f": {
+  "airline_code": "GL",
+  "airline_name": "Greenlands",
+  "carrier_code": "GLUZ",
   "division": "uzuri"
  },
  "14acd4e5-6f14-40ed-99cf-8123f3e8026b": {
@@ -510,9 +546,9 @@
   "division": "elion"
  },
  "194740fc-253b-4d3b-93c2-a85935473a5a": {
-  "airline_code": "IA",
-  "airline_name": "Inter air",
-  "carrier_code": "IAPX",
+  "airline_code": "DL",
+  "airline_name": "Delta airlines",
+  "carrier_code": "DLPX",
   "division": "proxima"
  },
  "19618d01-ef0a-4372-be2e-2b9dc97d9940": {
@@ -529,7 +565,7 @@
  },
  "1a0e8706-7612-48e9-947c-d14ea5e84bb7": {
   "airline_code": "PX",
-  "airline_name": "LOTUS",
+  "airline_name": "lotus",
   "carrier_code": "PX",
   "division": "aura"
  },
@@ -611,6 +647,12 @@
   "carrier_code": "VTVS",
   "division": "vilis"
  },
+ "1d766ab3-369f-4eee-92d2-9e99de6c5b7b": {
+  "airline_code": "FM",
+  "airline_name": "Formosa",
+  "carrier_code": "FM",
+  "division": "proxima"
+ },
  "1dca0e35-589e-4db9-bf3a-3757d8a78883": {
   "airline_code": "SC",
   "airline_name": "Scotland Air",
@@ -653,6 +695,12 @@
   "carrier_code": "FXVS",
   "division": "vilis"
  },
+ "1ffa6486-37bd-4428-9e4e-3dc74a0406d9": {
+  "airline_code": "TR",
+  "airline_name": "Tigerair",
+  "carrier_code": "TRAG",
+  "division": "aegis"
+ },
  "2006139a-7184-4696-a2c3-47ff1c37eb50": {
   "airline_code": "LC",
   "airline_name": "LINKSTAR.CN",
@@ -670,6 +718,12 @@
   "airline_name": "Continental US",
   "carrier_code": "CSEO",
   "division": "eos"
+ },
+ "20998972-17e6-4b60-9dec-6ad5b5d639d7": {
+  "airline_code": "0A",
+  "airline_name": "aurevo",
+  "carrier_code": "0A",
+  "division": "elysium"
  },
  "218d6b96-76a8-4e8b-8288-1a02ead7a979": {
   "airline_code": "VN",
@@ -802,6 +856,12 @@
   "airline_name": "FlyJapan US",
   "carrier_code": "FJ",
   "division": "aegis"
+ },
+ "26507146-93d1-4ecb-b7f7-fca5ff9de97a": {
+  "airline_code": "SE",
+  "airline_name": "SkyLink Escape",
+  "carrier_code": "SEUZ",
+  "division": "uzuri"
  },
  "26695dcc-4038-46b7-a50b-1a64bc168106": {
   "airline_code": "CA",
@@ -990,9 +1050,9 @@
   "division": "proxima"
  },
  "2ef3daad-2e7b-4d5f-b228-4cf17fc9e273": {
-  "airline_code": "GJ",
-  "airline_name": "ÜKJET",
-  "carrier_code": "GJ",
+  "airline_code": "IJ",
+  "airline_name": "Naha Airlines",
+  "carrier_code": "IJ",
   "division": "uzuri"
  },
  "2f3817bc-9fdf-4955-b86b-ca9ba40a08f8": {
@@ -1023,7 +1083,7 @@
   "airline_code": "LL",
   "airline_name": "Longway by Romero",
   "carrier_code": "LL",
-  "division": "elion"
+  "division": "proxima"
  },
  "313a55d7-1a2f-4774-a0ab-b7a6b9423ac8": {
   "airline_code": "FD",
@@ -1053,6 +1113,12 @@
   "airline_code": "SB",
   "airline_name": "SAMAR AIRLINES",
   "carrier_code": "SBVH1",
+  "division": "rhea"
+ },
+ "32276c29-c95b-4864-8b1a-f350ec29d273": {
+  "airline_code": "ZP",
+  "airline_name": "Zenith Pacific",
+  "carrier_code": "ZP",
   "division": "rhea"
  },
  "324c640a-f07c-41b2-8fb0-e9816082ff56": {
@@ -1205,6 +1271,12 @@
   "carrier_code": "EB",
   "division": "eos"
  },
+ "380b6cad-a91b-4066-bc89-74fcb9a49eae": {
+  "airline_code": "8U",
+  "airline_name": "Banggai Airlines",
+  "carrier_code": "8U",
+  "division": "uzuri"
+ },
  "382ad5fe-3810-4526-ac81-91815627245e": {
   "airline_code": "DA",
   "airline_name": "Venture Airlines",
@@ -1253,11 +1325,23 @@
   "carrier_code": "CAEY2",
   "division": "elysium"
  },
+ "39ad21b6-6cab-4ea0-9bed-4c893ab94a8f": {
+  "airline_code": "OS",
+  "airline_name": "Austrian Airlines",
+  "carrier_code": "OSKY1",
+  "division": "kyra"
+ },
  "39e293ad-de03-443c-8bab-829891716ba3": {
   "airline_code": "C1",
   "airline_name": "InterConnect",
   "carrier_code": "C1",
   "division": "elion"
+ },
+ "39f394f2-6db1-457b-84e1-21050e5fa62a": {
+  "airline_code": "CZ",
+  "airline_name": "CzechAir",
+  "carrier_code": "CZPX",
+  "division": "proxima"
  },
  "3a0df368-b139-4471-bb73-65f06ef601e5": {
   "airline_code": "MH",
@@ -1294,6 +1378,12 @@
   "airline_name": "TerbangYuk",
   "carrier_code": "YK",
   "division": "vilis"
+ },
+ "3b625660-117c-42c4-8ff8-916e80dfc478": {
+  "airline_code": "NH",
+  "airline_name": "AfRO•Jet",
+  "carrier_code": "NHAG1",
+  "division": "aegis"
  },
  "3ba441c0-b5f0-4111-b9ae-cb928005a6bc": {
   "airline_code": "KL",
@@ -1379,6 +1469,12 @@
   "carrier_code": "ANUZ",
   "division": "uzuri"
  },
+ "3e4a495d-db14-47ee-b179-20ce08da8ee9": {
+  "airline_code": "JC",
+  "airline_name": "Jet Connect World",
+  "carrier_code": "JC",
+  "division": "uzuri"
+ },
  "3efa3a8d-361a-4d47-b172-9d8f43640b2f": {
   "airline_code": "CX",
   "airline_name": "Cathay Paciic",
@@ -1386,15 +1482,15 @@
   "division": "aegis"
  },
  "3f561966-d5d0-4b13-9cac-92f7a2b14bd0": {
-  "airline_code": "RP",
-  "airline_name": "Red Panda Air",
-  "carrier_code": "RP",
+  "airline_code": "GJ",
+  "airline_name": "GJA",
+  "carrier_code": "GJ",
   "division": "kyra"
  },
  "3f8bf260-c888-447c-a06f-6a059ad17b23": {
-  "airline_code": "E9",
-  "airline_name": "ExpressJet",
-  "carrier_code": "E9",
+  "airline_code": "AE",
+  "airline_name": "America East",
+  "carrier_code": "AEVS",
   "division": "vilis"
  },
  "40859c62-11f0-4f85-add2-604d1a263169": {
@@ -1511,6 +1607,12 @@
   "carrier_code": "SIEN",
   "division": "elion"
  },
+ "44cc3cc9-e116-4607-baa2-623ac2147bbd": {
+  "airline_code": "EU",
+  "airline_name": "FlyEuro",
+  "carrier_code": "EUAG1",
+  "division": "aegis"
+ },
  "452227c8-0d48-4cbf-a1d1-01337eb626d5": {
   "airline_code": "CF",
   "airline_name": "Pacific Clipper",
@@ -1518,9 +1620,9 @@
   "division": "rhea"
  },
  "454ecbb2-7489-4813-be03-493e835924d0": {
-  "airline_code": "SN",
-  "airline_name": "Sino Airways",
-  "carrier_code": "SNAU1",
+  "airline_code": "NX",
+  "airline_name": "Nederland Airlines",
+  "carrier_code": "NXAU",
   "division": "aura"
  },
  "457f2f33-522a-406a-8877-643edce98ba8": {
@@ -1552,6 +1654,12 @@
   "airline_name": "AeroCanadian",
   "carrier_code": "ACAU",
   "division": "aura"
+ },
+ "45f9b95c-82ca-48fd-8391-b6b28dda8cc7": {
+  "airline_code": "XQ",
+  "airline_name": "SunExpress",
+  "carrier_code": "XQVH",
+  "division": "rhea"
  },
  "4608e8d7-707f-4b9a-b63e-cc6ec4c8e2f7": {
   "airline_code": "SR",
@@ -1591,9 +1699,9 @@
  },
  "477bfe44-d0cd-461a-807e-21ff1a460790": {
   "airline_code": "AT",
-  "airline_name": "Alto",
-  "carrier_code": "ATEO1",
-  "division": "eos"
+  "airline_name": "Alto Group",
+  "carrier_code": "ATKY",
+  "division": "kyra"
  },
  "47952aca-b90a-4cd3-a5d0-e6645a71cee7": {
   "airline_code": "AE",
@@ -1606,6 +1714,12 @@
   "airline_name": "Sanggar Air",
   "carrier_code": "SAAG",
   "division": "aegis"
+ },
+ "47b24ede-6592-477b-9d6a-eafacd469113": {
+  "airline_code": "MI",
+  "airline_name": "Massa Internationa",
+  "carrier_code": "MIVH",
+  "division": "rhea"
  },
  "47ed7403-44f8-41ac-bd6b-d41faee1090d": {
   "airline_code": "2D",
@@ -1697,6 +1811,12 @@
   "carrier_code": "EKVS",
   "division": "vilis"
  },
+ "4b808f3d-8f4a-4b64-a53c-c3dc57a3937a": {
+  "airline_code": "NX",
+  "airline_name": "Foreigner",
+  "carrier_code": "NXEN",
+  "division": "elion"
+ },
  "4b841424-880c-486c-87e9-f3f1c07b6f53": {
   "airline_code": "PE",
   "airline_name": "Pan Deutsch Arw",
@@ -1708,6 +1828,12 @@
   "airline_name": "Pacific Jet",
   "carrier_code": "PJ",
   "division": "elion"
+ },
+ "4bf13fce-5778-4eea-9ce4-644b12549f2c": {
+  "airline_code": "MS",
+  "airline_name": "Museum",
+  "carrier_code": "MSVH",
+  "division": "rhea"
  },
  "4c1a54bd-9282-4641-b928-5f6f5555543a": {
   "airline_code": "QG",
@@ -1724,8 +1850,8 @@
  "4c62b6aa-e095-4fb3-9bf5-d3a1a1a82571": {
   "airline_code": "2A",
   "airline_name": "Air Astra",
-  "carrier_code": "2A",
-  "division": "elion"
+  "carrier_code": "2APX",
+  "division": "proxima"
  },
  "4c98eba6-4ada-46eb-b3b8-6fc9a21af4e4": {
   "airline_code": "4N",
@@ -1763,6 +1889,12 @@
   "carrier_code": "LJ",
   "division": "elion"
  },
+ "4dec261a-0487-488a-adeb-c8700053be93": {
+  "airline_code": "CV",
+  "airline_name": "Crystal Visayan",
+  "carrier_code": "CVVS",
+  "division": "vilis"
+ },
  "4e0df12b-ce65-4d9e-900f-11b9aec547ab": {
   "airline_code": "AV",
   "airline_name": "Avara Air",
@@ -1774,6 +1906,18 @@
   "airline_name": "Hong Kong Airways",
   "carrier_code": "HKVS",
   "division": "vilis"
+ },
+ "4e9efb25-fdec-4d56-8334-1b45258ba1cb": {
+  "airline_code": "KI",
+  "airline_name": "Kaiper airlines",
+  "carrier_code": "KI",
+  "division": "eos"
+ },
+ "4ea86c41-ca21-4629-bc70-2160c48602fc": {
+  "airline_code": "NA",
+  "airline_name": "North Atlantic",
+  "carrier_code": "NAUZ1",
+  "division": "uzuri"
  },
  "4ed02160-a527-4b24-8bac-7461f85ba83a": {
   "airline_code": "XY",
@@ -1787,11 +1931,29 @@
   "carrier_code": "TV",
   "division": "uzuri"
  },
+ "4eef8f4c-1f3c-4587-9c60-9e28cc85f0e3": {
+  "airline_code": "LA",
+  "airline_name": "Lianhua Airlines",
+  "carrier_code": "LAEY",
+  "division": "elysium"
+ },
+ "4fc1da9f-e568-4feb-9329-dd8e76013489": {
+  "airline_code": "HY",
+  "airline_name": "Hyosan Airways",
+  "carrier_code": "HY",
+  "division": "uzuri"
+ },
  "5069d652-024b-4ead-b681-3b3592c72211": {
   "airline_code": "AP",
   "airline_name": "Air Prussia",
   "carrier_code": "APEN2",
   "division": "elion"
+ },
+ "508fc0c0-476a-43eb-9893-e311da4f9efa": {
+  "airline_code": "AT",
+  "airline_name": "altura",
+  "carrier_code": "ATUZ",
+  "division": "uzuri"
  },
  "5095af47-30ab-40e7-a42f-c38952ef3350": {
   "airline_code": "JM",
@@ -1860,9 +2022,9 @@
   "division": "aura"
  },
  "535ccbdb-4fe3-4fc2-a874-2784160b698b": {
-  "airline_code": "CA",
-  "airline_name": "CAP Portugal",
-  "carrier_code": "CAEY3",
+  "airline_code": "CO",
+  "airline_name": "Aviația Română",
+  "carrier_code": "COEY",
   "division": "elysium"
  },
  "53707983-0d07-4512-b207-223bd2b8aa37": {
@@ -1951,9 +2113,9 @@
  },
  "56de5306-93ec-4cc3-8e43-dfd40aab5ec3": {
   "airline_code": "PT",
-  "airline_name": "Pacifico TH",
+  "airline_name": "Pacifico Airways",
   "carrier_code": "PT",
-  "division": "aegis"
+  "division": "kyra"
  },
  "57584640-b3cd-4869-b013-6bc7c59b94be": {
   "airline_code": "GA",
@@ -1991,6 +2153,12 @@
   "carrier_code": "KX",
   "division": "aegis"
  },
+ "58c642c5-018a-46fc-b0f5-75af4b6ac7cc": {
+  "airline_code": "GW",
+  "airline_name": "Guandong Airways",
+  "carrier_code": "GW",
+  "division": "elion"
+ },
  "58c6fea5-eb06-49a6-b8d8-b46da47863d0": {
   "airline_code": "MA",
   "airline_name": "AirMarianne",
@@ -2027,6 +2195,12 @@
   "carrier_code": "SKAU",
   "division": "aura"
  },
+ "5a8081f2-19ca-452d-86c2-8d8bc4cddae0": {
+  "airline_code": "BN",
+  "airline_name": "BNI",
+  "carrier_code": "BNAG",
+  "division": "aegis"
+ },
  "5abdc749-ffe9-41ce-814e-bca2c6b438ce": {
   "airline_code": "7S",
   "airline_name": "HOSHIZORA by SR",
@@ -2034,10 +2208,16 @@
   "division": "uzuri"
  },
  "5aebff50-07fc-4d0b-a4af-8c5db87b6583": {
-  "airline_code": "HS",
-  "airline_name": "Hasana Cargo",
-  "carrier_code": "HSEO",
+  "airline_code": "CC",
+  "airline_name": "CARL AIRHOLDS",
+  "carrier_code": "CCEO",
   "division": "eos"
+ },
+ "5afe0076-93da-4969-af47-ae9683a07134": {
+  "airline_code": "9W",
+  "airline_name": "Eastwind Air",
+  "carrier_code": "9W",
+  "division": "aura"
  },
  "5b211670-0838-423f-a4c6-739d2f449f49": {
   "airline_code": "OS",
@@ -2062,6 +2242,12 @@
   "airline_name": "MACH",
   "carrier_code": "MCEN",
   "division": "elion"
+ },
+ "5c055431-e120-4c17-bdef-590f3a90356d": {
+  "airline_code": "NA",
+  "airline_name": "Nation Airlines",
+  "carrier_code": "NAEO1",
+  "division": "eos"
  },
  "5c63dea2-e0f4-44b3-bde4-8ed6a2241f59": {
   "airline_code": "DR",
@@ -2099,6 +2285,12 @@
   "carrier_code": "SCVS",
   "division": "vilis"
  },
+ "5d9da1f3-a6bc-4ce4-ae7c-1a9dd116bdbd": {
+  "airline_code": "KG",
+  "airline_name": "Kangairoo",
+  "carrier_code": "KG",
+  "division": "elion"
+ },
  "5dc71be1-1e4b-4fc5-a12a-ce6c1cc1c42b": {
   "airline_code": "CT",
   "airline_name": "Catto!",
@@ -2116,6 +2308,18 @@
   "airline_name": "TEAL Pacific",
   "carrier_code": "TPEN",
   "division": "elion"
+ },
+ "5e4b7bb8-8e93-42f3-86f1-e46ef74f54fb": {
+  "airline_code": "BA",
+  "airline_name": "Brussel Airlines",
+  "carrier_code": "BAEY1",
+  "division": "elysium"
+ },
+ "5ec1bdb9-67ef-4498-9f97-a2da025b9e60": {
+  "airline_code": "FA",
+  "airline_name": "Fuji Airlines",
+  "carrier_code": "FAUZ1",
+  "division": "uzuri"
  },
  "5f09ad51-d3a8-41ed-9498-f2919328cc98": {
   "airline_code": "RH",
@@ -2160,9 +2364,9 @@
   "division": "proxima"
  },
  "6175fd98-0d6d-4447-9ec7-f24501b5d051": {
-  "airline_code": "SL",
-  "airline_name": "Skylink",
-  "carrier_code": "SLAU",
+  "airline_code": "HA",
+  "airline_name": "Hanse Air",
+  "carrier_code": "HAAU",
   "division": "aura"
  },
  "61e02546-1d6e-4946-aa73-3ef2438680b4": {
@@ -2219,6 +2423,12 @@
   "carrier_code": "AVPX1",
   "division": "proxima"
  },
+ "64d81e47-d157-4bf5-9aeb-03d0c94d64df": {
+  "airline_code": "OT",
+  "airline_name": "Ottoman Airlines",
+  "carrier_code": "OT",
+  "division": "aegis"
+ },
  "64db11db-6e2a-4411-87fb-73c03e941ffa": {
   "airline_code": "TG",
   "airline_name": "Thai airways",
@@ -2272,6 +2482,12 @@
   "airline_name": "NordAir",
   "carrier_code": "NDVS",
   "division": "vilis"
+ },
+ "66cd80e5-e794-451d-8aa4-f8005e6295d9": {
+  "airline_code": "MP",
+  "airline_name": "Minister Air",
+  "carrier_code": "MP",
+  "division": "uzuri"
  },
  "67a93dee-857c-435f-b7d1-777547b6a479": {
   "airline_code": "MA",
@@ -2351,11 +2567,23 @@
   "carrier_code": "TAAU1",
   "division": "aura"
  },
+ "6a46b698-2e05-410d-be97-651468ea6c9c": {
+  "airline_code": "EJ",
+  "airline_name": "ÉireJet",
+  "carrier_code": "EJEY",
+  "division": "elysium"
+ },
  "6a629798-477f-4262-b1da-ce8667e949d4": {
   "airline_code": "7I",
   "airline_name": "AEROLINK canarias",
   "carrier_code": "7I",
   "division": "vilis"
+ },
+ "6ad2d502-c4e9-41d6-8261-feb6ab469a95": {
+  "airline_code": "US",
+  "airline_name": "U.S. Airlines",
+  "carrier_code": "USUZ",
+  "division": "uzuri"
  },
  "6adca264-0958-4428-a5a0-6788ef77bc7b": {
   "airline_code": "HN",
@@ -2375,6 +2603,12 @@
   "carrier_code": "JZ",
   "division": "eos"
  },
+ "6b485eb1-d7c4-4bd4-a5a4-142bd748cc2a": {
+  "airline_code": "GZ",
+  "airline_name": "Guangzhou Airlines",
+  "carrier_code": "GZUZ",
+  "division": "uzuri"
+ },
  "6b7d2a5a-1cb9-42cc-bc3e-fcd1b21b40cf": {
   "airline_code": "TA",
   "airline_name": "TAA",
@@ -2392,6 +2626,18 @@
   "airline_name": "Mikeria",
   "carrier_code": "MIAG",
   "division": "aegis"
+ },
+ "6c14aea0-7db9-4b3c-8019-df6f56c5db19": {
+  "airline_code": "JO",
+  "airline_name": "Air Jango",
+  "carrier_code": "JO",
+  "division": "vilis"
+ },
+ "6c246c58-8617-4100-9816-8ff0ea9ff410": {
+  "airline_code": "SH",
+  "airline_name": "SMILE HOP",
+  "carrier_code": "SH",
+  "division": "uzuri"
  },
  "6c626f88-c6ac-48ef-a873-9b8237a1334f": {
   "airline_code": "AC",
@@ -2417,6 +2663,18 @@
   "carrier_code": "DE",
   "division": "kyra"
  },
+ "6d574cf6-4b10-4075-8d4f-c1c2929ccb84": {
+  "airline_code": "JS",
+  "airline_name": "Joyous Airlines",
+  "carrier_code": "JSUZ",
+  "division": "uzuri"
+ },
+ "6d842913-15ba-46b8-ad93-d1bc3dfe91ec": {
+  "airline_code": "FY",
+  "airline_name": "FlyHi (Malta)",
+  "carrier_code": "FYAU",
+  "division": "aura"
+ },
  "6db29242-4023-4a35-a1fd-25a133329909": {
   "airline_code": "DR",
   "airline_name": "港龍航空 BG DRAGONAIR",
@@ -2435,6 +2693,12 @@
   "carrier_code": "AAEN2",
   "division": "elion"
  },
+ "6f3b7372-4963-4151-8433-e6ecfad8930e": {
+  "airline_code": "EX",
+  "airline_name": "EuroStar",
+  "carrier_code": "EX",
+  "division": "eos"
+ },
  "6f75c031-7132-4613-822f-324a7142a509": {
   "airline_code": "EK",
   "airline_name": "Emirates",
@@ -2446,6 +2710,12 @@
   "airline_name": "Aer Red Bull",
   "carrier_code": "RB",
   "division": "kyra"
+ },
+ "7006e568-85b6-41bf-b99e-2d93d467c1c8": {
+  "airline_code": "88",
+  "airline_name": "jair",
+  "carrier_code": "88",
+  "division": "uzuri"
  },
  "702d3c6e-fa39-44f0-bca6-f4a2bde6525b": {
   "airline_code": "AG",
@@ -2561,6 +2831,12 @@
   "carrier_code": "SOEO",
   "division": "eos"
  },
+ "7382d755-3252-40db-b241-e8bc4659d1b5": {
+  "airline_code": "B7",
+  "airline_name": "BOEING 777",
+  "carrier_code": "B7",
+  "division": "elion"
+ },
  "73942aaf-c3cc-44ca-b226-2f0f6c56120c": {
   "airline_code": "FS",
   "airline_name": "Fly Switzerland",
@@ -2620,6 +2896,12 @@
   "airline_name": "MJJ ECLIPSE",
   "carrier_code": "LZAG",
   "division": "aegis"
+ },
+ "75727a12-cf41-4ea9-a306-fb27e5ccaa35": {
+  "airline_code": "CH",
+  "airline_name": "Chisair",
+  "carrier_code": "CHVS",
+  "division": "vilis"
  },
  "757cc57e-1f8b-4476-92e0-507e9a129a49": {
   "airline_code": "AL",
@@ -2693,6 +2975,12 @@
   "carrier_code": "CSEY",
   "division": "elysium"
  },
+ "77f06b23-5240-42f1-b0db-a43e6db9b957": {
+  "airline_code": "UL",
+  "airline_name": "Amerilantic",
+  "carrier_code": "ULUZ",
+  "division": "uzuri"
+ },
  "783b1f53-5d07-4260-a688-8824d5d9569a": {
   "airline_code": "FW",
   "airline_name": "FrenchWorldAirline",
@@ -2714,8 +3002,8 @@
  "78cd4d54-352f-41a1-8cae-a23f970f19bc": {
   "airline_code": "CZ",
   "airline_name": "China Southern",
-  "carrier_code": "CZAU",
-  "division": "aura"
+  "carrier_code": "CZPX1",
+  "division": "proxima"
  },
  "792c01f7-d553-4b7b-abe7-78e07d6dc278": {
   "airline_code": "AK",
@@ -2815,7 +3103,7 @@
  },
  "7d8c1024-d4fa-4d74-a147-8f1b0580666e": {
   "airline_code": "PV",
-  "airline_name": "Pacifico VN",
+  "airline_name": "Pacifico Airways",
   "carrier_code": "PVVS",
   "division": "vilis"
  },
@@ -2962,6 +3250,12 @@
   "airline_name": "SkyLink Airways",
   "carrier_code": "SAAG1",
   "division": "aegis"
+ },
+ "8279c103-2c6b-4787-a4c9-77cbe1d88171": {
+  "airline_code": "47",
+  "airline_name": "Dreamwalker",
+  "carrier_code": "47",
+  "division": "uzuri"
  },
  "82d93310-4851-4efe-adc4-f972c86dbaba": {
   "airline_code": "OL",
@@ -3174,9 +3468,9 @@
   "division": "elion"
  },
  "8b1d9153-0d34-451a-b170-9525a0e64fbf": {
-  "airline_code": "SA",
+  "airline_code": "VC",
   "airline_name": "Air Vostok",
-  "carrier_code": "SAEO",
+  "carrier_code": "VC",
   "division": "eos"
  },
  "8b317480-ac2c-421b-8b5f-487a95306f8b": {
@@ -3263,6 +3557,24 @@
   "carrier_code": "LAAG",
   "division": "aegis"
  },
+ "90439aa5-e1ea-40f3-b3df-7b07209d3cdb": {
+  "airline_code": "AR",
+  "airline_name": "United African Air",
+  "carrier_code": "ARUZ",
+  "division": "uzuri"
+ },
+ "905f557e-3ce7-4556-aecc-dc15012d3cc3": {
+  "airline_code": "TE",
+  "airline_name": "Transview EXPRESS",
+  "carrier_code": "TEUZ",
+  "division": "uzuri"
+ },
+ "90781a97-312d-4859-b47e-de05e9345b4d": {
+  "airline_code": "CJ",
+  "airline_name": "CôteJet",
+  "carrier_code": "CJ",
+  "division": "vilis"
+ },
  "90b50dae-4c2f-4e2d-a549-4a2fe419eb65": {
   "airline_code": "RE",
   "airline_name": "FlyPierrot TG",
@@ -3282,16 +3594,22 @@
   "division": "rhea"
  },
  "91814d64-9de2-4b9d-9053-6388f62b227d": {
-  "airline_code": "AS",
-  "airline_name": "AMS Int'l Air",
-  "carrier_code": "ASAG2",
-  "division": "aegis"
+  "airline_code": "SA",
+  "airline_name": "Saudia Airlines",
+  "carrier_code": "SAVS1",
+  "division": "vilis"
  },
  "91bdd24b-83fd-4140-9590-0a88800b67b0": {
   "airline_code": "CA",
   "airline_name": "Continental Arabia",
   "carrier_code": "CAEN2",
   "division": "elion"
+ },
+ "925eec68-129f-4819-b55d-83fd6ab86da0": {
+  "airline_code": "IR",
+  "airline_name": "Iran Air",
+  "carrier_code": "IR",
+  "division": "aegis"
  },
  "92689ec1-30b1-40ec-b97f-1a79153a1e77": {
   "airline_code": "VD",
@@ -3311,11 +3629,23 @@
   "carrier_code": "SD",
   "division": "kyra"
  },
+ "9334807e-a1ce-409d-b034-b65b957f34a5": {
+  "airline_code": "NX",
+  "airline_name": "NordX",
+  "carrier_code": "NXUZ",
+  "division": "uzuri"
+ },
  "933c42c8-e5e6-4a0b-8f18-03dadac70c8a": {
   "airline_code": "AN",
   "airline_name": "AeroNova Airlines",
   "carrier_code": "ANVH1",
   "division": "rhea"
+ },
+ "9347eb2b-c723-43b7-beb0-7356dc405f33": {
+  "airline_code": "AX",
+  "airline_name": "APEX",
+  "carrier_code": "AXUZ",
+  "division": "uzuri"
  },
  "936c2664-d532-48da-bd20-138edb632e5c": {
   "airline_code": "LA",
@@ -3407,6 +3737,12 @@
   "carrier_code": "IBEY",
   "division": "elysium"
  },
+ "98137740-50b2-4556-9ccc-5de6a487a2a2": {
+  "airline_code": "FN",
+  "airline_name": "Formosa Nova",
+  "carrier_code": "FNVH",
+  "division": "rhea"
+ },
  "983980b4-1ba2-4941-8ed8-2c6cfe67b697": {
   "airline_code": "RS",
   "airline_name": "Red Star",
@@ -3431,6 +3767,12 @@
   "carrier_code": "EJVH",
   "division": "rhea"
  },
+ "99928249-fd43-4f41-bd2a-d55b02fd44a3": {
+  "airline_code": "IZ",
+  "airline_name": "Blizzaird",
+  "carrier_code": "IZ",
+  "division": "eos"
+ },
  "99e0366a-6dc8-49e6-99a1-4b6bdb26f09e": {
   "airline_code": "LA",
   "airline_name": "LINKSTAR.VN",
@@ -3449,6 +3791,12 @@
   "carrier_code": "ACAG",
   "division": "aegis"
  },
+ "9adbb918-e077-498d-ac11-3923c1b2d48c": {
+  "airline_code": "AT",
+  "airline_name": "ASTARA",
+  "carrier_code": "ATUZ1",
+  "division": "uzuri"
+ },
  "9af774f3-7483-42c6-a4e0-f3e8d0254003": {
   "airline_code": "WA",
   "airline_name": "Westavia Airways",
@@ -3462,9 +3810,9 @@
   "division": "kyra"
  },
  "9b134779-0394-4581-871c-0ecc8555d73e": {
-  "airline_code": "SP",
-  "airline_name": "Сапсан Эйрвейз",
-  "carrier_code": "SPPX1",
+  "airline_code": "AE",
+  "airline_name": "Mandarin Airlines",
+  "carrier_code": "AEPX",
   "division": "proxima"
  },
  "9b2a93fe-86fd-44ee-979a-a05eaaab6ecf": {
@@ -3546,9 +3894,9 @@
   "division": "elysium"
  },
  "9df58847-11d6-4600-a5f3-3b9008028362": {
-  "airline_code": "LR",
+  "airline_code": "AH",
   "airline_name": "Asilat",
-  "carrier_code": "LREY",
+  "carrier_code": "AHEY",
   "division": "elysium"
  },
  "9e2d2b72-9f28-474a-8f47-3bb00aa87761": {
@@ -3559,7 +3907,7 @@
  },
  "9e8560e5-dbd4-4e4e-8826-7e8236ae22fc": {
   "airline_code": "SW",
-  "airline_name": "SwissLux",
+  "airline_name": "Helvetic Airlines",
   "carrier_code": "SWAG",
   "division": "aegis"
  },
@@ -3654,9 +4002,9 @@
   "division": "aura"
  },
  "9fff4f36-41a3-4c23-8e82-f4386033844a": {
-  "airline_code": "RD",
-  "airline_name": "Royal Desert Airways￼",
-  "carrier_code": "RDEN",
+  "airline_code": "CZ",
+  "airline_name": "Tuntric",
+  "carrier_code": "CZEN",
   "division": "elion"
  },
  "a00028b6-b584-4078-89db-11a37238dd6d": {
@@ -3664,6 +4012,12 @@
   "airline_name": "Nexus",
   "carrier_code": "NXVS",
   "division": "vilis"
+ },
+ "a007f5c3-e72c-4e47-83fd-26e6dab0f907": {
+  "airline_code": "AU",
+  "airline_name": "Australis",
+  "carrier_code": "AUUZ",
+  "division": "uzuri"
  },
  "a03a508f-f31c-470c-b3c7-f5e6cdf1ad1d": {
   "airline_code": "CL",
@@ -3757,7 +4111,7 @@
  },
  "a490803a-e2fd-43d4-a1a4-9da6bc57271e": {
   "airline_code": "PI",
-  "airline_name": "Pacifico ID",
+  "airline_name": "Pacifico Airways",
   "carrier_code": "PI",
   "division": "aura"
  },
@@ -3796,6 +4150,12 @@
   "airline_name": "Leaper",
   "carrier_code": "LZEN",
   "division": "elion"
+ },
+ "a5ecde56-84bf-4d90-a369-331ecd9c700e": {
+  "airline_code": "TA",
+  "airline_name": "Air Tokyo",
+  "carrier_code": "TAUZ",
+  "division": "uzuri"
  },
  "a5ef07b5-702d-4980-b543-edaae1ceccff": {
   "airline_code": "NE",
@@ -3947,6 +4307,12 @@
   "carrier_code": "ST",
   "division": "vilis"
  },
+ "ac0cc155-a2a2-4c1e-b07b-fb86e6c99e09": {
+  "airline_code": "TA",
+  "airline_name": "Temasek Airlines",
+  "carrier_code": "TAUZ1",
+  "division": "uzuri"
+ },
  "acb3d3cf-e35b-4395-9967-c27fc95c170e": {
   "airline_code": "CR",
   "airline_name": "Air Cairn",
@@ -3969,7 +4335,13 @@
   "airline_code": "AW",
   "airline_name": "America West",
   "carrier_code": "AW",
-  "division": "rhea"
+  "division": "kyra"
+ },
+ "ad7d0c57-7a4f-4dfd-bdef-1e497d898054": {
+  "airline_code": "K7",
+  "airline_name": "KRÍA Nordic by SR",
+  "carrier_code": "K7",
+  "division": "vilis"
  },
  "ad93c0d4-9482-45c2-849e-02b40221a481": {
   "airline_code": "FP",
@@ -4110,9 +4482,9 @@
   "division": "vilis"
  },
  "b43a9292-44b7-4242-bfc7-e6ce0f9ae535": {
-  "airline_code": "BF",
-  "airline_name": "BeFly!",
-  "carrier_code": "BF",
+  "airline_code": "SE",
+  "airline_name": "SMILE!",
+  "carrier_code": "SEUZ1",
   "division": "uzuri"
  },
  "b4bdf868-c4b7-440b-b948-cfd4a7dcc004": {
@@ -4199,17 +4571,35 @@
   "carrier_code": "NR",
   "division": "eos"
  },
+ "b85a4ff7-67d7-4cbd-8399-80ee6e4fa420": {
+  "airline_code": "ME",
+  "airline_name": "Meow",
+  "carrier_code": "MEPX",
+  "division": "proxima"
+ },
  "b86b98ea-c7af-4322-878c-d779ce7af34b": {
-  "airline_code": "ZH",
-  "airline_name": "Shenzhou Airways",
-  "carrier_code": "ZH",
-  "division": "vilis"
+  "airline_code": "SS",
+  "airline_name": "SAND AIR ساند إير",
+  "carrier_code": "SS",
+  "division": "aegis"
  },
  "b8a1a913-4ba5-4c32-b2c5-da61df9700ca": {
   "airline_code": "BL",
-  "airline_name": "B.L.A",
+  "airline_name": "BESLAI",
   "carrier_code": "BLVH3",
   "division": "rhea"
+ },
+ "b8bedb95-1657-435b-b1eb-1ea4a75c4e8f": {
+  "airline_code": "PJ",
+  "airline_name": "ProJet",
+  "carrier_code": "PJ",
+  "division": "aura"
+ },
+ "b8c93c78-dfc2-4e92-9ed7-36ea0a148e8c": {
+  "airline_code": "GO",
+  "airline_name": "Go!",
+  "carrier_code": "GOAG1",
+  "division": "aegis"
  },
  "b90672d8-52b7-4725-a3e0-d3d9d0ee181d": {
   "airline_code": "PL",
@@ -4337,6 +4727,12 @@
   "carrier_code": "AAKY2",
   "division": "kyra"
  },
+ "beddc495-12c5-4bcf-829e-49ac6c3a0f74": {
+  "airline_code": "SA",
+  "airline_name": "Southwest Airlines",
+  "carrier_code": "SAVS2",
+  "division": "vilis"
+ },
  "bedffe78-4545-4457-9fb5-c192c37f40d3": {
   "airline_code": "EJ",
   "airline_name": "British Airways",
@@ -4447,7 +4843,7 @@
  },
  "c276bec4-89e1-46eb-8431-372157c5b2fc": {
   "airline_code": "LA",
-  "airline_name": "Lumos Air",
+  "airline_name": "Lumos Airways",
   "carrier_code": "LAUZ2",
   "division": "uzuri"
  },
@@ -4456,6 +4852,12 @@
   "airline_name": "AeroVistula",
   "carrier_code": "AVAG",
   "division": "aegis"
+ },
+ "c2cba81d-b158-4ddb-9540-af822f464ea8": {
+  "airline_code": "VG",
+  "airline_name": "Concordia Uzuri",
+  "carrier_code": "VGUZ1",
+  "division": "uzuri"
  },
  "c338be5c-c40f-4ad1-8afc-540eb60f2882": {
   "airline_code": "HR",
@@ -4499,10 +4901,16 @@
   "carrier_code": "NV",
   "division": "aura"
  },
+ "c4fcc0c6-0bbc-4f0a-8652-376b20f42b24": {
+  "airline_code": "N7",
+  "airline_name": "Air Polaris",
+  "carrier_code": "N7",
+  "division": "uzuri"
+ },
  "c5fdf4d2-ed5c-4f77-86ec-408364e6812d": {
-  "airline_code": "ND",
-  "airline_name": "Nippon Global",
-  "carrier_code": "NDPX",
+  "airline_code": "NN",
+  "airline_name": "Nippon Narita",
+  "carrier_code": "NN",
   "division": "proxima"
  },
  "c68f8b6e-6299-4490-87f6-bef914207971": {
@@ -4576,6 +4984,12 @@
   "airline_name": "Avia Airlines",
   "carrier_code": "CGVH1",
   "division": "rhea"
+ },
+ "c95f07a9-46b3-465f-94fa-92f31710d80c": {
+  "airline_code": "CE",
+  "airline_name": "Cantik! Europa",
+  "carrier_code": "CEUZ",
+  "division": "uzuri"
  },
  "c9c2da2f-74a3-46c6-a2c6-e672a7e31844": {
   "airline_code": "AF",
@@ -4668,9 +5082,9 @@
   "division": "proxima"
  },
  "ccc2cddd-d1b5-4c5a-b02c-07d22e308e0f": {
-  "airline_code": "SY",
-  "airline_name": "SKYE",
-  "carrier_code": "SY",
+  "airline_code": "NW",
+  "airline_name": "National Airways",
+  "carrier_code": "NWVH",
   "division": "rhea"
  },
  "ccfa2827-7ea3-433d-893a-6423602efa74": {
@@ -4682,8 +5096,8 @@
  "cd581ab0-b9f6-46ea-9e87-94c8e92cc384": {
   "airline_code": "ME",
   "airline_name": "QuiceAir TG",
-  "carrier_code": "ME",
-  "division": "elysium"
+  "carrier_code": "MEUZ",
+  "division": "uzuri"
  },
  "cd636b51-748d-41e8-9c28-2e33c022c0c7": {
   "airline_code": "A2",
@@ -4751,10 +5165,16 @@
   "carrier_code": "ZN",
   "division": "kyra"
  },
+ "cec98ab8-7e12-47a7-9eda-906e3e71ba4b": {
+  "airline_code": "KC",
+  "airline_name": "K-Air",
+  "carrier_code": "KCEN",
+  "division": "elion"
+ },
  "cee4551e-07c9-418b-b982-742208598b3a": {
-  "airline_code": "QR",
-  "airline_name": "Qatar Airways",
-  "carrier_code": "QREY",
+  "airline_code": "B6",
+  "airline_name": "jetBlue",
+  "carrier_code": "B6",
   "division": "elysium"
  },
  "cef0b6a1-8734-4ef1-8fd3-48e09c41da93": {
@@ -4822,6 +5242,12 @@
   "airline_name": "Scoot",
   "carrier_code": "TREY",
   "division": "elysium"
+ },
+ "d10121ab-f672-4c0b-b257-c88df6583f07": {
+  "airline_code": "NA",
+  "airline_name": "NIRLANG AIR",
+  "carrier_code": "NAAG3",
+  "division": "aegis"
  },
  "d153e1a8-3e42-42fc-81e9-7d4432907317": {
   "airline_code": "KA",
@@ -4956,9 +5382,9 @@
   "division": "rhea"
  },
  "d5c8ca72-792d-45e8-b790-cbab7a39dba0": {
-  "airline_code": "MJ",
-  "airline_name": "Mint Jet",
-  "carrier_code": "MJUZ",
+  "airline_code": "MA",
+  "airline_name": "Maplestar Airways",
+  "carrier_code": "MAUZ",
   "division": "uzuri"
  },
  "d62806d8-4668-4101-8c2e-cbccdaee1c76": {
@@ -5081,6 +5507,12 @@
   "carrier_code": "6L",
   "division": "elion"
  },
+ "ddcb1c49-85f5-4b04-8e2b-d1e86696cc57": {
+  "airline_code": "SB",
+  "airline_name": "Sakhir Airways",
+  "carrier_code": "SBUZ",
+  "division": "uzuri"
+ },
  "de143db9-773b-4049-836e-39f4ae53d6a6": {
   "airline_code": "GD",
   "airline_name": "Glider",
@@ -5104,6 +5536,12 @@
   "airline_name": "NunbitLink",
   "carrier_code": "NLAG",
   "division": "aegis"
+ },
+ "dfac95e7-6807-4768-a1c9-8674771957d1": {
+  "airline_code": "QZ",
+  "airline_name": "Indonesia Air Asia",
+  "carrier_code": "QZ",
+  "division": "uzuri"
  },
  "e0178d94-beba-430d-8323-01941c95056c": {
   "airline_code": "NS",
@@ -5191,9 +5629,15 @@
  },
  "e36dda7a-f3c8-45b8-9179-373c5ea322fc": {
   "airline_code": "67",
-  "airline_name": "EJet United",
+  "airline_name": "Ronin Airlines",
   "carrier_code": "67",
   "division": "elion"
+ },
+ "e3c47268-0bb5-40e1-90c2-2328474fafbd": {
+  "airline_code": "HA",
+  "airline_name": "HIA",
+  "carrier_code": "HAVH",
+  "division": "rhea"
  },
  "e3d0dd76-2e0f-4e15-9ea1-7e19fdb51210": {
   "airline_code": "NW",
@@ -5263,7 +5707,7 @@
  },
  "e62dc898-92fc-4cbf-80b2-af92b153d361": {
   "airline_code": "PP",
-  "airline_name": "Pacifico PH",
+  "airline_name": "Pacifico Airways",
   "carrier_code": "PP",
   "division": "eos"
  },
@@ -5284,6 +5728,12 @@
   "airline_name": "Peacock air",
   "carrier_code": "IA",
   "division": "elysium"
+ },
+ "e74f8c76-e430-459d-bcdd-b5b964171971": {
+  "airline_code": "LX",
+  "airline_name": "LUXAR AIRLINES",
+  "carrier_code": "LXEN1",
+  "division": "elion"
  },
  "e75464d6-bed0-4a2c-9519-91704e7b054d": {
   "airline_code": "GT",
@@ -5333,11 +5783,23 @@
   "carrier_code": "ZAVS",
   "division": "vilis"
  },
+ "e8d31f5f-bd8e-45c0-b424-ea4568ea1dc6": {
+  "airline_code": "AQ",
+  "airline_name": "SC international",
+  "carrier_code": "AQEN",
+  "division": "elion"
+ },
  "e8e0adae-ec2f-47ee-ac82-11e85e198adf": {
   "airline_code": "AT",
   "airline_name": "Alitalia",
   "carrier_code": "ATVS",
   "division": "vilis"
+ },
+ "e8f8252f-102a-44fb-bc2c-349b1df287ad": {
+  "airline_code": "BF",
+  "airline_name": "Bahía de Flores",
+  "carrier_code": "BF",
+  "division": "rhea"
  },
  "e909f927-f52a-4156-add2-36e9b831a151": {
   "airline_code": "KP",
@@ -5376,10 +5838,10 @@
   "division": "uzuri"
  },
  "e9f9fcb8-761d-4021-ba02-213f0a566dcd": {
-  "airline_code": "AG",
+  "airline_code": "AC",
   "airline_name": "Avanti Global",
-  "carrier_code": "AGAG",
-  "division": "aegis"
+  "carrier_code": "ACKY",
+  "division": "kyra"
  },
  "ea5807ec-3426-4f08-a6ae-743bff309417": {
   "airline_code": "EJ",
@@ -5440,6 +5902,12 @@
   "airline_name": "Horizon",
   "carrier_code": "HZ",
   "division": "kyra"
+ },
+ "ec2f1bb9-2682-42a0-ac2e-9df97eda7414": {
+  "airline_code": "CL",
+  "airline_name": "Air Continental",
+  "carrier_code": "CLVS",
+  "division": "vilis"
  },
  "ec70c72c-0370-4bcc-a4a1-bfbc737a1e59": {
   "airline_code": "MR",
@@ -5508,9 +5976,9 @@
   "division": "kyra"
  },
  "ef115e18-0442-4b3d-9f09-b1c60b24d081": {
-  "airline_code": "SW",
+  "airline_code": "VS",
   "airline_name": "Volée Sorrel-Weed",
-  "carrier_code": "SWVH",
+  "carrier_code": "VS",
   "division": "rhea"
  },
  "ef12878a-078e-4093-bbbd-ee1d9bd000d0": {
@@ -5524,6 +5992,12 @@
   "airline_name": "Infinity Airlines",
   "carrier_code": "ASVS",
   "division": "vilis"
+ },
+ "ef4a94dc-dd5d-4698-b483-ea5d92a08e9e": {
+  "airline_code": "BU",
+  "airline_name": "British Uzuri Ltd",
+  "carrier_code": "BU",
+  "division": "uzuri"
  },
  "ef73152f-c48f-4913-8587-c598b7280d73": {
   "airline_code": "SS",
@@ -5554,6 +6028,12 @@
   "airline_name": "WeFly FRA",
   "carrier_code": "WR",
   "division": "eos"
+ },
+ "f07b0a3e-4801-40b6-aef0-1acfd7af728d": {
+  "airline_code": "AP",
+  "airline_name": "Alas Perú",
+  "carrier_code": "APEY",
+  "division": "elysium"
  },
  "f096554d-3244-4a8f-859a-c0fa30bf1fda": {
   "airline_code": "RN",
@@ -5617,7 +6097,7 @@
  },
  "f3d7bc3d-d586-42ab-9ca3-65700a9035a8": {
   "airline_code": "PS",
-  "airline_name": "Pacifico SG",
+  "airline_name": "Pacifico Airways",
   "carrier_code": "PS",
   "division": "rhea"
  },
@@ -5651,6 +6131,12 @@
   "carrier_code": "A2VS",
   "division": "vilis"
  },
+ "f58366c6-cd9e-4f2a-a0be-74e1e680bc16": {
+  "airline_code": "FK",
+  "airline_name": "Falcon Airlines",
+  "carrier_code": "FKAG",
+  "division": "aegis"
+ },
  "f62150a0-3938-41a1-aef2-e88f4a11c826": {
   "airline_code": "OP",
   "airline_name": "Oppo",
@@ -5670,9 +6156,9 @@
   "division": "rhea"
  },
  "f6ee81a1-3cb2-413c-8693-f1d00eacb465": {
-  "airline_code": "CI",
+  "airline_code": "FD",
   "airline_name": "Fundgo!",
-  "carrier_code": "CIVH1",
+  "carrier_code": "FDVH",
   "division": "rhea"
  },
  "f7002c71-0ce0-42fb-93e5-8ec8943adf68": {
@@ -5910,9 +6396,9 @@
   "division": "kyra"
  },
  "ffce4a85-0bca-414f-9567-91ff1f1d194b": {
-  "airline_code": "FH",
-  "airline_name": "FlyLux Huaxia",
-  "carrier_code": "FH",
+  "airline_code": "S4",
+  "airline_name": "STR4TX",
+  "carrier_code": "S4",
   "division": "kyra"
  }
 }
