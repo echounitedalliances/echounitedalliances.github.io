@@ -54,13 +54,26 @@ drop schema if exists echo_stage cascade;
 -- put things right. And it goes before the leg refresh, which needs the disk.
 vacuum (full, analyze) public.flights;
 vacuum (full, analyze) public.aircraft;
-vacuum (full, analyze) public.flight_assignments;
+-- flight_assignments needs none: it was empty before the merge filled it
+-- (50_assignments_weekly_only.sql), so it is already packed.
+analyze public.flight_assignments;
 
 -- New airports arrive from the merge as bare IATA codes. 03 gives them names,
 -- countries, timezones and coordinates, and is safe to re-run: it only
 -- touches airports whose data actually changed, and never overwrites a city
 -- name 27 has already cleaned.
 \i database/sql/03_airports_backfill.sql
+
+-- flight_assignments is empty between weekly builds (50_assignments_weekly_only.sql).
+-- Refreshing mv_legs from an empty table would wipe every departure on the
+-- site, so this file refuses to run unless the merge has just filled it.
+do $$
+begin
+    if not exists (select 1 from public.flight_assignments) then
+        raise exception 'flight_assignments is empty: run 1_stage.sql and 2_merge.sql first. Refreshing now would empty mv_legs. Nothing was refreshed.';
+    end if;
+end
+$$;
 
 -- The legs' rows: mv_leg_departures is a view over them (37_slim_storage.sql).
 refresh materialized view              public.mv_legs;
@@ -84,6 +97,12 @@ vacuum analyze public.mv_legs;
 vacuum analyze public.mv_division_arcs;
 analyze public.airlines;
 analyze public.airports;
+
+-- Everything that reads flight_assignments has now been built from it --
+-- mv_legs, and mv_airline_directory's cheapest fares -- so it is emptied
+-- again until next week: 120 MB the free plan does not have to hold
+-- (50_assignments_weekly_only.sql). TRUNCATE hands the space back at once.
+truncate public.flight_assignments;
 
 select 'mv_leg_departures' as matview, count(*) from public.mv_leg_departures
 union all select 'mv_airline_directory',    count(*) from public.mv_airline_directory

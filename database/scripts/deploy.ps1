@@ -146,7 +146,9 @@ $files += @('04_views.sql', '05_reservations.sql', '06_inventory.sql',
             # claim, written the same week in another session.
             '46_division_uzuri.sql',
             # Idle-routes view rewritten to work without the index 45 dropped.
-            '47_idle_routes_without_pair_index.sql')
+            '47_idle_routes_without_pair_index.sql',
+            # flight_assignments emptied between weekly builds, for space.
+            '50_assignments_weekly_only.sql')
 
 # Refuse the truncating reload against a database people are using.
 #

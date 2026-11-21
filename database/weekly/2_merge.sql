@@ -356,6 +356,11 @@ on conflict (flight_id) do update
  -- somebody is booking while this transaction runs.
  where (flights.*) is distinct from (excluded.*);
 
+-- Since 50_assignments_weekly_only.sql the table is empty between weekly
+-- builds, so in practice the delete below finds nothing and the insert loads
+-- the whole week; 3_refresh.sql empties it again once everything is built.
+-- Both are kept as written, so a merge run against a full table still works.
+--
 -- Assignments nothing points at, so the ones that went are simply deleted.
 -- This is also what retires a kept flight: without an assignment it has no
 -- leg, and without a leg it cannot be found or sold.
