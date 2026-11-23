@@ -884,6 +884,7 @@ const dict: Record<string, string> = {
   "From its hub at Taipei Taoyuan, Formosa (FM) of Echo Lior flies a 278-aircraft fleet, led by Airbus A350s and Boeing 777-9s, across 157 routes to 158 destinations.": "তাইপেই তাওইউয়ানের হাব থেকে Echo Lior-এর Formosa (FM) ২৭৮টি বিমানের বহর চালায়, যার শীর্ষে Airbus A350 ও Boeing 777-9, ১৫৭টি রুটে ১৫৮টি গন্তব্যে।",
   // Trainee division leaders, 21 November 2026 (lib/alliance.ts).
   "Trainee leader": "শিক্ষানবিশ লিডার",
+  "Verified with the Resonant role on the EUA Discord server": "EUA Discord সার্ভারে Resonant রোল দিয়ে যাচাই করা হয়েছে",
 }
 
 export default dict

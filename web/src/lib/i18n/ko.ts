@@ -884,6 +884,7 @@ const dict: Record<string, string> = {
   "From its hub at Taipei Taoyuan, Formosa (FM) of Echo Lior flies a 278-aircraft fleet, led by Airbus A350s and Boeing 777-9s, across 157 routes to 158 destinations.": "Echo Lior 소속 Formosa(FM)는 타이베이 타오위안을 허브로 278대의 기단을 운항하며, 에어버스 A350과 보잉 777-9를 주력으로 157개 노선에서 158개 목적지를 잇습니다.",
   // Trainee division leaders, 21 November 2026 (lib/alliance.ts).
   "Trainee leader": "수습 리더",
+  "Verified with the Resonant role on the EUA Discord server": "EUA Discord 서버의 Resonant 역할로 인증됨",
 }
 
 export default dict

@@ -89,6 +89,9 @@ export type Resonant = {
   claimed_airline_uid: string | null
   is_admin: boolean
   joined_at: string
+  /** When this account last proved it holds the Resonant Discord role, or
+   *  null if never. See database/sql/53_discord_resonant_badge.sql. */
+  discord_role_verified_at: string | null
 }
 
 /**
@@ -211,6 +214,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         next?.user?.app_metadata?.provider === 'discord' || providers.includes('discord')
       if (next?.provider_token && isDiscordSignIn) {
         const token = next.provider_token
+        const signedInUser = next.user
         void hasEuaResonantRole(token).then((hasRole) => {
           // null means the check itself failed (network, CORS, Discord
           // outage, or the bot not being in the server), not that the role
@@ -223,7 +227,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           if (!hasRole) {
             setDiscordGuildError(true)
             void supabase.auth.signOut()
+            return
           }
+          // Record the one proof the site ever gets of this, so the badge
+          // can show it on every later visit, not just this one.
+          void supabase
+            .from('resonants')
+            .update({ discord_role_verified_at: new Date().toISOString() })
+            .eq('user_id', signedInUser.id)
+            .then(() => loadResonant(signedInUser))
         })
       }
     })

@@ -150,6 +150,14 @@ export default function Resonance() {
           </h1>
           <p className="mono mt-1 text-[12px] text-ink-faint">
             {user.email}
+            {resonant?.discord_role_verified_at && (
+              <span
+                className="ml-3 border border-[color:var(--color-cyan)] px-2 py-0.5 uppercase tracking-[0.12em] text-cyan"
+                title={tr('Verified with the Resonant role on the EUA Discord server')}
+              >
+                {tr('Resonant')}
+              </span>
+            )}
             {resonant?.is_admin && (
               <span className="ml-3 border border-edge px-2 py-0.5 uppercase tracking-[0.12em] text-warn">
                 {tr('Admin')}

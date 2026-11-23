@@ -877,6 +877,7 @@ const dict: Record<string, string> = {
   "From its hub at Taipei Taoyuan, Formosa (FM) of Echo Lior flies a 278-aircraft fleet, led by Airbus A350s and Boeing 777-9s, across 157 routes to 158 destinations.": "Dari hub-nya di Taipei Taoyuan, Formosa (FM) dari Echo Lior menerbangkan armada 278 pesawat, dipimpin Airbus A350 dan Boeing 777-9, di 157 rute ke 158 destinasi.",
   // Trainee division leaders, 21 November 2026 (lib/alliance.ts).
   "Trainee leader": "Pemimpin magang",
+  "Verified with the Resonant role on the EUA Discord server": "Terverifikasi dengan role Resonant di server Discord EUA",
 }
 
 export default dict
