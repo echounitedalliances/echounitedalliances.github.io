@@ -12,15 +12,18 @@ import type { Airline, MyAirlineClaim as MyClaim } from '../lib/types'
  * Claiming used to write resonants.claimed_airline_uid directly, the
  * moment a Resonant picked a carrier: self-reported, no review, the same as
  * a home airport. 54_airline_claims.sql put a queue in front of that
- * instead, so this component now has three things to show depending on
- * where the account's one claim (if any) stands: a search box when there is
- * none, a pending notice while an admin has not decided yet, or -- once
- * approved -- the held airline and a small form to edit it, the one thing
- * holding it is actually for.
+ * instead, so this component now has four things to show depending on
+ * where the account stands: a prompt to verify with Discord first
+ * (55_claims_require_discord_verification.sql -- only a Resonant-role
+ * Discord sign-in may even ask), a search box once verified, a pending
+ * notice while an admin has not decided yet, or -- once approved -- the
+ * held airline and a small form to edit it, the one thing holding it is
+ * actually for.
  */
 export default function MyAirlineClaim() {
-  const { resonant, refreshResonant } = useAuth()
+  const { resonant, refreshResonant, signInWithDiscord } = useAuth()
   const t = useT()
+  const verified = !!resonant?.discord_role_verified_at
 
   const [claim, setClaim] = useState<MyClaim | null>(null)
   const [claimLoaded, setClaimLoaded] = useState(false)
@@ -192,6 +195,19 @@ export default function MyAirlineClaim() {
             airline: claim.airline_name ?? claim.carrier_code ?? t('this airline'),
           })}
         </p>
+      ) : !verified ? (
+        <>
+          <p className="mt-2 max-w-[58ch] text-sm text-ink-dim">
+            {t('Claiming an airline needs the Resonant role on the EUA Discord server, so an admin can trust it is really you. Sign in with Discord to verify your account first.')}
+          </p>
+          <button
+            type="button"
+            onClick={() => void signInWithDiscord()}
+            className="btn btn-ghost mt-3"
+          >
+            {t('Sign in with Discord')}
+          </button>
+        </>
       ) : (
         <>
           <p className="mt-2 max-w-[58ch] text-sm text-ink-dim">

@@ -895,6 +895,7 @@ const dict: Record<string, string> = {
   "Claimed by {name}": "Dipegang oleh {name}",
   "Claimed by its Resonant operator": "Dipegang oleh operator Resonant-nya",
   "Claimed": "Dipegang",
+  "Claiming an airline needs the Resonant role on the EUA Discord server, so an admin can trust it is really you. Sign in with Discord to verify your account first.": "Mengklaim maskapai memerlukan role Resonant di server Discord EUA, supaya admin bisa percaya itu benar-benar kamu. Masuk dengan Discord dulu untuk memverifikasi akunmu.",
 }
 
 export default dict

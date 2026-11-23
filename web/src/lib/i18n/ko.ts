@@ -902,6 +902,7 @@ const dict: Record<string, string> = {
   "Claimed by {name}": "{name}님이 보유 중",
   "Claimed by its Resonant operator": "해당 Resonant 운영자가 보유 중",
   "Claimed": "보유자 있음",
+  "Claiming an airline needs the Resonant role on the EUA Discord server, so an admin can trust it is really you. Sign in with Discord to verify your account first.": "항공사를 신청하려면 EUA Discord 서버의 Resonant 역할이 필요해요. 그래야 관리자가 정말 본인인지 확인할 수 있어요. 먼저 Discord로 로그인해서 계정을 인증하세요.",
 }
 
 export default dict

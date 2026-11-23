@@ -898,6 +898,7 @@ const dict: Record<string, string> = {
   "Claimed by {name}": "Do {name} nắm giữ",
   "Claimed by its Resonant operator": "Do operator Resonant của hãng nắm giữ",
   "Claimed": "Đã có người giữ",
+  "Claiming an airline needs the Resonant role on the EUA Discord server, so an admin can trust it is really you. Sign in with Discord to verify your account first.": "Để claim một hãng bay cần có vai trò Resonant trên server Discord EUA, để admin có thể tin đó thực sự là bạn. Hãy đăng nhập bằng Discord để xác minh tài khoản trước.",
 }
 
 export default dict
