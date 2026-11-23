@@ -885,6 +885,23 @@ const dict: Record<string, string> = {
   // Trainee division leaders, 21 November 2026 (lib/alliance.ts).
   "Trainee leader": "प्रशिक्षु लीडर",
   "Verified with the Resonant role on the EUA Discord server": "EUA Discord सर्वर पर Resonant रोल से सत्यापित",
+  "You hold {airline}. Update its name or description below; everything else comes from the weekly import.": "आपके पास {airline} है। नीचे इसका नाम या विवरण अपडेट करें; बाकी सब साप्ताहिक इम्पोर्ट से आता है।",
+  "Airline name": "एयरलाइन का नाम",
+  "Leave empty to keep it as is": "जैसा है वैसा रखने के लिए खाली छोड़ें",
+  "Description": "विवरण",
+  "Save changes": "बदलाव सहेजें",
+  "Release this airline": "इस एयरलाइन को छोड़ दें",
+  "Your claim for {airline} is waiting on an admin to review it.": "{airline} के लिए आपका दावा एडमिन की समीक्षा का इंतज़ार कर रहा है।",
+  "If you fly for an alliance member, ask to hold its page here. An admin reviews every request before it takes effect.": "अगर आप अलायंस के किसी सदस्य के लिए उड़ान भरते हैं, तो यहां उसका पेज अपने नाम करने का अनुरोध करें। लागू होने से पहले एडमिन हर अनुरोध की समीक्षा करता है।",
+  "Your last claim, for {airline}, was turned down.": "{airline} के लिए आपका आखिरी दावा अस्वीकार कर दिया गया।",
+  "Sent -- you will see it here once an admin decides.": "भेज दिया गया -- एडमिन के फैसला करते ही आप इसे यहां देख पाएंगे।",
+  "That could not be sent.": "वह भेजा नहीं जा सका।",
+  "That could not be saved.": "वह सहेजा नहीं जा सका।",
+  "this airline": "यह एयरलाइन",
+  "an airline": "एक एयरलाइन",
+  "Claimed by {name}": "{name} के पास",
+  "Claimed by its Resonant operator": "इसके Resonant ऑपरेटर के पास",
+  "Claimed": "दावा किया गया",
 }
 
 export default dict

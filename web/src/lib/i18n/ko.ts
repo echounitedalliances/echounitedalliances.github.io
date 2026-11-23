@@ -885,6 +885,23 @@ const dict: Record<string, string> = {
   // Trainee division leaders, 21 November 2026 (lib/alliance.ts).
   "Trainee leader": "수습 리더",
   "Verified with the Resonant role on the EUA Discord server": "EUA Discord 서버의 Resonant 역할로 인증됨",
+  "You hold {airline}. Update its name or description below; everything else comes from the weekly import.": "{airline}을(를) 보유하고 있습니다. 아래에서 이름이나 설명을 업데이트하세요. 나머지는 매주 가져오는 데이터에서 옵니다.",
+  "Airline name": "항공사 이름",
+  "Leave empty to keep it as is": "비워두면 그대로 유지돼요",
+  "Description": "설명",
+  "Save changes": "변경사항 저장",
+  "Release this airline": "이 항공사 반환하기",
+  "Your claim for {airline} is waiting on an admin to review it.": "{airline}에 대한 신청이 관리자의 검토를 기다리고 있어요.",
+  "If you fly for an alliance member, ask to hold its page here. An admin reviews every request before it takes effect.": "얼라이언스 멤버 항공사에서 근무한다면 여기서 해당 페이지를 보유하도록 요청하세요. 모든 요청은 적용되기 전에 관리자가 검토합니다.",
+  "Your last claim, for {airline}, was turned down.": "{airline}에 대한 마지막 신청이 거절됐어요.",
+  "Sent -- you will see it here once an admin decides.": "전송됨 -- 관리자가 결정하면 여기에서 확인할 수 있어요.",
+  "That could not be sent.": "보낼 수 없었어요.",
+  "That could not be saved.": "저장할 수 없었어요.",
+  "this airline": "이 항공사",
+  "an airline": "한 항공사",
+  "Claimed by {name}": "{name}님이 보유 중",
+  "Claimed by its Resonant operator": "해당 Resonant 운영자가 보유 중",
+  "Claimed": "보유자 있음",
 }
 
 export default dict

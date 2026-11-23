@@ -885,6 +885,23 @@ const dict: Record<string, string> = {
   // Trainee division leaders, 21 November 2026 (lib/alliance.ts).
   "Trainee leader": "见习负责人",
   "Verified with the Resonant role on the EUA Discord server": "已通过 EUA Discord 服务器上的 Resonant 身份组验证",
+  "You hold {airline}. Update its name or description below; everything else comes from the weekly import.": "你持有 {airline}。在下面更新它的名称或描述;其余内容都来自每周导入的数据。",
+  "Airline name": "航空公司名称",
+  "Leave empty to keep it as is": "留空以保持不变",
+  "Description": "描述",
+  "Save changes": "保存更改",
+  "Release this airline": "放弃这家航空公司",
+  "Your claim for {airline} is waiting on an admin to review it.": "你对 {airline} 的认领申请正在等待管理员审核。",
+  "If you fly for an alliance member, ask to hold its page here. An admin reviews every request before it takes effect.": "如果你为联盟的某个成员航空公司飞行,可以在这里申请持有它的页面。每个申请在生效前都会经过管理员审核。",
+  "Your last claim, for {airline}, was turned down.": "你上一次对 {airline} 的认领申请被拒绝了。",
+  "Sent -- you will see it here once an admin decides.": "已发送——管理员做出决定后你会在这里看到结果。",
+  "That could not be sent.": "无法发送。",
+  "That could not be saved.": "无法保存。",
+  "this airline": "这家航空公司",
+  "an airline": "一家航空公司",
+  "Claimed by {name}": "由 {name} 持有",
+  "Claimed by its Resonant operator": "由其 Resonant 运营者持有",
+  "Claimed": "已被认领",
 }
 
 export default dict

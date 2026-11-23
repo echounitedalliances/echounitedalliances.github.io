@@ -833,6 +833,23 @@ const dict: Record<string, string> = {
   // Trainee division leaders, 21 November 2026 (lib/alliance.ts).
   "Trainee leader": "Trainee leader",
   "Verified with the Resonant role on the EUA Discord server": "Na-verify gamit ang Resonant role sa EUA Discord server",
+  "You hold {airline}. Update its name or description below; everything else comes from the weekly import.": "Hawak mo ang {airline}. I-update ang pangalan o deskripsyon sa ibaba; galing sa weekly import ang lahat ng iba pa.",
+  "Airline name": "Pangalan ng airline",
+  "Leave empty to keep it as is": "Iwanang blangko para manatili ito",
+  "Description": "Deskripsyon",
+  "Save changes": "I-save ang mga pagbabago",
+  "Release this airline": "Bitawan ang airline na ito",
+  "Your claim for {airline} is waiting on an admin to review it.": "Naghihintay ang claim mo para sa {airline} na i-review ng admin.",
+  "If you fly for an alliance member, ask to hold its page here. An admin reviews every request before it takes effect.": "Kung lumilipad ka para sa isang miyembro ng alliance, humingi na hawakan ang page nito dito. Rine-review ng admin ang bawat request bago ito magkabisa.",
+  "Your last claim, for {airline}, was turned down.": "Ang huli mong claim, para sa {airline}, ay tinanggihan.",
+  "Sent -- you will see it here once an admin decides.": "Naipadala na -- makikita mo ito dito kapag may desisyon na ang admin.",
+  "That could not be sent.": "Hindi naipadala iyon.",
+  "That could not be saved.": "Hindi naisave iyon.",
+  "this airline": "airline na ito",
+  "an airline": "isang airline",
+  "Claimed by {name}": "Hawak ni {name}",
+  "Claimed by its Resonant operator": "Hawak ng Resonant operator nito",
+  "Claimed": "May Hawak",
 }
 
 export default dict

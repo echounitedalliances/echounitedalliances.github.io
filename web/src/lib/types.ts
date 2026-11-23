@@ -346,3 +346,40 @@ export type DashboardStats = {
   tickets_by_status: Partial<Record<TicketStatus, number>>
   tickets_by_category: Partial<Record<TicketCategory, number>>
 }
+
+export type ClaimStatus = 'pending' | 'approved' | 'rejected' | 'withdrawn'
+
+/** A signed-in Resonant's own airline claim -- my_airline_claim(). */
+export type MyAirlineClaim = {
+  claim_id: number
+  status: ClaimStatus
+  airline_uid: string
+  airline_name: string | null
+  carrier_code: string | null
+  submitted_at: string
+  decided_at: string | null
+  decision_note: string | null
+}
+
+/** An airline claim as the admin inbox sees it -- admin_airline_claims_list(). */
+export type AdminAirlineClaim = {
+  claim_id: number
+  email: string
+  display_name: string | null
+  airline_uid: string
+  airline_name: string | null
+  carrier_code: string | null
+  division_name: string | null
+  status: ClaimStatus
+  submitted_at: string
+  decided_at: string | null
+  decided_by: string | null
+  decision_note: string | null
+  already_held_by_someone_else: boolean
+}
+
+/** Public attribution for a claimed airline -- airline_claim_holder(). */
+export type AirlineClaimHolder = {
+  display_name: string | null
+  held_since: string | null
+}

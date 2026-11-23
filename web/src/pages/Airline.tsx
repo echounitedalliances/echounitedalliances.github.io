@@ -10,6 +10,7 @@ import { isConfigured, supabase } from '../lib/supabase'
 import { airlineTimetable } from '../lib/schedule'
 import type {
   Airline,
+  AirlineClaimHolder,
   Arc,
   FleetRow,
   MemberSiteRow,
@@ -29,6 +30,8 @@ export default function AirlinePage() {
   const code = divisionFromUrl(name)
   const { lang, t } = useI18n()
   const [a, setA] = useState<Airline | null>(null)
+  /** Who holds this airline's claim, if anyone -- airline_claim_holder(). */
+  const [claimHolder, setClaimHolder] = useState<AirlineClaimHolder | null>(null)
   usePageTitle(a && airlineTitle(a.airline_name ?? a.carrier_code, a.carrier_code, a.division_name))
   const [fleet, setFleet] = useState<FleetRow[]>([])
   const [routes, setRoutes] = useState<RoutePairRow[]>([])
@@ -84,6 +87,19 @@ export default function AirlinePage() {
       dead = true
     }
   }, [a?.uid, a?.description_is_custom, lang]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    setClaimHolder(null)
+    if (!isConfigured || !a) return
+    let dead = false
+    void supabase.rpc('airline_claim_holder', { p_airline_uid: a.uid }).then(({ data }) => {
+      const rows = (data as AirlineClaimHolder[]) ?? []
+      if (!dead) setClaimHolder(rows[0] ?? null)
+    })
+    return () => {
+      dead = true
+    }
+  }, [a?.uid])
 
   useEffect(() => {
     if (!isConfigured) return
@@ -326,6 +342,18 @@ export default function AirlinePage() {
                   {a.is_division_leader && (
                     <span className="border border-edge px-2 py-0.5 uppercase tracking-[0.12em]">
                       {t('Division leader')}
+                    </span>
+                  )}
+                  {claimHolder && (
+                    <span
+                      className="border border-[color:var(--color-cyan)] px-2 py-0.5 uppercase tracking-[0.12em] text-cyan"
+                      title={
+                        claimHolder.display_name
+                          ? t('Claimed by {name}', { name: claimHolder.display_name })
+                          : t('Claimed by its Resonant operator')
+                      }
+                    >
+                      {t('Claimed')}
                     </span>
                   )}
                   {/* Renders nothing unless the signed-in account is an admin. */}

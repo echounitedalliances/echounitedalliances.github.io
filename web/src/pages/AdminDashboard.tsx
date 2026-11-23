@@ -4,6 +4,7 @@ import { NotConfigured } from '../components/ui'
 import { useAuth } from '../lib/auth'
 import AdminStats from '../components/AdminStats'
 import AdminSupportQueue from '../components/AdminSupportQueue'
+import AdminAirlineClaims from '../components/AdminAirlineClaims'
 import AdminMembers from '../components/AdminMembers'
 import AdminCarrierSearch from '../components/AdminCarrierSearch'
 import AdminApplications from '../components/AdminApplications'
@@ -51,6 +52,7 @@ export default function AdminDashboard() {
 
       <AdminStats />
       <AdminSupportQueue />
+      <AdminAirlineClaims />
       <AdminMembers />
       <AdminCarrierSearch />
       <AdminApplications />

@@ -885,6 +885,23 @@ const dict: Record<string, string> = {
   // Trainee division leaders, 21 November 2026 (lib/alliance.ts).
   "Trainee leader": "শিক্ষানবিশ লিডার",
   "Verified with the Resonant role on the EUA Discord server": "EUA Discord সার্ভারে Resonant রোল দিয়ে যাচাই করা হয়েছে",
+  "You hold {airline}. Update its name or description below; everything else comes from the weekly import.": "তুমি {airline} ধরে আছো। নিচে এর নাম বা বিবরণ আপডেট করো; বাকি সবকিছু সাপ্তাহিক ইম্পোর্ট থেকে আসে।",
+  "Airline name": "এয়ারলাইনের নাম",
+  "Leave empty to keep it as is": "যেমন আছে তেমন রাখতে খালি রাখো",
+  "Description": "বিবরণ",
+  "Save changes": "পরিবর্তন সংরক্ষণ করুন",
+  "Release this airline": "এই এয়ারলাইনটা ছেড়ে দাও",
+  "Your claim for {airline} is waiting on an admin to review it.": "{airline}-এর জন্য তোমার ক্লেইম অ্যাডমিনের রিভিউয়ের অপেক্ষায় আছে।",
+  "If you fly for an alliance member, ask to hold its page here. An admin reviews every request before it takes effect.": "তুমি যদি অ্যালায়েন্সের কোনো মেম্বারের হয়ে ওড়ো, তাহলে এখানে তার পেজ ধরার জন্য আবেদন করো। কার্যকর হওয়ার আগে অ্যাডমিন প্রতিটা আবেদন পর্যালোচনা করে।",
+  "Your last claim, for {airline}, was turned down.": "{airline}-এর জন্য তোমার শেষ ক্লেইমটা প্রত্যাখ্যান করা হয়েছে।",
+  "Sent -- you will see it here once an admin decides.": "পাঠানো হয়েছে -- অ্যাডমিন সিদ্ধান্ত নিলে তুমি এখানে দেখতে পাবে।",
+  "That could not be sent.": "ওটা পাঠানো যায়নি।",
+  "That could not be saved.": "ওটা সংরক্ষণ করা যায়নি।",
+  "this airline": "এই এয়ারলাইন",
+  "an airline": "একটা এয়ারলাইন",
+  "Claimed by {name}": "{name} এর দখলে",
+  "Claimed by its Resonant operator": "এর Resonant অপারেটরের দখলে",
+  "Claimed": "দখলে আছে",
 }
 
 export default dict

@@ -878,6 +878,23 @@ const dict: Record<string, string> = {
   // Trainee division leaders, 21 November 2026 (lib/alliance.ts).
   "Trainee leader": "Pemimpin magang",
   "Verified with the Resonant role on the EUA Discord server": "Terverifikasi dengan role Resonant di server Discord EUA",
+  "You hold {airline}. Update its name or description below; everything else comes from the weekly import.": "Kamu memegang {airline}. Perbarui nama atau deskripsinya di bawah; selebihnya datang dari impor mingguan.",
+  "Airline name": "Nama maskapai",
+  "Leave empty to keep it as is": "Biarkan kosong untuk tetap seperti sekarang",
+  "Description": "Deskripsi",
+  "Save changes": "Simpan perubahan",
+  "Release this airline": "Lepaskan maskapai ini",
+  "Your claim for {airline} is waiting on an admin to review it.": "Klaimmu untuk {airline} sedang menunggu ditinjau admin.",
+  "If you fly for an alliance member, ask to hold its page here. An admin reviews every request before it takes effect.": "Kalau kamu terbang untuk anggota aliansi, ajukan untuk memegang halamannya di sini. Admin meninjau setiap permintaan sebelum berlaku.",
+  "Your last claim, for {airline}, was turned down.": "Klaim terakhirmu, untuk {airline}, ditolak.",
+  "Sent -- you will see it here once an admin decides.": "Terkirim -- kamu akan melihatnya di sini begitu admin memutuskan.",
+  "That could not be sent.": "Itu tidak bisa dikirim.",
+  "That could not be saved.": "Itu tidak bisa disimpan.",
+  "this airline": "maskapai ini",
+  "an airline": "sebuah maskapai",
+  "Claimed by {name}": "Dipegang oleh {name}",
+  "Claimed by its Resonant operator": "Dipegang oleh operator Resonant-nya",
+  "Claimed": "Dipegang",
 }
 
 export default dict

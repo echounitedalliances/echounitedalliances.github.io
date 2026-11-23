@@ -881,6 +881,23 @@ const dict: Record<string, string> = {
   // Trainee division leaders, 21 November 2026 (lib/alliance.ts).
   "Trainee leader": "Leader tập sự",
   "Verified with the Resonant role on the EUA Discord server": "Đã xác minh với vai trò Resonant trên server Discord EUA",
+  "You hold {airline}. Update its name or description below; everything else comes from the weekly import.": "Bạn đang giữ {airline}. Cập nhật tên hoặc mô tả bên dưới; mọi thứ khác đến từ lần nhập dữ liệu hàng tuần.",
+  "Airline name": "Tên hãng bay",
+  "Leave empty to keep it as is": "Để trống để giữ nguyên",
+  "Description": "Mô tả",
+  "Save changes": "Lưu thay đổi",
+  "Release this airline": "Trả lại hãng bay này",
+  "Your claim for {airline} is waiting on an admin to review it.": "Yêu cầu của bạn cho {airline} đang chờ admin xem xét.",
+  "If you fly for an alliance member, ask to hold its page here. An admin reviews every request before it takes effect.": "Nếu bạn bay cho một thành viên liên minh, hãy xin giữ trang của hãng đó ở đây. Admin sẽ xem xét mọi yêu cầu trước khi nó có hiệu lực.",
+  "Your last claim, for {airline}, was turned down.": "Yêu cầu gần nhất của bạn, cho {airline}, đã bị từ chối.",
+  "Sent -- you will see it here once an admin decides.": "Đã gửi -- bạn sẽ thấy ở đây ngay khi admin quyết định.",
+  "That could not be sent.": "Không thể gửi.",
+  "That could not be saved.": "Không thể lưu.",
+  "this airline": "hãng bay này",
+  "an airline": "một hãng bay",
+  "Claimed by {name}": "Do {name} nắm giữ",
+  "Claimed by its Resonant operator": "Do operator Resonant của hãng nắm giữ",
+  "Claimed": "Đã có người giữ",
 }
 
 export default dict
