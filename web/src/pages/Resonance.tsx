@@ -20,7 +20,8 @@ import { useT } from '../lib/i18n'
  * components/ResonanceAuth; the site only ever holds the session.
  */
 export default function Resonance() {
-  const { ready, user, resonant, recovering, endRecovery, signOut, refreshResonant } = useAuth()
+  const { ready, user, resonant, recovering, endRecovery, signOut, refreshResonant, discordVerifyError } =
+    useAuth()
   const [error, setError] = useState<string | null>(null)
   const tr = useT()
   const [divisions, setDivisions] = useState<Division[]>([])
@@ -127,6 +128,12 @@ export default function Resonance() {
           {tr('Sign out')}
         </button>
       </div>
+
+      {discordVerifyError && (
+        <p className="mt-4 border-l-2 border-l-[color:var(--color-warn)] pl-3 text-sm text-warn">
+          {tr('Your Discord sign-in worked, but verifying the Resonant role did not go through. Sign in with Discord again to retry.')}
+        </p>
+      )}
 
       {recovering && (
         <div className="mt-8">

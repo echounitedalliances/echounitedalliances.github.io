@@ -851,6 +851,7 @@ const dict: Record<string, string> = {
   "Claimed by its Resonant operator": "Hawak ng Resonant operator nito",
   "Claimed": "May Hawak",
   "Claiming an airline needs the Resonant role on the EUA Discord server, so an admin can trust it is really you. Sign in with Discord to verify your account first.": "Para mag-claim ng airline kailangan ng Resonant role sa EUA Discord server, para mapagkakatiwalaan ng admin na ikaw talaga iyon. Mag-sign in gamit ang Discord muna para i-verify ang account mo.",
+  "Your Discord sign-in worked, but verifying the Resonant role did not go through. Sign in with Discord again to retry.": "Matagumpay ang Discord sign-in mo, pero hindi natuloy ang pag-verify ng Resonant role. Mag-sign in ulit gamit ang Discord para subukan muli.",
 }
 
 export default dict

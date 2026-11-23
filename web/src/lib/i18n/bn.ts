@@ -903,6 +903,7 @@ const dict: Record<string, string> = {
   "Claimed by its Resonant operator": "এর Resonant অপারেটরের দখলে",
   "Claimed": "দখলে আছে",
   "Claiming an airline needs the Resonant role on the EUA Discord server, so an admin can trust it is really you. Sign in with Discord to verify your account first.": "কোনো এয়ারলাইন ক্লেইম করতে EUA Discord সার্ভারে Resonant রোল লাগবে, যাতে অ্যাডমিন বিশ্বাস করতে পারে এটা সত্যিই তুমি। প্রথমে তোমার অ্যাকাউন্ট যাচাই করতে Discord দিয়ে সাইন ইন করো।",
+  "Your Discord sign-in worked, but verifying the Resonant role did not go through. Sign in with Discord again to retry.": "তোমার Discord সাইন-ইন সফল হয়েছে, কিন্তু Resonant রোল যাচাই করা যায়নি। আবার চেষ্টা করতে Discord দিয়ে আবার সাইন ইন করো।",
 }
 
 export default dict

@@ -127,6 +127,15 @@ type AuthState = {
    * is attempted.
    */
   discordGuildError: boolean
+  /**
+   * Set when a Discord sign-in held the Resonant role (so it was not signed
+   * back out) but recording that fact failed -- the verify-discord-role
+   * Edge Function could not be reached, or it ran and the write itself
+   * failed. The account is still signed in either way; this only means the
+   * Resonant badge, and the airline-claim gate behind it, may not show it
+   * yet. Cleared the next time Discord sign-in is attempted.
+   */
+  discordVerifyError: boolean
   /** Resolves with needsConfirmation when the project requires a confirmed email. */
   signUp: (email: string, password: string) => Promise<Result & { needsConfirmation: boolean }>
   sendPasswordReset: (email: string) => Promise<Result>
@@ -153,6 +162,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [resonant, setResonant] = useState<Resonant | null>(null)
   const [recovering, setRecovering] = useState(false)
   const [discordGuildError, setDiscordGuildError] = useState(false)
+  const [discordVerifyError, setDiscordVerifyError] = useState(false)
 
   const loadResonant = async (user: User | null) => {
     if (!user) {
@@ -229,13 +239,42 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             void supabase.auth.signOut()
             return
           }
-          // Record the one proof the site ever gets of this, so the badge
-          // can show it on every later visit, not just this one.
-          void supabase
-            .from('resonants')
-            .update({ discord_role_verified_at: new Date().toISOString() })
-            .eq('user_id', signedInUser.id)
-            .then(() => loadResonant(signedInUser))
+          // Recording this does not happen here. A plain update from the
+          // browser is refused -- 40_lock_admin_flag.sql grants the client
+          // write on only display_name, given_name, family_name,
+          // home_airport and home_division, deliberately not this column,
+          // for the same reason it is not_admin: a client-writable "I am
+          // verified" flag is a client-writable lie. verify-discord-role
+          // (supabase/functions/) re-checks Discord itself, server-side,
+          // and writes with the service role, the only route past that
+          // grant that is not also a hole. See 53_discord_resonant_badge.sql.
+          setDiscordVerifyError(false)
+          void supabase.functions
+            .invoke('verify-discord-role', { body: { provider_token: token } })
+            .then(({ data, error }) => {
+              if (error) {
+                console.warn('verify-discord-role could not be reached; the account is still signed in, but the Resonant badge may not show yet.', error)
+                setDiscordVerifyError(true)
+                return
+              }
+              const result = data as { verified: boolean | null; reason?: string } | null
+              if (result?.verified === true) {
+                void loadResonant(signedInUser)
+                return
+              }
+              if (result?.verified === false) {
+                // The server's own check disagreed with the client's --
+                // trust it, the same as if the client check itself had
+                // failed this way.
+                setDiscordGuildError(true)
+                void supabase.auth.signOut()
+                return
+              }
+              // null: Discord itself could not be reached from the
+              // function. Not a confirmed absence, so the sign-in stands,
+              // same as the client-side check's own null case.
+              console.warn('verify-discord-role could not reach Discord; letting the sign-in stand rather than guessing.')
+            })
         })
       }
     })
@@ -253,6 +292,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       resonant,
       recovering,
       discordGuildError,
+      discordVerifyError,
       endRecovery: () => setRecovering(false),
 
       signInWithPassword: async (email: string, password: string) => {
@@ -268,6 +308,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       signInWithDiscord: async () => {
         setDiscordGuildError(false)
+        setDiscordVerifyError(false)
         const { error } = await supabase.auth.signInWithOAuth({
           provider: 'discord',
           // The default scope covers identify + email; guilds.members.read
@@ -313,7 +354,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       },
       refreshResonant: async () => loadResonant(session?.user ?? null),
     }),
-    [ready, session, resonant, recovering, discordGuildError],
+    [ready, session, resonant, recovering, discordGuildError, discordVerifyError],
   )
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>

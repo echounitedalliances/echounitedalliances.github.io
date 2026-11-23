@@ -98,10 +98,11 @@ export default function MyAirlineClaim() {
 
   const release = async () => {
     if (!resonant) return
-    const { error } = await supabase
-      .from('resonants')
-      .update({ claimed_airline_uid: null })
-      .eq('resonant_id', resonant.resonant_id)
+    // Not a direct table update: claimed_airline_uid is not in the client's
+    // write grant on resonants (40_lock_admin_flag.sql), so that silently
+    // failed the same way discord_role_verified_at did. See
+    // 56_verify_discord_role_server_side.sql.
+    const { error } = await supabase.rpc('release_claimed_airline')
     if (!error) {
       tapSuccess()
       await refreshResonant()

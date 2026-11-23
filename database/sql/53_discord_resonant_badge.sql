@@ -9,11 +9,18 @@
 --  password account, or a Discord account signed in before that tightening,
 --  has no way to show it ever passed.
 --
---  This is only the record. When it is set, when, is written by the client
---  the moment hasEuaResonantRole comes back true -- a plain update on the
---  caller's own row, already permitted by resonants_self_write
---  (08_rls_policies.sql lets an authenticated Resonant write any column of
---  their own row), so no new policy or function is needed here.
+--  This is only the record of when. How it gets WRITTEN does matter, though:
+--  40_lock_admin_flag.sql narrowed the client's update grant on resonants to
+--  display_name, given_name, family_name, home_airport and home_division
+--  only, specifically because a wide grant on this table is how an account
+--  patched itself to is_admin before that file. This column was never added
+--  to that grant, so a plain client-side update to it is refused -- correct,
+--  if quiet about it; a client is not where "this account proved it holds a
+--  Discord role" should be allowed to assert itself. See
+--  56_verify_discord_role_server_side.sql for how it is actually set now:
+--  a Supabase Edge Function re-checks Discord itself and writes with the
+--  service role, which is the only route past this grant that is not also
+--  a hole wide enough for an account to fake its own verification.
 --
 --  It is a timestamp, not a bare flag, for the same reason joined_at is:
 --  "since when" is worth keeping, "yes/no" throws it away. Nothing clears
