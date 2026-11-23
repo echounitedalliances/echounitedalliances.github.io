@@ -7,7 +7,6 @@ import { PasswordCard, SignIn } from '../components/ResonanceAuth'
 import AdminApplyModal from '../components/AdminApplyModal'
 import MySupportTickets from '../components/MySupportTickets'
 import type { AirportRow, Airline, Division } from '../lib/types'
-import { useSneakPeek } from '../lib/sneakPeek'
 import { tapError, tapSuccess } from '../lib/haptics'
 import { useT } from '../lib/i18n'
 
@@ -21,7 +20,6 @@ import { useT } from '../lib/i18n'
  */
 export default function Resonance() {
   const { ready, user, resonant, recovering, endRecovery, signOut, refreshResonant } = useAuth()
-  const { unlocked: claimAirlineUnlocked } = useSneakPeek()
   const [error, setError] = useState<string | null>(null)
   const tr = useT()
   const [divisions, setDivisions] = useState<Division[]>([])
@@ -247,52 +245,50 @@ export default function Resonance() {
                   </ul>
                 )}
               </label>
-              {claimAirlineUnlocked && (
-                <label className="relative block">
-                  <span className="eyebrow mb-1.5 block text-ink-faint">
-                    {tr('Your airline')}{' '}
-                    {claimedAirline && (
-                      <span className="mono text-cyan">{claimedAirline.airline_name}</span>
-                    )}
-                  </span>
-                  <input
-                    value={airlineQuery}
-                    onChange={(e) => setAirlineQuery(e.target.value)}
-                    placeholder={tr('Airline name or code')}
-                    className="w-full border border-edge bg-ground-2 px-3 py-2.5 text-ink outline-none placeholder:text-ink-faint focus:border-accent"
-                  />
-                  {airlineHits.length > 0 && (
-                    <ul className="panel absolute z-30 mt-1 max-h-64 w-full overflow-auto py-1">
-                      {airlineHits.map((a) => (
-                        <li key={a.uid}>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              void saveProfile({ claimed_airline_uid: a.uid })
-                              setAirlineQuery('')
-                              setAirlineHits([])
-                            }}
-                            className="flex w-full items-baseline gap-3 px-3 py-2 text-left hover:bg-surface-2"
-                          >
-                            <span className="mono w-14 shrink-0 text-cyan">{a.carrier_code}</span>
-                            <span className="truncate text-sm text-ink">{a.airline_name}</span>
-                            <span className="ml-auto shrink-0 text-[11px] text-ink-faint">{a.division_name}</span>
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+              <label className="relative block">
+                <span className="eyebrow mb-1.5 block text-ink-faint">
+                  {tr('Your airline')}{' '}
                   {claimedAirline && (
-                    <button
-                      type="button"
-                      onClick={() => void saveProfile({ claimed_airline_uid: null })}
-                      className="mono mt-1.5 text-[11px] uppercase tracking-[0.12em] text-ink-faint hover:text-ink"
-                    >
-                      {tr('Clear')}
-                    </button>
+                    <span className="mono text-cyan">{claimedAirline.airline_name}</span>
                   )}
-                </label>
-              )}
+                </span>
+                <input
+                  value={airlineQuery}
+                  onChange={(e) => setAirlineQuery(e.target.value)}
+                  placeholder={tr('Airline name or code')}
+                  className="w-full border border-edge bg-ground-2 px-3 py-2.5 text-ink outline-none placeholder:text-ink-faint focus:border-accent"
+                />
+                {airlineHits.length > 0 && (
+                  <ul className="panel absolute z-30 mt-1 max-h-64 w-full overflow-auto py-1">
+                    {airlineHits.map((a) => (
+                      <li key={a.uid}>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            void saveProfile({ claimed_airline_uid: a.uid })
+                            setAirlineQuery('')
+                            setAirlineHits([])
+                          }}
+                          className="flex w-full items-baseline gap-3 px-3 py-2 text-left hover:bg-surface-2"
+                        >
+                          <span className="mono w-14 shrink-0 text-cyan">{a.carrier_code}</span>
+                          <span className="truncate text-sm text-ink">{a.airline_name}</span>
+                          <span className="ml-auto shrink-0 text-[11px] text-ink-faint">{a.division_name}</span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {claimedAirline && (
+                  <button
+                    type="button"
+                    onClick={() => void saveProfile({ claimed_airline_uid: null })}
+                    className="mono mt-1.5 text-[11px] uppercase tracking-[0.12em] text-ink-faint hover:text-ink"
+                  >
+                    {tr('Clear')}
+                  </button>
+                )}
+              </label>
             </div>
             {saved && (
               <p className="mono mt-3 text-[11px] uppercase tracking-[0.12em] text-good">
