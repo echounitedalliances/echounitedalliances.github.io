@@ -33,6 +33,14 @@ export default function AdminAirlineClaims() {
   const [note, setNote] = useState('')
   const [busy, setBusy] = useState(false)
 
+  // Selecting several pending claims to approve or turn down together,
+  // instead of opening the single-claim panel above once per row.
+  const [selected, setSelected] = useState<Set<number>>(new Set())
+  const [bulkApprove, setBulkApprove] = useState<boolean | null>(null)
+  const [bulkNote, setBulkNote] = useState('')
+  const [bulkBusy, setBulkBusy] = useState(false)
+  const [skippedCount, setSkippedCount] = useState(0)
+
   const isAdmin = resonant?.is_admin ?? false
 
   const load = useCallback(async () => {
@@ -46,6 +54,7 @@ export default function AdminAirlineClaims() {
     }
     setError(null)
     setRows((data as AdminAirlineClaim[]) ?? [])
+    setSelected(new Set())
   }, [showAll])
 
   useEffect(() => {
@@ -80,6 +89,37 @@ export default function AdminAirlineClaims() {
     }
   }
 
+  const toggleSelect = (id: number) => {
+    setSelected((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
+  }
+
+  const decideBulk = async (approve: boolean) => {
+    setBulkBusy(true)
+    setError(null)
+    try {
+      const { data, error: e } = await supabase.rpc('admin_decide_airline_claims_bulk', {
+        p_claim_ids: Array.from(selected),
+        p_approve: approve,
+        p_note: bulkNote.trim() || null,
+      })
+      if (e) throw new Error(e.message)
+      const skipped = ((data as { skipped: boolean }[]) ?? []).filter((r) => r.skipped).length
+      setSkippedCount(skipped)
+      setBulkApprove(null)
+      setBulkNote('')
+      await load()
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'The decisions could not be saved.')
+    } finally {
+      setBulkBusy(false)
+    }
+  }
+
   return (
     <section className="panel mt-4 p-5">
       <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
@@ -91,20 +131,122 @@ export default function AdminAirlineClaims() {
             </span>
           )}
         </h2>
-        <button
-          type="button"
-          onClick={() => setShowAll((v) => !v)}
-          aria-pressed={showAll}
-          className={`chip ${showAll ? 'chip-on' : ''}`}
-        >
-          {showAll ? 'All' : 'Waiting only'}
-        </button>
+        <div className="flex items-center gap-3">
+          {pendingCount > 0 && (
+            <button
+              type="button"
+              onClick={() =>
+                setSelected((prev) => {
+                  const pendingIds = (rows ?? [])
+                    .filter((r) => r.status === 'pending')
+                    .map((r) => r.claim_id)
+                  // Toggle: clear it if everything waiting is already
+                  // selected, select everything waiting otherwise.
+                  return prev.size === pendingIds.length
+                    ? new Set()
+                    : new Set(pendingIds)
+                })
+              }
+              className="mono text-[11px] uppercase tracking-[0.14em] text-ink-faint hover:text-ink-dim"
+            >
+              {selected.size === pendingCount && pendingCount > 0
+                ? 'Deselect all waiting'
+                : 'Select all waiting'}
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={() => setShowAll((v) => !v)}
+            aria-pressed={showAll}
+            className={`chip ${showAll ? 'chip-on' : ''}`}
+          >
+            {showAll ? 'All' : 'Waiting only'}
+          </button>
+        </div>
       </div>
 
       {error && (
         <p className="mt-4 border-l-2 border-l-[color:var(--color-danger)] pl-3 text-sm text-danger">
           {error}
         </p>
+      )}
+
+      {skippedCount > 0 && (
+        <p className="mt-4 border-l-2 border-l-[color:var(--color-warn)] pl-3 text-sm text-warn">
+          {skippedCount} of those were already decided by the time this went through, and were
+          left as they were.
+        </p>
+      )}
+
+      {selected.size > 0 && (
+        <div className="mt-4 flex flex-wrap items-center gap-3 border border-edge bg-surface-2 p-3">
+          <span className="mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">
+            {selected.size} selected
+          </span>
+          {bulkApprove === null ? (
+            <>
+              <button
+                type="button"
+                onClick={() => {
+                  setBulkApprove(true)
+                  setBulkNote('')
+                }}
+                className="mono border border-[color:var(--color-good)] px-4 py-1.5 text-[10px] uppercase tracking-[0.14em] text-good transition-colors hover:bg-[color:var(--color-good)] hover:text-[#050505]"
+              >
+                Approve selected
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setBulkApprove(false)
+                  setBulkNote('')
+                }}
+                className="mono border border-edge px-4 py-1.5 text-[10px] uppercase tracking-[0.14em] text-ink-dim transition-colors hover:border-[color:var(--color-danger)] hover:text-danger"
+              >
+                Turn down selected
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelected(new Set())}
+                className="mono text-[11px] uppercase tracking-[0.14em] text-ink-faint hover:text-ink-dim"
+              >
+                Clear
+              </button>
+            </>
+          ) : (
+            <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center">
+              <input
+                value={bulkNote}
+                autoFocus
+                maxLength={200}
+                placeholder="Note for all of them (optional)"
+                onChange={(e) => setBulkNote(e.target.value)}
+                className="w-full max-w-sm border border-edge bg-ground-2 px-3 py-2 text-sm text-ink outline-none focus:border-accent"
+              />
+              <div className="flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  disabled={bulkBusy}
+                  onClick={() => void decideBulk(bulkApprove)}
+                  className="mono bg-accent px-5 py-2 text-[11px] uppercase tracking-[0.14em] text-[#050505] transition-opacity hover:opacity-90 disabled:opacity-50"
+                >
+                  {bulkBusy
+                    ? 'Saving…'
+                    : bulkApprove
+                      ? `Yes, approve ${selected.size}`
+                      : `Yes, turn down ${selected.size}`}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setBulkApprove(null)}
+                  className="mono border border-edge px-5 py-2 text-[11px] uppercase tracking-[0.14em] text-ink-dim transition-colors hover:text-ink"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       )}
 
       {rows === null ? (
@@ -121,11 +263,22 @@ export default function AdminAirlineClaims() {
               return (
                 <li key={c.claim_id} className="border border-edge p-4">
                   <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                    <div className="min-w-0">
-                      <span className="text-ink">{c.display_name ?? c.email}</span>
-                      {c.display_name && (
-                        <span className="mono ml-2 text-[12px] text-ink-faint">{c.email}</span>
+                    <div className="flex min-w-0 items-baseline gap-3">
+                      {c.status === 'pending' && (
+                        <input
+                          type="checkbox"
+                          checked={selected.has(c.claim_id)}
+                          onChange={() => toggleSelect(c.claim_id)}
+                          aria-label={`Select the claim from ${c.display_name ?? c.email}`}
+                          className="h-4 w-4 shrink-0 border-edge bg-ground-2 accent-cyan"
+                        />
                       )}
+                      <div className="min-w-0">
+                        <span className="text-ink">{c.display_name ?? c.email}</span>
+                        {c.display_name && (
+                          <span className="mono ml-2 text-[12px] text-ink-faint">{c.email}</span>
+                        )}
+                      </div>
                     </div>
                     <span
                       className={`mono text-[10px] uppercase tracking-[0.14em] ${STATUS_TONE[c.status]}`}
