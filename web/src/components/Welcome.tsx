@@ -34,9 +34,24 @@ const T_EXIT = 4900 // climb away
 type Roster = [string, number][] // [division colour, airlines]
 
 /**
- * Stand-in until the real roster arrives: the divisions' colours and sizes
- * from the 30 October 2026 data. Only seen if the database is slow to answer
- * or unreachable.
+ * The roster as of the last publish, written into the page by
+ * scripts/prerender.mjs: this week's division colours and airline counts,
+ * there before the first frame. The live query below can still refine it,
+ * but this is what a slow connection sees.
+ */
+function publishedRoster(): Roster | null {
+  try {
+    const el = document.getElementById('echo-roster')
+    const list = el?.textContent ? (JSON.parse(el.textContent) as Roster) : null
+    return Array.isArray(list) && list.length ? list : null
+  } catch {
+    return null
+  }
+}
+
+/**
+ * Last resort, for a page without the published roster (the dev server):
+ * the divisions' colours and sizes from the 30 October 2026 data.
  */
 const FALLBACK: Roster = [
   ['#7B35FF', 80], // Kyra
@@ -190,7 +205,7 @@ export default function Welcome() {
       // Sweep order: the contacts light as the beam reaches their bearing.
       return out.sort((p, q) => p.rel - q.rel)
     }
-    let blips = build(roster ?? FALLBACK)
+    let blips = build(roster ?? publishedRoster() ?? FALLBACK)
 
     // Wing targets: sample the mark's opaque pixels, then deal them out.
     const wing = wingImage ?? Object.assign(new Image(), { src: wingSrc })

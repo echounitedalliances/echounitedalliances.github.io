@@ -269,7 +269,7 @@ function removePrevious() {
 }
 
 export async function prerender() {
-  const template = readFileSync(join(repoRoot, 'index.html'), 'utf8')
+  let template = readFileSync(join(repoRoot, 'index.html'), 'utf8')
   const [divisions, airlines, airports] = await Promise.all([
     rows('v_division_summary', 'select=division_code,division_name,accent_color,carriers,aircraft,routes,destinations,top_hubs&order=sort_order'),
     rows(
@@ -282,6 +282,17 @@ export async function prerender() {
     ),
   ])
   const counts = { divisions: divisions.length, airlines: airlines.length }
+
+  // The welcome radar's roster, written into every page so its first frame
+  // already has this week's divisions and airline counts. Waiting on the
+  // database alone missed its 0.45 s window on about half of all loads, and
+  // the radar then showed a stand-in list frozen in the code
+  // (components/Welcome.tsx).
+  const roster = divisions.filter((d) => d.carriers > 0).map((d) => [d.accent_color || '#A855F7', d.carriers])
+  template = template.replace(
+    '</head>',
+    `    <script id="echo-roster" type="application/json">${JSON.stringify(roster).replace(/</g, '\x5cu003c')}</script>\n  </head>`,
+  )
   const byDivision = Object.groupBy(airlines, (a) => a.division_code)
 
   const pages = []
