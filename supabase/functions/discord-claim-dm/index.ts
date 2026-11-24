@@ -1,13 +1,21 @@
-// Echo United Alliances -- the "that's me" / "not me" DM for a new claim
+// Echo United Alliances -- claim DMs: "that's me" / "not me", and approved
 //
-// 58_airline_claim_dm_confirmation.sql's airline_claims_notify_dm trigger
-// calls this function right after a row lands in airline_claims, the same
-// moment echo_notify_airline_claim posts the admin-facing notice to the
-// claims channel. This one messages the claimant instead: a DM from the
-// EUA Resonance bot -- the same Discord application the site already uses
-// for Discord sign-in (verify-discord-role) -- with two buttons, so an
-// admin reviewing the claim can see whether the account behind it actually
-// meant to file it, not just take the claim's word for that.
+// Two different triggers call this, each passing a different `kind`:
+//
+//   airline_claims_notify_dm (58_airline_claim_dm_confirmation.sql), right
+//   after a row lands in airline_claims -- kind: 'new_claim', the two-
+//   button "was that you?" message, so an admin reviewing the claim can
+//   see whether the account behind it actually meant to file it.
+//
+//   airline_claims_notify_approved (59_airline_claim_approved_dm.sql),
+//   the moment a claim's status first becomes 'approved' -- kind:
+//   'approved', a plain congratulatory message, no buttons: there is
+//   nothing left for the claimant to answer, just something worth
+//   knowing without having to go back and check the site.
+//
+// Both go out as a DM from the EUA Resonance bot -- the same Discord
+// application the site already uses for Discord sign-in
+// (verify-discord-role).
 //
 // AUTH
 //
@@ -47,12 +55,16 @@ Deno.serve(async (req) => {
   }
 
   let claimId: unknown
+  let kind: unknown
   try {
-    ;({ claim_id: claimId } = await req.json())
+    ;({ claim_id: claimId, kind } = await req.json())
   } catch {
     return new Response('Invalid JSON body', { status: 400 })
   }
   if (typeof claimId !== 'number') return new Response('Missing claim_id', { status: 400 })
+  // Unset (every caller before this one existed) defaults to the original
+  // behaviour, not an error.
+  const isApproved = kind === 'approved'
 
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!
   const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
@@ -105,36 +117,45 @@ Deno.serve(async (req) => {
   }
   const channel = (await channelRes.json()) as { id: string }
 
-  // Step 2: the message itself, two buttons. custom_id carries the claim
-  // id and the choice -- discord-interactions reads both straight back
-  // off it, no lookup needed to know which claim a tap was about.
+  // Step 2: the message itself. The new-claim DM carries two buttons,
+  // custom_id's claim id and choice read straight back off it by
+  // discord-interactions with no lookup needed; the approved DM is
+  // read-only -- there is nothing left to tap, so no components at all.
+  const payload = isApproved
+    ? {
+        content:
+          `Your claim on **${airlineLabel}** at Echo United Alliances has been approved. ` +
+          `You can edit its name and description from your Resonance account whenever you like.`,
+      }
+    : {
+        content:
+          `You (or someone signed in as you) just filed a claim on **${airlineLabel}** at Echo United Alliances. ` +
+          `Was that you?`,
+        components: [
+          {
+            type: 1,
+            components: [
+              {
+                type: 2,
+                style: 3,
+                label: "That's me",
+                custom_id: `claim_confirm:${claimId}`,
+              },
+              {
+                type: 2,
+                style: 4,
+                label: "That's not me",
+                custom_id: `claim_deny:${claimId}`,
+              },
+            ],
+          },
+        ],
+      }
+
   const messageRes = await fetch(`${DISCORD_API}/channels/${channel.id}/messages`, {
     method: 'POST',
     headers: botHeaders,
-    body: JSON.stringify({
-      content:
-        `You (or someone signed in as you) just filed a claim on **${airlineLabel}** at Echo United Alliances. ` +
-        `Was that you?`,
-      components: [
-        {
-          type: 1,
-          components: [
-            {
-              type: 2,
-              style: 3,
-              label: "That's me",
-              custom_id: `claim_confirm:${claimId}`,
-            },
-            {
-              type: 2,
-              style: 4,
-              label: "That's not me",
-              custom_id: `claim_deny:${claimId}`,
-            },
-          ],
-        },
-      ],
-    }),
+    body: JSON.stringify(payload),
   })
   if (!messageRes.ok) {
     const detail = await messageRes.text()
