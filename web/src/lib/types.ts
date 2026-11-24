@@ -376,6 +376,10 @@ export type AdminAirlineClaim = {
   decided_by: string | null
   decision_note: string | null
   already_held_by_someone_else: boolean
+  /** True once the claimant tapped "That's me" on the Discord DM sent at
+   *  submission. Null means no DM could be sent, or no reply yet -- never
+   *  a no. See 58_airline_claim_dm_confirmation.sql. */
+  claimant_confirmed: boolean | null
 }
 
 /** Public attribution for a claimed airline -- airline_claim_holder(). */

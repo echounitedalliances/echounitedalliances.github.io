@@ -297,6 +297,16 @@ export default function AdminAirlineClaims() {
                     {' · '}{when(c.submitted_at)}
                   </p>
 
+                  {c.status === 'pending' && (
+                    <p className="mono mt-2 text-[11px] uppercase tracking-[0.12em]">
+                      {c.claimant_confirmed === true ? (
+                        <span className="text-good">Confirmed by claimant over Discord DM</span>
+                      ) : c.claimant_confirmed === null ? (
+                        <span className="text-ink-faint">No DM reply yet</span>
+                      ) : null}
+                    </p>
+                  )}
+
                   {c.already_held_by_someone_else && c.status === 'pending' && (
                     <p className="mt-2 text-[12px] text-warn">
                       A different account already holds this airline. Approving moves it to this

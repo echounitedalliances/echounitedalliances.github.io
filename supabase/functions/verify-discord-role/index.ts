@@ -114,13 +114,37 @@ Deno.serve(async (req) => {
     return json({ verified: false, reason: 'no_role' })
   }
 
+  // The claimant's own Discord snowflake id, same provider_token, a plain
+  // GET /users/@me (the `identify` scope every Discord sign-in already
+  // asks for -- lib/auth.tsx's signInWithDiscord). Not read off the guild
+  // member object above: that response does not reliably carry a `user`
+  // field when it is the caller's own membership being fetched. A failure
+  // here does not fail verification -- it only means no DM address is on
+  // file yet for 58_airline_claim_dm_confirmation.sql's claim-confirmation
+  // DM, same "a failure to fetch is not a value" discipline as the role
+  // check itself.
+  let discordUserId: string | null = null
+  try {
+    const meRes = await fetch('https://discord.com/api/users/@me', {
+      headers: { Authorization: `Bearer ${providerToken}` },
+    })
+    if (meRes.ok) {
+      const me = (await meRes.json()) as { id?: string }
+      discordUserId = me.id ?? null
+    }
+  } catch {
+    // discordUserId stays null; verification itself still proceeds below.
+  }
+
   // Only now, with the service role -- the one route past the column grant
   // that is not also a hole an unauthenticated request could use.
   const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
   const adminClient = createClient(supabaseUrl, serviceKey)
+  const patch: Record<string, string> = { discord_role_verified_at: new Date().toISOString() }
+  if (discordUserId) patch.discord_user_id = discordUserId
   const { error: updateError } = await adminClient
     .from('resonants')
-    .update({ discord_role_verified_at: new Date().toISOString() })
+    .update(patch)
     .eq('user_id', userId)
 
   if (updateError) {
