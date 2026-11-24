@@ -57,13 +57,14 @@ export default function MyAirlineClaim() {
     }
     let cancelled = false
     const timer = setTimeout(async () => {
-      const { data } = await supabase.rpc('search_airlines_claimable', {
+      const { data, error } = await supabase.rpc('search_airlines_claimable', {
         p_query: query.trim(),
         p_division: null,
         p_country: null,
         p_limit: 6,
         p_offset: 0,
       })
+      if (error) console.warn('search_airlines_claimable failed; the dropdown will show nothing.', error)
       if (!cancelled) setHits((data as ClaimableAirline[]) ?? [])
     }, 180)
     return () => {
