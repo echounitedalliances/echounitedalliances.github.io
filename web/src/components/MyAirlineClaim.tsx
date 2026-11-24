@@ -138,6 +138,7 @@ export default function MyAirlineClaim() {
       tapSuccess()
       setEditSaved(true)
       setTimeout(() => setEditSaved(false), 2500)
+      await loadClaims()
     } catch (e) {
       tapError()
       setEditError(e instanceof Error ? e.message : t('That could not be saved.'))
