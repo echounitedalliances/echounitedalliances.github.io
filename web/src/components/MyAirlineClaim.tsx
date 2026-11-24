@@ -307,9 +307,9 @@ export default function MyAirlineClaim() {
                     <li key={a.uid}>
                       <button
                         type="button"
-                        disabled={requesting}
+                        disabled={requesting || a.claimed}
                         onClick={() => void request(a.uid)}
-                        className="flex w-full items-baseline gap-3 px-3 py-2 text-left hover:bg-surface-2 disabled:opacity-50"
+                        className="flex w-full items-baseline gap-3 px-3 py-2 text-left hover:bg-surface-2 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent"
                       >
                         <span className="mono w-14 shrink-0 text-cyan">{a.carrier_code}</span>
                         <span className="truncate text-sm text-ink">{a.airline_name}</span>
