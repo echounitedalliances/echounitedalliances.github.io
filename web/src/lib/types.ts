@@ -383,8 +383,14 @@ export type AdminAirlineClaim = {
   claimant_confirmed: boolean | null
 }
 
-/** Public attribution for a claimed airline -- airline_claim_holder(). */
-export type AirlineClaimHolder = {
-  display_name: string | null
-  held_since: string | null
+/** One search result when asking which carrier to claim -- whether it is
+ *  already held by anyone is the one extra fact this adds over Airline
+ *  itself, so the dropdown can say so without a second round trip per
+ *  row. See search_airlines_claimable(). */
+export type ClaimableAirline = {
+  uid: string
+  carrier_code: string
+  airline_name: string | null
+  division_name: string
+  claimed: boolean
 }

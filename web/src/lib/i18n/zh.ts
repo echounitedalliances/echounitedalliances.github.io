@@ -894,8 +894,6 @@ const dict: Record<string, string> = {
   "That could not be saved.": "无法保存。",
   "this airline": "这家航空公司",
   "an airline": "一家航空公司",
-  "Claimed by {name}": "由 {name} 持有",
-  "Claimed by its Resonant operator": "由其 Resonant 运营者持有",
   "Claimed": "已被认领",
   "Claiming an airline needs the Resonant role on the EUA Discord server, so an admin can trust it is really you. Sign in with Discord to verify your account first.": "认领航空公司需要你在 EUA Discord 服务器上拥有 Resonant 身份组,这样管理员才能确认真的是你本人。请先用 Discord 登录以验证你的账户。",
   "Your Discord sign-in worked, but verifying the Resonant role did not go through. Sign in with Discord again to retry.": "你的 Discord 登录成功了,但 Resonant 身份组的验证没有完成。请再用 Discord 登录一次重试。",

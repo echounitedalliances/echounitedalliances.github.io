@@ -3,7 +3,7 @@ import { useAuth } from '../lib/auth'
 import { supabase } from '../lib/supabase'
 import { tapError, tapSuccess } from '../lib/haptics'
 import { useT } from '../lib/i18n'
-import type { Airline, MyAirlineClaim as MyClaim } from '../lib/types'
+import type { ClaimableAirline, MyAirlineClaim as MyClaim } from '../lib/types'
 
 /**
  * Claiming an airline, and -- once approved -- keeping each one's name and
@@ -28,7 +28,7 @@ export default function MyAirlineClaim() {
   const [claimsLoaded, setClaimsLoaded] = useState(false)
 
   const [query, setQuery] = useState('')
-  const [hits, setHits] = useState<Airline[]>([])
+  const [hits, setHits] = useState<ClaimableAirline[]>([])
   const [requesting, setRequesting] = useState(false)
   const [requestError, setRequestError] = useState<string | null>(null)
   const [requestSent, setRequestSent] = useState(false)
@@ -57,14 +57,14 @@ export default function MyAirlineClaim() {
     }
     let cancelled = false
     const timer = setTimeout(async () => {
-      const { data } = await supabase.rpc('search_airlines', {
+      const { data } = await supabase.rpc('search_airlines_claimable', {
         p_query: query.trim(),
         p_division: null,
         p_country: null,
         p_limit: 6,
         p_offset: 0,
       })
-      if (!cancelled) setHits((data as Airline[]) ?? [])
+      if (!cancelled) setHits((data as ClaimableAirline[]) ?? [])
     }, 180)
     return () => {
       cancelled = true
@@ -312,6 +312,11 @@ export default function MyAirlineClaim() {
                       >
                         <span className="mono w-14 shrink-0 text-cyan">{a.carrier_code}</span>
                         <span className="truncate text-sm text-ink">{a.airline_name}</span>
+                        {a.claimed && (
+                          <span className="mono shrink-0 border border-edge px-1.5 py-0.5 text-[10px] uppercase tracking-[0.1em] text-ink-faint">
+                            {t('Claimed')}
+                          </span>
+                        )}
                         <span className="ml-auto shrink-0 text-[11px] text-ink-faint">{a.division_name}</span>
                       </button>
                     </li>
