@@ -34,7 +34,6 @@ export default function MyAirlineClaim() {
   const [requestSent, setRequestSent] = useState(false)
 
   const [editingUid, setEditingUid] = useState<string | null>(null)
-  const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [editSaved, setEditSaved] = useState(false)
   const [editError, setEditError] = useState<string | null>(null)
@@ -104,7 +103,6 @@ export default function MyAirlineClaim() {
 
   const startEdit = (uid: string) => {
     setEditingUid(uid)
-    setName('')
     setDescription('')
     setEditError(null)
     setEditSaved(false)
@@ -131,7 +129,6 @@ export default function MyAirlineClaim() {
     try {
       const { error } = await supabase.rpc('update_claimed_airline', {
         p_airline_uid: uid,
-        p_airline_name: name.trim() || null,
         p_description_md: description.trim() || null,
       })
       if (error) throw new Error(error.message)
@@ -194,18 +191,9 @@ export default function MyAirlineClaim() {
                         onSubmit={(e) => void saveEdit(e, c.airline_uid)}
                         className="mt-3 flex flex-col gap-3"
                       >
-                        <label className="block">
-                          <span className="eyebrow mb-1.5 block text-ink-faint">
-                            {t('Airline name')}
-                          </span>
-                          <input
-                            value={name}
-                            maxLength={80}
-                            onChange={(e) => setName(e.target.value)}
-                            placeholder={label}
-                            className="mono w-full border border-edge bg-ground-2 px-3 py-2.5 text-ink outline-none placeholder:text-ink-faint focus:border-accent"
-                          />
-                        </label>
+                        <p className="text-[12px] text-ink-faint">
+                          {t('The name comes from the weekly game data and is not editable here.')}
+                        </p>
                         <label className="block">
                           <span className="eyebrow mb-1.5 block text-ink-faint">
                             {t('Description')}
@@ -228,7 +216,7 @@ export default function MyAirlineClaim() {
                         <div className="flex flex-wrap items-center gap-4">
                           <button
                             type="submit"
-                            disabled={editBusy || (!name.trim() && !description.trim())}
+                            disabled={editBusy || !description.trim()}
                             className="btn btn-primary"
                           >
                             {editBusy ? t('Saving…') : t('Save changes')}
