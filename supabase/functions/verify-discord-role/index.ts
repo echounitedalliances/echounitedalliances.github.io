@@ -35,7 +35,14 @@ const EUA_RESONANT_ROLE_ID = '1485741662851567616'
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, apikey, content-type',
+  // x-client-info is not optional: supabase-js's functions client attaches it
+  // to every invoke() call by default (SupabaseClient's DEFAULT_GLOBAL_OPTIONS),
+  // so leaving it out of this list fails the browser's CORS preflight on every
+  // single call -- not sometimes, always -- before the request body is even
+  // sent. That looked from the client like the Discord/role check itself
+  // failing every time, when the actual failure never reached this function at
+  // all.
+  'Access-Control-Allow-Headers': 'authorization, apikey, content-type, x-client-info',
 }
 
 function json(body: unknown, status = 200) {
