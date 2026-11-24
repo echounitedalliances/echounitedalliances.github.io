@@ -5,6 +5,14 @@ import { tapError, tapSuccess } from '../lib/haptics'
 import { useT } from '../lib/i18n'
 import type { ClaimableAirline, MyAirlineClaim as MyClaim } from '../lib/types'
 
+type DescriptionReview = {
+  airline_uid: string
+  status: 'pending' | 'rejected'
+  submitted_at: string
+  decided_at: string | null
+  decision_note: string | null
+}
+
 /**
  * Claiming an airline, and -- once approved -- keeping each one's name and
  * description up to date. An account can hold more than one at a time
@@ -38,11 +46,24 @@ export default function MyAirlineClaim() {
   const [editSaved, setEditSaved] = useState(false)
   const [editError, setEditError] = useState<string | null>(null)
   const [editBusy, setEditBusy] = useState(false)
+  // A description the word filter held for an admin (66_description_moderation.sql),
+  // and the last one an admin turned down, per airline.
+  const [reviews, setReviews] = useState<Record<string, DescriptionReview>>({})
+  const [editHeld, setEditHeld] = useState(false)
+
+  const loadReviews = async () => {
+    const { data } = await supabase.rpc('my_description_reviews')
+    const byAirline: Record<string, DescriptionReview> = {}
+    for (const r of (data as DescriptionReview[]) ?? []) byAirline[r.airline_uid] = r
+    setReviews(byAirline)
+    return byAirline
+  }
 
   const loadClaims = async () => {
     const { data } = await supabase.rpc('my_airline_claims')
     setClaims((data as MyClaim[]) ?? [])
     setClaimsLoaded(true)
+    void loadReviews()
   }
 
   useEffect(() => {
@@ -106,6 +127,7 @@ export default function MyAirlineClaim() {
     setDescription('')
     setEditError(null)
     setEditSaved(false)
+    setEditHeld(false)
   }
 
   const release = async (uid: string) => {
@@ -133,8 +155,14 @@ export default function MyAirlineClaim() {
       })
       if (error) throw new Error(error.message)
       tapSuccess()
-      setEditSaved(true)
-      setTimeout(() => setEditSaved(false), 2500)
+      // Held by the word filter: nothing went live, so say so instead of "Saved".
+      const latest = await loadReviews()
+      if (latest[uid]?.status === 'pending') setEditHeld(true)
+      else {
+        setEditHeld(false)
+        setEditSaved(true)
+        setTimeout(() => setEditSaved(false), 2500)
+      }
       await loadClaims()
     } catch (e) {
       tapError()
@@ -178,6 +206,17 @@ export default function MyAirlineClaim() {
                         <span className="mono text-[11px] text-cyan">{c.carrier_code}</span>
                       )}
                     </div>
+                    {reviews[c.airline_uid]?.status === 'pending' && (
+                      <p className="mt-2 text-[12px] text-warn">
+                        {t('Your latest description is waiting for an admin to review it. The previous one stays up until then.')}
+                      </p>
+                    )}
+                    {reviews[c.airline_uid]?.status === 'rejected' && (
+                      <p className="mt-2 text-[12px] text-ink-faint">
+                        {t('An admin turned down your last description.')}
+                        {reviews[c.airline_uid]?.decision_note && <> {reviews[c.airline_uid]?.decision_note}</>}
+                      </p>
+                    )}
                     {!open ? (
                       <button
                         type="button"
@@ -208,6 +247,11 @@ export default function MyAirlineClaim() {
                           />
                         </label>
                         {editError && <p className="text-[12px] text-danger">{editError}</p>}
+                        {editHeld && (
+                          <p className="text-[12px] text-warn">
+                            {t('Sent to an admin for review: it uses words our filter checks. It goes live once approved.')}
+                          </p>
+                        )}
                         {editSaved && (
                           <p className="mono text-[11px] uppercase tracking-[0.12em] text-good">
                             {t('Saved')}

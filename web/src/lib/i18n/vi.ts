@@ -893,6 +893,10 @@ const dict: Record<string, string> = {
   "Claimed": "Đã có người giữ",
   "Claiming an airline needs the Resonant role on the EUA Discord server, so an admin can trust it is really you. Sign in with Discord to verify your account first.": "Để claim một hãng bay cần có vai trò Resonant trên server Discord EUA, để admin có thể tin đó thực sự là bạn. Hãy đăng nhập bằng Discord để xác minh tài khoản trước.",
   "Your Discord sign-in worked, but verifying the Resonant role did not go through. Sign in with Discord again to retry.": "Đăng nhập Discord của bạn đã thành công, nhưng việc xác minh vai trò Resonant không thực hiện được. Hãy đăng nhập lại bằng Discord để thử lại.",
+  // Description word filter, 24 November 2026 (66_description_moderation.sql).
+  "Your latest description is waiting for an admin to review it. The previous one stays up until then.": "Mô tả mới nhất của bạn đang chờ admin duyệt. Mô tả cũ vẫn hiển thị cho đến lúc đó.",
+  "An admin turned down your last description.": "Admin đã từ chối mô tả gần nhất của bạn.",
+  "Sent to an admin for review: it uses words our filter checks. It goes live once approved.": "Đã gửi admin duyệt: có từ ngữ mà bộ lọc của chúng tôi kiểm tra. Sẽ hiển thị khi được duyệt.",
 }
 
 export default dict

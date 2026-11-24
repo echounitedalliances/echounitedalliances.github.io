@@ -890,6 +890,10 @@ const dict: Record<string, string> = {
   "Claimed": "Dipegang",
   "Claiming an airline needs the Resonant role on the EUA Discord server, so an admin can trust it is really you. Sign in with Discord to verify your account first.": "Mengklaim maskapai memerlukan role Resonant di server Discord EUA, supaya admin bisa percaya itu benar-benar kamu. Masuk dengan Discord dulu untuk memverifikasi akunmu.",
   "Your Discord sign-in worked, but verifying the Resonant role did not go through. Sign in with Discord again to retry.": "Masuk Discord-mu berhasil, tapi verifikasi role Resonant tidak berhasil. Masuk dengan Discord lagi untuk mencoba ulang.",
+  // Description word filter, 24 November 2026 (66_description_moderation.sql).
+  "Your latest description is waiting for an admin to review it. The previous one stays up until then.": "Deskripsi terbarumu sedang menunggu ditinjau admin. Deskripsi sebelumnya tetap tampil sampai saat itu.",
+  "An admin turned down your last description.": "Admin menolak deskripsi terakhirmu.",
+  "Sent to an admin for review: it uses words our filter checks. It goes live once approved.": "Dikirim ke admin untuk ditinjau: ada kata yang diperiksa filter kami. Akan tampil setelah disetujui.",
 }
 
 export default dict

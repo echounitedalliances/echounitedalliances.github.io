@@ -845,6 +845,10 @@ const dict: Record<string, string> = {
   "Claimed": "May Hawak",
   "Claiming an airline needs the Resonant role on the EUA Discord server, so an admin can trust it is really you. Sign in with Discord to verify your account first.": "Para mag-claim ng airline kailangan ng Resonant role sa EUA Discord server, para mapagkakatiwalaan ng admin na ikaw talaga iyon. Mag-sign in gamit ang Discord muna para i-verify ang account mo.",
   "Your Discord sign-in worked, but verifying the Resonant role did not go through. Sign in with Discord again to retry.": "Matagumpay ang Discord sign-in mo, pero hindi natuloy ang pag-verify ng Resonant role. Mag-sign in ulit gamit ang Discord para subukan muli.",
+  // Description word filter, 24 November 2026 (66_description_moderation.sql).
+  "Your latest description is waiting for an admin to review it. The previous one stays up until then.": "Naghihintay ng review ng admin ang pinakabago mong description. Mananatili ang dati hanggang doon.",
+  "An admin turned down your last description.": "Tinanggihan ng admin ang huli mong description.",
+  "Sent to an admin for review: it uses words our filter checks. It goes live once approved.": "Ipinadala sa admin para i-review: may mga salitang sinusuri ng filter namin. Lalabas ito kapag naaprubahan.",
 }
 
 export default dict

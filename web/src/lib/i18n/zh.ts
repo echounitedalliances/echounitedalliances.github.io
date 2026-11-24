@@ -897,6 +897,10 @@ const dict: Record<string, string> = {
   "Claimed": "已被认领",
   "Claiming an airline needs the Resonant role on the EUA Discord server, so an admin can trust it is really you. Sign in with Discord to verify your account first.": "认领航空公司需要你在 EUA Discord 服务器上拥有 Resonant 身份组,这样管理员才能确认真的是你本人。请先用 Discord 登录以验证你的账户。",
   "Your Discord sign-in worked, but verifying the Resonant role did not go through. Sign in with Discord again to retry.": "你的 Discord 登录成功了,但 Resonant 身份组的验证没有完成。请再用 Discord 登录一次重试。",
+  // Description word filter, 24 November 2026 (66_description_moderation.sql).
+  "Your latest description is waiting for an admin to review it. The previous one stays up until then.": "你最新的简介正在等待管理员审核，在此之前仍显示原来的简介。",
+  "An admin turned down your last description.": "管理员未通过你上一次提交的简介。",
+  "Sent to an admin for review: it uses words our filter checks. It goes live once approved.": "已提交管理员审核：其中包含我们的过滤器会检查的词语。通过后才会显示。",
 }
 
 export default dict

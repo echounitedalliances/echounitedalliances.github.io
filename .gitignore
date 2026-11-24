@@ -48,3 +48,6 @@ web/node_modules/
 web/dist/
 web/tsconfig.tsbuildinfo
 .claude/launch.json
+
+# Word filter terms (66_description_moderation.sql): slurs stay off the public repo.
+database/moderation/
