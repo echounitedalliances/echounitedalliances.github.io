@@ -7,9 +7,11 @@ import type { AdminAirlineClaim } from '../lib/types'
 
 /**
  * The airline-claim inbox: the review step admin_decide_airline_claim adds
- * in front of resonants.claimed_airline_uid (54_airline_claims.sql). Same
- * inbox shape as AdminApplications.tsx -- the two problems are the same
- * shape -- with one extra thing to check before approving: whether a
+ * in front of an approved row in airline_claims (54_airline_claims.sql),
+ * which is what "holding" an airline means since
+ * 60_airline_claims_multiple_per_account.sql let one account hold several.
+ * Same inbox shape as AdminApplications.tsx -- the two problems are the
+ * same shape -- with one extra thing to check before approving: whether a
  * different account already holds this airline, which the list itself
  * flags rather than letting an admin find out by approving over it.
  */
@@ -21,6 +23,7 @@ const STATUS_TONE: Record<AdminAirlineClaim['status'], string> = {
   approved: 'text-good',
   rejected: 'text-ink-faint',
   withdrawn: 'text-ink-faint',
+  superseded: 'text-ink-faint',
 }
 
 export default function AdminAirlineClaims() {
@@ -316,7 +319,14 @@ export default function AdminAirlineClaims() {
 
                   {c.status !== 'pending' && c.decided_at && (
                     <p className="mono mt-2 text-[11px] text-ink-faint">
-                      {c.status === 'approved' ? 'Approved' : 'Turned down'} {when(c.decided_at)}
+                      {c.status === 'approved'
+                        ? 'Approved'
+                        : c.status === 'withdrawn'
+                          ? 'Withdrawn'
+                          : c.status === 'superseded'
+                            ? 'Superseded by another account'
+                            : 'Turned down'}{' '}
+                      {when(c.decided_at)}
                       {c.decided_by && <> by {c.decided_by}</>}
                       {c.decision_note && <> · {c.decision_note}</>}
                     </p>

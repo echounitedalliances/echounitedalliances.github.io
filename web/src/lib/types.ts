@@ -347,9 +347,10 @@ export type DashboardStats = {
   tickets_by_category: Partial<Record<TicketCategory, number>>
 }
 
-export type ClaimStatus = 'pending' | 'approved' | 'rejected' | 'withdrawn'
+export type ClaimStatus = 'pending' | 'approved' | 'rejected' | 'withdrawn' | 'superseded'
 
-/** A signed-in Resonant's own airline claim -- my_airline_claim(). */
+/** One of a signed-in Resonant's own airline claims -- an account may hold
+ *  or be waiting on several at once. See my_airline_claims(). */
 export type MyAirlineClaim = {
   claim_id: number
   status: ClaimStatus
