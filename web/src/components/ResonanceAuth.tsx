@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../lib/auth'
 import { useCarrierCount } from '../lib/carriers'
 import { num } from '../lib/format'
-import { useSneakPeek } from '../lib/sneakPeek'
 import { tapError, tapSuccess } from '../lib/haptics'
 import AdminApplyModal from './AdminApplyModal'
 import DiscordGlyph from './DiscordGlyph'
@@ -123,7 +122,6 @@ export function SignIn() {
   const carrierCount = useCarrierCount()
   const t = useT()
   const { signInWithPassword, signInWithDiscord, signUp, sendPasswordReset, discordGuildError } = useAuth()
-  const { unlocked: discordSignInUnlocked } = useSneakPeek()
   const [mode, setMode] = useState<Mode>('password')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -256,7 +254,7 @@ export function SignIn() {
           </p>
         )}
 
-        {mode === 'password' && discordSignInUnlocked && (
+        {mode === 'password' && (
           <>
             <button
               type="button"

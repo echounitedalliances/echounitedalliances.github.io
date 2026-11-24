@@ -36,7 +36,6 @@ import Announcement from './components/Announcement'
 import { useFixedPageTitle } from './lib/pageMeta'
 import MaintenanceLock from './components/MaintenanceLock'
 import EchoAssistant from './components/EchoAssistant'
-import { SneakPeekProvider } from './lib/sneakPeek'
 import LangMenu from './components/LangMenu'
 import { I18nProvider, rich, useI18n, useT } from './lib/i18n'
 import { tapLight } from './lib/haptics'
@@ -450,7 +449,6 @@ export default function App() {
 
   return (
     <I18nProvider>
-    <SneakPeekProvider>
     <AuthProvider>
       <Welcome />
       <LangRouter>
@@ -483,7 +481,6 @@ export default function App() {
         </Shell>
       </LangRouter>
     </AuthProvider>
-    </SneakPeekProvider>
     </I18nProvider>
   )
 }
