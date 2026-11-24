@@ -33,7 +33,11 @@
 --              are all "trash"
 --    contains  the same folding, matched anywhere, even inside a word
 --    regex     a regular expression on the lower-cased raw text, for
---              links and invites, where folding would get in the way
+--              links and invites, and for profanity in Vietnamese, Korean,
+--              Chinese, Hindi and Bengali, which folding would mangle
+--              (Vietnamese loses meaning without its accents; the others
+--              are not Latin letters at all). Bengali terms match anywhere,
+--              since its vowel signs break the regex word edges.
 -- =====================================================================
 
 begin;
@@ -132,7 +136,7 @@ language sql stable security definer set search_path = public, extensions as $$
     )
     select coalesce(array_agg(distinct m.category || ': ' || m.term), '{}')
       from m, t
-     where m.ft <> '' and case m.kind
+     where (m.kind = 'regex' or m.ft <> '') and case m.kind
              when 'word' then
                  strpos(t.folded, ' ' || m.ft || ' ') > 0 or (m.single and strpos(t.squeezed, ' ' || m.ft || ' ') > 0)
              when 'contains' then
