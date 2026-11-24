@@ -96,7 +96,12 @@ Deno.serve(async (req) => {
     body: JSON.stringify({ recipient_id: discordUserId }),
   })
   if (!channelRes.ok) {
-    return new Response(`Could not open a DM channel: ${await channelRes.text()}`, { status: 502 })
+    const detail = await channelRes.text()
+    // The dashboard's Invocations view shows status/timing but not the
+    // response body pg_net received -- console.error is what shows up on
+    // the separate Logs tab, which is where this needs to be visible.
+    console.error(`discord-claim-dm: could not open a DM channel (${channelRes.status}): ${detail}`)
+    return new Response(`Could not open a DM channel: ${detail}`, { status: 502 })
   }
   const channel = (await channelRes.json()) as { id: string }
 
@@ -132,7 +137,9 @@ Deno.serve(async (req) => {
     }),
   })
   if (!messageRes.ok) {
-    return new Response(`Could not send the DM: ${await messageRes.text()}`, { status: 502 })
+    const detail = await messageRes.text()
+    console.error(`discord-claim-dm: could not send the DM (${messageRes.status}): ${detail}`)
+    return new Response(`Could not send the DM: ${detail}`, { status: 502 })
   }
 
   return new Response('ok', { status: 200 })
