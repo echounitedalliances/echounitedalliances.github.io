@@ -35,7 +35,7 @@ export type Leader = {
  * One row per leader, not per division, because the two do not match one to
  * one in either direction: a division can be led by more than one person, and
  * one person can lead more than one division -- since 21 November 2026 Ahnaf
- * leads Eos and Lior, and Naofum leads Kyra and Aegis, while Uzuri, Aura and
+ * leads Eos and Lior, and Naofum leads Kyra and Aegis, MayBe leads Uzuri, and Aura and
  * Elion are run by trainee leaders. That is
  * why nothing here counts the leaders and calls it the number of divisions;
  * the About page groups by division_code instead.
@@ -52,7 +52,7 @@ export const LEADERS: Leader[] = [
   { division_code: 'elion', name: 'Cancho', discord: 'dpd_613', trainee: true },
   { division_code: 'aura', name: 'PitStopVelocity', discord: 'pitstopvelocity', trainee: true },
   { division_code: 'eos', name: 'Ahnaf', discord: '_ahnafabrar_' },
-  { division_code: 'uzuri', name: 'May', discord: 'maybeeezz_', trainee: true },
+  { division_code: 'uzuri', name: 'MayBe', discord: 'maybeeezz_' },
 ]
 
 /**
@@ -70,7 +70,7 @@ export const LEADER_EMAILS: Record<string, string> = {
   _ahnafabrar_: '', // Ahnaf, Eos and Lior
   _erwinsmith: '', // Reiner, Rhea
   ykw_1009: '', // Yukai, Vilis
-  maybeeezz_: '', // May, Uzuri (trainee)
+  maybeeezz_: '', // MayBe, Uzuri
   pitstopvelocity: '', // PitStopVelocity, Aura (trainee)
   dpd_613: '', // Cancho, Elion (trainee)
 }

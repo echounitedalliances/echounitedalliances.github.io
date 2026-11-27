@@ -91,6 +91,9 @@ refresh materialized view              public.mv_division_arcs;
 refresh materialized view concurrently public.mv_airport_connectivity;
 refresh materialized view              public.mv_network_arcs;
 refresh materialized view concurrently public.mv_airline_directory;
+-- Each division's headline figures for the home page and /divisions
+-- (67_division_summary_stored.sql). Plain, like the maps: ten rows, packed.
+refresh materialized view              public.mv_division_summary;
 
 -- City names and place labels. 27 reads which airports are served from the
 -- mv_leg_departures just rebuilt -- a new airport in a city the alliance
