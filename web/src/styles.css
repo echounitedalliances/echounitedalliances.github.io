@@ -696,6 +696,9 @@ h1.display .serif, h2.display .serif { color: var(--color-heading-serif); }
 .div-meta { margin-top: 10px; display: flex; justify-content: space-between; gap: 12px; font-size: 14px; color: var(--color-ink-faint); transition: color .3s .2s; }
 .div-tile:hover .div-meta, .div-tile:focus-visible .div-meta { color: #050505; }
 .div-tile .echo-mark { transition: background-color .3s .2s; }
+/* The division still to open: a faded block of its colour, not a link. */
+.div-tile-soon { --tile-ink: color-mix(in srgb, var(--c) 35%, #f4e9ee); background: color-mix(in srgb, var(--c) 55%, var(--color-ground)); opacity: .6; cursor: default; }
+.div-tile-soon .div-meta { color: var(--tile-ink); }
 @media (max-width: 900px) { .div-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .div-grid { grid-template-columns: 1fr; } .div-tile { min-height: 150px; } }
 

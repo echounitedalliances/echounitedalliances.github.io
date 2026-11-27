@@ -901,6 +901,9 @@ const dict: Record<string, string> = {
   "Your latest description is waiting for an admin to review it. The previous one stays up until then.": "তোমার সর্বশেষ বিবরণ অ্যাডমিনের পর্যালোচনার অপেক্ষায় আছে। ততক্ষণ আগেরটিই দেখানো হবে।",
   "An admin turned down your last description.": "অ্যাডমিন তোমার শেষ বিবরণটি গ্রহণ করেননি।",
   "Sent to an admin for review: it uses words our filter checks. It goes live once approved.": "অ্যাডমিনের পর্যালোচনায় পাঠানো হয়েছে: এতে এমন শব্দ আছে যা আমাদের ফিল্টার যাচাই করে। অনুমোদনের পর এটি দেখা যাবে।",
+  // The eleventh division, before it opens, 28 November 2026 (lib/site.ts).
+  "Details coming soon": "বিস্তারিত শীঘ্রই আসছে",
+  "A new division is coming soon. Details coming soon.": "নতুন একটি ডিভিশন শীঘ্রই আসছে। বিস্তারিত শীঘ্রই আসছে।",
 }
 
 export default dict

@@ -5,7 +5,8 @@ import type { Division } from '../lib/types'
 import { capitalise, spell } from '../lib/format'
 import { useDivisionCount } from '../lib/carriers'
 import { Loading, NotConfigured } from '../components/ui'
-import DivisionTile from '../components/DivisionTile'
+import DivisionTile, { ComingSoonTile } from '../components/DivisionTile'
+import { UPCOMING_DIVISION } from '../lib/site'
 import { useT } from '../lib/i18n'
 
 /**
@@ -59,6 +60,7 @@ export default function Divisions() {
           {rows.map((d) => (
             <DivisionTile key={d.division_code} d={d} detailed />
           ))}
+          {UPCOMING_DIVISION && <ComingSoonTile color={UPCOMING_DIVISION.color} detailed />}
         </div>
       )}
     </div>

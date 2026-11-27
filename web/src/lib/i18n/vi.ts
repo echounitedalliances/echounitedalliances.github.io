@@ -897,6 +897,9 @@ const dict: Record<string, string> = {
   "Your latest description is waiting for an admin to review it. The previous one stays up until then.": "Mô tả mới nhất của bạn đang chờ admin duyệt. Mô tả cũ vẫn hiển thị cho đến lúc đó.",
   "An admin turned down your last description.": "Admin đã từ chối mô tả gần nhất của bạn.",
   "Sent to an admin for review: it uses words our filter checks. It goes live once approved.": "Đã gửi admin duyệt: có từ ngữ mà bộ lọc của chúng tôi kiểm tra. Sẽ hiển thị khi được duyệt.",
+  // The eleventh division, before it opens, 28 November 2026 (lib/site.ts).
+  "Details coming soon": "Thông tin sắp có",
+  "A new division is coming soon. Details coming soon.": "Một division mới sắp ra mắt. Thông tin sắp có.",
 }
 
 export default dict

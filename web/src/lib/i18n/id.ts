@@ -894,6 +894,9 @@ const dict: Record<string, string> = {
   "Your latest description is waiting for an admin to review it. The previous one stays up until then.": "Deskripsi terbarumu sedang menunggu ditinjau admin. Deskripsi sebelumnya tetap tampil sampai saat itu.",
   "An admin turned down your last description.": "Admin menolak deskripsi terakhirmu.",
   "Sent to an admin for review: it uses words our filter checks. It goes live once approved.": "Dikirim ke admin untuk ditinjau: ada kata yang diperiksa filter kami. Akan tampil setelah disetujui.",
+  // The eleventh division, before it opens, 28 November 2026 (lib/site.ts).
+  "Details coming soon": "Detail segera hadir",
+  "A new division is coming soon. Details coming soon.": "Divisi baru segera hadir. Detail segera hadir.",
 }
 
 export default dict

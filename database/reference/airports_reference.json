@@ -7489,16 +7489,6 @@
   "tz": "Pacific/Auckland",
   "tz_source": "dataset"
  },
- "HKN": {
-  "city": "Kimbe",
-  "country": "PG",
-  "iata": "HKN",
-  "lat": -5.463846,
-  "lon": 150.407327,
-  "name": "Hoskins Airport",
-  "tz": "Pacific/Port_Moresby",
-  "tz_source": "dataset"
- },
  "HKT": {
   "city": "Phuket",
   "country": "TH",
@@ -11637,16 +11627,6 @@
   "lon": -102.202003,
   "name": "Midland International Air and Space Port",
   "tz": "America/Chicago",
-  "tz_source": "dataset"
- },
- "MAG": {
-  "city": "Madang",
-  "country": "PG",
-  "iata": "MAG",
-  "lat": -5.20707988739,
-  "lon": 145.789001465,
-  "name": "Madang Airport",
-  "tz": "Pacific/Port_Moresby",
   "tz_source": "dataset"
  },
  "MAH": {
@@ -19327,16 +19307,6 @@
   "lon": 121.733150482,
   "name": "Tuguegarao Airport",
   "tz": "Asia/Manila",
-  "tz_source": "dataset"
- },
- "TUI": {
-  "city": "Turaif",
-  "country": "SA",
-  "iata": "TUI",
-  "lat": 31.692188,
-  "lon": 38.731544,
-  "name": "Turaif Domestic Airport",
-  "tz": "Asia/Riyadh",
   "tz_source": "dataset"
  },
  "TUL": {

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import Advisory from '../components/Advisory'
 import DepartureBoard from '../components/DepartureBoard'
 import { AirlineCard, NotConfigured } from '../components/ui'
-import DivisionTile from '../components/DivisionTile'
+import DivisionTile, { ComingSoonTile } from '../components/DivisionTile'
 import RouteCanvas from '../components/home/RouteCanvas'
 import AirlineOfTheWeek from '../components/home/AirlineOfTheWeek'
 import GameIntro from '../components/GameIntro'
@@ -13,7 +13,7 @@ import type { Airline, Arc, Division } from '../lib/types'
 import { accentOf, capitalise, num, spell } from '../lib/format'
 import { useAirportCount, useCarrierCount, useDivisionCount } from '../lib/carriers'
 import { useOnlineCount } from '../lib/discordWidget'
-import { SITE, discordConfigured } from '../lib/site'
+import { SITE, UPCOMING_DIVISION, discordConfigured } from '../lib/site'
 import { SLOGAN, STORY } from '../lib/alliance'
 import { CountUp, Marquee, Reveal } from '../lib/motion'
 import { emph, rich, useT } from '../lib/i18n'
@@ -309,6 +309,7 @@ export default function Home() {
             {divisions.map((d) => (
               <DivisionTile key={d.division_code} d={d} />
             ))}
+            {UPCOMING_DIVISION && <ComingSoonTile color={UPCOMING_DIVISION.color} />}
           </div>
         </div>
       </section>

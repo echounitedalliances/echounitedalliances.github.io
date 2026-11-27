@@ -77,6 +77,14 @@ export const DIVISION_NOTES: Record<string, string> = {
   elysium: 'Realism Alliance',
 }
 
+/**
+ * A division announced but not yet open, shown after the real ones as a
+ * faded tile with no link (DivisionTile.tsx, ComingSoonTile). Set to null
+ * once it opens and appears in the database. Since 28 November 2026: the
+ * eleventh, in Qatar Airways maroon.
+ */
+export const UPCOMING_DIVISION: { color: string } | null = { color: '#5C0632' }
+
 export const discordConfigured = !SITE.discordInvite.includes('REPLACE-ME')
 
 /**

@@ -901,6 +901,9 @@ const dict: Record<string, string> = {
   "Your latest description is waiting for an admin to review it. The previous one stays up until then.": "최신 소개글이 관리자 검토를 기다리고 있어요. 그때까지는 이전 소개글이 표시됩니다.",
   "An admin turned down your last description.": "관리자가 마지막 소개글을 반려했어요.",
   "Sent to an admin for review: it uses words our filter checks. It goes live once approved.": "관리자 검토로 보냈어요: 필터가 확인하는 단어가 포함되어 있어요. 승인되면 게시됩니다.",
+  // The eleventh division, before it opens, 28 November 2026 (lib/site.ts).
+  "Details coming soon": "세부 정보 곧 공개",
+  "A new division is coming soon. Details coming soon.": "새 디비전이 곧 열려요. 세부 정보는 곧 공개됩니다.",
 }
 
 export default dict

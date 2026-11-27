@@ -17,6 +17,32 @@ import LeaderMail from './LeaderMail'
  * The 60 cells light in a random order chosen once per tile, so each
  * division fills differently and keeps filling the same way.
  */
+/**
+ * The next division, before it has a name: the same tile, faded, in its
+ * colour, with no link and no hover flood. See UPCOMING_DIVISION.
+ */
+export function ComingSoonTile({ color, detailed = false }: { color: string; detailed?: boolean }) {
+  const t = useT()
+  return (
+    <div
+      className={`div-tile div-tile-soon ${detailed ? 'div-tile-detailed' : ''}`}
+      style={{ ['--c' as string]: color }}
+      aria-label={t('A new division is coming soon. Details coming soon.')}
+    >
+      <span className="div-top">
+        <EchoMark height={22} color="var(--tile-ink)" />
+        <span className="div-tag">{t('Coming soon')}</span>
+      </span>
+      <span>
+        <span className="div-name">???</span>
+        <span className="div-meta">
+          <span>{t('Details coming soon')}</span>
+        </span>
+      </span>
+    </div>
+  )
+}
+
 export default function DivisionTile({
   d,
   detailed = false,

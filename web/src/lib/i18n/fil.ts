@@ -849,6 +849,9 @@ const dict: Record<string, string> = {
   "Your latest description is waiting for an admin to review it. The previous one stays up until then.": "Naghihintay ng review ng admin ang pinakabago mong description. Mananatili ang dati hanggang doon.",
   "An admin turned down your last description.": "Tinanggihan ng admin ang huli mong description.",
   "Sent to an admin for review: it uses words our filter checks. It goes live once approved.": "Ipinadala sa admin para i-review: may mga salitang sinusuri ng filter namin. Lalabas ito kapag naaprubahan.",
+  // The eleventh division, before it opens, 28 November 2026 (lib/site.ts).
+  "Details coming soon": "Malapit na ang detalye",
+  "A new division is coming soon. Details coming soon.": "May bagong division na darating. Malapit na ang detalye.",
 }
 
 export default dict
